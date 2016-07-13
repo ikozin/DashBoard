@@ -1,0 +1,65 @@
+import os
+import sys
+import urllib.request as request
+import urllib.parse as parse
+import configparser 
+import pygame
+import pygame.locals
+
+from block_base import BlockBase
+from setting import TEXT_EXCEPTION_NOT_FOUND
+
+class BlockVoice(BlockBase):
+    """description of class"""
+
+    def __init__(self, logger):
+        """Ininitializes"""
+        super(BlockVoice, self).__init__(logger)
+        self._blockSource = None
+        self._speaker = None
+        self._key = None
+
+
+    def init(self, fileName):
+        config = configparser.ConfigParser()
+        config.read(fileName, encoding="utf-8")
+        section = config["VoiceBlock"]
+
+        self._speaker = section.get("Speaker")
+        self._key = section.get("Key")
+        if not self._speaker: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Speaker"))
+        if not self._key:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Key"))
+
+
+    def proccedEvent(self, event, isOnline):
+        try:
+            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE):
+                if self._blockSource:
+                    text = self._blockSource.getText()
+                    if not text: return
+                    soundFile = self.__getvoicetext(text)
+                    pygame.mixer.music.load(soundFile)
+                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.play()
+                    #if not pygame.mixer.get_busy():
+                    #    soundFile = getvoicetext(self._weather_text)
+                    #    sound = pygame.mixer.Sound(soundFile)
+                    #    sound.set_volume(1.0)   # Now plays at 100% of full volume.
+                    #    sound.play()            # Sound plays at full volume by default
+        except Exception as ex:
+            self._logger.exception(ex)
+
+
+    def setTextSource(self, block):
+        if not isinstance(block, BlockBase):
+            raise("Передаваемы парамтр должен быть наследником BlockBase")
+        self._blockSource = block
+
+    
+    def __getvoicetext(self, text):
+        fileName = "text.wav";
+        url = "https://tts.voicetech.yandex.net/generate?format=wav&lang=ru-RU&speaker={0}&emotion=good&key={1}&text='{2}'".format(self._speaker, self._key, parse.quote(text))
+        out = open(fileName, "wb")
+        out.write(request.urlopen(url).read())
+        out.close()
+        return fileName

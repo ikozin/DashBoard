@@ -250,3 +250,8 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/modules/__pycache__
+/__pycache__
+/log.txt
+/text.wav
+/Images
