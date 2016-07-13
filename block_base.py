@@ -2,7 +2,7 @@ class BlockBase:
     """description of class"""
 
     def __init__(self, logger):
-        """Ininitializes"""
+        """Initializes (declare internal variables)"""
         self._logger = logger
         self._text = None
 
@@ -12,7 +12,7 @@ class BlockBase:
 
 
     def init(self, fileName):
-        """ """
+        """Initializes (initialize internal variables)"""
         pass
 
 

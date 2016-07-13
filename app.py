@@ -44,7 +44,7 @@ if sys.platform == "linux": # Only for Raspberry Pi
 class Mainboard :
 
     def __init__(self):
-        """Ininitializes a new pygame screen using the framebuffer"""
+        """Initializes a new pygame screen using the framebuffer"""
         self._modules  = []
         self._size = None
         self._screen = None
@@ -207,7 +207,7 @@ class Mainboard :
 
 
 if __name__ == "__main__":
-    
+
     print(pygame.version.ver)
     # Create an instance of the mainboard class
     app = Mainboard()

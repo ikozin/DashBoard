@@ -12,24 +12,31 @@ class BlockCalendar(BlockBase):
     """description of class"""
 
     def __init__(self, logger):
-        "Ininitializes"
+        """Initializes (declare internal variables)"""
         super(BlockCalendar, self).__init__(logger)
         self._font = None
         self._pos = None
 
 
     def init(self, fileName):
+        """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
-        config.read(fileName, encoding="utf-8")
+        config.read(fileName, "utf-8")
         section = config["CalendarBlock"]
 
         fontSize = section.getint("FontSize")
         fontName = section.get("FontName")
+        isBold = section.getboolean("FontBold")
+        isItalic = section.getboolean("FontItalic")
         self._pos = section.getint("Position")
-        if not fontSize:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontSize"))
-        if not fontName:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontName"))
-        if not self._pos: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "Position"))
-        self._font = pygame.font.SysFont(fontName, fontSize)
+
+        if fontSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontSize"))
+        if fontName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontName"))
+        if isBold   is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontBold"))
+        if isItalic is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontItalic"))
+        if self._pos is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "Position"))
+
+        self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):

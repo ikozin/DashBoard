@@ -15,37 +15,48 @@ class BlockYandexNews(BlockBase):
     """description of class"""
     
     def __init__(self, logger):
-        "Ininitializes"
+        """Initializes (declare internal variables)"""
         super(BlockYandexNews, self).__init__(logger)
         self._url = None
-        self._fontSize = None
-        self._fontName = None
-        self._line = None
+        self._indent = None
         self._pos = None
         self._length = None
         self._time = None
+        self._font = None
         self._news = []
 
 
     def init(self, fileName):
+        """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
-        config.read(fileName, encoding="utf-8")
+        config.read(fileName, "utf-8")
         section = config["YandexNewsBlock"]
+
         self._url = section.get("Url")
-        self._fontSize = section.getint("FontSize")
-        self._fontName = section.get("FontName")
-        self._line = section.getint("Line")
+        self._indent = section.getint("Indent")
         self._pos = section.getint("Position")
-        self._length = section.getint("Length")
+        self._length = section.getint("Rows")
         self._time = section.getint("UpdateTime")
-        if not self._url:      raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Url"))
-        if not self._fontSize: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontSize"))
-        if not self._fontName: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontName"))
-        if not self._line:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Line"))
-        if not self._pos:      raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Position"))
-        if not self._length:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Length"))
-        if not self._time:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "UpdateTime"))
+
+        fontName = section.get("FontName")
+        fontSize = section.getint("FontSize")
+        isBold = section.getboolean("FontBold")
+        isItalic = section.getboolean("FontItalic")
+
+        if self._url is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Url"))
+        if self._indent is None:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Indent"))
+        if self._pos is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Position"))
+        if self._length is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Rows"))
+        if self._time is None:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "UpdateTime"))
+
+        if fontName is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontName"))
+        if fontSize is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontSize"))
+        if isBold   is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontBold"))
+        if isItalic is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontItalic"))
+
+        self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
+
         pygame.time.set_timer(BLOCK_YANDEX_NEWS_UPDATE_EVENT, self._time * 60000)
        
 
@@ -72,13 +83,12 @@ class BlockYandexNews(BlockBase):
             if not self._news: return
 
             y = self._pos
-            font = pygame.font.SysFont(self._fontName, self._fontSize)
             for text in self._news:
-                sz = font.size(text)
+                sz = self._font.size(text)
                 x = (size[0] - min(size[0], sz[0])) >> 1
-                surf = font.render(text, True, foreColor, backColor)
+                surf = self._font.render(text, True, foreColor, backColor)
                 screen.blit(surf, (x, y))
-                y += sz[1] + self._line
+                y += sz[1] + self._indent
         except Exception as ex:
             self._logger.exception(ex)
 

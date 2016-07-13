@@ -14,22 +14,29 @@ class BlockTime(BlockBase):
     """description of class"""
 
     def __init__(self, logger):
-        """Ininitializes"""
+        """Initializes (declare internal variables)"""
         super(BlockTime, self).__init__(logger)
         self._font = None
 
 
     def init(self, fileName):
+        """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
-        config.read(fileName, encoding="utf-8")
+        config.read(fileName, "utf-8")
 
         section = config["TimeBlock"]
-        fontSize = section.getint("FontSize")
         fontName = section.get("FontName")
-        if not fontSize:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontSize"))
-        if not fontName:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontName"))
-        self._font = pygame.font.SysFont(fontName, fontSize)
+        fontSize = section.getint("FontSize")
+        isBold = section.getboolean("FontBold")
+        isItalic = section.getboolean("FontItalic")
+
+        if fontName is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontName"))
+        if fontSize is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontSize"))
+        if isBold   is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontBold"))
+        if isItalic is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontItalic"))
+
+        self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):

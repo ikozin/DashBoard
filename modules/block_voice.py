@@ -1,5 +1,3 @@
-import os
-import sys
 import urllib.request as request
 import urllib.parse as parse
 import configparser 
@@ -13,7 +11,7 @@ class BlockVoice(BlockBase):
     """description of class"""
 
     def __init__(self, logger):
-        """Ininitializes"""
+        """Initializes (declare internal variables)"""
         super(BlockVoice, self).__init__(logger)
         self._blockSource = None
         self._speaker = None
@@ -21,14 +19,16 @@ class BlockVoice(BlockBase):
 
 
     def init(self, fileName):
+        """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
-        config.read(fileName, encoding="utf-8")
+        config.read(fileName, "utf-8")
         section = config["VoiceBlock"]
 
         self._speaker = section.get("Speaker")
         self._key = section.get("Key")
-        if not self._speaker: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Speaker"))
-        if not self._key:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Key"))
+
+        if self._speaker is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Speaker"))
+        if self._key is None:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Key"))
 
 
     def proccedEvent(self, event, isOnline):
@@ -52,7 +52,7 @@ class BlockVoice(BlockBase):
 
     def setTextSource(self, block):
         if not isinstance(block, BlockBase):
-            raise("Передаваемы парамтр должен быть наследником BlockBase")
+            raise("Передаваемый параметр должен быть наследником BlockBase")
         self._blockSource = block
 
     
