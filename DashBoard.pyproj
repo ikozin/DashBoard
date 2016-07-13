@@ -48,7 +48,6 @@
     <Compile Include="setting.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log.txt" />
     <Content Include="logger.ini" />
     <Content Include="setting.ini" />
   </ItemGroup>
