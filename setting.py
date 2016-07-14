@@ -11,7 +11,8 @@ class Setting:
         self._backgroundColor = None
         self._foregroundColor = None
         self._idleTime = None
-        self._timeLine = []         #Набор кортежей (StartTime, TimeBackgroundColor, TimeForegroundColor, IdleTime)
+        self._timeLine = []         #Набор кортежей (StartTime, BackgroundColor, ForegroundColor, IdleTime)
+
     
     def load(self, fileName):
         # Загружаем настройки
@@ -25,7 +26,7 @@ class Setting:
 
         if not self._backgroundColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "BackgroundColor"))
         if not self._foregroundColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "ForegroundColor"))
-        if not self._idleTime:           raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "IdleTime"))
+        if not self._idleTime:        raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "IdleTime"))
 
         if len(self._backgroundColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "BackgroundColor"))
         if len(self._foregroundColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "ForegroundColor"))
