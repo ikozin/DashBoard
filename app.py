@@ -1,7 +1,6 @@
 ﻿import os
 import sys
 import subprocess
-import time
 import configparser
 import logging
 import logging.config
@@ -74,7 +73,7 @@ class Mainboard :
         if not found:
             raise Exception("No suitable video driver found!")
         
-        (start, backgroudColor, foregroudColor, idleTime) = self._config.get_curret_setting()
+        (start, BackgroundColor, ForegroundColor, idleTime) = self._config.get_curret_setting()
 
         if sys.platform == "linux": # Only for Raspberry Pi
             self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
@@ -85,7 +84,7 @@ class Mainboard :
 
         print("Framebuffer size: {0} x {1}".format(self._size[0], self._size[1]))
         # Очищаем экран
-        self._screen.fill(backgroudColor)
+        self._screen.fill(BackgroundColor)
 
         # Инициализируем шрифты
         pygame.font.init()
@@ -127,7 +126,7 @@ class Mainboard :
 
     def setDisplayTimerOn(self):
         """Таймер для отключения дисплея"""
-        (start, backgroudColor, foregroudColor, idleTime) = self._config.get_curret_setting()
+        (start, BackgroundColor, ForegroundColor, idleTime) = self._config.get_curret_setting()
         pygame.time.set_timer(IDLE_EVENT, 0)
         pygame.time.set_timer(IDLE_EVENT, idleTime * 60000)
 
@@ -202,11 +201,11 @@ class Mainboard :
     def loop(self):
         while (self.proccedEvent(pygame.event.get())):
 
-            (start, backgroudColor, foregroudColor, idleTime) = self._config.get_curret_setting()
-            self._screen.fill(backgroudColor)
+            (start, BackgroundColor, ForegroundColor, idleTime) = self._config.get_curret_setting()
+            self._screen.fill(BackgroundColor)
 
             for module in self._modules:
-                module.updateDisplay(self._isDisplayOn, self._screen, self._size, foregroudColor, backgroudColor)
+                module.updateDisplay(self._isDisplayOn, self._screen, self._size, ForegroundColor, BackgroundColor)
 
             pygame.display.update()
             pygame.time.delay(100)

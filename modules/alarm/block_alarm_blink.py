@@ -25,23 +25,23 @@ class BlockAlarmBlink(AlarmBase):
         
         self._startTime = configSection.get("Time")
         self._duration = configSection.getint("Duration")
-        self._foreColor = self._getTuple(configSection.get("ForegroudColor"))
-        self._backColor = self._getTuple(configSection.get("BackgroudColor"))
+        self._foreColor = self._getTuple(configSection.get("ForegroundColor"))
+        self._backColor = self._getTuple(configSection.get("BackgroundColor"))
 
         if self._startTime is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "Time"))
         if self._duration is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "Duration"))
-        if self._foreColor is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "ForegroudColor"))
-        if self._backColor is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "BackgroudColor"))
+        if self._foreColor is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "ForegroundColor"))
+        if self._backColor is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "BackgroundColor"))
 
-        if len(self._foreColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(configSection.name, "ForegroudColor"))
-        if len(self._backColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(configSection.name, "BackgroudColor"))
+        if len(self._foreColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(configSection.name, "ForegroundColor"))
+        if len(self._backColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(configSection.name, "BackgroundColor"))
 
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
         self._stopTime = self._startTime + datetime.timedelta(seconds = self._duration)
 
 
     def updateState(self, currentTime):
-        if not isinstance(currentTime, datetime.datetime): raise("Передаваемый параметр должен быть наследником datetime")
+        #if not isinstance(currentTime, datetime.datetime): raise("Передаваемый параметр должен быть наследником datetime")
 
         if (currentTime - self._startTime).seconds == 0:
             self._isAlarm = True
@@ -52,6 +52,11 @@ class BlockAlarmBlink(AlarmBase):
     def updateDisplay(self, screen, size, foreColor, backColor, blocks):
         try:
             if not self._isAlarm: return
-            pass
+            value = datetime.datetime.today()
+            if (value - self._startTime).seconds % 2 == 0:
+                backColor = self._backColor
+            screen.fill(backColor)
+            for block in blocks:
+                block.updateDisplay(True, screen, size, self._foreColor, backColor)
         except Exception as ex:
             self._logger.exception(ex)
