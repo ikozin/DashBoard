@@ -255,3 +255,4 @@ paket-files/
 /log.txt
 /text.wav
 /Images
+/modules/alarm/__pycache__

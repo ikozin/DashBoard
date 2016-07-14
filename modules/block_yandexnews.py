@@ -44,16 +44,16 @@ class BlockYandexNews(BlockBase):
         isBold = section.getboolean("FontBold")
         isItalic = section.getboolean("FontItalic")
 
-        if self._url is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Url"))
-        if self._indent is None:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Indent"))
-        if self._pos is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Position"))
-        if self._length is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "Rows"))
-        if self._time is None:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "UpdateTime"))
+        if self._url is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Url"))
+        if self._indent is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Indent"))
+        if self._pos is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Position"))
+        if self._length is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Rows"))
+        if self._time is None:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "UpdateTime"))
 
-        if fontName is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontName"))
-        if fontSize is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontSize"))
-        if isBold   is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontBold"))
-        if isItalic is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("YandexNewsBlock", "FontItalic"))
+        if fontName is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontName"))
+        if fontSize is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontSize"))
+        if isBold   is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontBold"))
+        if isItalic is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontItalic"))
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 

@@ -26,6 +26,18 @@
     <Compile Include="block_base.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\alarm\alarm_base.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\alarm\block_alarm_blink.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\alarm\block_alarm_simple.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\alarm\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\block_alarm.py">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +61,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setting.py" />
+    <Compile Include="test.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="logger.ini" />
@@ -56,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="modules\" />
+    <Folder Include="modules\alarm\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -30,11 +30,11 @@ class BlockCalendar(BlockBase):
         isItalic = section.getboolean("FontItalic")
         self._pos = section.getint("Position")
 
-        if fontSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontSize"))
-        if fontName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontName"))
-        if isBold   is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontBold"))
-        if isItalic is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "FontItalic"))
-        if self._pos is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("CalendarBlock", "Position"))
+        if fontSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontSize"))
+        if fontName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontName"))
+        if isBold   is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontBold"))
+        if isItalic is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontItalic"))
+        if self._pos is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Position"))
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 

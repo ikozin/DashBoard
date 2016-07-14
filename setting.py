@@ -18,17 +18,17 @@ class Setting:
         config = configparser.ConfigParser()
         config.read(fileName, encoding="utf-8")
 
-        section = config["DEFAULT"]
+        section = config["MAIN"]
         self.TimeBackgroudColor = self._getTuple(section.get("BackgroudColor"))
         self.TimeForegroudColor = self._getTuple(section.get("ForegroudColor"))
         self.IdleTime           = section.getint("IdleTime")
 
-        if not self.TimeBackgroudColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("DEFAULT", "BackgroudColor"))
-        if not self.TimeForegroudColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("DEFAULT", "ForegroudColor"))
-        if not self.IdleTime:           raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("DEFAULT", "IdleTime"))
+        if not self.TimeBackgroudColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "BackgroudColor"))
+        if not self.TimeForegroudColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "ForegroudColor"))
+        if not self.IdleTime:           raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "IdleTime"))
 
-        if len(self.TimeBackgroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format("DEFAULT", "BackgroudColor"))
-        if len(self.TimeForegroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format("DEFAULT", "ForegroudColor"))
+        if len(self.TimeBackgroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "BackgroudColor"))
+        if len(self.TimeForegroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "ForegroudColor"))
 
         section = config["TIMELINE"]
         schemas = section.get("sections")
@@ -40,15 +40,15 @@ class Setting:
                 section = config[schema]
                 start = section.get("StartTime")
                 if not start:
-                    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(schema, "StartTime"))
+                    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "StartTime"))
                 start = time.strptime(start, "%H:%M:%S")
                 backgroudColor = self._getTuple(section.get("BackgroudColor"))
                 foregroudColor = self._getTuple(section.get("ForegroudColor"))
                 idleTime       = section.getint('IdleTime', self.IdleTime)
                 if not backgroudColor: backgroudColor = self.TimeBackgroudColor
                 if not foregroudColor: foregroudColor = self.TimeForegroudColor
-                if len(backgroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(schema, "BackgroudColor"))
-                if len(foregroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(schema, "ForegroudColor"))
+                if len(backgroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "BackgroudColor"))
+                if len(foregroudColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "ForegroudColor"))
                 entry = (start, backgroudColor, foregroudColor, idleTime)
                 self.TimeLine.append(entry)
         if len(self.TimeLine) == 0:

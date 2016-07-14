@@ -27,8 +27,8 @@ class BlockVoice(BlockBase):
         self._speaker = section.get("Speaker")
         self._key = section.get("Key")
 
-        if self._speaker is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Speaker"))
-        if self._key is None:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("VoiceBlock", "Key"))
+        if self._speaker is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Speaker"))
+        if self._key is None:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Key"))
 
 
     def proccedEvent(self, event, isOnline):

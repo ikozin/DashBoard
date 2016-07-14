@@ -31,10 +31,10 @@ class BlockTime(BlockBase):
         isBold = section.getboolean("FontBold")
         isItalic = section.getboolean("FontItalic")
 
-        if fontName is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontName"))
-        if fontSize is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontSize"))
-        if isBold   is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontBold"))
-        if isItalic is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format("TimeBlock", "FontItalic"))
+        if fontName is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontName"))
+        if fontSize is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontSize"))
+        if isBold   is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontBold"))
+        if isItalic is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontItalic"))
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 
