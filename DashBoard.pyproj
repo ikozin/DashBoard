@@ -26,6 +26,9 @@
     <Compile Include="block_base.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\block_alarm.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\block_calendar.py">
       <SubType>Code</SubType>
     </Compile>

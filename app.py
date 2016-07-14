@@ -17,6 +17,7 @@ from modules.block_yandexnews import BlockYandexNews
 from modules.block_openweathermap import BlockOpenWeatherMap
 from modules.block_voice import BlockVoice
 from modules.block_textagregator import BlockTextAgregator
+from modules.block_alarm import BlocklAlarm
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -107,6 +108,12 @@ class Mainboard :
         self._modules.append(voice)
         self._modules.append(argergator)
         
+        alarm = BlocklAlarm(logger)
+        alarm.addBlock(self._modules[0])
+        alarm.addBlock(self._modules[1])
+        alarm.addBlock(self._modules[2])
+        self._modules.append(alarm)
+
         for module in self._modules:
             module.init(FILE_SETTING)
             module.updateInfo(self._isDisplayOn)
