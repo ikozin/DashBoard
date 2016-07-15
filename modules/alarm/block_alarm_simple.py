@@ -44,17 +44,23 @@ class BlockAlarmSimple(AlarmBase):
     def updateState(self, currentTime):
         #if not isinstance(currentTime, datetime.datetime): raise("Передаваемый параметр должен быть наследником datetime")
 
-        if (currentTime - self._startTime).seconds == 0:
-            self._isAlarm = True
-        if (currentTime - self._stopTime).seconds == 0:
-            self._isAlarm = False
+        if not self._isAlarm:
+            if (currentTime - self._startTime).seconds < 3: #3 секунды на запуск, вдруг задержка какая-нить была
+                self._isAlarm = True
+                return
+        
+        if self._isAlarm:
+            if (currentTime - self._stopTime).seconds >= 0:
+                self._isAlarm = False
 
 
     def updateDisplay(self, screen, size, foreColor, backColor, blocks):
         try:
             if not self._isAlarm: return
+
             screen.fill(self._backColor)
             for block in blocks:
                 block.updateDisplay(True, screen, size, self._foreColor, self._backColor)
+
         except Exception as ex:
             self._logger.exception(ex)
