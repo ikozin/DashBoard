@@ -10,18 +10,37 @@ import time
 #print(20)
 
 
-t10 = datetime.datetime.now()
-time.sleep(2)
-t11 = datetime.datetime.now()
-time.sleep(2)
-t12 = datetime.datetime.now()
+#t10 = datetime.datetime.now()
+#time.sleep(2)
+#t11 = datetime.datetime.now()
+#time.sleep(2)
+#t12 = datetime.datetime.now()
 
-print(t10)
-print(t11)
-print(t12)
+#print(t10)
+#print(t11)
+#print(t12)
 
-t = t10 - t11
-print(t, t.seconds)
+#t = t10 - t11
+#print(t, t.seconds)
 
-t = t12 - t11
-print(t, t.seconds)
+#t = t12 - t11
+#print(t, t.seconds)
+
+#t13 = datetime.datetime.today()
+#print(t13.weekday())
+
+
+weekDay = "0, 1, 2, 3, 4, 5, 6"
+
+weekDay = tuple(int(item.strip("([ '])")) for item in weekDay.split(",") if item.strip())
+
+if len(weekDay) > 7:    raise Exception()
+if not all(day < 7 for day in weekDay): raise Exception()
+
+day = 5
+
+if any(day == value for value in weekDay):
+    print ("XXX")
+
+
+print (weekDay)
