@@ -18,7 +18,7 @@ from setting import TEXT_EXCEPTION_FORMAT
 MIN_UPDATE_TIME = 600
 CITY_ID = 524901
 WEATHER_FILE = "data.xml"
-WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3:d}%, Давление {4:d} мм ртутного столба"
+WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3}%, Давление {4} мм ртутного столба"
 DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДавление {3} мм"
 BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 
@@ -182,8 +182,8 @@ class BlockOpenWeatherMap(BlockBase):
             root = ET.fromstring(data)
             self._weather_type = str(root.find("weather").attrib["value"]).capitalize()
             self._temperature = int(float(root.find("temperature").attrib["value"]))
-            self._humidity = int(root.find("humidity").attrib["value"])
-            self._pressure = int(root.find("pressure").attrib["value"])
+            self._humidity = int(float(root.find("humidity").attrib["value"]))
+            self._pressure = float(root.find("pressure").attrib["value"])
             self._wind_speed = float(root.find("wind/speed").attrib["value"])
             self._wind_direction = str(root.find("wind/direction").attrib["code"])
     
@@ -238,34 +238,24 @@ class BlockOpenWeatherMap(BlockBase):
         filePath = os.path.join(path, imageName);
         if not os.path.exists(filePath):
             url = "http://openweathermap.org/img/w/{0}".format(imageName)
-            file = open(filePath, "wb")
-            file.write(request.urlopen(url).read())
-            file.close()
+            with open(filePath, "wb") as file:
+                file.write(request.urlopen(url).read())
 
 
-    if sys.platform == "linux": # Only for Raspberry Pi
-        def _getData(self):
-            dif = datetime.now() - self._lastUpdate
-            ##############################################################
-            # http://openweathermap.org/appid#work - 1 time per 10 minutes 
-            ##############################################################
-            if dif.seconds >= MIN_UPDATE_TIME:
-                data = request.urlopen("http://api.openweathermap.org/data/2.5/weather?id={0}&mode=xml&units=metric&lang=ru&APPID={1}".format(CITY_ID, self._key)).read()
-                file = open(os.path.join(self._folder, WEATHER_FILE), "wb")
+    def _getData(self):
+        dif = datetime.now() - self._lastUpdate
+        ##############################################################
+        # http://openweathermap.org/appid#work - 1 time per 10 minutes 
+        ##############################################################
+        if dif.seconds >= MIN_UPDATE_TIME:
+            data = request.urlopen("http://api.openweathermap.org/data/2.5/weather?id={0}&mode=xml&units=metric&lang=ru&APPID={1}".format(CITY_ID, self._key)).read()
+            with open(os.path.join(self._folder, WEATHER_FILE), "wb") as file:
                 file.write(data)
-                file.close()
-                self._lastUpdate = datetime.now()
-            else:
-                file = open(os.path.join(self._folder, WEATHER_FILE), "rb")
-                data = file.read()
-                file.close()
+            self._lastUpdate = datetime.now()
             return data
-    else:
-        def _getData(self):
-            file = open(os.path.join(self._folder, WEATHER_FILE), "rb")
-            data = file.read()
-            file.close()
-            return data
+        else:
+            with open(os.path.join(self._folder, WEATHER_FILE), "rb") as file:
+                return file.read()
 
 
     def _getTuple(self, value):

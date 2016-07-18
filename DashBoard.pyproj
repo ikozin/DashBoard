@@ -26,6 +26,7 @@
     <Compile Include="block_base.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\alarm\alarm_time_base.py" />
     <Compile Include="modules\alarm\alarm_base.py">
       <SubType>Code</SubType>
     </Compile>
@@ -66,10 +67,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\01d.png" />
+    <Content Include="Images\01n.png" />
+    <Content Include="Images\02d.png" />
+    <Content Include="Images\02n.png" />
+    <Content Include="Images\03d.png" />
+    <Content Include="Images\03n.png" />
+    <Content Include="Images\04d.png" />
+    <Content Include="Images\04n.png" />
+    <Content Include="Images\09d.png" />
+    <Content Include="Images\09n.png" />
+    <Content Include="Images\10d.png" />
+    <Content Include="Images\10n.png" />
+    <Content Include="Images\11d.png" />
+    <Content Include="Images\11n.png" />
+    <Content Include="Images\13d.png" />
+    <Content Include="Images\13n.png" />
+    <Content Include="Images\50d.png" />
+    <Content Include="Images\50n.png" />
+    <Content Include="Images\data.xml" />
     <Content Include="logger.ini" />
     <Content Include="setting.ini" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\" />
     <Folder Include="modules\" />
     <Folder Include="modules\alarm\" />
   </ItemGroup>
