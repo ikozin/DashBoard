@@ -39,7 +39,7 @@ class AlarmTimeBase(AlarmBase):
         if len(self._backColor) != 3: raise ExceptionFormat(configSection.name, "BackgroundColor")
         
         if len(self._weekDay) > 7:    raise ExceptionFormat(configSection.name, "WeekDay")
-        if not all(day < 7 for day in self._weekDay): raise ExceptionFormat(configSection.name, "WeekDay")
+        if not all(day >= 0 and day < 7 for day in self._weekDay): raise ExceptionFormat(configSection.name, "WeekDay")
 
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
         self._stopTime = self._startTime + datetime.timedelta(seconds = self._duration)
