@@ -73,8 +73,6 @@ class Mainboard :
         if not found:
             raise Exception("No suitable video driver found!")
         
-        (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
-
         if sys.platform == "linux": # Only for Raspberry Pi
             self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
             self._screen = pygame.display.set_mode(self._size, pygame.FULLSCREEN | pygame.HWSURFACE)
@@ -82,9 +80,7 @@ class Mainboard :
             self._size = (1280, 1024)
             self._screen = pygame.display.set_mode(self._size)
 
-        print("Framebuffer size: {0} x {1}".format(self._size[0], self._size[1]))
-        # Очищаем экран
-        self._screen.fill(backgroundColor)
+        print("Framebuffer size: {0}".format(self._size))
 
         # Инициализируем шрифты
         pygame.font.init()
@@ -98,6 +94,7 @@ class Mainboard :
         self._modules.append(BlockOpenWeatherMap(logger, self._config))
         #self._modules.append(BlockCalendar(logger, self._config))
         self._modules.append(BlockYandexNews(logger, self._config))
+
         argergator = BlockTextAgregator(logger, self._config)
         argergator.addBlock(self._modules[0])
         argergator.addBlock(self._modules[1])
