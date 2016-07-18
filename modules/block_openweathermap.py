@@ -8,9 +8,7 @@ import pygame.locals
 from datetime  import datetime, timedelta
 
 from block_base import BlockBase
-from setting import TEXT_EXCEPTION_NOT_FOUND
-from setting import TEXT_EXCEPTION_FORMAT
-
+from exceptions import ExceptionFormat, ExceptionNotFound
 
 ##############################################################
 # http://openweathermap.org/appid#work - 1 time per 10 minutes 
@@ -99,51 +97,51 @@ class BlockOpenWeatherMap(BlockBase):
         pItalic  = section.getboolean("PressureFontItalic")
         wItalic  = section.getboolean("WindFontItalic")
 
-        if self._key is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Key"))
-        if self._time is None:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "UpdateTime"))
-        if self._folder is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Folder"))
+        if self._key is None:    raise ExceptionNotFound(section.name, "Key")
+        if self._time is None:   raise ExceptionNotFound(section.name, "UpdateTime")
+        if self._folder is None: raise ExceptionNotFound(section.name, "Folder")
 
-        if self._iconScale is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "IconScale"))
-        if self._iconPos is None:   raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "IconPos"))
+        if self._iconScale is None: raise ExceptionNotFound(section.name, "IconScale")
+        if self._iconPos is None:   raise ExceptionNotFound(section.name, "IconPos")
 
-        if self._weatherTypePos is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WeatherTypePos"))
-        if self._temperaturePos is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "TemperaturePos"))
-        if self._humidityPos is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "HumidityPos"))
-        if self._pressurePos is None:    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "PressurePos"))
-        if self._windPos is None:        raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WindPos"))
+        if self._weatherTypePos is None: raise ExceptionNotFound(section.name, "WeatherTypePos")
+        if self._temperaturePos is None: raise ExceptionNotFound(section.name, "TemperaturePos")
+        if self._humidityPos is None:    raise ExceptionNotFound(section.name, "HumidityPos")
+        if self._pressurePos is None:    raise ExceptionNotFound(section.name, "PressurePos")
+        if self._windPos is None:        raise ExceptionNotFound(section.name, "WindPos")
 
-        if wtName is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WeatherTypeFontName"))
-        if tName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "TemperatureFontName"))
-        if hName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "HumidityFontName"))
-        if pName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "PressureFontName"))
-        if wName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WindFontName"))
+        if wtName is None: raise ExceptionNotFound(section.name, "WeatherTypeFontName")
+        if tName is None:  raise ExceptionNotFound(section.name, "TemperatureFontName")
+        if hName is None:  raise ExceptionNotFound(section.name, "HumidityFontName")
+        if pName is None:  raise ExceptionNotFound(section.name, "PressureFontName")
+        if wName is None:  raise ExceptionNotFound(section.name, "WindFontName")
 
-        if wtSize is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WeatherTypeFontSize"))
-        if tSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "TemperatureFontSize"))
-        if hSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "HumidityFontSize"))
-        if pSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "PressureFontSize"))
-        if wSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WindFontSize"))
+        if wtSize is None: raise ExceptionNotFound(section.name, "WeatherTypeFontSize")
+        if tSize is None:  raise ExceptionNotFound(section.name, "TemperatureFontSize")
+        if hSize is None:  raise ExceptionNotFound(section.name, "HumidityFontSize")
+        if pSize is None:  raise ExceptionNotFound(section.name, "PressureFontSize")
+        if wSize is None:  raise ExceptionNotFound(section.name, "WindFontSize")
 
-        if wtBold is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WeatherTypeFontBold"))
-        if tBold is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "TemperatureFontBold"))
-        if hBold is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "HumidityFontBold"))
-        if pBold is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "PressureFontBold"))
-        if wBold is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WindFontBold"))
+        if wtBold is None: raise ExceptionNotFound(section.name, "WeatherTypeFontBold")
+        if tBold is None:  raise ExceptionNotFound(section.name, "TemperatureFontBold")
+        if hBold is None:  raise ExceptionNotFound(section.name, "HumidityFontBold")
+        if pBold is None:  raise ExceptionNotFound(section.name, "PressureFontBold")
+        if wBold is None:  raise ExceptionNotFound(section.name, "WindFontBold")
 
-        if wtItalic is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WeatherTypeFontItalic"))
-        if tItalic  is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "TemperatureFontItalic"))
-        if hItalic  is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "HumidityFontItalic"))
-        if pItalic  is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "PressureFontItalic"))
-        if wItalic  is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "WindFontItalic"))
+        if wtItalic is None: raise ExceptionNotFound(section.name, "WeatherTypeFontItalic")
+        if tItalic  is None: raise ExceptionNotFound(section.name, "TemperatureFontItalic")
+        if hItalic  is None: raise ExceptionNotFound(section.name, "HumidityFontItalic")
+        if pItalic  is None: raise ExceptionNotFound(section.name, "PressureFontItalic")
+        if wItalic  is None: raise ExceptionNotFound(section.name, "WindFontItalic")
 
 
-        if len(self._iconScale) != 2:      raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "IconScale"))
-        if len(self._iconPos) != 2:        raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "IconPos"))
-        if len(self._weatherTypePos) != 2: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "WeatherTypePos"))
-        if len(self._temperaturePos) != 2: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "TemperaturePos"))
-        if len(self._humidityPos) != 2:    raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "HumidityPos"))
-        if len(self._pressurePos) != 2:    raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "PressurePos"))
-        if len(self._windPos) != 2:        raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "WindPos"))
+        if len(self._iconScale) != 2:      raise ExceptionFormat(section.name, "IconScale")
+        if len(self._iconPos) != 2:        raise ExceptionFormat(section.name, "IconPos")
+        if len(self._weatherTypePos) != 2: raise ExceptionFormat(section.name, "WeatherTypePos")
+        if len(self._temperaturePos) != 2: raise ExceptionFormat(section.name, "TemperaturePos")
+        if len(self._humidityPos) != 2:    raise ExceptionFormat(section.name, "HumidityPos")
+        if len(self._pressurePos) != 2:    raise ExceptionFormat(section.name, "PressurePos")
+        if len(self._windPos) != 2:        raise ExceptionFormat(section.name, "WindPos")
 
         self._weatherTypeFont = pygame.font.SysFont(wtName, wtSize, wtBold, wtItalic)
         self._temperatureFont = pygame.font.SysFont(tName, tSize, tBold, tItalic)

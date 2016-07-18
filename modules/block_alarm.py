@@ -4,12 +4,10 @@ import pygame
 import pygame.locals
 
 from block_base import BlockBase
-from setting import TEXT_EXCEPTION_NOT_FOUND
+from exceptions import ExceptionFormat, ExceptionNotFound
 
 from modules.alarm.block_alarm_simple import BlockAlarmSimple
 from modules.alarm.block_alarm_blink import BlockAlarmBlink
-
-
 
 BLOCK_ALARM_UPDATE_EVENT  = (pygame.locals.USEREVENT + 5)
 
@@ -42,7 +40,7 @@ class BlocklAlarm(BlockBase):
 
             section = config[schema]
             type = section.getint("Type")
-            if type is None:      raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(schema, "Type"))
+            if type is None: raise ExceptionNotFound(schema, "Type")
 
             if type == 1:
                 alarm = BlockAlarmSimple(self._logger)
@@ -53,7 +51,7 @@ class BlocklAlarm(BlockBase):
                 alarm.init(section)
                 self._alarmBlock.append(alarm)
             else:
-                raise Exception(TEXT_EXCEPTION_FORMAT.format(schema, "Type"))
+                raise ExceptionFormat(schema, "Type")
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
 

@@ -5,7 +5,7 @@ import pygame
 import pygame.locals
 
 from block_base import BlockBase
-from setting import TEXT_EXCEPTION_NOT_FOUND
+from exceptions import ExceptionFormat, ExceptionNotFound
 
 class BlockVoice(BlockBase):
     """description of class"""
@@ -27,8 +27,8 @@ class BlockVoice(BlockBase):
         self._speaker = section.get("Speaker")
         self._key = section.get("Key")
 
-        if self._speaker is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Speaker"))
-        if self._key is None:     raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Key"))
+        if self._speaker is None: raise ExceptionNotFound(section.name, "Speaker")
+        if self._key is None:     raise ExceptionNotFound(section.name, "Key")
 
 
     def proccedEvent(self, event, isOnline):

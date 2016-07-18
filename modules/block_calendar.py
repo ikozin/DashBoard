@@ -4,7 +4,7 @@ import pygame.locals
 from datetime import date
 
 from block_base import BlockBase
-from setting import TEXT_EXCEPTION_NOT_FOUND
+from exceptions import ExceptionFormat, ExceptionNotFound
 
 BLOCK_CALENDAR_DISPLAY_FORMAT = "%a %d %B %Y"
 
@@ -30,11 +30,11 @@ class BlockCalendar(BlockBase):
         isItalic = section.getboolean("FontItalic")
         self._pos = section.getint("Position")
 
-        if fontSize is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontSize"))
-        if fontName is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontName"))
-        if isBold   is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontBold"))
-        if isItalic is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "FontItalic"))
-        if self._pos is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "Position"))
+        if fontSize is None:  raise ExceptionNotFound(section.name, "FontSize")
+        if fontName is None:  raise ExceptionNotFound(section.name, "FontName")
+        if isBold   is None:  raise ExceptionNotFound(section.name, "FontBold")
+        if isItalic is None:  raise ExceptionNotFound(section.name, "FontItalic")
+        if self._pos is None: raise ExceptionNotFound(section.name, "Position")
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 

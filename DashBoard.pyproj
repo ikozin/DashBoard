@@ -26,6 +26,9 @@
     <Compile Include="block_base.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="exceptions.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\alarm\alarm_time_base.py" />
     <Compile Include="modules\alarm\alarm_base.py">
       <SubType>Code</SubType>

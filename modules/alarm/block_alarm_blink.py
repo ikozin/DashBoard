@@ -2,8 +2,6 @@ import configparser
 import datetime
 
 from modules.alarm.alarm_time_base import AlarmTimeBase
-from setting import TEXT_EXCEPTION_NOT_FOUND
-from setting import TEXT_EXCEPTION_FORMAT
 
 class BlockAlarmBlink(AlarmTimeBase):
     """description of class"""

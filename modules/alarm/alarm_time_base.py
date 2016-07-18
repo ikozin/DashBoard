@@ -2,8 +2,7 @@
 import datetime
 
 from modules.alarm.alarm_base import AlarmBase
-from setting import TEXT_EXCEPTION_NOT_FOUND
-from setting import TEXT_EXCEPTION_FORMAT
+from exceptions import ExceptionFormat, ExceptionNotFound
 
 class AlarmTimeBase(AlarmBase):
     """description of class"""
@@ -28,13 +27,13 @@ class AlarmTimeBase(AlarmBase):
         self._foreColor = self._getTuple(configSection.get("ForegroundColor"))
         self._backColor = self._getTuple(configSection.get("BackgroundColor"))
 
-        if self._startTime is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "Time"))
-        if self._duration is None:  raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "Duration"))
-        if self._foreColor is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "ForegroundColor"))
-        if self._backColor is None: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(configSection.name, "BackgroundColor"))
+        if self._startTime is None: raise ExceptionNotFound(configSection.name, "Time")
+        if self._duration is None:  raise ExceptionNotFound(configSection.name, "Duration")
+        if self._foreColor is None: raise ExceptionNotFound(configSection.name, "ForegroundColor")
+        if self._backColor is None: raise ExceptionNotFound(configSection.name, "BackgroundColor")
 
-        if len(self._foreColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(configSection.name, "ForegroundColor"))
-        if len(self._backColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(configSection.name, "BackgroundColor"))
+        if len(self._foreColor) != 3: raise ExceptionFormat(configSection.name, "ForegroundColor")
+        if len(self._backColor) != 3: raise ExceptionFormat(configSection.name, "BackgroundColor")
 
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
         self._stopTime = self._startTime + datetime.timedelta(seconds = self._duration)

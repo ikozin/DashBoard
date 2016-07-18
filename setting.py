@@ -1,8 +1,7 @@
 ﻿import configparser 
 import datetime
 
-TEXT_EXCEPTION_NOT_FOUND = "Ошибка конфигурации! В секции [{0}] пропущен параметр {1}"
-TEXT_EXCEPTION_FORMAT = "Ошибка конфигурации! В секции [{0}] не верный формат параметра {1}"
+from exceptions import ExceptionFormat, ExceptionNotFound
 
 class Setting:
 
@@ -24,32 +23,32 @@ class Setting:
         self._foregroundColor = self._getTuple(section.get("ForegroundColor"))
         self._idleTime = section.getint("IdleTime")
 
-        if not self._backgroundColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "BackgroundColor"))
-        if not self._foregroundColor: raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "ForegroundColor"))
-        if not self._idleTime:        raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "IdleTime"))
+        if not self._backgroundColor: raise ExceptionNotFound(section.name, "BackgroundColor")
+        if not self._foregroundColor: raise ExceptionNotFound(section.name, "ForegroundColor")
+        if not self._idleTime:        raise ExceptionNotFound(section.name, "IdleTime")
 
-        if len(self._backgroundColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "BackgroundColor"))
-        if len(self._foregroundColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "ForegroundColor"))
+        if len(self._backgroundColor) != 3: raise ExceptionFormat(section.name, "BackgroundColor")
+        if len(self._foregroundColor) != 3: raise ExceptionFormat(section.name, "ForegroundColor")
 
         section = config["TIMELINE"]
         schemas = section.get("sections")
         if schemas:
             schemas = [item.strip(" '") for item in schemas.split(",") if item.strip()]
             for schema in schemas:
-                if not config.has_section(schema):
-                    raise Exception("Ошибка конфигурации! Нет секции [{0}]".format(schema))
+                if not config.has_section(schema): raise Exception("Ошибка конфигурации! Нет секции [{0}]".format(schema))
                 section = config[schema]
                 start = section.get("StartTime")
-                if not start:
-                    raise Exception(TEXT_EXCEPTION_NOT_FOUND.format(section.name, "StartTime"))
+                if not start: raise ExceptionNotFound(section.name, "StartTime")
                 start = datetime.datetime.strptime(start, "%H:%M:%S")
                 BackgroundColor = self._getTuple(section.get("BackgroundColor"))
                 ForegroundColor = self._getTuple(section.get("ForegroundColor"))
                 idleTime       = section.getint('IdleTime', self._idleTime)
+
                 if not BackgroundColor: BackgroundColor = self._backgroundColor
                 if not ForegroundColor: ForegroundColor = self._foregroundColor
-                if len(BackgroundColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "BackgroundColor"))
-                if len(ForegroundColor) != 3: raise Exception(TEXT_EXCEPTION_FORMAT.format(section.name, "ForegroundColor"))
+                if len(BackgroundColor) != 3: raise ExceptionFormat(section.name, "BackgroundColor")
+                if len(ForegroundColor) != 3: raise ExceptionFormat(section.name, "ForegroundColor")
+
                 entry = (start, BackgroundColor, ForegroundColor, idleTime)
                 self._timeLine.append(entry)
         if len(self._timeLine) == 0:
