@@ -10,9 +10,9 @@ from exceptions import ExceptionFormat, ExceptionNotFound
 class BlockVoice(BlockBase):
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlockVoice, self).__init__(logger)
+        super(BlockVoice, self).__init__(logger, setting)
         self._blockSource = None
         self._speaker = None
         self._key = None

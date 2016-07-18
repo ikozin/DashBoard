@@ -94,20 +94,20 @@ class Mainboard :
         # Выключаем курсор
         pygame.mouse.set_visible(False)
 
-        self._modules.append(BlockTime(logger))
-        self._modules.append(BlockOpenWeatherMap(logger))
-        #self._modules.append(BlockCalendar(logger))
-        self._modules.append(BlockYandexNews(logger))
-        argergator = BlockTextAgregator(logger)
+        self._modules.append(BlockTime(logger, self._config))
+        self._modules.append(BlockOpenWeatherMap(logger, self._config))
+        #self._modules.append(BlockCalendar(logger, self._config))
+        self._modules.append(BlockYandexNews(logger, self._config))
+        argergator = BlockTextAgregator(logger, self._config)
         argergator.addBlock(self._modules[0])
         argergator.addBlock(self._modules[1])
         argergator.addBlock(self._modules[2])
-        voice = BlockVoice(logger)
+        voice = BlockVoice(logger, self._config)
         voice.setTextSource(argergator)
         self._modules.append(voice)
         self._modules.append(argergator)
         
-        alarm = BlocklAlarm(logger)
+        alarm = BlocklAlarm(logger, self._config)
         alarm.addBlock(self._modules[0])
         alarm.addBlock(self._modules[1])
         alarm.addBlock(self._modules[2])
@@ -126,7 +126,7 @@ class Mainboard :
 
     def setDisplayTimerOn(self):
         """Таймер для отключения дисплея"""
-        (start, BackgroundColor, ForegroundColor, idleTime) = self._config.get_curret_setting()
+        (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
         pygame.time.set_timer(IDLE_EVENT, 0)
         pygame.time.set_timer(IDLE_EVENT, idleTime * 60000)
 
@@ -201,14 +201,15 @@ class Mainboard :
     def loop(self):
         while (self.proccedEvent(pygame.event.get())):
 
-            (start, BackgroundColor, ForegroundColor, idleTime) = self._config.get_curret_setting()
-            self._screen.fill(BackgroundColor)
+            (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
+            self._screen.fill(backgroundColor)
 
             for module in self._modules:
-                module.updateDisplay(self._isDisplayOn, self._screen, self._size, ForegroundColor, BackgroundColor)
+                module.updateDisplay(self._isDisplayOn, self._screen, self._size, foregroundColor, backgroundColor)
 
             pygame.display.update()
             pygame.time.delay(100)
+
         pygame.quit()
 
 

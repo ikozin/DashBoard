@@ -11,9 +11,9 @@ BLOCK_CALENDAR_DISPLAY_FORMAT = "%a %d %B %Y"
 class BlockCalendar(BlockBase):
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlockCalendar, self).__init__(logger)
+        super(BlockCalendar, self).__init__(logger, setting)
         self._font = None
         self._pos = None
 

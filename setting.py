@@ -19,8 +19,8 @@ class Setting:
         config.read(fileName, encoding="utf-8")
 
         section = config["MAIN"]
-        self._backgroundColor = self._getTuple(section.get("BackgroundColor"))
-        self._foregroundColor = self._getTuple(section.get("ForegroundColor"))
+        self._backgroundColor = self.getTuple(section.get("BackgroundColor"))
+        self._foregroundColor = self.getTuple(section.get("ForegroundColor"))
         self._idleTime = section.getint("IdleTime")
 
         if not self._backgroundColor: raise ExceptionNotFound(section.name, "BackgroundColor")
@@ -40,8 +40,8 @@ class Setting:
                 start = section.get("StartTime")
                 if not start: raise ExceptionNotFound(section.name, "StartTime")
                 start = datetime.datetime.strptime(start, "%H:%M:%S")
-                BackgroundColor = self._getTuple(section.get("BackgroundColor"))
-                ForegroundColor = self._getTuple(section.get("ForegroundColor"))
+                BackgroundColor = self.getTuple(section.get("BackgroundColor"))
+                ForegroundColor = self.getTuple(section.get("ForegroundColor"))
                 idleTime       = section.getint('IdleTime', self._idleTime)
 
                 if not BackgroundColor: BackgroundColor = self._backgroundColor
@@ -68,10 +68,11 @@ class Setting:
         return current
 
 
-    def _getTuple(self, value):
+    def getTuple(self, value, logger = None):
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
         try:
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except:
+        except Exception as ex:
+            if logger: logger.exception(ex)
             return None
 

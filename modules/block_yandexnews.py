@@ -14,9 +14,9 @@ BLOCK_YANDEX_NEWS_UPDATE_EVENT = (pygame.locals.USEREVENT + 2)
 class BlockYandexNews(BlockBase):
     """description of class"""
     
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlockYandexNews, self).__init__(logger)
+        super(BlockYandexNews, self).__init__(logger, setting)
         self._url = None
         self._indent = None
         self._pos = None

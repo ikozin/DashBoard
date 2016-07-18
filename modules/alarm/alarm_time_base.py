@@ -7,9 +7,9 @@ from exceptions import ExceptionFormat, ExceptionNotFound
 class AlarmTimeBase(AlarmBase):
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(AlarmTimeBase, self).__init__(logger)
+        super(AlarmTimeBase, self).__init__(logger, setting)
         self._isAlarm = False
         self._startTime = None
         self._stopTime = None
@@ -50,10 +50,22 @@ class AlarmTimeBase(AlarmBase):
 
         if not self._isAlarm:
             if any(currentTime.weekday() == day for day in self._weekDay):
-                if (currentTime - self._startTime).seconds <= 3: #3 секунды на запуск, вдруг задержка какая-нить была
+                if (currentTime - self._startTime).seconds <= 3: # 3 секунды на запуск, вдруг задержка какая-нить была
                     self._isAlarm = True
+                    self.init_draw()
                     return
         
         if self._isAlarm:
             if (currentTime - self._stopTime).seconds <= 3:
+                self.done_draw()
                 self._isAlarm = False
+
+
+    def init_draw(self):
+        """ """
+        pass
+
+
+    def done_draw(self):
+        """ """
+        pass

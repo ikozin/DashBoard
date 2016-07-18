@@ -3,9 +3,9 @@
 class BlockTextAgregator(BlockBase):
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlockTextAgregator, self).__init__(logger)
+        super(BlockTextAgregator, self).__init__(logger, setting)
         self._blocks = []
 
 

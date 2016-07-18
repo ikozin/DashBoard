@@ -8,15 +8,16 @@ from exceptions import ExceptionFormat, ExceptionNotFound
 
 from modules.alarm.block_alarm_simple import BlockAlarmSimple
 from modules.alarm.block_alarm_blink import BlockAlarmBlink
+from modules.alarm.block_alarm_rise import BlockAlarmRise
 
 BLOCK_ALARM_UPDATE_EVENT  = (pygame.locals.USEREVENT + 5)
 
 class BlocklAlarm(BlockBase):
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlocklAlarm, self).__init__(logger)
+        super(BlocklAlarm, self).__init__(logger, setting)
         self._blocks = []
         self._alarmBlock = []
 
@@ -43,15 +44,15 @@ class BlocklAlarm(BlockBase):
             if type is None: raise ExceptionNotFound(schema, "Type")
 
             if type == 1:
-                alarm = BlockAlarmSimple(self._logger)
-                alarm.init(section)
-                self._alarmBlock.append(alarm)
+                alarm = BlockAlarmSimple(self._logger, self._setting)
             elif type == 2:
-                alarm = BlockAlarmBlink(self._logger)
-                alarm.init(section)
-                self._alarmBlock.append(alarm)
+                alarm = BlockAlarmBlink(self._logger, self._setting)
+            elif type == 3:
+                alarm = BlockAlarmRise(self._logger, self._setting)
             else:
                 raise ExceptionFormat(schema, "Type")
+            alarm.init(section)
+            self._alarmBlock.append(alarm)
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
 

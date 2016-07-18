@@ -23,9 +23,9 @@ BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 class BlockOpenWeatherMap(BlockBase):
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlockOpenWeatherMap, self).__init__(logger)
+        super(BlockOpenWeatherMap, self).__init__(logger, setting)
         self._lastUpdate = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
 
         self._key = None
@@ -255,11 +255,3 @@ class BlockOpenWeatherMap(BlockBase):
             with open(os.path.join(self._folder, WEATHER_FILE), "rb") as file:
                 return file.read()
 
-
-    def _getTuple(self, value):
-        """ Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except Exception as ex:
-            self._logger.exception(ex)
-            return None

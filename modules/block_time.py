@@ -13,9 +13,9 @@ BLOCK_TIME_TIME_TEXT = "Московское время {0}"
 class BlockTime(BlockBase):
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlockTime, self).__init__(logger)
+        super(BlockTime, self).__init__(logger, setting)
         self._font = None
 
 

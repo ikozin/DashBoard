@@ -30,17 +30,26 @@ import time
 #print(t13.weekday())
 
 
-weekDay = "0, 1, 2, 3, 4, 5, 6"
+#weekDay = "0, 1, 2, 3, 4, 5, 6"
 
-weekDay = tuple(int(item.strip("([ '])")) for item in weekDay.split(",") if item.strip())
+#weekDay = tuple(int(item.strip("([ '])")) for item in weekDay.split(",") if item.strip())
 
-if len(weekDay) > 7:    raise Exception()
-if not all(day < 7 for day in weekDay): raise Exception()
+#if len(weekDay) > 7:    raise Exception()
+#if not all(day < 7 for day in weekDay): raise Exception()
 
-day = 5
+#day = 5
 
-if any(day == value for value in weekDay):
-    print ("XXX")
+#if any(day == value for value in weekDay):
+#    print ("XXX")
 
 
-print (weekDay)
+#print (weekDay)
+
+v1 = (128, 0, 0)
+v2 = (255, 255, 255)
+
+print (v1)
+print (v2)
+
+v3 = v2[0] - v1[0]
+print (v3)

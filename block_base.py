@@ -1,9 +1,15 @@
+from logging import Logger
+from setting import Setting
+
 class BlockBase:
     """description of class"""
 
-    def __init__(self, logger):
+    def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
+        if not isinstance(logger, Logger):   raise("Передаваемый параметр logger должен быть Logger")
+        if not isinstance(setting, Setting): raise("Передаваемый параметр setting должен быть Setting")
         self._logger = logger
+        self._setting = setting
         self._text = None
 
     def __del__(self):
@@ -35,3 +41,6 @@ class BlockBase:
     def getText(self):
         """ """
         return self._text
+
+    def _getTuple(self, value):
+        return self._setting.getTuple(value, self._logger)

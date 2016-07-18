@@ -36,6 +36,9 @@
     <Compile Include="modules\alarm\block_alarm_blink.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\alarm\block_alarm_rise.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\alarm\block_alarm_simple.py">
       <SubType>Code</SubType>
     </Compile>
