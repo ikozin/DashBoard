@@ -256,3 +256,5 @@ paket-files/
 /text.wav
 /Images
 /modules/alarm/__pycache__
+/new_setting.ini
+/ext/__pycache__

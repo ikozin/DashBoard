@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>tool.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,6 +27,33 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="exceptions.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\AlarmManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\AlarmSetting.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\MainManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\MainSetting.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\ModalDialog.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\TimeManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\VoiceManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\YandexNewsManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\alarm\alarm_time_base.py" />
@@ -71,6 +98,9 @@
     <Compile Include="test.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tool.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\01d.png" />
@@ -99,6 +129,7 @@
     <Folder Include="Images\" />
     <Folder Include="modules\" />
     <Folder Include="modules\alarm\" />
+    <Folder Include="ext\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
