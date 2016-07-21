@@ -18,9 +18,9 @@ class XYFrame(ttk.LabelFrame):
         self._X = IntVar()
         self._Y = IntVar()
         ttk.Label(self, text=textX).grid(row=0, column=0, padx=2, pady=2)
-        Spinbox(self, from_=1, to=1000, increment=1, width=5, textvariable=self._X).grid(row=0, column=1, padx=2, pady=2)
+        Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._X).grid(row=0, column=1, padx=2, pady=2)
         ttk.Label(self, text=textY).grid(row=0, column=2, padx=2, pady=2)
-        Spinbox(self, from_=1, to=1000, increment=1, width=5, textvariable=self._Y).grid(row=0, column=3, padx=2, pady=2)
+        Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._Y).grid(row=0, column=3, padx=2, pady=2)
 
     def load(self, x, y):
         """ """
@@ -56,9 +56,8 @@ class OpenWeatherMapManager(ttk.LabelFrame):
         ttk.Label(content, justify=RIGHT, text="Директория для картинок").grid(row=2, column=0, padx=2, pady=2, sticky=(N,S,E))
         ttk.Entry(content, width=5, textvariable=self._folderValue).grid(row=2, column=1, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
 
-        self._scaleIcon = XYFrame(self, "Масштаб для картинки", "Расположение (X)", "Расположение (Y)")
+        self._scaleIcon = XYFrame(self, "Масштаб для картинки", "Масштаб (X)", "Масштаб (Y)")
         self._scaleIcon.grid(row=1, column=0, padx=2, pady=2, sticky=(N,S,E,W))
-
         self._posIcon = XYFrame(self, "Расположение для картинки", "Расположение (X)", "Расположение (Y)")
         self._posIcon.grid(row=2, column=0, padx=2, pady=2, sticky=(N,S,E,W))
 
@@ -93,6 +92,8 @@ class OpenWeatherMapManager(ttk.LabelFrame):
         self._keyValue.set(section.get("Key", ""))
         self._folderValue.set(section.get("Folder", ""))
 
+        (posX, posY) = self._getTuple(section.get("IconScale", "(256, 256)"))
+        self._scaleIcon.load(posX, posY)
         (posX, posY) = self._getTuple(section.get("IconPos", "(0, 0)"))
         self._posIcon.load(posX, posY)
         
@@ -147,6 +148,8 @@ class OpenWeatherMapManager(ttk.LabelFrame):
         section["Key"] = self._keyValue.get()
         section["Folder"] = self._folderValue.get()
 
+        (posX, posY) = self._scaleIcon.getResult()
+        section["IconScale"] = "({0},{1})".format(posX, posY)
         (posX, posY) = self._posIcon.getResult()
         section["IconPos"] = "({0},{1})".format(posX, posY)
 
