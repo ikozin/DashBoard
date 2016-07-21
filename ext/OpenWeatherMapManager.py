@@ -85,6 +85,7 @@ class OpenWeatherMapManager(ttk.LabelFrame):
 
 
     def load(self, config):
+        """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         section = config["OpenWeatherMapBlock"]
 
@@ -140,6 +141,7 @@ class OpenWeatherMapManager(ttk.LabelFrame):
 
 
     def save(self, config):
+        """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("OpenWeatherMapBlock"):      config.add_section("OpenWeatherMapBlock")
         section = config["OpenWeatherMapBlock"]
@@ -201,17 +203,3 @@ class OpenWeatherMapManager(ttk.LabelFrame):
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
         except Exception as ex:
             return None
-
-#[OpenWeatherMapBlock]
-#UpdateTime = 15
-#Key = b5561ca2d2e87158e97b7333779623f8
-#Folder = Images
-
-#IconScale = (256, 256)
-#IconPos = (0, 0)
-
-#WeatherTypePos = (260, 242)
-#TemperaturePos = (240, 50)
-#HumidityPos = (620, 98)
-#PressurePos = (620, 170)
-#WindPos = (620, 26)
