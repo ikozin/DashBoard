@@ -35,6 +35,9 @@
     <Compile Include="ext\AlarmSetting.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ext\CalendarManager.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ext\MainManager.py">
       <SubType>Code</SubType>
     </Compile>
@@ -42,6 +45,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\ModalDialog.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\OpenWeatherMapManager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\TimeManager.py">

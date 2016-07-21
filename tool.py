@@ -14,6 +14,8 @@ from ext.MainManager import MainManager
 from ext.AlarmManager import AlarmManager
 from ext.VoiceManager import VoiceManager
 from ext.YandexNewsManager import YandexNewsManager
+from ext.CalendarManager import CalendarManager
+from ext.OpenWeatherMapManager import OpenWeatherMapManager
 
 class App(object):
     """description of class"""
@@ -25,12 +27,12 @@ class App(object):
         self._root.rowconfigure(0, weight=1)
         
         self._window = Frame(self._root)
-        self._window.grid(row=0, column=0, sticky=NSEW)
+        self._window.grid(row=0, column=0, sticky=(N,S,E,W))
         self._window.rowconfigure(1, weight=1)
         self._window.columnconfigure(0, weight=1)
 
         header = LabelFrame(self._window, text="Configuration", bg = "blue", width=300, height=100)
-        header.grid(row=0, column=0, sticky=NSEW)
+        header.grid(row=0, column=0, sticky=(N,S,E,W))
         header.columnconfigure(4, weight=1)
 
         entryFileName = Entry(header, width=24)
@@ -46,7 +48,7 @@ class App(object):
         btnSave.grid(row=0, column=3, padx=2, pady=2)
 
         self._text = Text(self._window, wrap=NONE)
-        self._text.grid(row=2, column=0, sticky=NSEW)
+        self._text.grid(row=2, column=0, sticky=(N,S,E,W))
 
         self._root.bind('<Key-Escape>', lambda e: self._root.destroy())
         #self._root.resizable(False, False)
@@ -68,7 +70,10 @@ class App(object):
         #self.dlg = MainManager(self._window)
         #self.dlg = AlarmManager(self._window)
         #self.dlg = TimeManager(self._window)
-        self.dlg = VoiceManager(self._window)
+        #self.dlg = VoiceManager(self._window)
+        #self.dlg = YandexNewsManager(self._window)
+        #self.dlg = CalendarManager(self._window)
+        self.dlg = OpenWeatherMapManager(self._window)
         self.dlg.grid(row=1, column=0, sticky=(N,S,E,W))
         self.dlg.load(self._config)
 

@@ -7,12 +7,15 @@ from tkinter import colorchooser
 class ModalDialog:
 
     def _ok(self):
+        """ """
         pass
 
     def _cancel(self):
+        """ """
         pass
 
     def _waitDialog(self, modal, root):
+        """ """
         modal.bind('<Key-Return>', lambda e: self._ok())
         modal.bind('<Key-Escape>', lambda e: self._cancel())
         modal.transient(root)
@@ -29,9 +32,11 @@ class ModalDialog:
 class EntryModalDialog(ModalDialog):
 
     def __init__(self, title):
+        """ """
         self._title = str(title)
 
     def Execute(self, root, text):
+        """ """
         self._modal = Toplevel(root)
         self._modal.title(self._title)
         self._value = StringVar()
@@ -45,9 +50,11 @@ class EntryModalDialog(ModalDialog):
         return self._value.get()
 
     def _ok(self):
+        """ """
         self._modal.destroy()
 
     def _cancel(self):
+        """ """
         self._modal.destroy()
         self._value.set("")
 
@@ -104,6 +111,7 @@ class EntryModalDialog(ModalDialog):
 #        return self._color
 
 class ColorsChooserFrame(ttk.LabelFrame):
+
     def __init__(self, root, text):
         """ """
         if not isinstance(text, str): raise TypeError("text")
@@ -119,6 +127,7 @@ class ColorsChooserFrame(ttk.LabelFrame):
         self._foreSelector.grid(row=0, column=1, padx=2, pady=2, sticky=NSEW)
         self.load((0, 0, 0), (255, 255, 255))
     def load(self, backColor, foreColor):
+        """ """
         if not isinstance(backColor, tuple): raise TypeError("backColor")
         if not isinstance(foreColor, tuple): raise TypeError("foreColor")
         self._backColor = backColor
@@ -127,7 +136,6 @@ class ColorsChooserFrame(ttk.LabelFrame):
         foreColor = "#%02x%02x%02x" % foreColor
         self._backSelector.configure(background=backColor, foreground=foreColor)
         self._foreSelector.configure(background=backColor, foreground=foreColor)
-        pass
     def _selectBackColor(self):
         """ """
         (tripleColor, tkColor) = colorchooser.askcolor(self._backColor)
@@ -145,6 +153,41 @@ class ColorsChooserFrame(ttk.LabelFrame):
     def getResult(self):
         """ """
         return (self._backColor, self._foreColor)
+
+
+
+class FontChooserFrame(ttk.LabelFrame):
+
+    def __init__(self, root, text):
+        """ """
+        if not isinstance(text, str): raise TypeError("text")
+        super(FontChooserFrame, self).__init__(root, text=text)
+        self._root = root
+        self._fontName = StringVar()
+        self._fontSize = IntVar()
+        self._isBold = BooleanVar()
+        self._isItalic = BooleanVar()
+        ttk.Label(self, text="Шрифт").grid(row=0, column=0, padx=2, pady=2)
+        fonts = list(font.families())
+        list.sort(fonts)
+        ttk.Combobox(self, values=fonts, textvariable=self._fontName).grid(row=0, column=1, padx=2, pady=2)
+        ttk.Label(self, text="Размер").grid(row=0, column=2, padx=2, pady=2)
+        Spinbox(self, from_=1, to=500, increment=1, width=4, textvariable=self._fontSize).grid(row=0, column=3, padx=2, pady=2)
+        ttk.Checkbutton(self, text="Жирный", variable=self._isBold).grid(row=0, column=4, padx=2, pady=2)
+        ttk.Checkbutton(self, text="Наклон", variable=self._isItalic).grid(row=0, column=5, padx=2, pady=2)
+    def load(self, fontName, fontSize, isBold, isItalic):
+        """ """
+        if not isinstance(fontName, str):  raise TypeError("fontName")
+        if not isinstance(fontSize, int):  raise TypeError("fontSize")
+        if not isinstance(isBold, bool):   raise TypeError("isBold")
+        if not isinstance(isItalic, bool): raise TypeError("isItalic")
+        self._fontName.set(fontName)
+        self._fontSize.set(fontSize)
+        self._isBold.set(isBold)
+        self._isItalic.set(isItalic)
+    def getResult(self):
+        """ """
+        return (self._fontName.get(), self._fontSize.get(), self._isBold.get(), self._isItalic.get())
 
 
 
