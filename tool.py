@@ -20,12 +20,14 @@ from ext.OpenWeatherMapManager import OpenWeatherMapManager
 class App(object):
     """description of class"""
     def __init__(self):
-        self._config = None
+        self._list = []
         self._root = Tk()
         self._root.title('DashBoard Tool')
         self._root.columnconfigure(0, weight=1)
         self._root.rowconfigure(0, weight=1)
         
+        self._fileName = StringVar()
+
         self._window = Frame(self._root)
         self._window.grid(row=0, column=0, sticky=(N,S,E,W))
         self._window.rowconfigure(1, weight=1)
@@ -35,20 +37,20 @@ class App(object):
         header.grid(row=0, column=0, sticky=(N,S,E,W))
         header.columnconfigure(4, weight=1)
 
-        entryFileName = Entry(header, width=24)
+        entryFileName = Entry(header, width=24, textvariable=self._fileName)
         entryFileName.grid(row=0, column=0, padx=2, pady=2)
         
-        btnSelect = Button(header, text="...", command=self.loadFile)
+        btnSelect = Button(header, text="...", command=self.selectFile)
         btnSelect.grid(row=0, column=1, padx=2, pady=2)
 
-        btnLoad = Button(header, text= " Load ", command=self.showData1)
+        btnLoad = Button(header, text= " Load ", command=self.loadData)
         btnLoad.grid(row=0, column=2, padx=2, pady=2)
 
-        btnSave = Button(header, text= " Save ", command=self.showData2)
+        btnSave = Button(header, text= " Save ", command=self.saveData)
         btnSave.grid(row=0, column=3, padx=2, pady=2)
 
         self._text = Text(self._window, wrap=NONE)
-        self._text.grid(row=2, column=0, sticky=(N,S,E,W))
+        self._text.grid(row=99, column=0, sticky=(N,S,E,W))
 
         self._root.bind('<Key-Escape>', lambda e: self._root.destroy())
         #self._root.resizable(False, False)
@@ -58,32 +60,70 @@ class App(object):
         self._root.mainloop()
 
 
-    def loadFile(self): 
-        fn = filedialog.Open(self._root, filetypes = [('*.ini files', '.ini')]).show()
-        if fn == '': return
-        self._config = configparser.ConfigParser()
-        self._config.read(fn, encoding="utf-8")
-        self._text.delete('1.0', 'end') 
-        self._text.insert('1.0', open(fn, 'rt').read())
+    def selectFile(self): 
+        fileName = filedialog.Open(self._root, filetypes = [('*.ini files', '.ini')]).show()
+        if fileName == '': return
+        self._fileName.set(fileName)
 
-    def showData1(self): 
-        #self.dlg = MainManager(self._window)
-        #self.dlg = AlarmManager(self._window)
-        #self.dlg = TimeManager(self._window)
-        #self.dlg = VoiceManager(self._window)
-        #self.dlg = YandexNewsManager(self._window)
-        #self.dlg = CalendarManager(self._window)
-        self.dlg = OpenWeatherMapManager(self._window)
-        self.dlg.grid(row=1, column=0, sticky=(N,S,E,W))
-        self.dlg.load(self._config)
 
-    def showData2(self): 
+    def loadData(self): 
+        fileName = self._fileName.get()
+        if not fileName: return
         config = configparser.ConfigParser()
-        self.dlg.save(config)
+        config.read(fileName, encoding="utf-8")
+        
+        self._text.delete('1.0', 'end') 
+        self._text.insert('1.0', open(fileName, 'rt').read())
+
+        for item in self._list:
+            item.destroy()
+
+        item = MainManager(self._window)
+        item.grid(row=1, column=0, sticky=(N,S,E,W))
+        item.load(config)
+        self._list.append(item)
+        
+        item = TimeManager(self._window)
+        item.grid(row=2, column=0, sticky=(N,S,E,W))
+        item.load(config)
+        self._list.append(item)
+        
+        item = CalendarManager(self._window)
+        item.grid(row=3, column=0, sticky=(N,S,E,W))
+        item.load(config)
+        self._list.append(item)
+
+        item = OpenWeatherMapManager(self._window)
+        item.grid(row=4, column=0, sticky=(N,S,E,W))
+        item.load(config)
+        self._list.append(item)
+
+        item = YandexNewsManager(self._window)
+        item.grid(row=5, column=0, sticky=(N,S,E,W))
+        item.load(config)
+        self._list.append(item)
+
+        item = AlarmManager(self._window)
+        item.grid(row=6, column=0, sticky=(N,S,E,W))
+        item.load(config)
+        self._list.append(item)
+
+        item = VoiceManager(self._window)
+        item.grid(row=7, column=0, sticky=(N,S,E,W))
+        item.load(config)
+        self._list.append(item)
+
+    def saveData(self): 
+        fileName = self._fileName.get()
+        if not fileName: return
+        config = configparser.ConfigParser()
+        for item in self._list:
+            item.save(config)
         with open('new_setting.ini', 'w') as fp:
             config.write(fp)
+
         self._text.delete('1.0', 'end') 
-        self._text.insert('1.0', open('new_setting.ini', 'rt').read())
+        self._text.insert('1.0', open(fileName, 'rt').read())
 
 def main():            
     App().run()
