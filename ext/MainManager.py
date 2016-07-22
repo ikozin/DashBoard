@@ -87,6 +87,7 @@ class MainManager(ttk.LabelFrame):
         if self._currentName:
             sectionBlock = self._sectionlist[self._currentName]
             sectionBlock.grid_forget()
+        if len(self._sectionlist) == 0: return
         sectionBlock = self._sectionlist[name]
         self._currentName = name
         sectionBlock.grid(row=0, column=0, sticky=(N,S,E,W))

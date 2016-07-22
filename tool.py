@@ -47,9 +47,11 @@ class App(object):
         self._listBox.bind('<<ListboxSelect>>', lambda e: self._selectManager())
         for item in self._managerList.keys():
             self._listBox.insert("end", item)
-        self._content = Frame(self._window, bg="blue", width=500)
+        self._content = ttk.Frame(self._window, width=500)
         self._content.grid(row=1, column=1, sticky=(N,S,E,W))
 
+        scbHDirSel = Scrollbar(self._content, orient=HORIZONTAL, command=self._content.xview)
+        scbVDirSel = Scrollbar(self._content, orient=VERTICAL, command=self._content.yview)    
         #self._text = Text(self._window, wrap=NONE)
         #self._text.grid(row=99, column=0, columnspan=2, sticky=(N,S,E,W))
 
@@ -103,10 +105,10 @@ class App(object):
         selection = self._listBox.curselection() 
         if not selection: return
         name = self._listBox.get(selection[0])
-
         if self._currentName:
             manager = self._list[self._currentName]
             manager.grid_forget()
+        if len(self._list) == 0: return
         manager = self._list[name]
         self._currentName = name
         manager.grid(row=0, column=0, sticky=(N,S,E,W))
