@@ -35,7 +35,7 @@ class AlarmTimeSetting(ttk.LabelFrame):
         self._durationVariable = IntVar(0)
 
         weekDayFrame = ttk.LabelFrame(self, text="Дни недели")
-        weekDayFrame.grid(row = 0, column = 0, columnspan=2, sticky=NSEW)
+        weekDayFrame.grid(row = 0, column = 0, columnspan=2, sticky=(N,S,E,W))
         ttk.Checkbutton(weekDayFrame, text="ПН", takefocus=True, variable=self._weekDay0).grid(row=0, column=0, padx=2, pady=2)
         ttk.Checkbutton(weekDayFrame, text="ВТ", takefocus=True, variable=self._weekDay1).grid(row=0, column=1, padx=2, pady=2) 
         ttk.Checkbutton(weekDayFrame, text="СР", takefocus=True, variable=self._weekDay2).grid(row=0, column=2, padx=2, pady=2) 
@@ -45,7 +45,7 @@ class AlarmTimeSetting(ttk.LabelFrame):
         ttk.Checkbutton(weekDayFrame, text="ВС", takefocus=True, variable=self._weekDay6).grid(row=0, column=6, padx=2, pady=2)
 
         timeFrame = ttk.LabelFrame(self, text="Время")
-        timeFrame.grid(row=1, column=0, sticky=NSEW)
+        timeFrame.grid(row=1, column=0, sticky=(N,S,E,W))
         timeFrame.columnconfigure(1, weight=1)
         timeFrame.columnconfigure(3, weight=1)
         timeFrame.columnconfigure(4, weight=1)
@@ -55,18 +55,12 @@ class AlarmTimeSetting(ttk.LabelFrame):
         Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._minuteVariable).grid(row=0, column=3, padx=2, pady=2)
         ttk.Label(timeFrame, text="Сек:", justify=RIGHT).grid(row=0, column=4, pady=2)
         Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._secondVariable).grid(row=0, column=5, padx=2, pady=2)
-
         durationFrame = ttk.LabelFrame(self, text="Длительность")
-        durationFrame.grid(row=1, column=1, sticky=NSEW)
+        durationFrame.grid(row=1, column=1, sticky=(N,S,E,W))
         Spinbox(durationFrame, from_=5, to=60, increment=1, width=3, textvariable=self._durationVariable).grid(row=0, column=0, padx=2, pady=2)
         ttk.Label(durationFrame, text="секунд").grid(row=0, column=1, pady=2)
-
-        #self._colorBackFrame = ColorChooserFrame(self, "Цвет фона", backColor)
-        #self._colorBackFrame.grid(row=2, column=0, sticky=NSEW)
-        #self._colorForeFrame = ColorChooserFrame(self, "Цвет текста", foreColor)
-        #self._colorForeFrame.grid(row=3, column=0, sticky=NSEW)
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
-        self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=NSEW)
+        self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N,S,E,W))
 
     def load(self, config, sectionName):
         """ """

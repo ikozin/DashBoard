@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import font
 from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
@@ -42,10 +43,10 @@ class EntryModalDialog(ModalDialog):
         self._value = StringVar()
         self._value.set(text)
         entry = Entry(self._modal, textvariable=self._value)
-        entry.grid(row=0, column=0, columnspan=4, padx=10, pady=5, sticky=NSEW)
+        entry.grid(row=0, column=0, columnspan=4, padx=10, pady=5, sticky=(N,S,E,W))
         entry.focus_set()
-        ttk.Button(self._modal, text="OK", command=self._ok).grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky=NSEW)
-        ttk.Button(self._modal, text="Cancel", command=self._cancel).grid(row=1, column=2, columnspan=2, padx=10, pady=5, sticky=NSEW)
+        ttk.Button(self._modal, text="OK", command=self._ok).grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky=(N,S,E,W))
+        ttk.Button(self._modal, text="Cancel", command=self._cancel).grid(row=1, column=2, columnspan=2, padx=10, pady=5, sticky=(N,S,E,W))
         self._waitDialog(self._modal, root)
         return self._value.get()
 
@@ -58,57 +59,6 @@ class EntryModalDialog(ModalDialog):
         self._modal.destroy()
         self._value.set("")
 
-#class ColorChooserFrame(LabelFrame):
-#    def __init__(self, root, text, color):
-#        """ """
-#        if not isinstance(color, tuple): raise TypeError("color")
-#        super(ColorChooserFrame, self).__init__(root, text=str(text))
-#        self._root = root
-#        self._vR = IntVar()
-#        self._vG = IntVar()
-#        self._vB = IntVar()
-#        self._vR.set(color[0])
-#        self._vG.set(color[1])
-#        self._vB.set(color[2])
-#        Label(self, text = "Красный:").grid(row = 0, column = 0, padx = 2, pady = 2)
-#        Spinbox(self, from_=0, to=255, increment=1, width=3, textvariable=self._vR).grid(row = 0, column = 1, padx = 2, pady = 2)
-#        Label(self, text = "Зеленый:").grid(row = 0, column = 2, padx = 2, pady = 2)
-#        Spinbox(self, from_=0, to=255, increment=1, width=3, textvariable=self._vG).grid(row = 0, column = 3, padx = 2, pady = 2)
-#        Label(self, text = "Синий:").grid(row = 0, column = 4, padx = 2, pady = 2)
-#        Spinbox(self, from_=0, to=255, increment=1, width=3, textvariable=self._vB).grid(row = 0, column = 5, padx = 2, pady = 2)
-#        Button(self, text = "...", command=self._selectColor).grid(row = 0, column = 6, padx = 2, pady = 2)
-#    def _selectColor(self):
-#        """ """
-#        color = (self._vR.get(), self._vG.get(), self._vB.get())
-#        (tripleColor, tkColor) = colorchooser.askcolor(color)
-#        if tripleColor is None: return
-#        self._vR.set(int(tripleColor[0]))
-#        self._vG.set(int(tripleColor[1]))
-#        self._vB.set(int(tripleColor[2]))
-#    def getResult(self):
-#        """ """
-#        color = (self._vR.get(), self._vG.get(), self._vB.get())
-#        return color
-
-#class ColorChooserFrame(LabelFrame):
-#    def __init__(self, root, text, color):
-#        """ """
-#        if not isinstance(color, tuple): raise TypeError("color")
-#        super(ColorChooserFrame, self).__init__(root, text=str(text))
-#        self._root = root
-#        self._color = color
-#        color = "#%02x%02x%02x" % color
-#        self._selector = Button(self, text=str(text), background=color, command=self._selectColor)
-#        self._selector.grid(row = 0, column = 0, padx = 2, pady = 2)
-#    def _selectColor(self):
-#        """ """
-#        (tripleColor, tkColor) = colorchooser.askcolor(self._color)
-#        if tripleColor is None: return
-#        self._selector.configure(background=tkColor)
-#        self._color = tripleColor
-#    def getResult(self):
-#        """ """
-#        return self._color
 
 class ColorsChooserFrame(ttk.LabelFrame):
 
@@ -122,9 +72,9 @@ class ColorsChooserFrame(ttk.LabelFrame):
         self._backColor = None
         self._foreColor = None
         self._backSelector = Button(self, text="Цвет фона", command=self._selectBackColor)
-        self._backSelector.grid(row=0, column=0, padx=2, pady=2, sticky=NSEW)
+        self._backSelector.grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,E,W))
         self._foreSelector = Button(self, text="Цвет текста", command=self._selectForeColor)
-        self._foreSelector.grid(row=0, column=1, padx=2, pady=2, sticky=NSEW)
+        self._foreSelector.grid(row=0, column=1, padx=2, pady=2, sticky=(N,S,E,W))
         self.load((0, 0, 0), (255, 255, 255))
     def load(self, backColor, foreColor):
         """ """

@@ -22,20 +22,20 @@ class AlarmCreateDialog(ModalDialog):
         self._valueName = StringVar()
         self._valueType = StringVar()
         self._valueType.set('1')
-        ttk.Label(self._modal, text="Имя будильника").grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=NSEW)
+        ttk.Label(self._modal, text="Имя будильника").grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N,S,E,W))
         entry = ttk.Entry(self._modal, textvariable=self._valueName)
-        entry.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=NSEW)
+        entry.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N,S,E,W))
         entry.focus_set()
         #vcmd = (entry.register(self._validateName), '%s', '%P')
         vcmd = (entry.register(self._validateName), '%P')
         entry.configure(validate="key", validatecommand=vcmd)
-        ttk.Label(self._modal, text="Тип будильника").grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=NSEW)
+        ttk.Label(self._modal, text="Тип будильника").grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N,S,E,W))
         combo = ttk.Combobox(self._modal, state="readonly", values=('1','2','3'), textvariable=self._valueType)
-        combo.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=NSEW)
+        combo.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N,S,E,W))
         combo.bind('<<ComboboxSelected>>', lambda e: self._selectType())
         self._btnOk = ttk.Button(self._modal, text="OK", state="disabled", command=self._ok)
-        self._btnOk.grid(row=4, column=0, columnspan=2, padx=2, pady=2, sticky=NSEW)
-        ttk.Button(self._modal, text="Cancel", command=self._cancel).grid(row=4, column=2, columnspan=2, padx=2, pady=2, sticky=NSEW)
+        self._btnOk.grid(row=4, column=0, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
+        ttk.Button(self._modal, text="Cancel", command=self._cancel).grid(row=4, column=2, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
         self._waitDialog(self._modal, root)        
         name = self._valueName.get()
         type = self._valueType.get()
@@ -75,19 +75,20 @@ class AlarmManager(ttk.LabelFrame):
     def __init__(self, root):
         """ """
         super(AlarmManager, self).__init__(root, text="Выбор будильника")
+        self.columnconfigure(2, weight=1)
         self._functions = {1: AlarmSimpleSetting, 2: AlarmBlinkSetting, 3: AlarmRiseSetting}
         self._alarmlist = dict()
         self._currentName = None
-        self._listBox = Listbox(self)
-        self._listBox.grid(row=0, column=0, padx=2, pady=2)
-        self._listBox.bind('<<ListboxSelect>>', lambda e: self._selectAlarm())
+        self._listBox = Listbox(self, width=25)
+        self._listBox.grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,W))
+        self._listBox.bind('<<ListboxSelect>>', self._selectAlarm)
         commandFrame = ttk.Frame(self, padding=(2,2,2,2))
-        commandFrame.grid(row=0, column=1, sticky=NSEW)
-        ttk.Button(commandFrame, text="Создать", command=self._createAlarm).grid(row=0, column=0, sticky=NSEW)
-        ttk.Button(commandFrame, text="Переименовать", command=self._renameAlarm).grid(row=1, column=0, sticky=NSEW)
-        ttk.Button(commandFrame, text="Удалить", command=self._deleteAlarm).grid(row=2, column=0, sticky=NSEW)
+        commandFrame.grid(row=0, column=1, sticky=(N,S,W))
+        ttk.Button(commandFrame, text="Создать", command=self._createAlarm).grid(row=0, column=0, sticky=(N,S,E,W))
+        ttk.Button(commandFrame, text="Переименовать", command=self._renameAlarm).grid(row=1, column=0, sticky=(N,S,E,W))
+        ttk.Button(commandFrame, text="Удалить", command=self._deleteAlarm).grid(row=2, column=0, sticky=(N,S,E,W))
         self._alarmFrame = ttk.Frame(self, padding=(2,2,2,2))
-        self._alarmFrame.grid(row=0, column=2, sticky=NSEW)
+        self._alarmFrame.grid(row=0, column=2, sticky=(N,S,E,W))
 
 
     def load(self, config):
@@ -124,17 +125,19 @@ class AlarmManager(ttk.LabelFrame):
             alarmBlock.save(config, schemaName)
 
 
-    def _selectAlarm(self):
-        selection = self._listBox.curselection() 
+    def _selectAlarm(self, event):
+        listBox = event.widget
+        selection = listBox.curselection() 
         if not selection: return
-        name = self._listBox.get(selection[0])
+        name = listBox.get(selection[0])
 
         if self._currentName:
             alarmBlock = self._alarmlist[self._currentName]
             alarmBlock.grid_forget()
+        if len(self._alarmlist) == 0: return
         alarmBlock = self._alarmlist[name]
         self._currentName = name
-        alarmBlock.grid(row=0, column=0, sticky=NSEW)
+        alarmBlock.grid(row=0, column=0, sticky=(N,S,E,W))
 
 
     def _createAlarm(self):

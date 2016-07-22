@@ -23,7 +23,7 @@ class MainManager(ttk.LabelFrame):
         self._idleVariable = StringVar()
         self._listBox = Listbox(self)
         self._listBox.grid(row=0, column=0, rowspan=3, padx=2, pady=2)
-        self._listBox.bind('<<ListboxSelect>>', lambda e: self._selectSection())
+        self._listBox.bind('<<ListboxSelect>>', self._selectSection)
         commandFrame = ttk.Frame(self, padding=(2,2,2,2))
         commandFrame.grid(row=0, column=1, rowspan=3, sticky=(N,S,E,W))
         ttk.Button(commandFrame, text="Создать", command=self._createSection).grid(row=0, column=0, sticky=(N,S,E,W))
@@ -36,7 +36,7 @@ class MainManager(ttk.LabelFrame):
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
         self._colorFrame.grid(row=0, column=3, sticky=(N,E,W))
         self._setcionFrame = ttk.Frame(self, padding=(2,2,2,2))
-        self._setcionFrame.grid(row=1, column=2, rowspan=2, columnspan=3,  sticky=(N,S,E,W))
+        self._setcionFrame.grid(row=1, column=2, rowspan=2, columnspan=3, sticky=(N,S,E,W))
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
@@ -79,16 +79,17 @@ class MainManager(ttk.LabelFrame):
             sectionBlock = self._sectionlist[sectionName]
             sectionBlock.save(config, sectionName)
 
-    def _selectSection(self):
-        selection = self._listBox.curselection() 
+    def _selectSection(self, event):
+        listBox = event.widget
+        selection = listBox.curselection() 
         if not selection: return
-        name = self._listBox.get(selection[0])
+        name = listBox.get(selection[0])
         if self._currentName:
             sectionBlock = self._sectionlist[self._currentName]
             sectionBlock.grid_forget()
         sectionBlock = self._sectionlist[name]
         self._currentName = name
-        sectionBlock.grid(row=0, column=0, sticky=NSEW)
+        sectionBlock.grid(row=0, column=0, sticky=(N,S,E,W))
 
     def _createSection(self):
         item = EntryModalDialog("Создать").Execute(self, "")

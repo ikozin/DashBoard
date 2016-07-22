@@ -9,8 +9,8 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 
-from ext.TimeManager import TimeManager
 from ext.MainManager import MainManager
+from ext.TimeManager import TimeManager
 from ext.AlarmManager import AlarmManager
 from ext.VoiceManager import VoiceManager
 from ext.YandexNewsManager import YandexNewsManager
@@ -20,7 +20,9 @@ from ext.OpenWeatherMapManager import OpenWeatherMapManager
 class App(object):
     """description of class"""
     def __init__(self):
-        self._list = []
+        self._managerList = { "MainManager": MainManager, "TimeManager": TimeManager, "AlarmManager": AlarmManager, "VoiceManager": VoiceManager, "YandexNewsManager": YandexNewsManager, "OpenWeatherMapManager": OpenWeatherMapManager, "CalendarManager": CalendarManager}
+        self._list = dict()
+        self._currentName = None
         self._root = Tk()
         self._root.title('DashBoard Tool')
         self._root.columnconfigure(0, weight=1)
@@ -28,32 +30,40 @@ class App(object):
         
         self._fileName = StringVar()
 
-        self._window = Frame(self._root)
+        self._window = ttk.Frame(self._root)
         self._window.grid(row=0, column=0, sticky=(N,S,E,W))
         self._window.rowconfigure(1, weight=1)
-        self._window.columnconfigure(0, weight=1)
+        self._window.columnconfigure(1, weight=1)
 
-        header = LabelFrame(self._window, text="Configuration", bg = "blue", width=300, height=100)
-        header.grid(row=0, column=0, sticky=(N,S,E,W))
+        header = ttk.LabelFrame(self._window, text="Configuration", width=300, height=100)
+        header.grid(row=0, column=0, columnspan=2, sticky=(N,S,E,W))
         header.columnconfigure(4, weight=1)
-        Entry(header, width=24, textvariable=self._fileName).grid(row=0, column=0, padx=2, pady=2)
-        Button(header, text="...", command=self.selectFile).grid(row=0, column=1, padx=2, pady=2)
-        Button(header, text= "Load", command=self.loadData).grid(row=0, column=2, padx=2, pady=2)
-        Button(header, text= "Save", command=self.saveData).grid(row=0, column=3, padx=2, pady=2)
+        ttk.Entry(header, width=24, textvariable=self._fileName).grid(row=0, column=0, padx=2, pady=2)
+        ttk.Button(header, text="...", command=self.selectFile).grid(row=0, column=1, padx=2, pady=2)
+        ttk.Button(header, text= "Load", command=self.loadData).grid(row=0, column=2, padx=2, pady=2)
+        ttk.Button(header, text= "Save", command=self.saveData).grid(row=0, column=3, padx=2, pady=2)
+        self._listBox = Listbox(self._window, width=25)
+        self._listBox.grid(row=1, column=0, padx=2, pady=2, sticky=(N,S,W))
+        self._listBox.bind('<<ListboxSelect>>', lambda e: self._selectManager())
+        for item in self._managerList.keys():
+            self._listBox.insert("end", item)
+        self._content = Frame(self._window, bg="blue", width=500)
+        self._content.grid(row=1, column=1, sticky=(N,S,E,W))
 
-        self._text = Text(self._window, wrap=NONE)
-        self._text.grid(row=99, column=0, sticky=(N,S,E,W))
+        #self._text = Text(self._window, wrap=NONE)
+        #self._text.grid(row=99, column=0, columnspan=2, sticky=(N,S,E,W))
 
         self._root.bind('<Key-Escape>', lambda e: self._root.destroy())
         #self._root.resizable(False, False)
-        self._root.geometry("+0+0")
+        self._root.geometry("+100+100")
+
     
     def run(self):
         self._root.mainloop()
 
 
     def selectFile(self): 
-        fileName = filedialog.Open(self._root, filetypes = [('*.ini files', '.ini')]).show()
+        fileName = filedialog. Open(self._root, filetypes = [('*.ini files', '.ini')]).show()
         if fileName == '': return
         self._fileName.set(fileName)
 
@@ -64,46 +74,18 @@ class App(object):
         config = configparser.ConfigParser()
         config.read(fileName, encoding="utf-8")
         
-        self._text.delete('1.0', 'end') 
-        self._text.insert('1.0', open(fileName, 'rt').read())
+        #self._text.delete('1.0', 'end') 
+        #self._text.insert('1.0', open(fileName, 'rt').read())
 
-        for item in self._list:
-            item.destroy()
+        for name in self._list.keys():
+            manager = self._list[name]
+            manager.destroy()
+        self._list.clear()
 
-        item = MainManager(self._window)
-        item.grid(row=1, column=0, sticky=(N,S,E,W))
-        item.load(config)
-        self._list.append(item)
-        
-        item = TimeManager(self._window)
-        item.grid(row=2, column=0, sticky=(N,S,E,W))
-        item.load(config)
-        self._list.append(item)
-        
-        item = CalendarManager(self._window)
-        item.grid(row=3, column=0, sticky=(N,S,E,W))
-        item.load(config)
-        self._list.append(item)
-
-        item = OpenWeatherMapManager(self._window)
-        item.grid(row=4, column=0, sticky=(N,S,E,W))
-        item.load(config)
-        self._list.append(item)
-
-        item = YandexNewsManager(self._window)
-        item.grid(row=5, column=0, sticky=(N,S,E,W))
-        item.load(config)
-        self._list.append(item)
-
-        item = AlarmManager(self._window)
-        item.grid(row=6, column=0, sticky=(N,S,E,W))
-        item.load(config)
-        self._list.append(item)
-
-        item = VoiceManager(self._window)
-        item.grid(row=7, column=0, sticky=(N,S,E,W))
-        item.load(config)
-        self._list.append(item)
+        for name in self._managerList.keys():
+            manager = self._managerList[name](self._content)
+            manager.load(config)
+            self._list[name] = manager
 
     def saveData(self): 
         fileName = self._fileName.get()
@@ -116,6 +98,18 @@ class App(object):
 
         self._text.delete('1.0', 'end') 
         self._text.insert('1.0', open(fileName, 'rt').read())
+
+    def _selectManager(self):
+        selection = self._listBox.curselection() 
+        if not selection: return
+        name = self._listBox.get(selection[0])
+
+        if self._currentName:
+            manager = self._list[self._currentName]
+            manager.grid_forget()
+        manager = self._list[name]
+        self._currentName = name
+        manager.grid(row=0, column=0, sticky=(N,S,E,W))
 
 def main():            
     App().run()

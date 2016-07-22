@@ -25,7 +25,7 @@ class MainSetting(ttk.LabelFrame):
         self._idleVariable   = IntVar(0)
 
         timeFrame = ttk.LabelFrame(self, text="Время")
-        timeFrame.grid(row=1, column=0, sticky=NSEW)
+        timeFrame.grid(row=1, column=0, sticky=(N,S,E,W))
         timeFrame.columnconfigure(1, weight=1)
         timeFrame.columnconfigure(3, weight=1)
         timeFrame.columnconfigure(4, weight=1)
@@ -37,12 +37,12 @@ class MainSetting(ttk.LabelFrame):
         Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._secondVariable).grid(row=0, column=5, padx=2, pady=2)
 
         idleFrame = ttk.LabelFrame(self, text="Время простоя")
-        idleFrame.grid(row=1, column=1, sticky=NSEW)
+        idleFrame.grid(row=1, column=1, sticky=(N,S,E,W))
         Spinbox(idleFrame, from_=5, to=60, increment=1, width=3, textvariable=self._idleVariable).grid(row=0, column=0, padx=2, pady=2)
         ttk.Label(idleFrame, text="минут").grid(row=0, column=1, pady=2)
 
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
-        self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=NSEW)
+        self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N,S,E,W))
 
 
     def load(self, config, sectionName):
