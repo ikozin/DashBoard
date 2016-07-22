@@ -3,12 +3,11 @@ import configparser
 import pygame
 import pygame.locals
 
-from block_base import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
-
-from modules.alarm.block_alarm_simple import BlockAlarmSimple
-from modules.alarm.block_alarm_blink import BlockAlarmBlink
-from modules.alarm.block_alarm_rise import BlockAlarmRise
+from modules.BlockBase import BlockBase
+from modules.alarm.BlockAlarmSimple import BlockAlarmSimple
+from modules.alarm.BlockAlarmBlink import BlockAlarmBlink
+from modules.alarm.BlockAlarmRise import BlockAlarmRise
 
 BLOCK_ALARM_UPDATE_EVENT  = (pygame.locals.USEREVENT + 5)
 
@@ -20,6 +19,7 @@ class BlocklAlarm(BlockBase):
         super(BlocklAlarm, self).__init__(logger, setting)
         self._blocks = []
         self._alarmBlock = []
+        self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise}
 
 
     def init(self, fileName):
@@ -43,14 +43,9 @@ class BlocklAlarm(BlockBase):
             type = section.getint("Type")
             if type is None: raise ExceptionNotFound(schema, "Type")
 
-            if type == 1:
-                alarm = BlockAlarmSimple(self._logger, self._setting)
-            elif type == 2:
-                alarm = BlockAlarmBlink(self._logger, self._setting)
-            elif type == 3:
-                alarm = BlockAlarmRise(self._logger, self._setting)
-            else:
-                raise ExceptionFormat(schema, "Type")
+            func = self._functions.get(type, None)
+            if func is None: raise ExceptionFormat(schema, "Type")
+            alarm = func(self._logger, self._setting)
             alarm.init(section)
             self._alarmBlock.append(alarm)
 

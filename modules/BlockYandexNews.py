@@ -5,8 +5,8 @@ import xml.etree.ElementTree as ET
 import pygame
 import pygame.locals
 
-from block_base import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
+from modules.BlockBase import BlockBase
 
 BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В секции [YandexNewsBlock] пропущен параметр {0}"
 BLOCK_YANDEX_NEWS_UPDATE_EVENT = (pygame.locals.USEREVENT + 2)

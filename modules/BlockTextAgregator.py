@@ -1,4 +1,4 @@
-﻿from block_base import BlockBase
+﻿from modules.BlockBase import BlockBase
 
 class BlockTextAgregator(BlockBase):
     """description of class"""

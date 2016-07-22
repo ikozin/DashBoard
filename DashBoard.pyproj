@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>tool.py</StartupFile>
+    <StartupFile>test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.py" />
-    <Compile Include="block_base.py">
+    <Compile Include="modules\BlockBase.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="exceptions.py">
@@ -62,39 +62,39 @@
     <Compile Include="ext\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\alarm\alarm_time_base.py" />
-    <Compile Include="modules\alarm\alarm_base.py">
+    <Compile Include="modules\alarm\AlarmTimeBase.py" />
+    <Compile Include="modules\alarm\AlarmBase.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\alarm\block_alarm_blink.py">
+    <Compile Include="modules\alarm\BlockAlarmBlink.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\alarm\block_alarm_rise.py">
+    <Compile Include="modules\alarm\BlockAlarmRise.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\alarm\block_alarm_simple.py">
+    <Compile Include="modules\alarm\BlockAlarmSimple.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\alarm\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\block_alarm.py">
+    <Compile Include="modules\BlocklAlarm.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\block_calendar.py">
+    <Compile Include="modules\BlockCalendar.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\block_openweathermap.py">
+    <Compile Include="modules\BlockOpenWeatherMap.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\block_textagregator.py" />
-    <Compile Include="modules\block_time.py">
+    <Compile Include="modules\BlockTextAgregator.py" />
+    <Compile Include="modules\BlockTime.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\block_voice.py">
+    <Compile Include="modules\BlockVoice.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\block_yandexnews.py">
+    <Compile Include="modules\BlockYandexNews.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\__init__.py">

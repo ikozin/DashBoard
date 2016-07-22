@@ -10,13 +10,13 @@ import pygame
 import pygame.locals
 
 from setting import Setting
-from modules.block_time import BlockTime
-from modules.block_calendar import BlockCalendar
-from modules.block_yandexnews import BlockYandexNews
-from modules.block_openweathermap import BlockOpenWeatherMap
-from modules.block_voice import BlockVoice
-from modules.block_textagregator import BlockTextAgregator
-from modules.block_alarm import BlocklAlarm
+from modules.BlockTime import BlockTime
+from modules.BlockCalendar import BlockCalendar
+from modules.BlockYandexNews import BlockYandexNews
+from modules.BlockOpenWeatherMap import BlockOpenWeatherMap
+from modules.BlockVoice import BlockVoice
+from modules.BlockTextAgregator import BlockTextAgregator
+from modules.BlocklAlarm import BlocklAlarm
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")

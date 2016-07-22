@@ -1,7 +1,7 @@
 import configparser
 import datetime
 
-from modules.alarm.alarm_time_base import AlarmTimeBase
+from modules.alarm.AlarmTimeBase import AlarmTimeBase
 
 class BlockAlarmBlink(AlarmTimeBase):
     """description of class"""

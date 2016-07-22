@@ -3,7 +3,7 @@ import configparser
 import pygame
 import pygame.locals
 
-from block_base import BlockBase
+from modules.BlockBase import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
 
 BLOCK_TIME_DISPLAY_FORMAT = "%H:%M"

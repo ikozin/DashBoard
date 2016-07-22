@@ -1,7 +1,7 @@
 ﻿import configparser
 import datetime
 
-from modules.alarm.alarm_base import AlarmBase
+from modules.alarm.AlarmBase import AlarmBase
 from exceptions import ExceptionFormat, ExceptionNotFound
 
 class AlarmTimeBase(AlarmBase):

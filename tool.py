@@ -36,18 +36,10 @@ class App(object):
         header = LabelFrame(self._window, text="Configuration", bg = "blue", width=300, height=100)
         header.grid(row=0, column=0, sticky=(N,S,E,W))
         header.columnconfigure(4, weight=1)
-
-        entryFileName = Entry(header, width=24, textvariable=self._fileName)
-        entryFileName.grid(row=0, column=0, padx=2, pady=2)
-        
-        btnSelect = Button(header, text="...", command=self.selectFile)
-        btnSelect.grid(row=0, column=1, padx=2, pady=2)
-
-        btnLoad = Button(header, text= " Load ", command=self.loadData)
-        btnLoad.grid(row=0, column=2, padx=2, pady=2)
-
-        btnSave = Button(header, text= " Save ", command=self.saveData)
-        btnSave.grid(row=0, column=3, padx=2, pady=2)
+        Entry(header, width=24, textvariable=self._fileName).grid(row=0, column=0, padx=2, pady=2)
+        Button(header, text="...", command=self.selectFile).grid(row=0, column=1, padx=2, pady=2)
+        Button(header, text= "Load", command=self.loadData).grid(row=0, column=2, padx=2, pady=2)
+        Button(header, text= "Save", command=self.saveData).grid(row=0, column=3, padx=2, pady=2)
 
         self._text = Text(self._window, wrap=NONE)
         self._text.grid(row=99, column=0, sticky=(N,S,E,W))

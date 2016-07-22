@@ -7,8 +7,8 @@ import pygame
 import pygame.locals
 from datetime  import datetime, timedelta
 
-from block_base import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
+from modules.BlockBase import BlockBase
 
 ##############################################################
 # http://openweathermap.org/appid#work - 1 time per 10 minutes 

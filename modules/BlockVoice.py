@@ -4,8 +4,8 @@ import configparser
 import pygame
 import pygame.locals
 
-from block_base import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
+from modules.BlockBase import BlockBase
 
 class BlockVoice(BlockBase):
     """description of class"""
@@ -39,7 +39,7 @@ class BlockVoice(BlockBase):
                     if not text: return
                     soundFile = self.__getvoicetext(text)
                     pygame.mixer.music.load(soundFile)
-                    pygame.mixer.music.set_volume(0.5)
+                    pygame.mixer.music.set_volume(1.0)
                     pygame.mixer.music.play()
                     #if not pygame.mixer.get_busy():
                     #    soundFile = getvoicetext(self._weather_text)
