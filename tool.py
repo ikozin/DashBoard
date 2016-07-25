@@ -50,8 +50,6 @@ class App(object):
         self._content = ttk.Frame(self._window, width=500)
         self._content.grid(row=1, column=1, sticky=(N,S,E,W))
 
-        scbHDirSel = Scrollbar(self._content, orient=HORIZONTAL, command=self._content.xview)
-        scbVDirSel = Scrollbar(self._content, orient=VERTICAL, command=self._content.yview)    
         #self._text = Text(self._window, wrap=NONE)
         #self._text.grid(row=99, column=0, columnspan=2, sticky=(N,S,E,W))
 
@@ -93,13 +91,14 @@ class App(object):
         fileName = self._fileName.get()
         if not fileName: return
         config = configparser.ConfigParser()
-        for item in self._list:
-            item.save(config)
-        with open('new_setting.ini', 'w') as fp:
+        for name in self._list.keys():
+            manager = self._list[name]
+            manager.save(config)
+        with open(fileName, 'w') as fp:
             config.write(fp)
 
-        self._text.delete('1.0', 'end') 
-        self._text.insert('1.0', open(fileName, 'rt').read())
+        #self._text.delete('1.0', 'end') 
+        #self._text.insert('1.0', open(fileName, 'rt').read())
 
     def _selectManager(self):
         selection = self._listBox.curselection() 

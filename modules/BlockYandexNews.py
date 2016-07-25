@@ -70,11 +70,8 @@ class BlockYandexNews(BlockBase):
             if not isOnline: return
             
             self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
-            self._text = "Новости от Яндекса. %s" % '.'.join(self._news)
         except Exception as ex:
             self._logger.exception(ex)
-            self._news = []
-            self._text = None
 
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
@@ -91,6 +88,12 @@ class BlockYandexNews(BlockBase):
                 y += sz[1] + self._indent
         except Exception as ex:
             self._logger.exception(ex)
+
+
+    def getText(self):
+        """ """
+        self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
+        return self._text
 
 
     def __get_newsblock(self, url):

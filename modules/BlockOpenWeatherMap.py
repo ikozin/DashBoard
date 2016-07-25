@@ -189,22 +189,14 @@ class BlockOpenWeatherMap(BlockBase):
             self._load(imageName, self._folder)
             imageName = os.path.join(self._folder, imageName)
             self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
-    
-            self._text = WEATHER_TEXT_FORMAT.format(self._weather_type, 
-                                                    self._temperature, 
-                                                    self._wind_speed, 
-                                                    self._humidity, 
-                                                    self._pressure)
-            #print (self._text)
+
         except Exception as ex:
             self._logger.exception(ex)
-            self._text = None
 
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
         try:
             if not isOnline: return
-            if self._text is None: return
 
             if (self._weather_image):
                 screen.blit(self._weather_image, self._iconPos)
@@ -230,6 +222,16 @@ class BlockOpenWeatherMap(BlockBase):
                 screen.blit(surf, self._windPos)
         except Exception as ex:
             self._logger.exception(ex)
+
+
+    def getText(self):
+        """ """
+        self._text = WEATHER_TEXT_FORMAT.format(self._weather_type, 
+                                                self._temperature, 
+                                                self._wind_speed, 
+                                                self._humidity, 
+                                                self._pressure)
+        return self._text
 
 
     def _load(self, imageName, path):
