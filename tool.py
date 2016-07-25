@@ -19,6 +19,7 @@ from ext.OpenWeatherMapManager import OpenWeatherMapManager
 
 class App(object):
     """description of class"""
+
     def __init__(self):
         self._managerList = { "MainManager": MainManager, "TimeManager": TimeManager, "AlarmManager": AlarmManager, "VoiceManager": VoiceManager, "YandexNewsManager": YandexNewsManager, "OpenWeatherMapManager": OpenWeatherMapManager, "CalendarManager": CalendarManager}
         self._list = dict()
@@ -34,7 +35,6 @@ class App(object):
         self._window.grid(row=0, column=0, sticky=(N,S,E,W))
         self._window.rowconfigure(1, weight=1)
         self._window.columnconfigure(1, weight=1)
-
         header = ttk.LabelFrame(self._window, text="Configuration", width=300, height=100)
         header.grid(row=0, column=0, columnspan=2, sticky=(N,S,E,W))
         header.columnconfigure(4, weight=1)
@@ -49,10 +49,6 @@ class App(object):
             self._listBox.insert("end", item)
         self._content = ttk.Frame(self._window, width=500)
         self._content.grid(row=1, column=1, sticky=(N,S,E,W))
-
-        #self._text = Text(self._window, wrap=NONE)
-        #self._text.grid(row=99, column=0, columnspan=2, sticky=(N,S,E,W))
-
         self._root.bind('<Key-Escape>', lambda e: self._root.destroy())
         #self._root.resizable(False, False)
         self._root.geometry("+100+100")
@@ -73,19 +69,15 @@ class App(object):
         if not fileName: return
         config = configparser.ConfigParser()
         config.read(fileName, encoding="utf-8")
-        
-        #self._text.delete('1.0', 'end') 
-        #self._text.insert('1.0', open(fileName, 'rt').read())
-
         for name in self._list.keys():
             manager = self._list[name]
             manager.destroy()
         self._list.clear()
-
         for name in self._managerList.keys():
             manager = self._managerList[name](self._content)
             manager.load(config)
             self._list[name] = manager
+
 
     def saveData(self): 
         fileName = self._fileName.get()
@@ -97,8 +89,6 @@ class App(object):
         with open(fileName, 'w') as fp:
             config.write(fp)
 
-        #self._text.delete('1.0', 'end') 
-        #self._text.insert('1.0', open(fileName, 'rt').read())
 
     def _selectManager(self):
         selection = self._listBox.curselection() 
@@ -112,8 +102,6 @@ class App(object):
         self._currentName = name
         manager.grid(row=0, column=0, sticky=(N,S,E,W))
 
-def main():            
-    App().run()
-    
+
 if __name__ == "__main__":
-    main()
+    App().run()
