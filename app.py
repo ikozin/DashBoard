@@ -17,6 +17,7 @@ from modules.BlockOpenWeatherMap import BlockOpenWeatherMap
 from modules.BlockVoice import BlockVoice
 from modules.BlockTextAgregator import BlockTextAgregator
 from modules.BlocklAlarm import BlocklAlarm
+from modules.BlockSwap import BlockSwap
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -91,8 +92,11 @@ class Mainboard :
         pygame.mouse.set_visible(False)
 
         self._modules.append(BlockTime(logger, self._config))
-        self._modules.append(BlockOpenWeatherMap(logger, self._config))
+        #self._modules.append(BlockOpenWeatherMap(logger, self._config))
         #self._modules.append(BlockCalendar(logger, self._config))
+        blockSwap = BlockSwap(logger, self._config)
+        blockSwap.AddBlocks(BlockOpenWeatherMap(logger, self._config), BlockCalendar(logger, self._config))
+        self._modules.append(blockSwap)
         self._modules.append(BlockYandexNews(logger, self._config))
 
         argergator = BlockTextAgregator(logger, self._config)
