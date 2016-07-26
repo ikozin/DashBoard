@@ -16,22 +16,24 @@ class BlockSwap(BlockBase):
         """Initializes (declare internal variables)"""
         super(BlockSwap, self).__init__(logger, setting)
         self._lastSwap = datetime.now()
-        self._needUpdate = True
+        self._firstUpdate = True
         self._showBlock1 = True
         self._block1 = None
         self._block2 = None
+        self._time = None
 
 
     def init(self, fileName):
         """Initializes (initialize internal variables)"""
-        #config = configparser.ConfigParser()
-        #config.read(fileName, "utf-8")
-        #section = config["SwapBlock"]
+        config = configparser.ConfigParser()
+        config.read(fileName, "utf-8")
+        section = config["SwapBlock"]
+        self._time = section.getint("UpdateTime")
         if not self._block1: raise Exception(EXCEPTION_TEXT)
         if not self._block2: raise Exception(EXCEPTION_TEXT)
         self._block1.init(fileName)
         self._block2.init(fileName)
-        pygame.time.set_timer(BLOCK_SWAP_UPDATE_EVENT, 10000)
+        pygame.time.set_timer(BLOCK_SWAP_UPDATE_EVENT, self._time * 1000)
 
 
     def proccedEvent(self, event, isOnline):
@@ -41,20 +43,18 @@ class BlockSwap(BlockBase):
 
 
     def updateInfo(self, isOnline):
-        if self._needUpdate:
+        if self._firstUpdate:
             self._block1.updateInfo(isOnline)
             self._block2.updateInfo(isOnline)
-        self._needUpdate = False
+        self._firstUpdate = False
         self._showBlock1 = not self._showBlock1
 
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
         try:
             if not isOnline: return
-            if self._showBlock1:
-                self._block1.updateDisplay(isOnline, screen, size, foreColor, backColor)
-            else:
-                self._block2.updateDisplay(isOnline, screen, size, foreColor, backColor)
+            block = self._block1 if self._showBlock1 else self._block2
+            block.updateDisplay(isOnline, screen, size, foreColor, backColor)
         except Exception as ex:
             self._logger.exception(ex)
 

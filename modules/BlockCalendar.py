@@ -6,7 +6,6 @@ from datetime import date
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 
-BLOCK_CALENDAR_DISPLAY_FORMAT = "%a %d %B %Y"
 
 class BlockCalendar(BlockBase):
     """description of class"""
@@ -14,6 +13,10 @@ class BlockCalendar(BlockBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockCalendar, self).__init__(logger, setting)
+        self._daysLong = ["первое", "второе", "третье", "четвертое", "пятое", "шестое", "седьмое", "восьмое", "девятое", "десятое", "одиннадцатое", "двенадцатое", "тринадцатое", "четырнадцатое", "пятнадцатое", "шестнадцатое", "семнадцатое", "восенадцатое", "девятнадцатое", "двадцатое", "двадцать первое", "двадцать второе", "двадцать третье", "двадцать четвертое", "двадцать пятое", "двадцать шестое", "двадцать седьмое", "двадцать восьмое", "двадцать девятое", "тридцатое", "тридцать первое", "тридцать второе"]
+        self._months   = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "ноября", "декабря"]
+        self._weekDayShot = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
+        self._weekDayLong = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
         self._font = None
         self._pos = None
 
@@ -42,14 +45,19 @@ class BlockCalendar(BlockBase):
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
         try:
             if not isOnline: return
-
-            self._text = date.today().strftime(BLOCK_CALENDAR_DISPLAY_FORMAT)
-            sz = self._font.size(self._text)
+            time = date.today()
+            text = "{0} {1} {2} {3}".format(self._weekDayShot[time.weekday()], time.day, self._months[time.month-1], time.year)
+            sz = self._font.size(text)
             x = (size[0] - sz[0]) >> 1
             y = self._pos
-            surf = self._font.render(self._text, True, foreColor, backColor)
+            surf = self._font.render(text, True, foreColor, backColor)
             screen.blit(surf, (x, y))
         except Exception as ex:
             self._logger.exception(ex)
 
 
+    def getText(self):
+        """ """
+        time = date.today()
+        self._text = "{0}, {1} {2} {3} год".format(self._weekDayLong[time.weekday()], self._daysLong[time.day-1], self._months[time.month-1], time.year)
+        return self._text
