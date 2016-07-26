@@ -7,6 +7,7 @@ import pygame.locals
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 
+#"Использует сервис "Yandex SpeechKit Cloud" https://tech.yandex.ru/speechkit/cloud/
 class BlockVoice(BlockBase):
     """description of class"""
 
