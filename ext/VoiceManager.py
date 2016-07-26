@@ -18,7 +18,7 @@ class VoiceManager(ttk.LabelFrame):
         ttk.Label(self, text="Голос").grid(row=0, column=0, padx=2, pady=2)
         ttk.Combobox(self, state="readonly", values=('jane', 'oksana', 'alyss', 'omazh', 'zahar', 'ermil'), textvariable=self._speakerValue).grid(row=0, column=1, padx=2, pady=2)
         ttk.Label(self, text="Яндекс ключ").grid(row=0, column=2, padx=2, pady=2)
-        ttk.Entry(self, textvariable=self._keyValue, width=40).grid(row=0, column=3, padx=2, pady=2)
+        ttk.Entry(self, textvariable=self._keyValue, width=35).grid(row=0, column=3, padx=2, pady=2)
         
 
     def load(self, config):

@@ -9,6 +9,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
 
+from ext.ModalDialog import VerticalScrolledFrame
 from ext.MainManager import MainManager
 from ext.TimeManager import TimeManager
 from ext.AlarmManager import AlarmManager
@@ -28,6 +29,7 @@ class App(object):
         self._root.title('DashBoard Tool')
         self._root.columnconfigure(0, weight=1)
         self._root.rowconfigure(0, weight=1)
+        self._root.minsize(740, 480)
         
         self._fileName = StringVar()
 
@@ -47,7 +49,8 @@ class App(object):
         self._listBox.bind('<<ListboxSelect>>', lambda e: self._selectManager())
         for item in self._managerList.keys():
             self._listBox.insert("end", item)
-        self._content = ttk.Frame(self._window, width=500)
+        #self._content = ttk.Frame(self._window, width=500)
+        self._content = VerticalScrolledFrame(self._window)
         self._content.grid(row=1, column=1, sticky=(N,S,E,W))
         self._root.bind('<Key-Escape>', lambda e: self._root.destroy())
         #self._root.resizable(False, False)
@@ -74,7 +77,7 @@ class App(object):
             manager.destroy()
         self._list.clear()
         for name in self._managerList.keys():
-            manager = self._managerList[name](self._content)
+            manager = self._managerList[name](self._content.interior)
             manager.load(config)
             self._list[name] = manager
 
