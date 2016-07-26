@@ -22,7 +22,7 @@ class App(object):
     """description of class"""
 
     def __init__(self):
-        self._managerList = { "MainManager": MainManager, "TimeManager": TimeManager, "AlarmManager": AlarmManager, "VoiceManager": VoiceManager, "YandexNewsManager": YandexNewsManager, "OpenWeatherMapManager": OpenWeatherMapManager, "CalendarManager": CalendarManager}
+        self._managerList = { "Main": MainManager, "Time": TimeManager, "Alarm": AlarmManager, "Voice": VoiceManager, "YandexNews": YandexNewsManager, "OpenWeatherMap": OpenWeatherMapManager, "Calendar": CalendarManager}
         self._list = dict()
         self._currentName = None
         self._root = Tk()
