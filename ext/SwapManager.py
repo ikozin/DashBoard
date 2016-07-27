@@ -19,6 +19,7 @@ class SwapManager(ttk.LabelFrame):
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("SwapBlock"):      config.add_section("SwapBlock")
         section = config["SwapBlock"]
         self._updateValue.set(section.getint("UpdateTime", 10))
 

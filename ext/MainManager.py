@@ -40,6 +40,8 @@ class MainManager(ttk.LabelFrame):
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("MAIN"):      config.add_section("MAIN")
+        if not config.has_section("TIMELINE"):  config.add_section("TIMELINE")
         self._currentName = None
         for sectionName in self._sectionlist.keys():
             sectionBlock = self._sectionlist[sectionName]

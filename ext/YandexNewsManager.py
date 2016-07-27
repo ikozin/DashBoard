@@ -45,6 +45,7 @@ class YandexNewsManager(ttk.LabelFrame):
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("YandexNewsBlock"):      config.add_section("YandexNewsBlock")
         section = config["YandexNewsBlock"]
         fontName = section.get("FontName", "Helvetica")
         fontSize = section.getint("FontSize", 34)

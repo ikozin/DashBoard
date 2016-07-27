@@ -25,6 +25,7 @@ class CalendarManager(ttk.LabelFrame):
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("CalendarBlock"):      config.add_section("CalendarBlock")
         section = config["CalendarBlock"]
         fontName = section.get("FontName", "Helvetica")
         fontSize = section.getint("FontSize", 150)

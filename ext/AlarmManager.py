@@ -93,6 +93,8 @@ class AlarmManager(ttk.LabelFrame):
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("AlarmBlock"): config.add_section("AlarmBlock")
+
         self._currentName = None
         for schemaName in self._alarmlist.keys():
             alarmBlock = self._alarmlist[schemaName]
@@ -100,7 +102,7 @@ class AlarmManager(ttk.LabelFrame):
         self._alarmlist.clear()
         self._listBox.delete(0, "end")
         section = config["AlarmBlock"]
-        csvValue = section.get("List")
+        csvValue = section.get("List", "")
         if csvValue:
             alarmSchemas = [item.strip(" '") for item in csvValue.split(",") if item.strip()]
             alarmSchemas = [str(item) for item in alarmSchemas if config.has_section(item)]

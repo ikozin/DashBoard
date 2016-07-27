@@ -23,6 +23,7 @@ class VoiceManager(ttk.LabelFrame):
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("VoiceBlock"):      config.add_section("VoiceBlock")
         section = config["VoiceBlock"]
         self._speakerValue.set(section.get("Speaker", "omazh"))
         self._keyValue.set(section.get("Key", ""))

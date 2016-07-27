@@ -20,6 +20,7 @@ class TimeManager(ttk.LabelFrame):
 
     def load(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("TimeBlock"):      config.add_section("TimeBlock")
         section = config["TimeBlock"]
         fontName = section.get("FontName", "Helvetica")
         fontSize = section.getint("FontSize", 384)

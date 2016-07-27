@@ -65,6 +65,7 @@ class OpenWeatherMapManager(ttk.LabelFrame):
     def load(self, config):
         """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
+        if not config.has_section("OpenWeatherMapBlock"):      config.add_section("OpenWeatherMapBlock")
         section = config["OpenWeatherMapBlock"]
 
         self._updateValue.set(section.getint("UpdateTime", 15))
@@ -87,34 +88,34 @@ class OpenWeatherMapManager(ttk.LabelFrame):
         (posX, posY) = self._getTuple(section.get("WindPos", "(620, 26)"))
         self._posWind.load(posX, posY)
 
-        fontName = section.get("WeatherTypeFontName")
-        fontSize = section.getint("WeatherTypeFontSize")
-        isBold = section.getboolean("WeatherTypeFontBold")
-        isItalic = section.getboolean("WeatherTypeFontItalic")
+        fontName = section.get("WeatherTypeFontName", "Helvetica")
+        fontSize = section.getint("WeatherTypeFontSize", 64)
+        isBold = section.getboolean("WeatherTypeFontBold", True)
+        isItalic = section.getboolean("WeatherTypeFontItalic", False)
         self._weatherType.load(fontName, fontSize, isBold, isItalic)
 
-        fontName = section.get("TemperatureFontName")
-        fontSize = section.getint("TemperatureFontSize")
-        isBold = section.getboolean("TemperatureFontBold")
-        isItalic = section.getboolean("TemperatureFontItalic")
+        fontName = section.get("TemperatureFontName", "Helvetica")
+        fontSize = section.getint("TemperatureFontSize", 160)
+        isBold = section.getboolean("TemperatureFontBold", True)
+        isItalic = section.getboolean("TemperatureFontItalic", False)
         self._temperature.load(fontName, fontSize, isBold, isItalic)
 
-        fontName = section.get("HumidityFontName")
-        fontSize = section.getint("HumidityFontSize")
-        isBold = section.getboolean("HumidityFontBold")
-        isItalic = section.getboolean("HumidityFontItalic")
+        fontName = section.get("HumidityFontName", "Helvetica")
+        fontSize = section.getint("HumidityFontSize", 64)
+        isBold = section.getboolean("HumidityFontBold", False)
+        isItalic = section.getboolean("HumidityFontItalic", False)
         self._humidity.load(fontName, fontSize, isBold, isItalic)
 
-        fontName = section.get("PressureFontName")
-        fontSize = section.getint("PressureFontSize")
-        isBold = section.getboolean("PressureFontBold")
-        isItalic = section.getboolean("PressureFontItalic")
+        fontName = section.get("PressureFontName", "Helvetica")
+        fontSize = section.getint("PressureFontSize", 64)
+        isBold = section.getboolean("PressureFontBold", False)
+        isItalic = section.getboolean("PressureFontItalic", False)
         self._pressure.load(fontName, fontSize, isBold, isItalic)
 
-        fontName = section.get("WindFontName")
-        fontSize = section.getint("WindFontSize")
-        isBold = section.getboolean("WindFontBold")
-        isItalic = section.getboolean("WindFontItalic")
+        fontName = section.get("WindFontName", "Helvetica")
+        fontSize = section.getint("WindFontSize", 64)
+        isBold = section.getboolean("WindFontBold", False)
+        isItalic = section.getboolean("WindFontItalic", False)
         self._wind.load(fontName, fontSize, isBold, isItalic)
 
 
