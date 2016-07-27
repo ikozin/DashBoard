@@ -258,3 +258,5 @@ paket-files/
 /modules/alarm/__pycache__
 /new_setting.ini
 /ext/__pycache__
+/weather/openweathermap_data.xml
+/weather/wunderground_data.xml
