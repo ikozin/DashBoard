@@ -87,7 +87,9 @@ class App(object):
         fileName = self._fileName.get()
         if not fileName: return
         config = configparser.ConfigParser()
-        for name in self._list.keys():
+        listName = [name for name, block in self._list.items()]
+        list.sort(listName)
+        for name in listName:
             manager = self._list[name]
             manager.save(config)
         with open(fileName, 'w') as fp:
