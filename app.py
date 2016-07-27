@@ -96,8 +96,8 @@ class Mainboard :
         #self._modules.append(BlockOpenWeatherMap(logger, self._config))
         #self._modules.append(BlockCalendar(logger, self._config))
         blockSwap = BlockSwap(logger, self._config)
-        blockSwap.AddBlocks(BlockWunderGround(logger, self._config), BlockCalendar(logger, self._config))
         #blockSwap.AddBlocks(BlockOpenWeatherMap(logger, self._config), BlockCalendar(logger, self._config))
+        blockSwap.AddBlocks(BlockWunderGround(logger, self._config), BlockCalendar(logger, self._config))
         self._modules.append(blockSwap)
         self._modules.append(BlockYandexNews(logger, self._config))
 
