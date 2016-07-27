@@ -17,13 +17,14 @@ from ext.VoiceManager import VoiceManager
 from ext.YandexNewsManager import YandexNewsManager
 from ext.CalendarManager import CalendarManager
 from ext.OpenWeatherMapManager import OpenWeatherMapManager
+from ext.WunderGroundManager import WunderGroundManager
 from ext.SwapManager import SwapManager
 
 class App(object):
     """description of class"""
 
     def __init__(self):
-        self._managerList = { "Main": MainManager, "Time": TimeManager, "Alarm": AlarmManager, "Voice": VoiceManager, "YandexNews": YandexNewsManager, "OpenWeatherMap": OpenWeatherMapManager, "Calendar": CalendarManager, "Swap": SwapManager}
+        self._managerList = { "Main": MainManager, "Time": TimeManager, "Alarm": AlarmManager, "Voice": VoiceManager, "YandexNews": YandexNewsManager, "OpenWeatherMap": OpenWeatherMapManager, "WunderGround": WunderGroundManager, "Calendar": CalendarManager, "Swap": SwapManager}
         self._list = dict()
         self._currentName = None
         self._root = Tk()

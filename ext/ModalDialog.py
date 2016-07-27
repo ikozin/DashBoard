@@ -105,7 +105,6 @@ class ColorsChooserFrame(ttk.LabelFrame):
         return (self._backColor, self._foreColor)
 
 
-
 class FontChooserFrame(ttk.LabelFrame):
 
     def __init__(self, root, text):
@@ -139,6 +138,28 @@ class FontChooserFrame(ttk.LabelFrame):
         """ """
         return (self._fontName.get(), self._fontSize.get(), self._isBold.get(), self._isItalic.get())
 
+
+class XYFrame(ttk.LabelFrame):
+    """description of class"""
+
+    def __init__(self, root, text, textX, textY):
+        """ """
+        super(XYFrame, self).__init__(root, text=text)
+        self._X = IntVar()
+        self._Y = IntVar()
+        ttk.Label(self, text=textX).grid(row=0, column=0, padx=2, pady=2)
+        Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._X).grid(row=0, column=1, padx=2, pady=2)
+        ttk.Label(self, text=textY).grid(row=0, column=2, padx=2, pady=2)
+        Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._Y).grid(row=0, column=3, padx=2, pady=2)
+
+    def load(self, x, y):
+        """ """
+        self._X.set(x)
+        self._Y.set(y)
+
+    def getResult(self):
+        """ """
+        return (self._X.get(), self._Y.get())
 
 
 # http://tkinter.unpythonic.net/wiki/VerticalScrolledFrame

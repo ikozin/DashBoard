@@ -106,6 +106,9 @@
     <Compile Include="modules\BlockYandexNews.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ext\WunderGroundManager.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\__init__.py">
       <SubType>Code</SubType>
     </Compile>

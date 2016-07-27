@@ -10,12 +10,12 @@ from tkinter import colorchooser
 from ext.ModalDialog import FontChooserFrame
 from ext.ModalDialog import XYFrame
 
-class OpenWeatherMapManager(ttk.LabelFrame):
+class WunderGroundManager(ttk.LabelFrame):
     """description of class"""
 
     def __init__(self, root):
         """ """
-        super(OpenWeatherMapManager, self).__init__(root, text="Настройки OpenWeatherMap")
+        super(WunderGroundManager, self).__init__(root, text="Настройки WunderGround")
 
         self._updateValue = IntVar()
         self._keyValue = StringVar()
@@ -65,7 +65,7 @@ class OpenWeatherMapManager(ttk.LabelFrame):
     def load(self, config):
         """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        section = config["OpenWeatherMapBlock"]
+        section = config["WunderGroundBlock"]
 
         self._updateValue.set(section.getint("UpdateTime", 15))
         self._keyValue.set(section.get("Key", ""))
@@ -121,8 +121,8 @@ class OpenWeatherMapManager(ttk.LabelFrame):
     def save(self, config):
         """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not config.has_section("OpenWeatherMapBlock"):      config.add_section("OpenWeatherMapBlock")
-        section = config["OpenWeatherMapBlock"]
+        if not config.has_section("WunderGroundBlock"):      config.add_section("WunderGroundBlock")
+        section = config["WunderGroundBlock"]
 
         section["UpdateTime"] = str(self._updateValue.get())
         section["Key"] = self._keyValue.get()
@@ -181,3 +181,5 @@ class OpenWeatherMapManager(ttk.LabelFrame):
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
         except Exception as ex:
             return None
+
+
