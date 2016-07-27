@@ -1,8 +1,9 @@
-﻿import os
+import os
 import sys
 import urllib.request as request
 import xml.etree.ElementTree as ET
 import configparser 
+import json
 import pygame
 import pygame.locals
 from datetime  import datetime, timedelta
@@ -11,21 +12,22 @@ from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 
 ##############################################################
-# http://openweathermap.org/appid#work - 1 time per 10 minutes 
+# Calls Per Day = 500
 ##############################################################
 MIN_UPDATE_TIME = 600
-CITY_ID = 524901
-WEATHER_FILE = "openweathermap_data.xml"
-WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3}%, Давление {4} мм ртутного столба"
-DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДавление {3} мм"
-BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
+CITY_URL = "zmw:00000.1.27612"
+WEATHER_FILE = "wunderground_data.xml"
+WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3}, Давление {4} мм ртутного столба"
 
-class BlockOpenWeatherMap(BlockBase):
+BLOCK_WUNDER_GROUND_UPDATE_EVENT = (pygame.locals.USEREVENT + 7)
+
+
+class BlockWunderGround(BlockBase):
     """description of class"""
 
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
-        super(BlockOpenWeatherMap, self).__init__(logger, setting)
+        super(BlockWunderGround, self).__init__(logger, setting)
         self._lastUpdate = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
 
         self._key = None
@@ -59,7 +61,7 @@ class BlockOpenWeatherMap(BlockBase):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
-        section = config["OpenWeatherMapBlock"]
+        section = config["WunderGroundBlock"]
 
         self._key = section.get("Key")
         self._time = section.getint("UpdateTime")
@@ -151,22 +153,34 @@ class BlockOpenWeatherMap(BlockBase):
 
         if not os.path.exists(self._folder):
             os.mkdir(self._folder)
-        for imageName in ["01d.png","01n.png",
-                          "02d.png","02n.png",
-                          "03d.png","03n.png",
-                          "04d.png","04n.png",
-                          "09d.png","09n.png",
-                          "10d.png","10n.png",
-                          "11d.png","11n.png",
-                          "13d.png","13n.png",
-                          "50d.png","50n.png"]:
+        for imageName in ["chanceflurries.gif","chancerain.gif",
+                          "chancesleet.gif","chancesnow.gif",
+                          "chancetstorms.gif","clear.gif",
+                          "clear.gif","flurries.gif",
+                          "fog.gif","hazy.gif",
+                          "mostlycloudy.gif","mostlysunny.gif",
+                          "partlycloudy.gif","partlysunny.gif",
+                          "sleet.gif","rain.gif",
+                          "sleet.gif","snow.gif",
+                          "sunny.gif","tstorms.gif",
+                          "cloudy.gif","partlycloudy.gif",
+                          "nt_chanceflurries.gif","nt_chancerain.gif",
+                          "nt_chancesleet.gif","nt_chancesnow.gif",
+                          "nt_chancetstorms.gif","nt_clear.gif",
+                          "nt_cloudy.gif","nt_flurries.gif",
+                          "nt_fog.gif","nt_hazy.gif",
+                          "nt_mostlycloudy.gif","nt_mostlysunny.gif",
+                          "nt_partlycloudy.gif","nt_partlysunny.gif",
+                          "nt_sleet.gif","nt_rain.gif",
+                          "nt_sleet.gif","nt_snow.gif",
+                          "nt_sunny.gif","nt_tstorms.gif",
+                          "nt_cloudy.gif","nt_partlycloudy.gif"]:
             self._load(imageName, self._folder)
-
-        pygame.time.set_timer(BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT, self._time * 60000)
+        pygame.time.set_timer(BLOCK_WUNDER_GROUND_UPDATE_EVENT, self._time * 60000)
 
 
     def proccedEvent(self, event, isOnline):
-        if event.type == BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT:
+        if event.type == BLOCK_WUNDER_GROUND_UPDATE_EVENT:
             self.updateInfo(isOnline)
 
 
@@ -178,17 +192,20 @@ class BlockOpenWeatherMap(BlockBase):
             if data is None: return
 
             root = ET.fromstring(data)
-            self._weather_type = str(root.find("weather").attrib["value"]).capitalize()
-            self._temperature = int(float(root.find("temperature").attrib["value"]))
-            self._humidity = int(float(root.find("humidity").attrib["value"]))
-            self._pressure = float(root.find("pressure").attrib["value"])
-            self._wind_speed = float(root.find("wind/speed").attrib["value"])
-            self._wind_direction = str(root.find("wind/direction").attrib["code"])
-    
-            imageName = str(root.find("weather").attrib["icon"]) + ".png"
+            self._weather_type = str(root.find("current_observation/weather").text).capitalize()
+            self._temperature = int(float(root.find("current_observation/temp_c").text))
+            self._humidity = str(root.find("current_observation/relative_humidity").text)
+            self._pressure = float(root.find("current_observation/pressure_mb").text)
+            self._wind_speed = float(root.find("current_observation/wind_mph").text)
+            self._wind_direction = str(root.find("current_observation/wind_dir").text)
+
+            imageName = str(root.find("current_observation/icon_url").text)
+            imageName = imageName[imageName.rfind("/") + 1:]
             self._load(imageName, self._folder)
             imageName = os.path.join(self._folder, imageName)
-            self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
+            #self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
+            self._weather_image = pygame.image.load(imageName)
+            self._weather_image = pygame.transform.scale(self._weather_image, self._iconScale)
 
         except Exception as ex:
             self._logger.exception(ex)
@@ -209,7 +226,7 @@ class BlockOpenWeatherMap(BlockBase):
                 surf = self._temperatureFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._temperaturePos)
             if (self._humidity):
-                text = "Влажность {0}%".format(self._humidity)
+                text = "Влажность {0}".format(self._humidity)
                 surf = self._humidityFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._humidityPos)
             if (self._pressure):
@@ -237,7 +254,7 @@ class BlockOpenWeatherMap(BlockBase):
     def _load(self, imageName, path):
         filePath = os.path.join(path, imageName);
         if not os.path.exists(filePath):
-            url = "http://openweathermap.org/img/w/{0}".format(imageName)
+            url = "http://icons.wxug.com/i/c/k/{0}".format(imageName)
             with open(filePath, "wb") as file:
                 file.write(request.urlopen(url).read())
 
@@ -248,7 +265,7 @@ class BlockOpenWeatherMap(BlockBase):
         # http://openweathermap.org/appid#work - 1 time per 10 minutes 
         ##############################################################
         if dif.seconds >= MIN_UPDATE_TIME:
-            with request.urlopen("http://api.openweathermap.org/data/2.5/weather?id={0}&mode=xml&units=metric&lang=ru&APPID={1}".format(CITY_ID, self._key)) as f:
+            with request.urlopen("http://api.wunderground.com/api/{0}/conditions/lang:RU/q/{1}.xml".format(self._key, CITY_URL)) as f:
                 data = f.read()
             with open(os.path.join(self._folder, WEATHER_FILE), "wb") as file:
                 file.write(data)

@@ -18,6 +18,7 @@ from modules.BlockVoice import BlockVoice
 from modules.BlockTextAgregator import BlockTextAgregator
 from modules.BlocklAlarm import BlocklAlarm
 from modules.BlockSwap import BlockSwap
+from modules.BlockWunderGround import BlockWunderGround
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -95,7 +96,8 @@ class Mainboard :
         #self._modules.append(BlockOpenWeatherMap(logger, self._config))
         #self._modules.append(BlockCalendar(logger, self._config))
         blockSwap = BlockSwap(logger, self._config)
-        blockSwap.AddBlocks(BlockOpenWeatherMap(logger, self._config), BlockCalendar(logger, self._config))
+        blockSwap.AddBlocks(BlockWunderGround(logger, self._config), BlockCalendar(logger, self._config))
+        #blockSwap.AddBlocks(BlockOpenWeatherMap(logger, self._config), BlockCalendar(logger, self._config))
         self._modules.append(blockSwap)
         self._modules.append(BlockYandexNews(logger, self._config))
 

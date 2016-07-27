@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>tool.py</StartupFile>
+    <StartupFile>app.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -100,6 +100,9 @@
     <Compile Include="modules\BlockVoice.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\BlockWunderGround.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\BlockYandexNews.py">
       <SubType>Code</SubType>
     </Compile>
@@ -133,7 +136,6 @@
     <Content Include="Images\13n.png" />
     <Content Include="Images\50d.png" />
     <Content Include="Images\50n.png" />
-    <Content Include="Images\data.xml" />
     <Content Include="logger.ini" />
     <Content Include="setting.ini" />
   </ItemGroup>
