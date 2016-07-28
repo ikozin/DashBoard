@@ -1,5 +1,7 @@
 ﻿import configparser
 import datetime
+import pygame
+import pygame.locals
 
 from modules.alarm.AlarmBase import AlarmBase
 from exceptions import ExceptionFormat, ExceptionNotFound
@@ -63,7 +65,9 @@ class AlarmTimeBase(AlarmBase):
 
     def init_draw(self):
         """ """
-        pass
+        pygame.mixer.music.load("music\\happy three frend.mp3")
+        pygame.mixer.music.set_volume(1.0)
+        pygame.mixer.music.play()
 
 
     def done_draw(self):

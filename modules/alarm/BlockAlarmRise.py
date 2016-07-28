@@ -40,6 +40,7 @@ class BlockAlarmRise(AlarmTimeBase):
 
 
     def init_draw(self):
+        super(BlockAlarmRise, self).init_draw()
         (start, backgroundColor, foregroundColor, idleTime) = self._setting.get_curret_setting()
         self._startR = backgroundColor[0]
         self._startG = backgroundColor[1]

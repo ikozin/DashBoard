@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>tool.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -121,6 +121,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="music\happy three frend.mp3" />
     <Content Include="weather\01d.png" />
     <Content Include="weather\01n.png" />
     <Content Include="weather\02d.png" />
@@ -181,6 +182,7 @@
     <Content Include="setting.ini" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="music\" />
     <Folder Include="weather\" />
     <Folder Include="modules\" />
     <Folder Include="modules\alarm\" />
