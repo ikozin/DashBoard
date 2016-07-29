@@ -49,8 +49,10 @@ class App(object):
         self._listBox = Listbox(self._window, width=25)
         self._listBox.grid(row=1, column=0, padx=2, pady=2, sticky=(N,S,W))
         self._listBox.bind('<<ListboxSelect>>', lambda e: self._selectManager())
-        for item in self._managerList.keys():
-            self._listBox.insert("end", item)
+        listName = [name for name, block in self._managerList.items()]
+        list.sort(listName)
+        for name in listName:
+            self._listBox.insert("end", name)
         #self._content = ttk.Frame(self._window, width=500)
         self._content = VerticalScrolledFrame(self._window)
         self._content.grid(row=1, column=1, sticky=(N,S,E,W))

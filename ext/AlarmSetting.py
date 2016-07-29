@@ -19,23 +19,21 @@ class AlarmTimeSetting(ttk.LabelFrame):
         self.columnconfigure(9, weight=1)
         self._type = None
         self._colorFrame = None
-        #self._colorBackFrame = None
-        #self._colorForeFrame = None
-
-        self._weekDay0 = IntVar(0)
-        self._weekDay1 = IntVar(0)
-        self._weekDay2 = IntVar(0)
-        self._weekDay3 = IntVar(0)
-        self._weekDay4 = IntVar(0)
-        self._weekDay5 = IntVar(0)
-        self._weekDay6 = IntVar(0)
-        self._hourVariable   = IntVar(0)
-        self._minuteVariable = IntVar(0)
-        self._secondVariable = IntVar(0)
-        self._durationVariable = IntVar(0)
+        self._weekDay0 = IntVar(value=0)
+        self._weekDay1 = IntVar(value=0)
+        self._weekDay2 = IntVar(value=0)
+        self._weekDay3 = IntVar(value=0)
+        self._weekDay4 = IntVar(value=0)
+        self._weekDay5 = IntVar(value=0)
+        self._weekDay6 = IntVar(value=0)
+        self._hourVariable   = IntVar(value=0)
+        self._minuteVariable = IntVar(value=0)
+        self._secondVariable = IntVar(value=0)
+        self._durationVariable = IntVar(value=0)
+        self._fileVariable = StringVar(value="")
 
         weekDayFrame = ttk.LabelFrame(self, text="Дни недели")
-        weekDayFrame.grid(row = 0, column = 0, columnspan=2, sticky=(N,S,E,W))
+        weekDayFrame.grid(row=0, column=0, columnspan=2, sticky=(N,S,E,W))
         ttk.Checkbutton(weekDayFrame, text="ПН", takefocus=True, variable=self._weekDay0).grid(row=0, column=0, padx=2, pady=2)
         ttk.Checkbutton(weekDayFrame, text="ВТ", takefocus=True, variable=self._weekDay1).grid(row=0, column=1, padx=2, pady=2) 
         ttk.Checkbutton(weekDayFrame, text="СР", takefocus=True, variable=self._weekDay2).grid(row=0, column=2, padx=2, pady=2) 
@@ -62,6 +60,13 @@ class AlarmTimeSetting(ttk.LabelFrame):
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
         self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N,S,E,W))
 
+        fileFrame = ttk.LabelFrame(self, text="Файл для проигрывания")
+        fileFrame.grid(row=3, column=0, columnspan=2, sticky=(N,S,E,W))
+        ttk.Label(fileFrame, text="Файл:").grid(row=0, column=0, pady=2)
+        ttk.Entry(fileFrame, width=34, textvariable=self._fileVariable).grid(row=0, column=1, pady=2)
+        ttk.Button(fileFrame, text="...", command=self._selectFile, width=3).grid(row=0, column=2, pady=2)
+
+
     def load(self, config, sectionName):
         """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
@@ -87,10 +92,10 @@ class AlarmTimeSetting(ttk.LabelFrame):
         self._minuteVariable.set(date.minute)
         self._secondVariable.set(date.second)
         self._durationVariable.set(duration)
-
         backColor = self._getTuple(section.get("BackgroundColor", "(0, 0, 0)"))
         foreColor = self._getTuple(section.get("ForegroundColor", "(255, 255, 255)"))
         self._colorFrame.load(backColor, foreColor)
+        self._fileVariable.set(section.get("File", ""))
 
     def save(self, config, sectionName):
         """ """
@@ -122,10 +127,17 @@ class AlarmTimeSetting(ttk.LabelFrame):
         section["Duration"] = str(self._durationVariable.get())
         section["BackgroundColor"] = "(%d, %d, %d)" % backgroundColor
         section["ForegroundColor"] = "(%d, %d, %d)" % foregroundColor
+        section["File"] = self._fileVariable.get()
 
     def rename(self, sectionName):
         if not isinstance(sectionName, str): raise TypeError("sectionName")
         self.configure(text="Настройка будильника: {0}".format(sectionName))
+
+    def _selectFile(self): 
+        fileName = filedialog. Open(self, filetypes = [('*.* all files', '.*')]).show()
+        if fileName == '': return
+        self._fileVariable.set(fileName)
+
 
     def _getTuple(self, value):
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
