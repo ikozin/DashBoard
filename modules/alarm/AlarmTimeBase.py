@@ -53,8 +53,8 @@ class AlarmTimeBase(AlarmBase):
         if not self._isAlarm:
             if any(currentTime.weekday() == day for day in self._weekDay):
                 if (currentTime - self._startTime).seconds <= 3: # 3 секунды на запуск, вдруг задержка какая-нить была
-                    self._isAlarm = True
                     self.init_draw()
+                    self._isAlarm = True
                     return
         
         if self._isAlarm:
@@ -65,7 +65,7 @@ class AlarmTimeBase(AlarmBase):
 
     def init_draw(self):
         """ """
-        pygame.mixer.music.load("music\\happy three frend.mp3")
+        pygame.mixer.music.load("music/happy three frend.mp3")
         pygame.mixer.music.set_volume(1.0)
         pygame.mixer.music.play()
 
