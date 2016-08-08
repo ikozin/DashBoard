@@ -211,7 +211,7 @@ class Mainboard :
                 module.updateDisplay(self._isDisplayOn, self._screen, self._size, foregroundColor, backgroundColor)
 
             pygame.display.update()
-            pygame.time.delay(100)
+            pygame.time.delay(50)
 
         pygame.quit()
 
