@@ -72,6 +72,7 @@ class AlarmTimeSetting(ttk.LabelFrame):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not isinstance(sectionName, str):                  raise TypeError("sectionName")
         if self._type is None: raise Exception("Type is None")
+        self.config(text="Настройка будильника: {0} (Тип {1})".format(sectionName, self._type))
 
         section = config[sectionName]
         if section is None: raise Exception("Section {0} not found".format(sectionName))
