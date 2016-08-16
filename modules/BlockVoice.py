@@ -16,6 +16,7 @@ class BlockVoice(BlockBase):
         super(BlockVoice, self).__init__(logger, setting)
         self._blockSource = None
         self._speaker = None
+        self._speed = 1
         self._key = None
 
 
@@ -59,7 +60,7 @@ class BlockVoice(BlockBase):
     
     def __getvoicetext(self, text):
         fileName = "text.wav";
-        url = "https://tts.voicetech.yandex.net/generate?format=wav&lang=ru-RU&speaker={0}&emotion=good&key={1}&text='{2}'".format(self._speaker, self._key, parse.quote(text))
+        url = "https://tts.voicetech.yandex.net/generate?format=wav&lang=ru-RU&speaker={0}&emotion=good&speed={1}&key={2}&text='{3}'".format(self._speaker, self._speed, self._key, parse.quote(text))
         out = open(fileName, "wb")
         out.write(request.urlopen(url).read())
         out.close()

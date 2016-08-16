@@ -8,7 +8,7 @@ from exceptions import ExceptionFormat, ExceptionNotFound
 
 BLOCK_TIME_DISPLAY_FORMAT = "%H:%M"
 #BLOCK_TIME_DISPLAY_FORMAT = "%H:%M:%S"
-BLOCK_TIME_TIME_TEXT = "Московское время {0}"
+BLOCK_TIME_TIME_TEXT = "Московское время {0}:{1}"
 
 class BlockTime(BlockBase):
     """description of class"""
@@ -42,14 +42,14 @@ class BlockTime(BlockBase):
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
         try:
             if not isOnline: return
-
-            text = time.strftime(BLOCK_TIME_DISPLAY_FORMAT, time.localtime())
+            t = time.localtime()
+            text = time.strftime(BLOCK_TIME_DISPLAY_FORMAT, t)
             sz = self._font.size(text)
             x = (size[0] - sz[0]) >> 1
             y = (size[1] - sz[1]) >> 1
             surf = self._font.render(text, True, foreColor, backColor)
             screen.blit(surf, (x, y))
-            self._text = BLOCK_TIME_TIME_TEXT.format(text)
+            self._text = BLOCK_TIME_TIME_TEXT.format(t.tm_hour, t.tm_min)
         except Exception as ex:
             self._logger.exception(ex)
 
