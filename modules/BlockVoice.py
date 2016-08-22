@@ -43,11 +43,6 @@ class BlockVoice(BlockBase):
                     pygame.mixer.music.load(soundFile)
                     pygame.mixer.music.set_volume(1.0)
                     pygame.mixer.music.play()
-                    #if not pygame.mixer.get_busy():
-                    #    soundFile = getvoicetext(self._weather_text)
-                    #    sound = pygame.mixer.Sound(soundFile)
-                    #    sound.set_volume(1.0)   # Now plays at 100% of full volume.
-                    #    sound.play()            # Sound plays at full volume by default
         except Exception as ex:
             self._logger.exception(ex)
 

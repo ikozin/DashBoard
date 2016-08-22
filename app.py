@@ -87,8 +87,9 @@ class Mainboard :
         # Инициализируем шрифты
         pygame.font.init()
         # Инициализируем музыкальный модуль
-        pygame.mixer.init(16000, -16, 1, 512)
+        pygame.mixer.init(16000, -16, 2, 512)
         pygame.mixer.music.set_volume(0.0)
+
         # Выключаем курсор
         pygame.mouse.set_visible(False)
 
