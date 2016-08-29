@@ -100,6 +100,9 @@
     <Compile Include="modules\BlockVoice.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\BlockWatcher.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\BlockWunderGround.py">
       <SubType>Code</SubType>
     </Compile>

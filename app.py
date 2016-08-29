@@ -145,7 +145,7 @@ class Mainboard :
             return
         ###########################################################################
         if sys.platform == "linux": # Only for Raspberry Pi
-            subprocess.call("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True)
+            subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True)
             GPIO.output(LED_PIN, 0)
         else:
             pass
@@ -160,7 +160,7 @@ class Mainboard :
             return
         ###########################################################################
         if sys.platform == "linux": # Only for Raspberry Pi
-            subprocess.call("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True)
+            subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True)
             GPIO.output(LED_PIN, 1)
         else:
             pass
@@ -177,7 +177,7 @@ class Mainboard :
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_r):
                 ###########################################################################
                 if sys.platform == "linux": # Only for Raspberry Pi
-                    subprocess.call("sudo reboot", shell=True)
+                    subprocess.Popen("sudo reboot", shell=True)
                 else:
                     pass
                 ###########################################################################
@@ -185,7 +185,7 @@ class Mainboard :
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_h):
                 ###########################################################################
                 if sys.platform == "linux": # Only for Raspberry Pi
-                    subprocess.call("sudo shutdown -h now", shell=True)
+                    subprocess.Popen("sudo shutdown -h now", shell=True)
                 else:
                     pass
                 ###########################################################################
