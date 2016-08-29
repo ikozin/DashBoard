@@ -33,7 +33,11 @@ class BlockWatcher(BlockBase):
             if not self._path: return
             if (datetime.datetime.now() - self._lastUpdate).seconds <= 5: return
             self._lastUpdate = datetime.datetime.now()
-            subprocess.Popen(self._path, shell=True)
-            pass
+            ###########################################################################
+            if sys.platform == "linux": # Only for Raspberry Pi
+                subprocess.Popen(self._path, shell=True)
+            else:
+                pass
+            ###########################################################################
         except Exception as ex:
             self._logger.exception(ex)
