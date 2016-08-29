@@ -19,6 +19,7 @@ from modules.BlockTextAgregator import BlockTextAgregator
 from modules.BlocklAlarm import BlocklAlarm
 from modules.BlockSwap import BlockSwap
 from modules.BlockWunderGround import BlockWunderGround
+from modules.BlockWatcher import BlockWatcher
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -117,6 +118,7 @@ class Mainboard :
         alarm.addBlock(self._modules[2])
         self._modules.append(alarm)
 
+        self._modules.append(BlockWatcher(logger, self._config))        
         for module in self._modules:
             module.init(FILE_SETTING)
             module.updateInfo(self._isDisplayOn)
