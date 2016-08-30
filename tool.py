@@ -19,12 +19,13 @@ from ext.CalendarManager import CalendarManager
 from ext.OpenWeatherMapManager import OpenWeatherMapManager
 from ext.WunderGroundManager import WunderGroundManager
 from ext.SwapManager import SwapManager
+from ext.WatcherManager import WatcherManager
 
 class App(object):
     """description of class"""
 
     def __init__(self):
-        self._managerList = { "Main": MainManager, "Time": TimeManager, "Alarm": AlarmManager, "Voice": VoiceManager, "YandexNews": YandexNewsManager, "OpenWeatherMap": OpenWeatherMapManager, "WunderGround": WunderGroundManager, "Calendar": CalendarManager, "Swap": SwapManager}
+        self._managerList = { "Main": MainManager, "Time": TimeManager, "Alarm": AlarmManager, "Voice": VoiceManager, "YandexNews": YandexNewsManager, "OpenWeatherMap": OpenWeatherMapManager, "WunderGround": WunderGroundManager, "Calendar": CalendarManager, "Swap": SwapManager, "Watcher": WatcherManager }
         self._list = dict()
         self._currentName = None
         self._root = Tk()

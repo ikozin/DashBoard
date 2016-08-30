@@ -75,14 +75,14 @@ class Mainboard :
     
         if not found:
             raise Exception("No suitable video driver found!")
-        
+        ###########################################################################
         if sys.platform == "linux": # Only for Raspberry Pi
             self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
             self._screen = pygame.display.set_mode(self._size, pygame.FULLSCREEN | pygame.HWSURFACE)
         else:
             self._size = (1280, 1024)
             self._screen = pygame.display.set_mode(self._size)
-
+        ###########################################################################
         print("Framebuffer size: {0}".format(self._size))
 
         # Инициализируем шрифты
@@ -119,6 +119,7 @@ class Mainboard :
         self._modules.append(alarm)
 
         self._modules.append(BlockWatcher(logger, self._config))        
+
         for module in self._modules:
             module.init(FILE_SETTING)
             module.updateInfo(self._isDisplayOn)
