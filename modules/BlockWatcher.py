@@ -21,7 +21,7 @@ class BlockWatcher(BlockBase):
         self._weekDay = None
         self._time = None
         self._path = None
-
+        self._isWatching = False
 
     def init(self, fileName):
         """Initializes (initialize internal variables)"""
@@ -66,7 +66,14 @@ class BlockWatcher(BlockBase):
             if not isOnline: return
             if not self._path: return
             currentTime = datetime.datetime.now()
-            if any(currentTime.weekday() == day for day in self._weekDay):
+            if not self._isWatching:
+                if any(currentTime.weekday() == day for day in self._weekDay):
+                    if (currentTime - self._startTime).seconds <= self._time * 1000:
+                        self._isWatching = True
+            if self._isWatching:
+                if (currentTime - self._stopTime).seconds <= self._time * 1000:
+                    self._isWatching = False
+            if self._isWatching:
                 subprocess.Popen(self._path, shell=True)
         except Exception as ex:
             self._logger.exception(ex)

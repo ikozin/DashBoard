@@ -361,20 +361,20 @@ def main():
     
 if __name__ == "__main__":
     #main()
-    date1 = datetime.datetime.strptime("15:00:00", "%H:%M:%S")
-    date2 = datetime.datetime.strptime("23:00:00", "%H:%M:%S")
-    #currentDate = datetime.datetime.strptime("19:00:00", "%H:%M:%S")
-    currentDate = datetime.datetime.now()
+    currentTime = datetime.datetime.now()
+    startTime = datetime.datetime.strptime("14:44:10", "%H:%M:%S")
+    stopTime = datetime.datetime.strptime("14:50:00", "%H:%M:%S")
+    
+    
 
-    print(currentDate, date1, date2)
+    print((currentTime - startTime).seconds)
+    print((currentTime - stopTime).seconds)
 
-    #print((currentDate - date1))
-    #print((date1 - currentDate))
 
-    print((currentDate - date1).seconds)
-    print((date1 - currentDate).seconds)
-    print(3600*24)
-    print((currentDate - date2).seconds)
-    print((date2 - currentDate).seconds)
-    print(3600*24)
+    #print((currentDate - date1).seconds)
+    #print((date1 - currentDate).seconds)
+    #print(3600*24)
+    #print((currentDate - date2).seconds)
+    #print((date2 - currentDate).seconds)
+    #print(3600*24)
 
