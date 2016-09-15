@@ -19,6 +19,7 @@ class MainSetting(ttk.LabelFrame):
         self.columnconfigure(9, weight=1)
         self._colorFrame = None
 
+        self._time = None
         self._hourVariable   = IntVar(0)
         self._minuteVariable = IntVar(0)
         self._secondVariable = IntVar(0)
@@ -66,6 +67,13 @@ class MainSetting(ttk.LabelFrame):
         foreColor = self._getTuple(section.get("foregroundcolor", "(255, 255, 255)"))
         self._colorFrame.load(backColor, foreColor)
 
+    def pre_save(self):
+        date = datetime.datetime(year=1900, month=1, day=1,
+            hour=self._hourVariable.get(),
+            minute=self._minuteVariable.get(),
+            second=self._secondVariable.get())
+        self._time = datetime.datetime.strftime(date, "%H:%M:%S")
+
     def save(self, config, sectionName):
         """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
@@ -74,12 +82,8 @@ class MainSetting(ttk.LabelFrame):
         if config.has_section(sectionName): config.remove_section(sectionName)
         config.add_section(sectionName)
         section = config[sectionName]
-        date = datetime.datetime(year=1900, month=1, day=1,
-            hour=self._hourVariable.get(),
-            minute=self._minuteVariable.get(),
-            second=self._secondVariable.get())
         (backgroundColor, foregroundColor) = self._colorFrame.getResult()
-        section["starttime"] = datetime.datetime.strftime(date, "%H:%M:%S")
+        section["starttime"] = self._time
         section["idletime"] = str(self._idleVariable.get())
         section["backgroundcolor"] = "(%d, %d, %d)" % backgroundColor
         section["foregroundcolor"] = "(%d, %d, %d)" % foregroundColor

@@ -19,6 +19,7 @@ class AlarmTimeSetting(ttk.LabelFrame):
         self.columnconfigure(9, weight=1)
         self._type = None
         self._colorFrame = None
+        self._time = None
         self._weekDay0 = IntVar(value=0)
         self._weekDay1 = IntVar(value=0)
         self._weekDay2 = IntVar(value=0)
@@ -98,6 +99,13 @@ class AlarmTimeSetting(ttk.LabelFrame):
         self._colorFrame.load(backColor, foreColor)
         self._fileVariable.set(section.get("File", ""))
 
+    def pre_save(self):
+        date = datetime.datetime(year=1900, month=1, day=1,
+            hour=self._hourVariable.get(),
+            minute=self._minuteVariable.get(),
+            second=self._secondVariable.get())
+        self._time = datetime.datetime.strftime(date, "%H:%M:%S")
+
     def save(self, config, sectionName):
         """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
@@ -107,10 +115,6 @@ class AlarmTimeSetting(ttk.LabelFrame):
         if config.has_section(sectionName): config.remove_section(sectionName)
         config.add_section(sectionName)
         section = config[sectionName]
-        date = datetime.datetime(year=1900, month=1, day=1,
-            hour=self._hourVariable.get(),
-            minute=self._minuteVariable.get(),
-            second=self._secondVariable.get())
         weekday = (
                     self._weekDay0.get(),
                     self._weekDay1.get(),
@@ -123,7 +127,7 @@ class AlarmTimeSetting(ttk.LabelFrame):
         weekday = [str(index) for (index, value) in enumerate(weekday) if value != 0]
         (backgroundColor, foregroundColor) = self._colorFrame.getResult()
         section["Type"] = str(self._type)
-        section["Time"] = datetime.datetime.strftime(date, "%H:%M:%S")
+        section["Time"] = self._time
         section["WeekDay"] = ", ".join(weekday)
         section["Duration"] = str(self._durationVariable.get())
         section["BackgroundColor"] = "(%d, %d, %d)" % backgroundColor

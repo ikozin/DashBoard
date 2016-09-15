@@ -121,8 +121,13 @@ class AlarmManager(ttk.LabelFrame):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("AlarmBlock"): config.add_section("AlarmBlock")
         section = config["AlarmBlock"]
-        section["List"] = ", ".join(self._alarmlist.keys())
-        for schemaName in self._alarmlist.keys():
+
+        modules = [x for x in iter(self._alarmlist)]
+        for schemaName in modules:
+            self._alarmlist[schemaName].pre_save()
+        list.sort(modules, key=lambda entry: self._alarmlist[entry]._time)
+        section["List"] = ", ".join(modules)
+        for schemaName in modules:
             alarmBlock = self._alarmlist[schemaName]
             alarmBlock.save(config, schemaName)
 

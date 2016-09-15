@@ -76,8 +76,13 @@ class MainManager(ttk.LabelFrame):
         section["backgroundcolor"] = "(%d, %d, %d)" % backgroundColor
         section["foregroundcolor"] = "(%d, %d, %d)" % foregroundColor
         section = config["TIMELINE"]
-        section["sections"] = ", ".join(self._sectionlist)
-        for sectionName in self._sectionlist.keys():
+
+        parts = [x for x in iter(self._sectionlist)]
+        for schemaName in parts:
+            self._sectionlist[schemaName].pre_save()
+        list.sort(parts, key=lambda entry: self._sectionlist[entry]._time)
+        section["sections"] = ", ".join(parts)
+        for sectionName in parts:
             sectionBlock = self._sectionlist[sectionName]
             sectionBlock.save(config, sectionName)
 
