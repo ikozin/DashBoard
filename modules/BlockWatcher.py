@@ -74,6 +74,6 @@ class BlockWatcher(BlockBase):
                 if (currentTime - self._stopTime).seconds <= self._time * 1000:
                     self._isWatching = False
             if self._isWatching:
-                subprocess.Popen(self._path, shell=True)
+                subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
         except Exception as ex:
             self._logger.exception(ex)

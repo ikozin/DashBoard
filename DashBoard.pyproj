@@ -127,6 +127,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
     <Content Include="weather\chanceflurries.gif" />
     <Content Include="weather\chancerain.gif" />
@@ -168,6 +169,7 @@
     <Content Include="weather\tstorms.gif" />
     <Content Include="logger.ini" />
     <Content Include="setting.ini" />
+    <Content Include="webcam.sh" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="music\" />
