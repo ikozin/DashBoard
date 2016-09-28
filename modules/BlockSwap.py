@@ -15,45 +15,47 @@ class BlockSwap(BlockBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockSwap, self).__init__(logger, setting)
+        self._blocks = []
+        self._index = 0
         self._lastSwap = datetime.now()
-        self._firstUpdate = True
-        self._showBlock1 = True
-        self._block1 = None
-        self._block2 = None
         self._time = None
 
 
-    def init(self, fileName):
+    def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
         section = config["SwapBlock"]
         self._time = section.getint("UpdateTime")
-        if not self._block1: raise Exception(EXCEPTION_TEXT)
-        if not self._block2: raise Exception(EXCEPTION_TEXT)
-        self._block1.init(fileName)
-        self._block2.init(fileName)
+        selection = section.get("BlockList", "")
+        selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
+        for name in selection:
+            if name in modList:
+                self.addBlock(modList[name])
+
+        if not self._blocks: raise Exception(EXCEPTION_TEXT)
+        for block in self._blocks:
+            block.init(fileName, isOnline, modList)
+
         pygame.time.set_timer(BLOCK_SWAP_UPDATE_EVENT, self._time * 1000)
+        self.updateInfo(isOnline)
 
 
     def proccedEvent(self, event, isOnline):
-        self._block1.proccedEvent(event, isOnline)
-        self._block2.proccedEvent(event, isOnline)
+        for block in self._blocks:
+            block.proccedEvent(event, isOnline)
         if event.type == BLOCK_SWAP_UPDATE_EVENT: self.updateInfo(isOnline)
 
 
     def updateInfo(self, isOnline):
-        if self._firstUpdate:
-            self._block1.updateInfo(isOnline)
-            self._block2.updateInfo(isOnline)
-        self._firstUpdate = False
-        self._showBlock1 = not self._showBlock1
-
+        self._index = self._index + 1
+        if self._index >= len(self._blocks):
+            self._index = 0
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
         try:
             if not isOnline: return
-            block = self._block1 if self._showBlock1 else self._block2
+            block = self._blocks[self._index]
             block.updateDisplay(isOnline, screen, size, foreColor, backColor)
         except Exception as ex:
             self._logger.exception(ex)
@@ -61,15 +63,12 @@ class BlockSwap(BlockBase):
 
     def getText(self):
         """ """
-        if self._showBlock1:
-            self._text = self._block1.getText()
-        else:
-            self._text = self._block2.getText()
+        block = self._blocks[self._index]
+        self._text = block.getText()
         return self._text
 
-
-    def AddBlocks(self, block1, block2):
-        if not isinstance(block1, BlockBase): raise("Передаваемый параметр block1 должен быть наследником BlockBase")
-        if not isinstance(block2, BlockBase): raise("Передаваемый параметр block2 должен быть наследником BlockBase")
-        self._block1 = block1
-        self._block2 = block2
+    def addBlock(self, block):
+        """  """
+        if not isinstance(block, BlockBase):
+            raise("Передаваемый параметр должен быть наследником BlockBase")
+        self._blocks.append(block)

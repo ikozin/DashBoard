@@ -23,7 +23,7 @@ class BlockWatcher(BlockBase):
         self._path = None
         self._isWatching = False
 
-    def init(self, fileName):
+    def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
@@ -54,6 +54,7 @@ class BlockWatcher(BlockBase):
             self._path = "calc.exe"
         ###########################################################################
         pygame.time.set_timer(BLOCK_WATCHER_UPDATE_EVENT, self._time * 1000)
+        self.updateInfo(isOnline)
 
 
     def proccedEvent(self, event, isOnline):

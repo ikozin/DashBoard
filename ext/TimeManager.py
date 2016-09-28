@@ -18,7 +18,7 @@ class TimeManager(ttk.LabelFrame):
         self._font = FontChooserFrame(self, "Параметры шрифта")
         self._font.grid(row=0, column=1)
 
-    def load(self, config):
+    def load(self, config, modulelist):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("TimeBlock"):      config.add_section("TimeBlock")
         section = config["TimeBlock"]

@@ -57,7 +57,7 @@ class BlockWunderGround(BlockBase):
         self._windFont = None
 
 
-    def init(self, fileName):
+    def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
@@ -177,6 +177,7 @@ class BlockWunderGround(BlockBase):
                           "nt_cloudy.gif","nt_partlycloudy.gif"]:
             self._load(imageName, self._folder)
         pygame.time.set_timer(BLOCK_WUNDER_GROUND_UPDATE_EVENT, self._time * 60000)
+        self.updateInfo(isOnline)
 
 
     def proccedEvent(self, event, isOnline):

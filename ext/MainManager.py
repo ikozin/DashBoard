@@ -35,10 +35,10 @@ class MainManager(ttk.LabelFrame):
         ttk.Label(idleFrame, text="минут").grid(row=0, column=2, pady=2)
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
         self._colorFrame.grid(row=0, column=3, sticky=(N,E,W))
-        self._setcionFrame = ttk.Frame(self, padding=(2,2,2,2))
-        self._setcionFrame.grid(row=1, column=2, rowspan=2, columnspan=3, sticky=(N,S,E,W))
+        self._sectionFrame = ttk.Frame(self, padding=(2,2,2,2))
+        self._sectionFrame.grid(row=1, column=2, rowspan=2, columnspan=3, sticky=(N,S,E,W))
 
-    def load(self, config):
+    def load(self, config, modulelist):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("MAIN"):      config.add_section("MAIN")
         if not config.has_section("TIMELINE"):  config.add_section("TIMELINE")
@@ -61,7 +61,7 @@ class MainManager(ttk.LabelFrame):
             sectionSchemas = [str(item) for item in sectionSchemas if config.has_section(item)]
             for item in sectionSchemas:
                 section = config[item]
-                sectionBlock = MainSetting(self._setcionFrame, item)
+                sectionBlock = MainSetting(self._sectionFrame, item)
                 sectionBlock.load(config, item)
                 self._sectionlist[item] = sectionBlock
                 self._listBox.insert("end", item)
@@ -105,7 +105,7 @@ class MainManager(ttk.LabelFrame):
         if item in self._sectionlist:
             messagebox.showerror("Ошибка", "Расписание {0} уже существует".format(item))
             return
-        sectionBlock = MainSetting(self._setcionFrame, item)
+        sectionBlock = MainSetting(self._sectionFrame, item)
         self._sectionlist[item] = sectionBlock
         self._listBox.insert("end", item)
 

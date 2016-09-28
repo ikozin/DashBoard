@@ -19,7 +19,7 @@ class BlockTime(BlockBase):
         self._font = None
 
 
-    def init(self, fileName):
+    def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
@@ -37,6 +37,8 @@ class BlockTime(BlockBase):
         if isItalic is None: raise ExceptionNotFound(section.name, "FontItalic")
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
+
+        self.updateInfo(isOnline)
 
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor):

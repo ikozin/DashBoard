@@ -47,7 +47,7 @@ if sys.platform == "linux": # Only for Raspberry Pi
 class Mainboard :
 
     def __init__(self):
-        """Initializes a new pygame screen using the framebuffer"""
+        """ """
         self._modules  = []
         self._size = None
         self._screen = None
@@ -94,35 +94,27 @@ class Mainboard :
         # Выключаем курсор
         pygame.mouse.set_visible(False)
 
-        self._modules.append(BlockTime(logger, self._config))
-        #self._modules.append(BlockOpenWeatherMap(logger, self._config))
-        #self._modules.append(BlockCalendar(logger, self._config))
-        blockSwap = BlockSwap(logger, self._config)
-        #blockSwap.AddBlocks(BlockOpenWeatherMap(logger, self._config), BlockCalendar(logger, self._config))
-        blockSwap.AddBlocks(BlockWunderGround(logger, self._config), BlockCalendar(logger, self._config))
-        self._modules.append(blockSwap)
-        self._modules.append(BlockYandexNews(logger, self._config))
+        self._managerList = {
+            "Time": BlockTime(logger, self._config),
+            "Alarm": BlocklAlarm(logger, self._config),
+            "Voice": BlockVoice(logger, self._config),
+            "YandexNews": BlockYandexNews(logger, self._config),
+            "OpenWeatherMap": BlockOpenWeatherMap(logger, self._config),
+            "WunderGround": BlockWunderGround(logger, self._config),
+            "Calendar": BlockCalendar(logger, self._config),
+            "Swap": BlockSwap(logger, self._config),
+            "Watcher": BlockWatcher(logger, self._config)
+            }
 
-        argergator = BlockTextAgregator(logger, self._config)
-        argergator.addBlock(self._modules[0])
-        argergator.addBlock(self._modules[1])
-        argergator.addBlock(self._modules[2])
-        voice = BlockVoice(logger, self._config)
-        voice.setTextSource(argergator)
-        self._modules.append(voice)
-        self._modules.append(argergator)
-        
-        alarm = BlocklAlarm(logger, self._config)
-        alarm.addBlock(self._modules[0])
-        alarm.addBlock(self._modules[1])
-        alarm.addBlock(self._modules[2])
-        self._modules.append(alarm)
-
-        self._modules.append(BlockWatcher(logger, self._config))        
+        self._modules.append(self._managerList["Watcher"])
+        self._modules.append(self._managerList["Time"])
+        self._modules.append(self._managerList["Swap"])
+        self._modules.append(self._managerList["YandexNews"])
+        self._modules.append(self._managerList["Voice"])
+        self._modules.append(self._managerList["Alarm"])
 
         for module in self._modules:
-            module.init(FILE_SETTING)
-            module.updateInfo(self._isDisplayOn)
+            module.init(FILE_SETTING, self._isDisplayOn, self._managerList)
 
 
     def __del__(self):

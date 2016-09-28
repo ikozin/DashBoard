@@ -23,7 +23,7 @@ class CalendarManager(ttk.LabelFrame):
         self._font = FontChooserFrame(self, "Параметры шрифта")
         self._font.grid(row=1, column=0, padx=2, pady=2, sticky=(N,S,E,W))
 
-    def load(self, config):
+    def load(self, config, modulelist):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("CalendarBlock"):      config.add_section("CalendarBlock")
         section = config["CalendarBlock"]

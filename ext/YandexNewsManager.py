@@ -43,7 +43,7 @@ class YandexNewsManager(ttk.LabelFrame):
         self._font.grid(row=2, column=0, padx=2, pady=2, sticky=(N,S,E,W))
 
 
-    def load(self, config):
+    def load(self, config, modulelist):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("YandexNewsBlock"):      config.add_section("YandexNewsBlock")
         section = config["YandexNewsBlock"]

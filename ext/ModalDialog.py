@@ -161,6 +161,79 @@ class XYFrame(ttk.LabelFrame):
         """ """
         return (self._X.get(), self._Y.get())
 
+class SelectFrame(ttk.LabelFrame):
+    def __init__(self, root, text):
+        super(SelectFrame, self).__init__(root, text=text)
+        self._selList = []
+        self._srcList = []
+        Button(self, text="Вверх", command=self._command_up).grid(row=0, column=0, sticky=(N,S,E,W), padx=5, pady=5)
+        Button(self, text="Вниз", command=self._command_down).grid(row=1, column=0, sticky=(N,S,E,W), padx=5, pady=5)
+        self._selListBox = Listbox(self)
+        self._selListBox.grid(row=0, column=1, rowspan=2)
+        Button(self, text="Включить", command=self._command_include).grid(row=0, column=2, sticky=(N,S,E,W), padx=5, pady=5)
+        Button(self, text="Выключить", command=self._command_exclude).grid(row=1, column=2, sticky=(N,S,E,W), padx=5, pady=5)
+        self._srcListBox = Listbox(self)
+        self._srcListBox.grid(row=0, column=3, rowspan=2)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(3, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=1)
+
+    def load(self, selection=[], modList=[]):
+        self._selList = selection
+        self._srcList = modList
+        for item in self._selList:  self._selListBox.insert("end", item)
+        self._selListBox.selection_set(0)
+        for item in self._srcList:  self._srcListBox.insert("end", item)
+        self._srcListBox.selection_set(0)
+
+    def getResult(self):
+        """ """
+        return ", ".join(self._selList)
+
+    def _command_up(self):
+        selection = self._selListBox.curselection() 
+        if not selection: return
+        if selection[0] == 0: return
+        item = self._selList.pop(selection[0])
+        self._selList.insert(selection[0] - 1, item)
+        self._update_selected_list(selection[0] - 1)
+
+
+    def _command_down(self):
+        selection = self._selListBox.curselection() 
+        if not selection: return
+        if selection[0] == len(self._selList) - 1: return
+        item = self._selList.pop(selection[0])
+        self._selList.insert(selection[0] + 1, item)
+        self._update_selected_list(selection[0] + 1)
+
+    def _command_include(self):
+        selection = self._srcListBox.curselection() 
+        if not selection: return
+        name = self._srcListBox.get(selection[0])
+        if name in self._selList: return
+
+        self._selList.append(name)
+        self._update_selected_list()
+        pass
+
+    def _command_exclude(self):
+        selection = self._srcListBox.curselection() 
+        if not selection: return
+        name = self._srcListBox.get(selection[0])
+        if name not in self._selList: return
+
+        self._selList.remove(name)
+        self._update_selected_list()
+        pass
+
+    def _update_selected_list(self, selection = None):
+        self._selListBox.delete(0, 'end')
+        for item in self._selList:  self._selListBox.insert("end", item)
+        if selection:
+            self._selListBox.selection_set(selection)
+
 
 # http://tkinter.unpythonic.net/wiki/VerticalScrolledFrame
 class VerticalScrolledFrame(Frame):

@@ -7,6 +7,8 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
+from ext.ModalDialog import SelectFrame
+
 class VoiceManager(ttk.LabelFrame):
     """description of class"""
 
@@ -19,14 +21,18 @@ class VoiceManager(ttk.LabelFrame):
         ttk.Combobox(self, state="readonly", values=('jane', 'oksana', 'alyss', 'omazh', 'zahar', 'ermil'), textvariable=self._speakerValue).grid(row=0, column=1, padx=2, pady=2)
         ttk.Label(self, text="Яндекс ключ").grid(row=0, column=2, padx=2, pady=2)
         ttk.Entry(self, textvariable=self._keyValue, width=35).grid(row=0, column=3, padx=2, pady=2)
-        
+        self._frame = SelectFrame(self, "Выбор модулей")
+        self._frame.grid(row=1, column=0, columnspan=4, sticky=(N,S,E,W), padx=2, pady=2)
 
-    def load(self, config):
+    def load(self, config, modulelist):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("VoiceBlock"):      config.add_section("VoiceBlock")
         section = config["VoiceBlock"]
         self._speakerValue.set(section.get("Speaker", "omazh"))
         self._keyValue.set(section.get("Key", ""))
+        selection = section.get("BlockList", "")
+        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in modulelist]
+        self._frame.load(selection, modulelist)
 
     def save(self, config):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
@@ -34,4 +40,4 @@ class VoiceManager(ttk.LabelFrame):
         section = config["VoiceBlock"]
         section["Speaker"] = self._speakerValue.get()
         section["Key"] = self._keyValue.get()
-
+        section["BlockList"] = self._frame.getResult()

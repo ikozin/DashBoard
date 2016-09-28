@@ -62,7 +62,7 @@ class WunderGroundManager(ttk.LabelFrame):
         self._wind.grid(row=12, column=0, padx=2, pady=2, sticky=(N,S,E,W))
 
 
-    def load(self, config):
+    def load(self, config, modulelist):
         """ """
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("WunderGroundBlock"):      config.add_section("WunderGroundBlock")

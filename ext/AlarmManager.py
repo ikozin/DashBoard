@@ -9,6 +9,7 @@ from tkinter import colorchooser
 
 from ext.ModalDialog import ModalDialog
 from ext.ModalDialog import EntryModalDialog
+from ext.ModalDialog import SelectFrame
 from ext.AlarmSetting import AlarmSimpleSetting
 from ext.AlarmSetting import AlarmBlinkSetting
 from ext.AlarmSetting import AlarmRiseSetting
@@ -89,9 +90,11 @@ class AlarmManager(ttk.LabelFrame):
         ttk.Button(commandFrame, text="Удалить", command=self._deleteAlarm).grid(row=2, column=0, sticky=(N,S,E,W))
         self._alarmFrame = ttk.Frame(self, padding=(2,2,2,2))
         self._alarmFrame.grid(row=0, column=2, sticky=(N,S,E,W))
+        self._frame = SelectFrame(self, "Выбор модулей для отображения во время срабатывания будильника")
+        self._frame.grid(row=1, column=0, columnspan=3, sticky=(N,S,E,W), padx=2, pady=2)
 
 
-    def load(self, config):
+    def load(self, config, modulelist):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("AlarmBlock"): config.add_section("AlarmBlock")
 
@@ -102,6 +105,9 @@ class AlarmManager(ttk.LabelFrame):
         self._alarmlist.clear()
         self._listBox.delete(0, "end")
         section = config["AlarmBlock"]
+        selection = section.get("BlockList", "")
+        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in modulelist]
+        self._frame.load(selection, modulelist)
         csvValue = section.get("List", "")
         if csvValue:
             alarmSchemas = [item.strip(" '") for item in csvValue.split(",") if item.strip()]
@@ -130,6 +136,7 @@ class AlarmManager(ttk.LabelFrame):
         for schemaName in modules:
             alarmBlock = self._alarmlist[schemaName]
             alarmBlock.save(config, schemaName)
+        section["BlockList"] = self._frame.getResult()
 
 
     def _selectAlarm(self, event):

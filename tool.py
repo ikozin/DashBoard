@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-# feedback_solution.py by Barron Stone
-# This is an exercise file from Python GUI Development with Tkinter on lynda.com
 
 import datetime
 import configparser
@@ -81,9 +79,11 @@ class App(object):
             manager = self._list[name]
             manager.destroy()
         self._list.clear()
+        modulelist = [name for name in iter(self._managerList)]
+        list.sort(modulelist)
         for name in self._managerList.keys():
             manager = self._managerList[name](self._content.interior)
-            manager.load(config)
+            manager.load(config, modulelist)
             self._list[name] = manager
 
 

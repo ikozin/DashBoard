@@ -14,13 +14,13 @@ class BlockVoice(BlockBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockVoice, self).__init__(logger, setting)
-        self._blockSource = None
+        self._blocks = []
         self._speaker = None
         self._speed = 1
         self._key = None
 
 
-    def init(self, fileName):
+    def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
@@ -28,16 +28,24 @@ class BlockVoice(BlockBase):
 
         self._speaker = section.get("Speaker")
         self._key = section.get("Key")
+        selection = section.get("BlockList", "")
+        selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
+        for name in selection:
+            if name in modList:
+                self.addBlock(modList[name])
 
         if self._speaker is None: raise ExceptionNotFound(section.name, "Speaker")
         if self._key is None:     raise ExceptionNotFound(section.name, "Key")
+        if not self._blocks:      raise ExceptionNotFound(section.name, "BlockList")
+
+        self.updateInfo(isOnline)
 
 
     def proccedEvent(self, event, isOnline):
         try:
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE):
-                if self._blockSource:
-                    text = self._blockSource.getText()
+                if self._blocks:
+                    text = ". ".join(map(lambda block: block.getText(), self._blocks))
                     if not text: return
                     soundFile = self.__getvoicetext(text)
                     pygame.mixer.music.load(soundFile)
@@ -47,10 +55,11 @@ class BlockVoice(BlockBase):
             self._logger.exception(ex)
 
 
-    def setTextSource(self, block):
+    def addBlock(self, block):
+        """  """
         if not isinstance(block, BlockBase):
             raise("Передаваемый параметр должен быть наследником BlockBase")
-        self._blockSource = block
+        self._blocks.append(block)
 
     
     def __getvoicetext(self, text):

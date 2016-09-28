@@ -22,7 +22,7 @@ class BlocklAlarm(BlockBase):
         self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise}
 
 
-    def init(self, fileName):
+    def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
@@ -30,6 +30,12 @@ class BlocklAlarm(BlockBase):
 
         section = config["AlarmBlock"]
         if section is None: return
+
+        selection = section.get("BlockList", "")
+        selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
+        for name in selection:
+            if name in modList:
+                self.addBlock(modList[name])
 
         csvValue = section.get("List")
         if csvValue is None: return
@@ -50,6 +56,7 @@ class BlocklAlarm(BlockBase):
             self._alarmBlock.append(alarm)
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
+        self.updateInfo(isOnline)
 
 
     def proccedEvent(self, event, isOnline):

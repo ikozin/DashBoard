@@ -17,7 +17,7 @@ class BlockBase:
         pass
 
 
-    def init(self, fileName):
+    def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         pass
 
