@@ -118,9 +118,6 @@
     <Compile Include="modules\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="mod_list.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="setting.py" />
     <Compile Include="test.py">
       <SubType>Code</SubType>
