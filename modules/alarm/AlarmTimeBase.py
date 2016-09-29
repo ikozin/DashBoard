@@ -7,6 +7,10 @@ import pygame.locals
 from modules.alarm.AlarmBase import AlarmBase
 from exceptions import ExceptionFormat, ExceptionNotFound
 
+ALARM_VOLUME_MIN = 0.1
+ALARM_VOLUME_MAX = 1.0
+ALARM_VOLUME_STEP = 0.05
+
 class AlarmTimeBase(AlarmBase):
     """description of class"""
 
@@ -21,6 +25,7 @@ class AlarmTimeBase(AlarmBase):
         self._duration = None
         self._foreColor = None
         self._backColor = None
+        self._volume = ALARM_VOLUME_MIN
 
     def init(self, configSection):
         """Initializes (initialize internal variables)"""
@@ -52,6 +57,7 @@ class AlarmTimeBase(AlarmBase):
         if not self._isAlarm:
             if any(currentTime.weekday() == day for day in self._weekDay):
                 if (currentTime - self._startTime).seconds <= 3: # 3 секунды на запуск, вдруг задержка какая-нить была
+                    self._volume = ALARM_VOLUME_MIN
                     self.init_draw()
                     self._isAlarm = True
                     return
@@ -61,12 +67,17 @@ class AlarmTimeBase(AlarmBase):
                 self.done_draw()
                 self._isAlarm = False
 
+        if self._isAlarm:
+            if self._volume < ALARM_VOLUME_MAX:
+                self._volume += ALARM_VOLUME_STEP
+                pygame.mixer.music.set_volume(self._volume)
+
     def init_draw(self):
         """ """
         if not self._fileName: return
+        pygame.mixer.music.set_volume(self._volume)
         pygame.mixer.music.load(self._fileName)
         pygame.mixer.music.play()
-        pygame.mixer.music.set_volume(1.0)
 
         #if not pygame.mixer.get_busy():
         #    soundFile = getvoicetext(self._weather_text)
