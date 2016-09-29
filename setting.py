@@ -9,6 +9,7 @@ class Setting:
         """Ininitializes a new instanse"""
         self._backgroundColor = None
         self._foregroundColor = None
+        self._blockList = []
         self._idleTime = None
         self._timeLine = []         #Набор кортежей (StartTime, BackgroundColor, ForegroundColor, IdleTime)
 
@@ -22,10 +23,13 @@ class Setting:
         self._backgroundColor = self.getTuple(section.get("BackgroundColor"))
         self._foregroundColor = self.getTuple(section.get("ForegroundColor"))
         self._idleTime = section.getint("IdleTime")
+        selection = section.get("BlockList", "")
+        self._blockList = [item.strip(" '") for item in selection.split(",") if item.strip()]
 
         if not self._backgroundColor: raise ExceptionNotFound(section.name, "BackgroundColor")
         if not self._foregroundColor: raise ExceptionNotFound(section.name, "ForegroundColor")
         if not self._idleTime:        raise ExceptionNotFound(section.name, "IdleTime")
+        if not self._blockList:       raise ExceptionNotFound(section.name, "BlockList")
 
         if len(self._backgroundColor) != 3: raise ExceptionFormat(section.name, "BackgroundColor")
         if len(self._foregroundColor) != 3: raise ExceptionFormat(section.name, "ForegroundColor")

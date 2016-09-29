@@ -106,12 +106,15 @@ class Mainboard :
             "Watcher": BlockWatcher(logger, self._config)
             }
 
-        self._modules.append(self._managerList["Watcher"])
-        self._modules.append(self._managerList["Time"])
-        self._modules.append(self._managerList["Swap"])
-        self._modules.append(self._managerList["YandexNews"])
-        self._modules.append(self._managerList["Voice"])
-        self._modules.append(self._managerList["Alarm"])
+        for name in self._config._blockList:
+            if name in self._managerList:
+                self._modules.append(self._managerList[name])
+        #self._modules.append(self._managerList["Watcher"])
+        #self._modules.append(self._managerList["Time"])
+        #self._modules.append(self._managerList["Swap"])
+        #self._modules.append(self._managerList["YandexNews"])
+        #self._modules.append(self._managerList["Voice"])
+        #self._modules.append(self._managerList["Alarm"])
 
         for module in self._modules:
             module.init(FILE_SETTING, self._isDisplayOn, self._managerList)

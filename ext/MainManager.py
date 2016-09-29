@@ -9,6 +9,7 @@ from tkinter import colorchooser
 
 from ext.ModalDialog import ColorsChooserFrame
 from ext.ModalDialog import EntryModalDialog
+from ext.ModalDialog import SelectFrame
 from ext.MainSetting import MainSetting
 
 class MainManager(ttk.LabelFrame):
@@ -38,6 +39,9 @@ class MainManager(ttk.LabelFrame):
         self._sectionFrame = ttk.Frame(self, padding=(2,2,2,2))
         self._sectionFrame.grid(row=1, column=2, rowspan=2, columnspan=3, sticky=(N,S,E,W))
 
+        self._frame = SelectFrame(self, "Выбор модулей для загрузки")
+        self._frame.grid(row=3, column=0, columnspan=3, sticky=(N,S,E,W), padx=2, pady=2)
+
     def load(self, config, modulelist):
         if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
         if not config.has_section("MAIN"):      config.add_section("MAIN")
@@ -54,6 +58,9 @@ class MainManager(ttk.LabelFrame):
         backColor = self._getTuple(section.get("backgroundcolor", "(0, 0, 0)"))
         foreColor = self._getTuple(section.get("foregroundcolor", "(255, 255, 255)"))
         self._colorFrame.load(backColor, foreColor)
+        selection = section.get("BlockList", "")
+        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in modulelist]
+        self._frame.load(selection, modulelist)
         section = config["TIMELINE"]
         csvValue = section.get("sections")
         if csvValue:
@@ -75,6 +82,8 @@ class MainManager(ttk.LabelFrame):
         section["idletime"] = str(self._idleVariable.get())
         section["backgroundcolor"] = "(%d, %d, %d)" % backgroundColor
         section["foregroundcolor"] = "(%d, %d, %d)" % foregroundColor
+        section["BlockList"] = self._frame.getResult()
+
         section = config["TIMELINE"]
 
         parts = [x for x in iter(self._sectionlist)]
