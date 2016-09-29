@@ -69,12 +69,17 @@ class BlockWatcher(BlockBase):
             currentTime = datetime.datetime.now()
             if not self._isWatching:
                 if any(currentTime.weekday() == day for day in self._weekDay):
-                    if (currentTime - self._startTime).seconds <= self._time * 1000:
+                    if currentTime.time() >= self._startTime.time():
                         self._isWatching = True
             if self._isWatching:
-                if (currentTime - self._stopTime).seconds <= self._time * 1000:
+                if currentTime.time() > self._stopTime.time():
                     self._isWatching = False
             if self._isWatching:
-                subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
+                ###########################################################################
+                if sys.platform == "linux": # Only for Raspberry Pi
+                    subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
+                else:
+                    subprocess.Popen(self._path, shell=True)
+                ###########################################################################
         except Exception as ex:
             self._logger.exception(ex)
