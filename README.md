@@ -1,15 +1,15 @@
-# DashBoard
-Инфромационная панель для Raspberry pi
+п»ї# DashBoard
+РРЅС„СЂРѕРјР°С†РёРѕРЅРЅР°СЏ РїР°РЅРµР»СЊ РґР»СЏ Raspberry pi
 
 
-## Доступные плагины
-1. Часы (BlockTime)
-2. Календарь (BlockCalendar)
-3. Погода от OpenWeaterMap (BlockOpenWeatherMap)
-4. Погода от Weather UnderGround (BlockWunderGround)
-5. Новости от Яндекса (BlockYandexNews)
-6. Голос YandexSpeech - озвучивает полученный текст (BlockVoice)
-7. Будильник (BlocklAlarm)
-8. Смена модулей (BlockSwap)
-9. Наблюдатель, запуск скрипта (BlockWatcher)
+## Р”РѕСЃС‚СѓРїРЅС‹Рµ РїР»Р°РіРёРЅС‹
+1. Р§Р°СЃС‹ (BlockTime)
+2. РљР°Р»РµРЅРґР°СЂСЊ (BlockCalendar)
+3. РџРѕРіРѕРґР° РѕС‚ OpenWeaterMap (BlockOpenWeatherMap)
+4. РџРѕРіРѕРґР° РѕС‚ Weather UnderGround (BlockWunderGround)
+5. РќРѕРІРѕСЃС‚Рё РѕС‚ РЇРЅРґРµРєСЃР° (BlockYandexNews)
+6. Р“РѕР»РѕСЃ YandexSpeech - РѕР·РІСѓС‡РёРІР°РµС‚ РїРѕР»СѓС‡РµРЅРЅС‹Р№ С‚РµРєСЃС‚ (BlockVoice)
+7. Р‘СѓРґРёР»СЊРЅРёРє (BlocklAlarm)
+8. РЎРјРµРЅР° РјРѕРґСѓР»РµР№ (BlockSwap)
+9. РќР°Р±Р»СЋРґР°С‚РµР»СЊ, Р·Р°РїСѓСЃРє СЃРєСЂРёРїС‚Р° (BlockWatcher)
 
