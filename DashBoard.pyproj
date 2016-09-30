@@ -129,6 +129,7 @@
   <ItemGroup>
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
+    <Content Include="requirements.txt" />
     <Content Include="weather\chanceflurries.gif" />
     <Content Include="weather\chancerain.gif" />
     <Content Include="weather\chancesleet.gif" />
