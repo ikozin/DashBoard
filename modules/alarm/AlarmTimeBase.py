@@ -7,7 +7,7 @@ import pygame.locals
 from modules.alarm.AlarmBase import AlarmBase
 from exceptions import ExceptionFormat, ExceptionNotFound
 
-ALARM_VOLUME_MIN = 0.1
+ALARM_VOLUME_MIN = 0.2
 ALARM_VOLUME_MAX = 1.0
 ALARM_VOLUME_STEP = 0.05
 
