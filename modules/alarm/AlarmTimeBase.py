@@ -9,7 +9,7 @@ from exceptions import ExceptionFormat, ExceptionNotFound
 
 ALARM_VOLUME_MIN = 0.2
 ALARM_VOLUME_MAX = 1.0
-ALARM_VOLUME_STEP = 0.05
+ALARM_VOLUME_STEP = 0.1
 
 class AlarmTimeBase(AlarmBase):
     """description of class"""
