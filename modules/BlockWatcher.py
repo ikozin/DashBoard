@@ -1,4 +1,4 @@
-import configparser 
+import configparser
 import datetime
 import pygame
 import pygame.locals
@@ -23,6 +23,7 @@ class BlockWatcher(BlockBase):
         self._path = None
         self._isWatching = False
 
+
     def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
@@ -43,7 +44,7 @@ class BlockWatcher(BlockBase):
 
         if len(self._weekDay) > 7:    raise ExceptionFormat(section.name, "WeekDay")
         if not all(day >= 0 and day < 7 for day in self._weekDay): raise ExceptionFormat(section.name, "WeekDay")
-        
+
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
         self._stopTime = datetime.datetime.strptime(self._stopTime, "%H:%M:%S")
 

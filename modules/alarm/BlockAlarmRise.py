@@ -23,18 +23,18 @@ class BlockAlarmRise(AlarmTimeBase):
         self._currentB = None
 
 
-    def updateDisplay(self, screen, size, foreColor, backColor, blocks):
+    def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
         try:
             if not self._isAlarm: return
             backColor = (self._currentR, self._currentG, self._currentB)
             screen.fill(backColor)
             for block in blocks:
-                block.updateDisplay(True, screen, size, self._foreColor, backColor)
+                block.updateDisplay(True, screen, size, self._foreColor, backColor, current_time)
 
             (self._currentR, self._stepR) = self._calculateColorPart(self._startR, self._stopR, self._stepR, self._currentR)
             (self._currentG, self._stepG) = self._calculateColorPart(self._startG, self._stopG, self._stepG, self._currentG)
             (self._currentB, self._stepB) = self._calculateColorPart(self._startB, self._stopB, self._stepB, self._currentB)
-            
+
         except Exception as ex:
             self._logger.exception(ex)
 

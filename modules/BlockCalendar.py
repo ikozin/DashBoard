@@ -1,4 +1,5 @@
-import configparser 
+import datetime
+import configparser
 import pygame
 import pygame.locals
 from datetime import date
@@ -19,6 +20,7 @@ class BlockCalendar(BlockBase):
         self._weekDayLong = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
         self._font = None
         self._pos = None
+        self._time = None
 
 
     def init(self, fileName, isOnline, modList):
@@ -44,11 +46,11 @@ class BlockCalendar(BlockBase):
         self.updateInfo(isOnline)
 
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
+            self._time = current_time
             if not isOnline: return
-            time = date.today()
-            text = "{0} {1} {2} {3}".format(self._weekDayShot[time.weekday()], time.day, self._months[time.month-1], time.year)
+            text = "{0} {1} {2} {3}".format(self._weekDayShot[self._time.weekday()], self._time.day, self._months[self._time.month-1], self._time.year)
             sz = self._font.size(text)
             x = (size[0] - sz[0]) >> 1
             y = self._pos
@@ -60,6 +62,5 @@ class BlockCalendar(BlockBase):
 
     def getText(self):
         """ """
-        time = date.today()
-        self._text = "{0}, {1} {2} {3} год".format(self._weekDayLong[time.weekday()], self._daysLong[time.day-1], self._months[time.month-1], time.year)
+        self._text = "{0}, {1} {2} {3} год".format(self._weekDayLong[self._time.weekday()], self._daysLong[self._time.day-1], self._months[self._time.month-1], self._time.year)
         return self._text

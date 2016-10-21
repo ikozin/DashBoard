@@ -1,4 +1,4 @@
-import configparser 
+import configparser
 import pygame
 import pygame.locals
 
@@ -8,6 +8,7 @@ from modules.BlockBase import BlockBase
 
 BLOCK_SWAP_UPDATE_EVENT = (pygame.locals.USEREVENT + 6)
 EXCEPTION_TEXT = "Не заданы блоки для отображения"
+
 
 class BlockSwap(BlockBase):
     """description of class"""
@@ -52,11 +53,11 @@ class BlockSwap(BlockBase):
         if self._index >= len(self._blocks):
             self._index = 0
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
             if not isOnline: return
             block = self._blocks[self._index]
-            block.updateDisplay(isOnline, screen, size, foreColor, backColor)
+            block.updateDisplay(isOnline, screen, size, foreColor, backColor, current_time)
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -66,6 +67,7 @@ class BlockSwap(BlockBase):
         block = self._blocks[self._index]
         self._text = block.getText()
         return self._text
+
 
     def addBlock(self, block):
         """  """

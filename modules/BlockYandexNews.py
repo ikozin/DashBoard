@@ -1,4 +1,4 @@
-import configparser 
+import configparser
 import urllib.request as request
 import urllib.parse as parse
 import xml.etree.ElementTree as ET
@@ -13,7 +13,7 @@ BLOCK_YANDEX_NEWS_UPDATE_EVENT = (pygame.locals.USEREVENT + 2)
 
 class BlockYandexNews(BlockBase):
     """description of class"""
-    
+
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockYandexNews, self).__init__(logger, setting)
@@ -59,7 +59,7 @@ class BlockYandexNews(BlockBase):
 
         pygame.time.set_timer(BLOCK_YANDEX_NEWS_UPDATE_EVENT, self._time * 60000)
         self.updateInfo(isOnline)
-       
+
 
     def proccedEvent(self, event, isOnline):
         if event.type == BLOCK_YANDEX_NEWS_UPDATE_EVENT:
@@ -69,13 +69,13 @@ class BlockYandexNews(BlockBase):
     def updateInfo(self, isOnline):
         try:
             if not isOnline: return
-            
             self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
+            self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
         except Exception as ex:
             self._logger.exception(ex)
 
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
             if not isOnline: return
             if not self._news: return
@@ -91,12 +91,6 @@ class BlockYandexNews(BlockBase):
             self._logger.exception(ex)
 
 
-    def getText(self):
-        """ """
-        self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
-        return self._text
-
-
     def __get_newsblock(self, url):
         news = []
         data = request.urlopen(url).read()
@@ -104,4 +98,3 @@ class BlockYandexNews(BlockBase):
         for node in root.findall("./channel/item/title"):
             news.append(parse.unquote(node.text))
         return news
-        

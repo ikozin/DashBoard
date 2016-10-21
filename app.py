@@ -1,4 +1,5 @@
-﻿import os
+﻿import datetime
+import os
 import sys
 import subprocess
 import configparser
@@ -24,10 +25,12 @@ from modules.BlockWatcher import BlockWatcher
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
 
+WAIT_TIME    = 40
 FILE_SETTING = "setting.ini"
 PIR_PIN      = 13                #GPIO27 green
 LED_PIN      = 12                #GPIO18 red
 IDLE_EVENT   = (pygame.locals.USEREVENT + 1)
+
 
 ###########################################################################
 if sys.platform == "linux": # Only for Raspberry Pi
@@ -41,8 +44,9 @@ if sys.platform == "linux": # Only for Raspberry Pi
 
     def motionDetected(pin):
         #logger.debug("Motion detected!")
-        app.displayOn()    
+        app.displayOn()
 ###########################################################################
+
 
 class Mainboard :
 
@@ -54,7 +58,7 @@ class Mainboard :
         self._isDisplayOn = True
         # Загружаем настройки из конфиг файла
         self._config = Setting()
-        self._config.load(FILE_SETTING) 
+        self._config.load(FILE_SETTING)
         # Based on "Python GUI in Linux frame buffer"
         # http://www.karoltomala.com/blog/?p=679
         # Check which frame buffer drivers are available
@@ -72,7 +76,7 @@ class Mainboard :
                 continue
             found = True
             break
-    
+
         if not found:
             raise Exception("No suitable video driver found!")
         ###########################################################################
@@ -109,12 +113,6 @@ class Mainboard :
         for name in self._config._blockList:
             if name in self._managerList:
                 self._modules.append(self._managerList[name])
-        #self._modules.append(self._managerList["Watcher"])
-        #self._modules.append(self._managerList["Time"])
-        #self._modules.append(self._managerList["Swap"])
-        #self._modules.append(self._managerList["YandexNews"])
-        #self._modules.append(self._managerList["Voice"])
-        #self._modules.append(self._managerList["Alarm"])
 
         for module in self._modules:
             module.init(FILE_SETTING, self._isDisplayOn, self._managerList)
@@ -168,8 +166,8 @@ class Mainboard :
             module.updateInfo(self._isDisplayOn)
 
 
-    def proccedEvent(self, events): 
-        for event in events: 
+    def proccedEvent(self, events):
+        for event in events:
             if (event.type == pygame.locals.QUIT) or (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_ESCAPE):
                 return 0
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_r):
@@ -206,11 +204,12 @@ class Mainboard :
             (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
             self._screen.fill(backgroundColor)
 
+            time = datetime.datetime.now()
             for module in self._modules:
-                module.updateDisplay(self._isDisplayOn, self._screen, self._size, foregroundColor, backgroundColor)
+                module.updateDisplay(self._isDisplayOn, self._screen, self._size, foregroundColor, backgroundColor, time)
 
             pygame.display.update()
-            pygame.time.delay(50)
+            pygame.time.delay(WAIT_TIME)
 
         pygame.quit()
 

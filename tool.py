@@ -23,7 +23,18 @@ class App(object):
     """description of class"""
 
     def __init__(self):
-        self._managerList = { "Main": MainManager, "Time": TimeManager, "Alarm": AlarmManager, "Voice": VoiceManager, "YandexNews": YandexNewsManager, "OpenWeatherMap": OpenWeatherMapManager, "WunderGround": WunderGroundManager, "Calendar": CalendarManager, "Swap": SwapManager, "Watcher": WatcherManager }
+        self._managerList = {
+           "Main": MainManager,
+           "Time": TimeManager,
+           "Alarm": AlarmManager,
+           "Voice": VoiceManager,
+           "YandexNews": YandexNewsManager,
+           "OpenWeatherMap": OpenWeatherMapManager,
+           "WunderGround": WunderGroundManager,
+           "Calendar": CalendarManager,
+           "Swap": SwapManager,
+           "Watcher": WatcherManager
+        }
         self._list = dict()
         self._currentName = None
         self._root = Tk()
@@ -31,7 +42,7 @@ class App(object):
         self._root.columnconfigure(1, weight=1)
         self._root.rowconfigure(1, weight=1)
         self._root.minsize(740, 480)
-        
+
         self._fileName = StringVar()
         header = ttk.LabelFrame(self._root, text="Configuration")
         header.grid(row=0, column=0)
@@ -45,8 +56,8 @@ class App(object):
         #tabs.grid(row=1, column=0, columnspan=2, sticky=(N,S,E,W))
         #self._window = ttk.Frame(tabs)
         #self._order  = ttk.Frame(tabs)
-        #tabs.add(self._window, text='Настройки модулей')
-        #tabs.add(self._order, text='Загрузка модулей')
+        #tabs.add(self._window, text='Setting')
+        #tabs.add(self._order, text='Load')
         self._window = ttk.Frame(self._root)
         self._window.grid(row=1, column=0, columnspan=2, sticky=(N,S,E,W))
         self._window.rowconfigure(0, weight=1)
@@ -68,18 +79,18 @@ class App(object):
         #self._root.resizable(False, False)
         self._root.geometry("+100+100")
 
-    
+
     def run(self):
         self._root.mainloop()
 
 
-    def selectFile(self): 
+    def selectFile(self):
         fileName = filedialog. Open(self._root, filetypes = [('*.ini files', '.ini')]).show()
         if fileName == '': return
         self._fileName.set(fileName)
 
 
-    def loadData(self): 
+    def loadData(self):
         fileName = self._fileName.get()
         if not fileName: return
         config = configparser.ConfigParser()
@@ -96,7 +107,7 @@ class App(object):
             self._list[name] = manager
 
 
-    def saveData(self): 
+    def saveData(self):
         fileName = self._fileName.get()
         if not fileName: return
         config = configparser.ConfigParser()
@@ -110,7 +121,7 @@ class App(object):
 
 
     def _selectManager(self):
-        selection = self._listBox.curselection() 
+        selection = self._listBox.curselection()
         if not selection: return
         name = self._listBox.get(selection[0])
         if self._currentName:

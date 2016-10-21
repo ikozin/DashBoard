@@ -1,14 +1,15 @@
 ﻿import time
-import configparser 
+import configparser
 import pygame
 import pygame.locals
 
 from modules.BlockBase import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
 
-BLOCK_TIME_DISPLAY_FORMAT = "%H:%M"
-#BLOCK_TIME_DISPLAY_FORMAT = "%H:%M:%S"
-BLOCK_TIME_TIME_TEXT = "Московское время {0}:{1}"
+BLOCK_TIME_DISPLAY_FORMAT = "{:%H:%M}"
+#BLOCK_TIME_DISPLAY_FORMAT = "{%H:%M:%S}"
+BLOCK_TIME_TIME_TEXT = "Московское время {:%H:%M}"
+
 
 class BlockTime(BlockBase):
     """description of class"""
@@ -41,18 +42,15 @@ class BlockTime(BlockBase):
         self.updateInfo(isOnline)
 
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
             if not isOnline: return
-            t = time.localtime()
-            text = time.strftime(BLOCK_TIME_DISPLAY_FORMAT, t)
+            text = BLOCK_TIME_DISPLAY_FORMAT.format(current_time)
             sz = self._font.size(text)
             x = (size[0] - sz[0]) >> 1
             y = (size[1] - sz[1]) >> 1
             surf = self._font.render(text, True, foreColor, backColor)
             screen.blit(surf, (x, y))
-            self._text = BLOCK_TIME_TIME_TEXT.format(t.tm_hour, t.tm_min)
+            self._text = BLOCK_TIME_TIME_TEXT.format(current_time)
         except Exception as ex:
             self._logger.exception(ex)
-
-

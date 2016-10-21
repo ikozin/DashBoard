@@ -1,5 +1,5 @@
 import datetime
-import configparser 
+import configparser
 import pygame
 import pygame.locals
 
@@ -10,6 +10,7 @@ from modules.alarm.BlockAlarmBlink import BlockAlarmBlink
 from modules.alarm.BlockAlarmRise import BlockAlarmRise
 
 BLOCK_ALARM_UPDATE_EVENT  = (pygame.locals.USEREVENT + 5)
+
 
 class BlocklAlarm(BlockBase):
     """description of class"""
@@ -56,6 +57,7 @@ class BlocklAlarm(BlockBase):
             self._alarmBlock.append(alarm)
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
+
         self.updateInfo(isOnline)
 
 
@@ -74,12 +76,11 @@ class BlocklAlarm(BlockBase):
             self._logger.exception(ex)
 
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
             if not self._alarmBlock: return
-            value = datetime.datetime.now()
             for item in self._alarmBlock:
-                item.updateDisplay(screen, size, foreColor, backColor, self._blocks)
+                item.updateDisplay(screen, size, foreColor, backColor, self._blocks, current_time)
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -88,12 +89,3 @@ class BlocklAlarm(BlockBase):
         if not isinstance(block, BlockBase):
             raise("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
-
-
-    def _getTuple(self, value):
-        """ Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except Exception as ex:
-            self._logger.exception(ex)
-            return None

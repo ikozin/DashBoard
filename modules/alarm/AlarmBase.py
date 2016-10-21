@@ -1,6 +1,7 @@
-﻿import configparser 
+﻿import configparser
 from logging import Logger
 from setting import Setting
+
 
 class AlarmBase:
     """description of class"""
@@ -28,7 +29,7 @@ class AlarmBase:
         pass
 
 
-    def updateDisplay(self, screen, size, foreColor, backColor, blocks):
+    def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
         pass
 
 

@@ -2,7 +2,7 @@
 import sys
 import urllib.request as request
 import xml.etree.ElementTree as ET
-import configparser 
+import configparser
 import pygame
 import pygame.locals
 from datetime  import datetime, timedelta
@@ -11,14 +11,16 @@ from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 
 ##############################################################
-# http://openweathermap.org/appid#work - 1 time per 10 minutes 
+# http://openweathermap.org/appid#work - 1 time per 10 minutes
 ##############################################################
 MIN_UPDATE_TIME = 600
 CITY_ID = 524901
 WEATHER_FILE = "openweathermap_data.xml"
 WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3}%, Давление {4} мм ртутного столба"
 DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДавление {3} мм"
+
 BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
+
 
 class BlockOpenWeatherMap(BlockBase):
     """description of class"""
@@ -151,18 +153,13 @@ class BlockOpenWeatherMap(BlockBase):
 
         if not os.path.exists(self._folder):
             os.mkdir(self._folder)
-        for imageName in ["01d.png","01n.png",
-                          "02d.png","02n.png",
-                          "03d.png","03n.png",
-                          "04d.png","04n.png",
-                          "09d.png","09n.png",
-                          "10d.png","10n.png",
-                          "11d.png","11n.png",
-                          "13d.png","13n.png",
-                          "50d.png","50n.png"]:
+        for imageName in ["01d.png","01n.png","02d.png","02n.png","03d.png","03n.png",
+                          "04d.png","04n.png","09d.png","09n.png","10d.png","10n.png",
+                          "11d.png","11n.png","13d.png","13n.png","50d.png","50n.png"]:
             self._load(imageName, self._folder)
 
         pygame.time.set_timer(BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT, self._time * 60000)
+
         self.updateInfo(isOnline)
 
 
@@ -185,17 +182,18 @@ class BlockOpenWeatherMap(BlockBase):
             self._pressure = float(root.find("pressure").attrib["value"])
             self._wind_speed = float(root.find("wind/speed").attrib["value"])
             self._wind_direction = str(root.find("wind/direction").attrib["code"])
-    
+
             imageName = str(root.find("weather").attrib["icon"]) + ".png"
             self._load(imageName, self._folder)
             imageName = os.path.join(self._folder, imageName)
             self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
 
+            self._text = WEATHER_TEXT_FORMAT.format(self._weather_type, self._temperature, self._wind_speed, self._humidity, self._pressure)
         except Exception as ex:
             self._logger.exception(ex)
 
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
             if not isOnline: return
 
@@ -225,16 +223,6 @@ class BlockOpenWeatherMap(BlockBase):
             self._logger.exception(ex)
 
 
-    def getText(self):
-        """ """
-        self._text = WEATHER_TEXT_FORMAT.format(self._weather_type, 
-                                                self._temperature, 
-                                                self._wind_speed, 
-                                                self._humidity, 
-                                                self._pressure)
-        return self._text
-
-
     def _load(self, imageName, path):
         filePath = os.path.join(path, imageName);
         if not os.path.exists(filePath):
@@ -246,7 +234,7 @@ class BlockOpenWeatherMap(BlockBase):
     def _getData(self):
         dif = datetime.now() - self._lastUpdate
         ##############################################################
-        # http://openweathermap.org/appid#work - 1 time per 10 minutes 
+        # http://openweathermap.org/appid#work - 1 time per 10 minutes
         ##############################################################
         if dif.seconds >= MIN_UPDATE_TIME:
             with request.urlopen("http://api.openweathermap.org/data/2.5/weather?id={0}&mode=xml&units=metric&lang=ru&APPID={1}".format(CITY_ID, self._key)) as f:
@@ -258,4 +246,3 @@ class BlockOpenWeatherMap(BlockBase):
         else:
             with open(os.path.join(self._folder, WEATHER_FILE), "rb") as file:
                 return file.read()
-

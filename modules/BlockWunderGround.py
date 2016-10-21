@@ -2,7 +2,7 @@ import os
 import sys
 import urllib.request as request
 import xml.etree.ElementTree as ET
-import configparser 
+import configparser
 import json
 import pygame
 import pygame.locals
@@ -208,11 +208,12 @@ class BlockWunderGround(BlockBase):
             self._weather_image = pygame.image.load(imageName)
             self._weather_image = pygame.transform.scale(self._weather_image, self._iconScale)
 
+            self._text = WEATHER_TEXT_FORMAT.format(self._weather_type, self._temperature, self._wind_speed, self._humidity, self._pressure)
         except Exception as ex:
             self._logger.exception(ex)
 
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
             if not isOnline: return
 
@@ -242,16 +243,6 @@ class BlockWunderGround(BlockBase):
             self._logger.exception(ex)
 
 
-    def getText(self):
-        """ """
-        self._text = WEATHER_TEXT_FORMAT.format(self._weather_type, 
-                                                self._temperature, 
-                                                self._wind_speed, 
-                                                self._humidity, 
-                                                self._pressure)
-        return self._text
-
-
     def _load(self, imageName, path):
         filePath = os.path.join(path, imageName);
         if not os.path.exists(filePath):
@@ -263,7 +254,7 @@ class BlockWunderGround(BlockBase):
     def _getData(self):
         dif = datetime.now() - self._lastUpdate
         ##############################################################
-        # http://openweathermap.org/appid#work - 1 time per 10 minutes 
+        # http://openweathermap.org/appid#work - 1 time per 10 minutes
         ##############################################################
         if dif.seconds >= MIN_UPDATE_TIME:
             with request.urlopen("http://api.wunderground.com/api/{0}/conditions/lang:RU/q/{1}.xml".format(self._key, CITY_URL)) as f:
@@ -275,4 +266,3 @@ class BlockWunderGround(BlockBase):
         else:
             with open(os.path.join(self._folder, WEATHER_FILE), "rb") as file:
                 return file.read()
-

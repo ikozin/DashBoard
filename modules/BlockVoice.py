@@ -1,6 +1,6 @@
 import urllib.request as request
 import urllib.parse as parse
-import configparser 
+import configparser
 import pygame
 import pygame.locals
 
@@ -61,7 +61,7 @@ class BlockVoice(BlockBase):
             raise("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
 
-    
+
     def __getvoicetext(self, text):
         fileName = "text.wav";
         url = "https://tts.voicetech.yandex.net/generate?format=wav&lang=ru-RU&speaker={0}&emotion=good&speed={1}&key={2}&text='{3}'".format(self._speaker, self._speed, self._key, parse.quote(text))

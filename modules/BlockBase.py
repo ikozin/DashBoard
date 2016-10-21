@@ -1,6 +1,7 @@
 from logging import Logger
 from setting import Setting
 
+
 class BlockBase:
     """description of class"""
 
@@ -11,6 +12,7 @@ class BlockBase:
         self._logger = logger
         self._setting = setting
         self._text = None
+
 
     def __del__(self):
         """Destructor"""
@@ -32,8 +34,8 @@ class BlockBase:
         if not isOnline: return
         pass
 
-    
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor):
+
+    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         """ """
         pass
 
@@ -41,6 +43,7 @@ class BlockBase:
     def getText(self):
         """ """
         return self._text
+
 
     def _getTuple(self, value):
         return self._setting.getTuple(value, self._logger)

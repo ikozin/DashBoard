@@ -11,6 +11,7 @@ ALARM_VOLUME_MIN = 0.2
 ALARM_VOLUME_MAX = 1.0
 ALARM_VOLUME_STEP = 0.1
 
+
 class AlarmTimeBase(AlarmBase):
     """description of class"""
 
@@ -30,7 +31,7 @@ class AlarmTimeBase(AlarmBase):
     def init(self, configSection):
         """Initializes (initialize internal variables)"""
         super(AlarmTimeBase, self).init(configSection)
-        
+
         self._startTime = configSection.get("Time")
         self._weekDay = self._getTuple(configSection.get("WeekDay"))
         self._duration = configSection.getint("Duration")
@@ -52,6 +53,7 @@ class AlarmTimeBase(AlarmBase):
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
         self._stopTime = self._startTime + datetime.timedelta(seconds = self._duration)
 
+
     def updateState(self, currentTime):
         #if not isinstance(currentTime, datetime.datetime): raise("Передаваемый параметр должен быть наследником datetime")
         if not self._isAlarm:
@@ -61,7 +63,7 @@ class AlarmTimeBase(AlarmBase):
                     self.init_draw()
                     self._isAlarm = True
                     return
-        
+
         if self._isAlarm:
             if (currentTime - self._stopTime).seconds <= 3:
                 self.done_draw()
@@ -71,6 +73,7 @@ class AlarmTimeBase(AlarmBase):
             if self._volume < ALARM_VOLUME_MAX:
                 self._volume += ALARM_VOLUME_STEP
                 pygame.mixer.music.set_volume(self._volume)
+
 
     def init_draw(self):
         """ """
