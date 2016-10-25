@@ -39,6 +39,7 @@ class BlockSwap(BlockBase):
             block.init(fileName, isOnline, modList)
 
         pygame.time.set_timer(BLOCK_SWAP_UPDATE_EVENT, self._time * 1000)
+
         self.updateInfo(isOnline)
 
 

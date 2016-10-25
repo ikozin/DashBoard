@@ -58,6 +58,7 @@ class BlockYandexNews(BlockBase):
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 
         pygame.time.set_timer(BLOCK_YANDEX_NEWS_UPDATE_EVENT, self._time * 60000)
+
         self.updateInfo(isOnline)
 
 

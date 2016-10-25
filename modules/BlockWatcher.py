@@ -55,6 +55,7 @@ class BlockWatcher(BlockBase):
             self._path = "calc.exe"
         ###########################################################################
         pygame.time.set_timer(BLOCK_WATCHER_UPDATE_EVENT, self._time * 1000)
+
         self.updateInfo(isOnline)
 
 

@@ -177,6 +177,7 @@ class BlockWunderGround(BlockBase):
                           "nt_cloudy.gif","nt_partlycloudy.gif"]:
             self._load(imageName, self._folder)
         pygame.time.set_timer(BLOCK_WUNDER_GROUND_UPDATE_EVENT, self._time * 60000)
+
         self.updateInfo(isOnline)
 
 
