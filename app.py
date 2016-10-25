@@ -25,7 +25,8 @@ from modules.BlockWatcher import BlockWatcher
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
 
-WAIT_TIME    = 40
+FPS          = 60
+#WAIT_TIME    = 40
 FILE_SETTING = "setting.ini"
 PIR_PIN      = 13                #GPIO27 green
 LED_PIN      = 12                #GPIO18 red
@@ -199,6 +200,7 @@ class Mainboard :
 
 
     def loop(self):
+        clock = pygame.time.Clock()
         while (self.proccedEvent(pygame.event.get())):
 
             (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
@@ -209,7 +211,8 @@ class Mainboard :
                 module.updateDisplay(self._isDisplayOn, self._screen, self._size, foregroundColor, backgroundColor, time)
 
             pygame.display.update()
-            pygame.time.delay(WAIT_TIME)
+            #pygame.time.delay(WAIT_TIME)
+            clock.tick(FPS)
 
         pygame.quit()
 
