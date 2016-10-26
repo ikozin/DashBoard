@@ -7,10 +7,11 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
+from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
 from ext.ModalDialog import XYFrame
 
-class OpenWeatherMapManager(ttk.LabelFrame):
+class OpenWeatherMapManager(BaseManager):
     """description of class"""
 
     def __init__(self, root):
@@ -23,14 +24,14 @@ class OpenWeatherMapManager(ttk.LabelFrame):
 
         content = ttk.Frame(self)
         content.grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,E,W))
-        
+
         ttk.Label(content, justify=RIGHT, text="Время обновления").grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,E))
         Spinbox(content, from_=1, to=60, increment=1, width=5, textvariable=self._updateValue).grid(row=0, column=1, padx=2, pady=2, sticky=(N,S,E,W))
         ttk.Label(content, justify=LEFT, text="минут").grid(row=0, column=2, padx=2, pady=2, sticky=(N,S,W))
-        
+
         ttk.Label(content, justify=RIGHT, text="Ключ").grid(row=1, column=0, padx=2, pady=2, sticky=(N,S,E))
         ttk.Entry(content, width=40, textvariable=self._keyValue).grid(row=1, column=1, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
-        
+
         ttk.Label(content, justify=RIGHT, text="Директория для картинок").grid(row=2, column=0, padx=2, pady=2, sticky=(N,S,E))
         ttk.Entry(content, width=5, textvariable=self._folderValue).grid(row=2, column=1, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
 
@@ -76,7 +77,7 @@ class OpenWeatherMapManager(ttk.LabelFrame):
         self._scaleIcon.load(posX, posY)
         (posX, posY) = self._getTuple(section.get("IconPos", "(0, 0)"))
         self._posIcon.load(posX, posY)
-        
+
         (posX, posY) = self._getTuple(section.get("WeatherTypePos", "(260, 242)"))
         self._posWeatherType.load(posX, posY)
         (posX, posY) = self._getTuple(section.get("TemperaturePos", "(240, 50)"))

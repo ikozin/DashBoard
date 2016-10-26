@@ -8,7 +8,9 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
-class WatcherManager(ttk.LabelFrame):
+from ext.BaseManager import BaseManager
+
+class WatcherManager(BaseManager):
     """description of class"""
 
     def __init__(self, root):
@@ -33,11 +35,11 @@ class WatcherManager(ttk.LabelFrame):
         weekDayFrame = ttk.LabelFrame(self, text="Дни недели")
         weekDayFrame.grid(row=0, column=0, columnspan=2, sticky=(N,S,E,W))
         ttk.Checkbutton(weekDayFrame, text="ПН", takefocus=True, variable=self._weekDay0).grid(row=0, column=0, padx=2, pady=2)
-        ttk.Checkbutton(weekDayFrame, text="ВТ", takefocus=True, variable=self._weekDay1).grid(row=0, column=1, padx=2, pady=2) 
-        ttk.Checkbutton(weekDayFrame, text="СР", takefocus=True, variable=self._weekDay2).grid(row=0, column=2, padx=2, pady=2) 
-        ttk.Checkbutton(weekDayFrame, text="ЧТ", takefocus=True, variable=self._weekDay3).grid(row=0, column=3, padx=2, pady=2) 
-        ttk.Checkbutton(weekDayFrame, text="ПТ", takefocus=True, variable=self._weekDay4).grid(row=0, column=4, padx=2, pady=2) 
-        ttk.Checkbutton(weekDayFrame, text="СБ", takefocus=True, variable=self._weekDay5).grid(row=0, column=5, padx=2, pady=2) 
+        ttk.Checkbutton(weekDayFrame, text="ВТ", takefocus=True, variable=self._weekDay1).grid(row=0, column=1, padx=2, pady=2)
+        ttk.Checkbutton(weekDayFrame, text="СР", takefocus=True, variable=self._weekDay2).grid(row=0, column=2, padx=2, pady=2)
+        ttk.Checkbutton(weekDayFrame, text="ЧТ", takefocus=True, variable=self._weekDay3).grid(row=0, column=3, padx=2, pady=2)
+        ttk.Checkbutton(weekDayFrame, text="ПТ", takefocus=True, variable=self._weekDay4).grid(row=0, column=4, padx=2, pady=2)
+        ttk.Checkbutton(weekDayFrame, text="СБ", takefocus=True, variable=self._weekDay5).grid(row=0, column=5, padx=2, pady=2)
         ttk.Checkbutton(weekDayFrame, text="ВС", takefocus=True, variable=self._weekDay6).grid(row=0, column=6, padx=2, pady=2)
 
         timeStartFrame = ttk.LabelFrame(self, text="Время (Начало)")
@@ -135,7 +137,7 @@ class WatcherManager(ttk.LabelFrame):
         section["UpdateTime"] = str(self._updateValue.get())
         section["Path"] = self._pathValue.get()
 
-    def _selectFile(self): 
+    def _selectFile(self):
         fileName = filedialog. Open(self, filetypes = [('*.* all files', '.*')]).show()
         if fileName == '': return
         self._pathValue.set(fileName)

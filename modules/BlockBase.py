@@ -1,8 +1,10 @@
+from abc import ABCMeta, abstractclassmethod
+
 from logging import Logger
 from setting import Setting
 
 
-class BlockBase:
+class BlockBase(metaclass=ABCMeta):
     """description of class"""
 
     def __init__(self, logger, setting):
@@ -19,27 +21,32 @@ class BlockBase:
         pass
 
 
+    @abstractclassmethod
     def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         pass
 
 
+    @classmethod
     def proccedEvent(self, event, isOnline):
         """ """
         pass
 
 
+    @classmethod
     def updateInfo(self, isOnline):
         """ """
         if not isOnline: return
         pass
 
 
+    @classmethod
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         """ """
         pass
 
 
+    @classmethod
     def getText(self):
         """ """
         return self._text

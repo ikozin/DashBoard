@@ -7,9 +7,10 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
+from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
 
-class YandexNewsManager(ttk.LabelFrame):
+class YandexNewsManager(BaseManager):
     """description of class"""
 
     def __init__(self, root):
@@ -21,7 +22,7 @@ class YandexNewsManager(ttk.LabelFrame):
         self._posValue = IntVar()
         self._indentValue = IntVar()
         self._rowsValue = IntVar()
-        
+
         content1 = ttk.Frame(self)
         content1.grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,E,W))
         ttk.Label(content1, text="Адрес").grid(row=0, column=0, padx=2, pady=2)

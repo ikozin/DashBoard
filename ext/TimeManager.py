@@ -7,9 +7,10 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
+from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
 
-class TimeManager(ttk.LabelFrame):
+class TimeManager(BaseManager):
     """description of class"""
 
     def __init__(self, root):

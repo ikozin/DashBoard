@@ -192,7 +192,7 @@ class SelectFrame(ttk.LabelFrame):
         return ", ".join(self._selList)
 
     def _command_up(self):
-        selection = self._selListBox.curselection() 
+        selection = self._selListBox.curselection()
         if not selection: return
         if selection[0] == 0: return
         item = self._selList.pop(selection[0])
@@ -201,7 +201,7 @@ class SelectFrame(ttk.LabelFrame):
 
 
     def _command_down(self):
-        selection = self._selListBox.curselection() 
+        selection = self._selListBox.curselection()
         if not selection: return
         if selection[0] == len(self._selList) - 1: return
         item = self._selList.pop(selection[0])
@@ -209,7 +209,7 @@ class SelectFrame(ttk.LabelFrame):
         self._update_selected_list(selection[0] + 1)
 
     def _command_include(self):
-        selection = self._srcListBox.curselection() 
+        selection = self._srcListBox.curselection()
         if not selection: return
         name = self._srcListBox.get(selection[0])
         if name in self._selList: return
@@ -219,7 +219,7 @@ class SelectFrame(ttk.LabelFrame):
         pass
 
     def _command_exclude(self):
-        selection = self._srcListBox.curselection() 
+        selection = self._srcListBox.curselection()
         if not selection: return
         name = self._srcListBox.get(selection[0])
         if name not in self._selList: return
@@ -244,7 +244,7 @@ class VerticalScrolledFrame(Frame):
 
     """
     def __init__(self, parent, *args, **kw):
-        Frame.__init__(self, parent, *args, **kw)            
+        Frame.__init__(self, parent, *args, **kw)
 
         # create a canvas object and a vertical scrollbar for scrolling it
         vscrollbar = Scrollbar(self, orient=VERTICAL)

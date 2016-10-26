@@ -23,6 +23,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.py" />
+    <Compile Include="ext\BaseManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\BaseSetting.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ext\SwapManager.py">
       <SubType>Code</SubType>
     </Compile>

@@ -1,9 +1,10 @@
 ﻿import configparser
+from abc import ABCMeta, abstractclassmethod
 from logging import Logger
 from setting import Setting
 
 
-class AlarmBase:
+class AlarmBase(metaclass=ABCMeta):
     """description of class"""
 
     def __init__(self, logger, setting):
@@ -19,16 +20,19 @@ class AlarmBase:
         pass
 
 
+    @abstractclassmethod
     def init(self, configSection):
         """Initializes (initialize internal variables)"""
         if not isinstance(configSection, configparser.SectionProxy):
             raise("Передаваемый параметр должен быть наследником configparser.SectionProxy")
 
 
+    @classmethod
     def updateState(self, currentTime):
         pass
 
 
+    @classmethod
     def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
         pass
 

@@ -7,9 +7,10 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
+from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
 
-class MainSetting(ttk.LabelFrame):
+class MainSetting(BaseSetting):
     """description of class"""
 
     def __init__(self, root, sectionName):

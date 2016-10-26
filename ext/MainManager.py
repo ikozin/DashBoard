@@ -7,12 +7,13 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
+from ext.BaseManager import BaseManager
 from ext.ModalDialog import ColorsChooserFrame
 from ext.ModalDialog import EntryModalDialog
 from ext.ModalDialog import SelectFrame
 from ext.MainSetting import MainSetting
 
-class MainManager(ttk.LabelFrame):
+class MainManager(BaseManager):
     """description of class"""
 
     def __init__(self, root):
@@ -97,7 +98,7 @@ class MainManager(ttk.LabelFrame):
 
     def _selectSection(self, event):
         listBox = event.widget
-        selection = listBox.curselection() 
+        selection = listBox.curselection()
         if not selection: return
         name = listBox.get(selection[0])
         if self._currentName:
@@ -119,7 +120,7 @@ class MainManager(ttk.LabelFrame):
         self._listBox.insert("end", item)
 
     def _renameSection(self):
-        selection = self._listBox.curselection() 
+        selection = self._listBox.curselection()
         if not selection: return
         name = self._listBox.get(selection[0])
         sectionBlock = self._sectionlist[name]
@@ -133,17 +134,17 @@ class MainManager(ttk.LabelFrame):
         self._sectionlist[newname] = sectionBlock
         if self._currentName == name:
             self._currentName = newname
-        self._listBox.delete(selection) 
+        self._listBox.delete(selection)
         self._listBox.insert(selection, newname)
 
     def _deleteSection(self):
-        selection = self._listBox.curselection() 
+        selection = self._listBox.curselection()
         if not selection: return
         name = self._listBox.get(selection[0])
         if messagebox.askquestion("Удалить", "Вы действительно хотите удалить расписание {0}".format(name)) == "no":
             return
         sectionBlock = self._sectionlist[name]
-        self._listBox.delete(selection) 
+        self._listBox.delete(selection)
         del self._sectionlist[name]
         sectionBlock.destroy()
         if self._currentName == name:

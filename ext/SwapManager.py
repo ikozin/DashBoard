@@ -3,15 +3,16 @@ import configparser
 from tkinter import *
 from tkinter import ttk
 
+from ext.BaseManager import BaseManager
 from ext.ModalDialog import SelectFrame
 
-class SwapManager(ttk.LabelFrame):
+class SwapManager(BaseManager):
     """description of class"""
 
     def __init__(self, root):
         """ """
         super(SwapManager, self).__init__(root, text="Настройки модуля переключения")
-        
+
         self._updateValue = IntVar()
 
         ttk.Label(self, text="Время обновления").grid(row=0, column=0, padx=2, pady=2)
