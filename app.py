@@ -21,6 +21,7 @@ from modules.BlocklAlarm import BlocklAlarm
 from modules.BlockSwap import BlockSwap
 from modules.BlockWunderGround import BlockWunderGround
 from modules.BlockWatcher import BlockWatcher
+from modules.BlockMT8057 import BlockMT8057
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -108,8 +109,9 @@ class Mainboard :
             "WunderGround": BlockWunderGround(logger, self._config),
             "Calendar": BlockCalendar(logger, self._config),
             "Swap": BlockSwap(logger, self._config),
-            "Watcher": BlockWatcher(logger, self._config)
-            }
+            "Watcher": BlockWatcher(logger, self._config),
+            "MT8057": BlockMT8057(logger, self._config),
+        }
 
         for name in self._config._blockList:
             if name in self._managerList:
@@ -213,6 +215,9 @@ class Mainboard :
             pygame.display.update()
             #pygame.time.delay(WAIT_TIME)
             clock.tick(FPS)
+
+        for module in self._modules:
+            module.done()
 
         pygame.quit()
 

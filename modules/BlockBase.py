@@ -52,5 +52,10 @@ class BlockBase(metaclass=ABCMeta):
         return self._text
 
 
+    @classmethod
+    def done(self):
+        """ """
+        pass
+
     def _getTuple(self, value):
         return self._setting.getTuple(value, self._logger)

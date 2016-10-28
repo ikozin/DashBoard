@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>tool.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,6 +27,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\BaseSetting.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\MT8057Manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\SwapManager.py">
@@ -119,6 +122,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\WunderGroundManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\BlockMT8057.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\__init__.py">

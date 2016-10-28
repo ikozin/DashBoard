@@ -18,6 +18,7 @@ from ext.OpenWeatherMapManager import OpenWeatherMapManager
 from ext.WunderGroundManager import WunderGroundManager
 from ext.SwapManager import SwapManager
 from ext.WatcherManager import WatcherManager
+from ext.MT8057Manager import MT8057Manager
 
 class App(object):
     """description of class"""
@@ -33,7 +34,8 @@ class App(object):
            "WunderGround": WunderGroundManager,
            "Calendar": CalendarManager,
            "Swap": SwapManager,
-           "Watcher": WatcherManager
+           "Watcher": WatcherManager,
+           "MT8057": MT8057Manager,
         }
         self._list = dict()
         self._currentName = None
