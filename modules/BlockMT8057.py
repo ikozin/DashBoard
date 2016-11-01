@@ -2,6 +2,7 @@ import datetime
 import configparser
 import pygame
 import pygame.locals
+import sys
 import usb.core
 import usb.util
 import threading
@@ -17,7 +18,12 @@ class BlockMT8057(BlockBase):
 		super(BlockMT8057, self).__init__(logger, setting)
 		self._green = None
 		self._yellow = None
-		self._t_mt8057 = None
+		self._co2Font = None
+		self._tempFont = None
+		self._co2Pos = None
+		self._tempPos = None
+		if sys.platform == "linux": # Only for Raspberry Pi
+			self._t_mt8057 = None
 
 
 	def init(self, fileName, isOnline, modList):
@@ -32,27 +38,69 @@ class BlockMT8057(BlockBase):
 		self._green = section.getint("Green")
 		self._yellow = section.getint("Yellow")
 
-		if self._green is None:  raise ExceptionNotFound(section.name, "Green")
-		if self._yellow is None: raise ExceptionNotFound(section.name, "Yellow")
+		co2FontSize = section.getint("CO2FontSize")
+		co2FontName = section.get("CO2FontName")
+		co2IsBold = section.getboolean("CO2FontBold")
+		co2IsItalic = section.getboolean("CO2FontItalic")
 
-		self._t_mt8057 = mt8057()
-		self._t_mt8057.start()
+		tempFontSize = section.getint("TempFontSize")
+		tempFontName = section.get("TempFontName")
+		tempIsBold = section.getboolean("TempFontBold")
+		tempIsItalic = section.getboolean("TempFontItalic")
+
+		self._co2Pos = self._getTuple(section.get("CO2Pos"))
+		self._tempPos = self._getTuple(section.get("TempPos"))
+
+		if self._green is None:   raise ExceptionNotFound(section.name, "Green")
+		if self._yellow is None:  raise ExceptionNotFound(section.name, "Yellow")
+		if co2FontSize is None:   raise ExceptionNotFound(section.name, "CO2FontSize")
+		if co2FontName is None:   raise ExceptionNotFound(section.name, "CO2FontName")
+		if co2IsBold   is None:   raise ExceptionNotFound(section.name, "CO2FontBold")
+		if co2IsItalic is None:   raise ExceptionNotFound(section.name, "CO2FontItalic")
+		if tempFontSize is None:  raise ExceptionNotFound(section.name, "TempFontSize")
+		if tempFontName is None:  raise ExceptionNotFound(section.name, "TempFontName")
+		if tempIsBold   is None:  raise ExceptionNotFound(section.name, "TempFontBold")
+		if tempIsItalic is None:  raise ExceptionNotFound(section.name, "TempFontItalic")
+		if self._co2Pos is None:  raise ExceptionNotFound(section.name, "CO2Pos")
+		if self._tempPos is None: raise ExceptionNotFound(section.name, "TempPos")
+
+		if len(self._co2Pos) != 2:  raise ExceptionFormat(section.name, "CO2Pos")
+		if len(self._tempPos) != 2: raise ExceptionFormat(section.name, "TempPos")
+
+		self._co2Font = pygame.font.SysFont(co2FontName, co2FontSize, co2IsBold, co2IsItalic)
+		self._tempFont = pygame.font.SysFont(tempFontName, tempFontSize, tempIsBold, tempIsItalic)
+		if sys.platform == "linux": # Only for Raspberry Pi
+			self._t_mt8057 = mt8057()
+			self._t_mt8057.start()
 
 		self.updateInfo(isOnline)
 
 
 	def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
 		try:
-			(co2, temp) = self._t_mt8057.get_data()
-			print("CO2", co2, "temp ", "{:.1f}".format(temp));
+			if not isOnline: return
+			if sys.platform == "linux": # Only for Raspberry Pi
+				(co2, temp) = self._t_mt8057.get_data()
+			else:
+				(co2, temp) = (500, 24.970001)
+			#print("CO2", co2, "temp ", "{:.1f}".format(temp))
+			textCO2 = "Концентрация CO2 {0}".format(co2)
+			textTemp = "Температура {0:+.1f}°".format(temp)
+
+			surf = self._co2Font.render(textCO2, True, foreColor, backColor)
+			screen.blit(surf, self._co2Pos)
+
+			surf = self._tempFont.render(textTemp, True, foreColor, backColor)
+			screen.blit(surf, self._tempPos)
 		except Exception as ex:
 			self._logger.exception(ex)
 
 
 	def done(self):
 		""" """
-		self._t_mt8057.stop()
-		self._t_mt8057.join()
+		if sys.platform == "linux": # Only for Raspberry Pi
+			self._t_mt8057.stop()
+			self._t_mt8057.join()
 
 
 
