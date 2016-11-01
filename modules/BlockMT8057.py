@@ -87,18 +87,18 @@ class BlockMT8057(BlockBase):
 			textCO2 = "Концентрация CO2:  {0}".format(co2)
 			textTemp = "Температура:  {0:+.1f}°".format(temp)
 
-			#sz = self._co2Font.size(textCO2)
-			#x = (size[0] - sz[0]) >> 1
-			#y = self._co2Pos[1]
+			sz = self._co2Font.size(textCO2)
+			x = (size[0] - sz[0]) >> 1
+			y = self._co2Pos[1]
 			surf = self._co2Font.render(textCO2, True, foreColor, backColor)
-			screen.blit(surf, self._co2Pos)
+			screen.blit(surf, (x, y))
 			#print(x)
 
-			#sz = self._co2Font.size(textTemp)
-			#x = (size[0] - sz[0]) >> 1
-			#y = self._tempPos[1]
+			sz = self._co2Font.size(textTemp)
+			x = (size[0] - sz[0]) >> 1
+			y = self._tempPos[1]
 			surf = self._tempFont.render(textTemp, True, foreColor, backColor)
-			screen.blit(surf, self._tempPos)
+			screen.blit(surf, (x, y))
 			#print(x)
 		except Exception as ex:
 			self._logger.exception(ex)
