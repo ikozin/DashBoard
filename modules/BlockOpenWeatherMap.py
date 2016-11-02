@@ -4,11 +4,10 @@ import urllib.request as request
 import xml.etree.ElementTree as ET
 import configparser
 import pygame
-import pygame.locals
 from datetime  import datetime, timedelta
 
 from exceptions import ExceptionFormat, ExceptionNotFound
-from modules.BlockBase import BlockBase
+from modules.BlockMinuteBase import BlockMinuteBase
 
 ##############################################################
 # http://openweathermap.org/appid#work - 1 time per 10 minutes
@@ -19,10 +18,8 @@ WEATHER_FILE = "openweathermap_data.xml"
 WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3}%, Давление {4} мм ртутного столба"
 DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДавление {3} мм"
 
-BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 
-
-class BlockOpenWeatherMap(BlockBase):
+class BlockOpenWeatherMap(BlockMinuteBase):
     """description of class"""
 
     def __init__(self, logger, setting):
@@ -31,7 +28,6 @@ class BlockOpenWeatherMap(BlockBase):
         self._lastUpdate = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
 
         self._key = None
-        self._time = None
         self._folder = None
 
         self._weather_type = None
@@ -64,8 +60,8 @@ class BlockOpenWeatherMap(BlockBase):
         section = config["OpenWeatherMapBlock"]
 
         self._key = section.get("Key")
-        self._time = section.getint("UpdateTime")
         self._folder = section.get("Folder")
+        time = section.getint("UpdateTime")
 
         self._iconScale = self._getTuple(section.get("IconScale"))
         self._iconPos = self._getTuple(section.get("IconPos"))
@@ -100,8 +96,8 @@ class BlockOpenWeatherMap(BlockBase):
         wItalic  = section.getboolean("WindFontItalic")
 
         if self._key is None:    raise ExceptionNotFound(section.name, "Key")
-        if self._time is None:   raise ExceptionNotFound(section.name, "UpdateTime")
         if self._folder is None: raise ExceptionNotFound(section.name, "Folder")
+        if time is None:         raise ExceptionNotFound(section.name, "UpdateTime")
 
         if self._iconScale is None: raise ExceptionNotFound(section.name, "IconScale")
         if self._iconPos is None:   raise ExceptionNotFound(section.name, "IconPos")
@@ -158,14 +154,8 @@ class BlockOpenWeatherMap(BlockBase):
                           "11d.png","11n.png","13d.png","13n.png","50d.png","50n.png"]:
             self._load(imageName, self._folder)
 
-        pygame.time.set_timer(BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT, self._time * 60000)
-
         self.updateInfo(isOnline)
-
-
-    def proccedEvent(self, event, isOnline):
-        if event.type == BLOCK_OPEN_WEATHER_MAP_UPDATE_EVENT:
-            self.updateInfo(isOnline)
+        self.setTime(time)
 
 
     def updateInfo(self, isOnline):

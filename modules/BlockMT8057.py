@@ -1,17 +1,16 @@
-import datetime
 import configparser
 import pygame
 import pygame.locals
 import sys
+import threading
 import usb.core
 import usb.util
-import threading
 
 from exceptions import ExceptionFormat, ExceptionNotFound
-from modules.BlockBase import BlockBase
+from modules.BlockSecondBase import BlockSecondBase
 
 
-class BlockMT8057(BlockBase):
+class BlockMT8057(BlockSecondBase):
 	"""description of class"""
 	def __init__(self, logger, setting):
 		"""Initializes (declare internal variables)"""
@@ -22,13 +21,14 @@ class BlockMT8057(BlockBase):
 		self._tempFont = None
 		self._co2Pos = None
 		self._tempPos = None
+		self._valueCO2 = None
+		self._valueTemp = None
 		if sys.platform == "linux": # Only for Raspberry Pi
 			self._t_mt8057 = None
 
 
 	def init(self, fileName, isOnline, modList):
 		"""Initializes (initialize internal variables)"""
-		# ��������� ���������
 		config = configparser.ConfigParser()
 		config.read(fileName, "utf-8")
 
@@ -74,18 +74,25 @@ class BlockMT8057(BlockBase):
 			self._t_mt8057.start()
 
 		self.updateInfo(isOnline)
+		self.setTime(2)
+
+
+	def updateInfo(self, isOnline):
+		if sys.platform == "linux": # Only for Raspberry Pi
+			(self._valueCO2, self._valueTemp) = self._t_mt8057.get_data()
+		else:
+			if (self._valueCO2 is None): self._valueCO2   = 500
+			if (self._valueTemp is None): self._valueTemp = 24.970001
+			self._valueCO2 += 1
+			self._valueTemp += 0.5
 
 
 	def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
 		try:
 			if not isOnline: return
-			if sys.platform == "linux": # Only for Raspberry Pi
-				(co2, temp) = self._t_mt8057.get_data()
-			else:
-				(co2, temp) = (500, 24.970001)
-			#print("CO2", co2, "temp ", "{:.1f}".format(temp))
-			textCO2 = "Концентрация CO2:  {0}".format(co2)
-			textTemp = "Температура:  {0:+.1f}°".format(temp)
+			#print("CO2", self._valueCO2, "temp", "{:.1f}".format(self._valueTemp))
+			textCO2 = "Концентрация CO2:  {0}".format(self._valueCO2)
+			textTemp = "Температура:  {0:+.1f}°".format(self._valueTemp)
 
 			sz = self._co2Font.size(textCO2)
 			x = (size[0] - sz[0]) >> 1

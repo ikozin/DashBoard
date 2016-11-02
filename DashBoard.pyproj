@@ -99,7 +99,13 @@
     <Compile Include="modules\BlockCalendar.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\BlockMinuteBase.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\BlockOpenWeatherMap.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\BlockSecondBase.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\BlockSwap.py">

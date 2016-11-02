@@ -9,7 +9,7 @@ from modules.alarm.BlockAlarmSimple import BlockAlarmSimple
 from modules.alarm.BlockAlarmBlink import BlockAlarmBlink
 from modules.alarm.BlockAlarmRise import BlockAlarmRise
 
-BLOCK_ALARM_UPDATE_EVENT  = (pygame.locals.USEREVENT + 5)
+BLOCK_ALARM_UPDATE_EVENT  = (pygame.locals.USEREVENT + 4)
 
 
 class BlocklAlarm(BlockBase):

@@ -1,7 +1,12 @@
-﻿import configparser 
+﻿import configparser
 import datetime
+import pygame
+import pygame.locals
 
 from exceptions import ExceptionFormat, ExceptionNotFound
+
+BLOCK_SECOND_UPDATE_EVENT = (pygame.locals.USEREVENT + 2)
+BLOCK_MINUTE_UPDATE_EVENT = (pygame.locals.USEREVENT + 3)
 
 class Setting:
 
@@ -13,7 +18,7 @@ class Setting:
         self._idleTime = None
         self._timeLine = []         #Набор кортежей (StartTime, BackgroundColor, ForegroundColor, IdleTime)
 
-    
+
     def load(self, fileName):
         # Загружаем настройки
         config = configparser.ConfigParser()

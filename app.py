@@ -11,6 +11,8 @@ import pygame
 import pygame.locals
 
 from setting import Setting
+from setting import BLOCK_SECOND_UPDATE_EVENT
+from setting import BLOCK_MINUTE_UPDATE_EVENT
 from modules.BlockTime import BlockTime
 from modules.BlockCalendar import BlockCalendar
 from modules.BlockYandexNews import BlockYandexNews
@@ -119,6 +121,9 @@ class Mainboard :
 
         for module in self._modules:
             module.init(FILE_SETTING, self._isDisplayOn, self._managerList)
+
+        pygame.time.set_timer(BLOCK_SECOND_UPDATE_EVENT, 1000)
+        pygame.time.set_timer(BLOCK_MINUTE_UPDATE_EVENT, 60000)
 
 
     def __del__(self):

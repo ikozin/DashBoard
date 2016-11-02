@@ -6,12 +6,12 @@ import pygame
 import pygame.locals
 
 from exceptions import ExceptionFormat, ExceptionNotFound
-from modules.BlockBase import BlockBase
+from modules.BlockMinuteBase import BlockMinuteBase
 
 BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В секции [YandexNewsBlock] пропущен параметр {0}"
-BLOCK_YANDEX_NEWS_UPDATE_EVENT = (pygame.locals.USEREVENT + 2)
 
-class BlockYandexNews(BlockBase):
+
+class BlockYandexNews(BlockMinuteBase):
     """description of class"""
 
     def __init__(self, logger, setting):
@@ -21,7 +21,6 @@ class BlockYandexNews(BlockBase):
         self._indent = None
         self._pos = None
         self._length = None
-        self._time = None
         self._font = None
         self._news = []
 
@@ -37,7 +36,7 @@ class BlockYandexNews(BlockBase):
         self._indent = section.getint("Indent")
         self._pos = section.getint("Position")
         self._length = section.getint("Rows")
-        self._time = section.getint("UpdateTime")
+        time = section.getint("UpdateTime")
 
         fontName = section.get("FontName")
         fontSize = section.getint("FontSize")
@@ -48,7 +47,7 @@ class BlockYandexNews(BlockBase):
         if self._indent is None: raise ExceptionNotFound(section.name, "Indent")
         if self._pos is None:    raise ExceptionNotFound(section.name, "Position")
         if self._length is None: raise ExceptionNotFound(section.name, "Rows")
-        if self._time is None:   raise ExceptionNotFound(section.name, "UpdateTime")
+        if time is None:         raise ExceptionNotFound(section.name, "UpdateTime")
 
         if fontName is None: raise ExceptionNotFound(section.name, "FontName")
         if fontSize is None: raise ExceptionNotFound(section.name, "FontSize")
@@ -57,14 +56,8 @@ class BlockYandexNews(BlockBase):
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 
-        pygame.time.set_timer(BLOCK_YANDEX_NEWS_UPDATE_EVENT, self._time * 60000)
-
         self.updateInfo(isOnline)
-
-
-    def proccedEvent(self, event, isOnline):
-        if event.type == BLOCK_YANDEX_NEWS_UPDATE_EVENT:
-            self.updateInfo(isOnline)
+        self.setTime(time)
 
 
     def updateInfo(self, isOnline):

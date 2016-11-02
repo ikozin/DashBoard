@@ -7,7 +7,6 @@ from modules.BlockBase import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
 
 BLOCK_TIME_DISPLAY_FORMAT = "{:%H:%M}"
-#BLOCK_TIME_DISPLAY_FORMAT = "{%H:%M:%S}"
 BLOCK_TIME_TIME_TEXT = "Московское время {:%H:%M}"
 
 

@@ -1,16 +1,13 @@
 import configparser
-import pygame
-import pygame.locals
 
-from datetime  import datetime, timedelta
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
+from modules.BlockSecondBase import BlockSecondBase
 
-BLOCK_SWAP_UPDATE_EVENT = (pygame.locals.USEREVENT + 6)
 EXCEPTION_TEXT = "Не заданы блоки для отображения"
 
 
-class BlockSwap(BlockBase):
+class BlockSwap(BlockSecondBase):
     """description of class"""
 
     def __init__(self, logger, setting):
@@ -18,8 +15,6 @@ class BlockSwap(BlockBase):
         super(BlockSwap, self).__init__(logger, setting)
         self._blocks = []
         self._index = 0
-        self._lastSwap = datetime.now()
-        self._time = None
 
 
     def init(self, fileName, isOnline, modList):
@@ -27,7 +22,10 @@ class BlockSwap(BlockBase):
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
         section = config["SwapBlock"]
-        self._time = section.getint("UpdateTime")
+
+        time = section.getint("UpdateTime")
+        if time is None:   raise ExceptionNotFound(section.name, "UpdateTime")
+
         selection = section.get("BlockList", "")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
         for name in selection:
@@ -38,21 +36,21 @@ class BlockSwap(BlockBase):
         for block in self._blocks:
             block.init(fileName, isOnline, modList)
 
-        pygame.time.set_timer(BLOCK_SWAP_UPDATE_EVENT, self._time * 1000)
-
+        self.setTime(time)
         self.updateInfo(isOnline)
 
 
     def proccedEvent(self, event, isOnline):
         for block in self._blocks:
             block.proccedEvent(event, isOnline)
-        if event.type == BLOCK_SWAP_UPDATE_EVENT: self.updateInfo(isOnline)
+        super(BlockSwap, self).proccedEvent(event, isOnline)
 
 
     def updateInfo(self, isOnline):
         self._index = self._index + 1
         if self._index >= len(self._blocks):
             self._index = 0
+
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:

@@ -9,7 +9,7 @@ import pygame.locals
 from datetime  import datetime, timedelta
 
 from exceptions import ExceptionFormat, ExceptionNotFound
-from modules.BlockBase import BlockBase
+from modules.BlockMinuteBase import BlockMinuteBase
 
 ##############################################################
 # Calls Per Day = 500
@@ -19,10 +19,8 @@ CITY_URL = "zmw:00000.1.27612"
 WEATHER_FILE = "wunderground_data.xml"
 WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3}, Давление {4} мм ртутного столба"
 
-BLOCK_WUNDER_GROUND_UPDATE_EVENT = (pygame.locals.USEREVENT + 7)
 
-
-class BlockWunderGround(BlockBase):
+class BlockWunderGround(BlockMinuteBase):
     """description of class"""
 
     def __init__(self, logger, setting):
@@ -31,7 +29,6 @@ class BlockWunderGround(BlockBase):
         self._lastUpdate = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
 
         self._key = None
-        self._time = None
         self._folder = None
 
         self._weather_type = None
@@ -64,8 +61,8 @@ class BlockWunderGround(BlockBase):
         section = config["WunderGroundBlock"]
 
         self._key = section.get("Key")
-        self._time = section.getint("UpdateTime")
         self._folder = section.get("Folder")
+        time = section.getint("UpdateTime")
 
         self._iconScale = self._getTuple(section.get("IconScale"))
         self._iconPos = self._getTuple(section.get("IconPos"))
@@ -100,8 +97,8 @@ class BlockWunderGround(BlockBase):
         wItalic  = section.getboolean("WindFontItalic")
 
         if self._key is None:    raise ExceptionNotFound(section.name, "Key")
-        if self._time is None:   raise ExceptionNotFound(section.name, "UpdateTime")
         if self._folder is None: raise ExceptionNotFound(section.name, "Folder")
+        if time is None:         raise ExceptionNotFound(section.name, "UpdateTime")
 
         if self._iconScale is None: raise ExceptionNotFound(section.name, "IconScale")
         if self._iconPos is None:   raise ExceptionNotFound(section.name, "IconPos")
@@ -176,14 +173,9 @@ class BlockWunderGround(BlockBase):
                           "nt_sunny.gif","nt_tstorms.gif",
                           "nt_cloudy.gif","nt_partlycloudy.gif"]:
             self._load(imageName, self._folder)
-        pygame.time.set_timer(BLOCK_WUNDER_GROUND_UPDATE_EVENT, self._time * 60000)
 
         self.updateInfo(isOnline)
-
-
-    def proccedEvent(self, event, isOnline):
-        if event.type == BLOCK_WUNDER_GROUND_UPDATE_EVENT:
-            self.updateInfo(isOnline)
+        self.setTime(time)
 
 
     def updateInfo(self, isOnline):
@@ -205,7 +197,7 @@ class BlockWunderGround(BlockBase):
             imageName = imageName[imageName.rfind("/") + 1:]
             self._load(imageName, self._folder)
             imageName = os.path.join(self._folder, imageName)
-            #self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
+
             self._weather_image = pygame.image.load(imageName)
             self._weather_image = pygame.transform.scale(self._weather_image, self._iconScale)
 
