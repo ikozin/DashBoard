@@ -15,8 +15,10 @@ class BlockMT8057(BlockSecondBase):
 	def __init__(self, logger, setting):
 		"""Initializes (declare internal variables)"""
 		super(BlockMT8057, self).__init__(logger, setting)
-		self._green = None
-		self._yellow = None
+		self._warnZone = None
+		self._critZone = None
+		self._warnColor = (255, 127, 0)
+		self._critColor = (255, 63, 63)
 		self._co2Font = None
 		self._tempFont = None
 		self._co2Pos = None
@@ -35,8 +37,10 @@ class BlockMT8057(BlockSecondBase):
 		section = config["MT8057Block"]
 		if section is None: return
 
-		self._green = section.getint("Green")
-		self._yellow = section.getint("Yellow")
+		self._warnZone = section.getint("Warn")
+		self._critZone = section.getint("Crit")
+		self._warnColor = self._getTuple(section.get("WarnColor"))
+		self._critColor = self._getTuple(section.get("CritColor"))
 
 		co2FontSize = section.getint("CO2FontSize")
 		co2FontName = section.get("CO2FontName")
@@ -51,21 +55,25 @@ class BlockMT8057(BlockSecondBase):
 		self._co2Pos = self._getTuple(section.get("CO2Pos"))
 		self._tempPos = self._getTuple(section.get("TempPos"))
 
-		if self._green is None:   raise ExceptionNotFound(section.name, "Green")
-		if self._yellow is None:  raise ExceptionNotFound(section.name, "Yellow")
-		if co2FontSize is None:   raise ExceptionNotFound(section.name, "CO2FontSize")
-		if co2FontName is None:   raise ExceptionNotFound(section.name, "CO2FontName")
-		if co2IsBold   is None:   raise ExceptionNotFound(section.name, "CO2FontBold")
-		if co2IsItalic is None:   raise ExceptionNotFound(section.name, "CO2FontItalic")
-		if tempFontSize is None:  raise ExceptionNotFound(section.name, "TempFontSize")
-		if tempFontName is None:  raise ExceptionNotFound(section.name, "TempFontName")
-		if tempIsBold   is None:  raise ExceptionNotFound(section.name, "TempFontBold")
-		if tempIsItalic is None:  raise ExceptionNotFound(section.name, "TempFontItalic")
-		if self._co2Pos is None:  raise ExceptionNotFound(section.name, "CO2Pos")
-		if self._tempPos is None: raise ExceptionNotFound(section.name, "TempPos")
+		if self._warnZone is None:  raise ExceptionNotFound(section.name, "Warn")
+		if self._critZone is None:  raise ExceptionNotFound(section.name, "Crit")
+		if self._warnColor is None: raise ExceptionNotFound(section.name, "WarnColor")
+		if self._critColor is None: raise ExceptionNotFound(section.name, "CritColor")
+		if co2FontSize is None:     raise ExceptionNotFound(section.name, "CO2FontSize")
+		if co2FontName is None:     raise ExceptionNotFound(section.name, "CO2FontName")
+		if co2IsBold   is None:     raise ExceptionNotFound(section.name, "CO2FontBold")
+		if co2IsItalic is None:     raise ExceptionNotFound(section.name, "CO2FontItalic")
+		if tempFontSize is None:    raise ExceptionNotFound(section.name, "TempFontSize")
+		if tempFontName is None:    raise ExceptionNotFound(section.name, "TempFontName")
+		if tempIsBold   is None:    raise ExceptionNotFound(section.name, "TempFontBold")
+		if tempIsItalic is None:    raise ExceptionNotFound(section.name, "TempFontItalic")
+		if self._co2Pos is None:    raise ExceptionNotFound(section.name, "CO2Pos")
+		if self._tempPos is None:   raise ExceptionNotFound(section.name, "TempPos")
 
-		if len(self._co2Pos) != 2:  raise ExceptionFormat(section.name, "CO2Pos")
-		if len(self._tempPos) != 2: raise ExceptionFormat(section.name, "TempPos")
+		if len(self._warnColor) != 3: raise ExceptionFormat(section.name, "WarnColor")
+		if len(self._critColor) != 3: raise ExceptionFormat(section.name, "CritColor")
+		if len(self._co2Pos) != 2:    raise ExceptionFormat(section.name, "CO2Pos")
+		if len(self._tempPos) != 2:   raise ExceptionFormat(section.name, "TempPos")
 
 		self._co2Font = pygame.font.SysFont(co2FontName, co2FontSize, co2IsBold, co2IsItalic)
 		self._tempFont = pygame.font.SysFont(tempFontName, tempFontSize, tempIsBold, tempIsItalic)
@@ -83,21 +91,26 @@ class BlockMT8057(BlockSecondBase):
 		else:
 			if (self._valueCO2 is None): self._valueCO2   = 500
 			if (self._valueTemp is None): self._valueTemp = 24.970001
-			self._valueCO2 += 1
-			self._valueTemp += 0.5
+			self._valueCO2 += 10
+			self._valueTemp += 0.1
 
 
 	def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
 		try:
 			if not isOnline: return
 			#print("CO2", self._valueCO2, "temp", "{:.1f}".format(self._valueTemp))
-			textCO2 = "Концентрация CO2:  {0}".format(self._valueCO2)
-			textTemp = "Температура:  {0:+.1f}°".format(self._valueTemp)
+			textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
+			textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
 
+			color = foreColor
+			if self._valueCO2 >= self._warnZone:
+				color = self._warnColor
+			if self._valueCO2 >= self._critZone:
+				color = self._critColor
 			sz = self._co2Font.size(textCO2)
 			x = (size[0] - sz[0]) >> 1
 			y = self._co2Pos[1]
-			surf = self._co2Font.render(textCO2, True, foreColor, backColor)
+			surf = self._co2Font.render(textCO2, True, color, backColor)
 			screen.blit(surf, (x, y))
 			#print(x)
 

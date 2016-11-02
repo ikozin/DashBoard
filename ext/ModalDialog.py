@@ -8,15 +8,10 @@ from tkinter import colorchooser
 class ModalDialog:
 
     def _ok(self):
-        """ """
         pass
-
     def _cancel(self):
-        """ """
         pass
-
     def _waitDialog(self, modal, root):
-        """ """
         modal.bind('<Key-Return>', lambda e: self._ok())
         modal.bind('<Key-Escape>', lambda e: self._cancel())
         modal.transient(root)
@@ -33,11 +28,8 @@ class ModalDialog:
 class EntryModalDialog(ModalDialog):
 
     def __init__(self, title):
-        """ """
         self._title = str(title)
-
     def Execute(self, root, text):
-        """ """
         self._modal = Toplevel(root)
         self._modal.title(self._title)
         self._value = StringVar()
@@ -49,13 +41,9 @@ class EntryModalDialog(ModalDialog):
         ttk.Button(self._modal, text="Cancel", command=self._cancel).grid(row=1, column=2, columnspan=2, padx=10, pady=5, sticky=(N,S,E,W))
         self._waitDialog(self._modal, root)
         return self._value.get()
-
     def _ok(self):
-        """ """
         self._modal.destroy()
-
     def _cancel(self):
-        """ """
         self._modal.destroy()
         self._value.set("")
 
@@ -63,7 +51,6 @@ class EntryModalDialog(ModalDialog):
 class ColorsChooserFrame(ttk.LabelFrame):
 
     def __init__(self, root, text):
-        """ """
         if not isinstance(text, str): raise TypeError("text")
         super(ColorsChooserFrame, self).__init__(root, text=text)
         self._root = root
@@ -77,7 +64,6 @@ class ColorsChooserFrame(ttk.LabelFrame):
         self._foreSelector.grid(row=0, column=1, padx=2, pady=2, sticky=(N,S,E,W))
         self.load((0, 0, 0), (255, 255, 255))
     def load(self, backColor, foreColor):
-        """ """
         if not isinstance(backColor, tuple): raise TypeError("backColor")
         if not isinstance(foreColor, tuple): raise TypeError("foreColor")
         self._backColor = backColor
@@ -87,28 +73,24 @@ class ColorsChooserFrame(ttk.LabelFrame):
         self._backSelector.configure(background=backColor, foreground=foreColor)
         self._foreSelector.configure(background=backColor, foreground=foreColor)
     def _selectBackColor(self):
-        """ """
         (tripleColor, tkColor) = colorchooser.askcolor(self._backColor)
         if tripleColor is None: return
         self._backSelector.configure(background=tkColor)
         self._foreSelector.configure(background=tkColor)
         self._backColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
     def _selectForeColor(self):
-        """ """
         (tripleColor, tkColor) = colorchooser.askcolor(self._foreColor)
         if tripleColor is None: return
         self._backSelector.configure(foreground=tkColor)
         self._foreSelector.configure(foreground=tkColor)
         self._foreColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
     def getResult(self):
-        """ """
         return (self._backColor, self._foreColor)
 
 
 class FontChooserFrame(ttk.LabelFrame):
 
     def __init__(self, root, text):
-        """ """
         if not isinstance(text, str): raise TypeError("text")
         super(FontChooserFrame, self).__init__(root, text=text)
         self._root = root
@@ -125,7 +107,6 @@ class FontChooserFrame(ttk.LabelFrame):
         ttk.Checkbutton(self, text="Жирный", variable=self._isBold).grid(row=0, column=4, padx=2, pady=2)
         ttk.Checkbutton(self, text="Наклон", variable=self._isItalic).grid(row=0, column=5, padx=2, pady=2)
     def load(self, fontName, fontSize, isBold, isItalic):
-        """ """
         if not isinstance(fontName, str):  raise TypeError("fontName")
         if not isinstance(fontSize, int):  raise TypeError("fontSize")
         if not isinstance(isBold, bool):   raise TypeError("isBold")
@@ -135,7 +116,6 @@ class FontChooserFrame(ttk.LabelFrame):
         self._isBold.set(isBold)
         self._isItalic.set(isItalic)
     def getResult(self):
-        """ """
         return (self._fontName.get(), self._fontSize.get(), self._isBold.get(), self._isItalic.get())
 
 
@@ -143,7 +123,6 @@ class XYFrame(ttk.LabelFrame):
     """description of class"""
 
     def __init__(self, root, text, textX, textY):
-        """ """
         super(XYFrame, self).__init__(root, text=text)
         self._X = IntVar()
         self._Y = IntVar()
@@ -151,17 +130,14 @@ class XYFrame(ttk.LabelFrame):
         Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._X).grid(row=0, column=1, padx=2, pady=2)
         ttk.Label(self, text=textY).grid(row=0, column=2, padx=2, pady=2)
         Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._Y).grid(row=0, column=3, padx=2, pady=2)
-
     def load(self, x, y):
-        """ """
         self._X.set(x)
         self._Y.set(y)
-
     def getResult(self):
-        """ """
         return (self._X.get(), self._Y.get())
 
 class SelectFrame(ttk.LabelFrame):
+
     def __init__(self, root, text):
         super(SelectFrame, self).__init__(root, text=text)
         self._selList = []
@@ -178,7 +154,6 @@ class SelectFrame(ttk.LabelFrame):
         self.columnconfigure(3, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
-
     def load(self, selection=[], modList=[]):
         self._selList = selection
         self._srcList = modList
@@ -186,11 +161,8 @@ class SelectFrame(ttk.LabelFrame):
         self._selListBox.selection_set(0)
         for item in self._srcList:  self._srcListBox.insert("end", item)
         self._srcListBox.selection_set(0)
-
     def getResult(self):
-        """ """
         return ", ".join(self._selList)
-
     def _command_up(self):
         selection = self._selListBox.curselection()
         if not selection: return
@@ -198,8 +170,6 @@ class SelectFrame(ttk.LabelFrame):
         item = self._selList.pop(selection[0])
         self._selList.insert(selection[0] - 1, item)
         self._update_selected_list(selection[0] - 1)
-
-
     def _command_down(self):
         selection = self._selListBox.curselection()
         if not selection: return
@@ -207,27 +177,20 @@ class SelectFrame(ttk.LabelFrame):
         item = self._selList.pop(selection[0])
         self._selList.insert(selection[0] + 1, item)
         self._update_selected_list(selection[0] + 1)
-
     def _command_include(self):
         selection = self._srcListBox.curselection()
         if not selection: return
         name = self._srcListBox.get(selection[0])
         if name in self._selList: return
-
         self._selList.append(name)
         self._update_selected_list()
-        pass
-
     def _command_exclude(self):
         selection = self._srcListBox.curselection()
         if not selection: return
         name = self._srcListBox.get(selection[0])
         if name not in self._selList: return
-
         self._selList.remove(name)
         self._update_selected_list()
-        pass
-
     def _update_selected_list(self, selection = None):
         self._selListBox.delete(0, 'end')
         for item in self._selList:  self._selListBox.insert("end", item)
@@ -249,8 +212,7 @@ class VerticalScrolledFrame(Frame):
         # create a canvas object and a vertical scrollbar for scrolling it
         vscrollbar = Scrollbar(self, orient=VERTICAL)
         vscrollbar.pack(fill=Y, side=RIGHT, expand=FALSE)
-        canvas = Canvas(self, bd=0, highlightthickness=0,
-                        yscrollcommand=vscrollbar.set)
+        canvas = Canvas(self, bd=0, highlightthickness=0, yscrollcommand=vscrollbar.set)
         canvas.pack(side=LEFT, fill=BOTH, expand=TRUE)
         vscrollbar.config(command=canvas.yview)
 
@@ -260,8 +222,7 @@ class VerticalScrolledFrame(Frame):
 
         # create a frame inside the canvas which will be scrolled with it
         self.interior = interior = Frame(canvas)
-        interior_id = canvas.create_window(0, 0, window=interior,
-                                           anchor=NW)
+        interior_id = canvas.create_window(0, 0, window=interior, anchor=NW)
 
         # track changes to the canvas and frame width and sync them,
         # also updating the scrollbar
