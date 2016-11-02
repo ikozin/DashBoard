@@ -127,7 +127,7 @@ class mt8057(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self, name="mt")
 		self._event_stop = threading.Event()
-		self._lock = threading.Lock()
+		#self._lock = threading.Lock()
 		self._temperature  = None
 		self._concentration = None
 		self._had_driver = False
@@ -159,9 +159,9 @@ class mt8057(threading.Thread):
 
 
 	def get_data(self):
-		self._lock.acquire()
+		#self._lock.acquire()
 		value = (self._concentration, self._temperature)
-		self._lock.release()
+		#self._lock.release()
 		return value
 
 
@@ -197,13 +197,13 @@ class mt8057(threading.Thread):
 			w = (r1 << 8) + r2
 			if (r0 == 0x42): # Ambient Temperature
 				w = w * 0.0625 - 273.15
-				self._lock.acquire()
+				#self._lock.acquire()
 				self._temperature  = w
-				self._lock.release()
+				#self._lock.release()
 			elif (r0 == 0x50): # Relative Concentration of CO2
-				self._lock.acquire()
+				#self._lock.acquire()
 				self._concentration = w
-				self._lock.release()
+				#self._lock.release()
 			else:
 				pass
 
