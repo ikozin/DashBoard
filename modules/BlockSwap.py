@@ -68,6 +68,12 @@ class BlockSwap(BlockSecondBase):
         return self._text
 
 
+    def done(self):
+        """ """
+        for block in self._blocks:
+            block.done()
+
+
     def addBlock(self, block):
         """  """
         if not isinstance(block, BlockBase):

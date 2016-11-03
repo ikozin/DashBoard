@@ -129,7 +129,7 @@ class BlockMT8057(BlockSecondBase):
 		""" """
 		if sys.platform == "linux": # Only for Raspberry Pi
 			self._t_mt8057.stop()
-			#self._t_mt8057.join()
+			self._t_mt8057.join()
 
 
 
@@ -167,10 +167,7 @@ class mt8057(threading.Thread):
 
 
 	def stop(self):
-		print("set")
 		self._event_stop.set()
-		print("join")
-		self.join()
 
 
 	def run(self):
@@ -178,12 +175,9 @@ class mt8057(threading.Thread):
 		self._event_stop.clear()
 		while not self._event_stop.is_set():
 			data = self._read()
-			print(data)
 			self._parse(data)
 			time.sleep(0.1)
-		print("release")
 		self._release()
-		print("done")
 
 
 	def get_data(self):
