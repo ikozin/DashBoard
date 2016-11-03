@@ -1,11 +1,11 @@
 import configparser
+import datetime
 import pygame
 import pygame.locals
 import sys
 import threading
 import usb.core
 import usb.util
-
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockSecondBase import BlockSecondBase
 
@@ -146,7 +146,7 @@ class mt8057(threading.Thread):
 
 	def __init__(self):
 		threading.Thread.__init__(self, name="mt")
-		self._event_stop = threading.Event()
+		self._event_stop = False #threading.Event()
 		#self._lock = threading.Lock()
 		self._temperature  = None
 		self._concentration = None
@@ -166,15 +166,16 @@ class mt8057(threading.Thread):
 
 
 	def stop(self):
-		self._event_stop.set()
+		self._event_stop = True #.set()
 
 
 	def run(self):
 		self._dev.ctrl_transfer(self.REQUEST_TYPE_SEND, self.REQ_HID_SET_REPORT, self.HID_REPORT_TYPE_FEATURE, 0x00, self.magic_buf, self.RW_TIMEOUT)
-		while not self._event_stop.is_set():
+		while not self._event_stop: #.is_set():
 			data = self._read()
 			#print(data)
 			self._parse(data)
+			datetime.time.sleep(0.1)
 		self._release()
 
 
