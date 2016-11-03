@@ -2,6 +2,7 @@ import configparser
 import pygame
 import pygame.locals
 import sys
+import time
 import threading
 import usb.core
 import usb.util
