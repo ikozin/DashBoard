@@ -148,7 +148,7 @@ class mt8057(threading.Thread):
 	def __init__(self):
 		threading.Thread.__init__(self, name="mt")
 		self._event_stop = threading.Event()
-		#self._lock = threading.Lock()
+		self._lock = threading.Lock()
 		self._temperature  = None
 		self._concentration = None
 		self._had_driver = False
@@ -167,19 +167,24 @@ class mt8057(threading.Thread):
 
 
 	def stop(self):
+		print("set")
 		self._event_stop.set()
-		time.sleep(1)
+		print("join")
+		self.join()
 
 
 	def run(self):
 		self._dev.ctrl_transfer(self.REQUEST_TYPE_SEND, self.REQ_HID_SET_REPORT, self.HID_REPORT_TYPE_FEATURE, 0x00, self.magic_buf, self.RW_TIMEOUT)
-		while not self._event_stop.isSet():
+		self._event_stop.clear()
+		while not self._event_stop.is_set():
 			data = self._read()
-			#print(data)
+			print(data)
 			self._parse(data)
 			time.sleep(0.1)
+		print("release")
 		self._release()
-		print("Done!")
+		print("done")
+
 
 	def get_data(self):
 		#self._lock.acquire()
