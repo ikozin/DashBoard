@@ -1,11 +1,11 @@
 import configparser
-import datetime
 import pygame
 import pygame.locals
 import sys
 import threading
 import usb.core
 import usb.util
+from datetime import time
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockSecondBase import BlockSecondBase
 
@@ -175,7 +175,7 @@ class mt8057(threading.Thread):
 			data = self._read()
 			#print(data)
 			self._parse(data)
-			datetime.time.sleep(0.1)
+			time.sleep(0.1)
 		self._release()
 
 
