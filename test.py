@@ -7,18 +7,18 @@ import usb.util
 class mt8057(threading.Thread):
 	VID = 0x04d9
 	PID = 0xa052
-	RW_TIMEOUT = 5000
+	RW_TIMEOUT = 0
 	REQUEST_TYPE_SEND = usb.util.build_request_type(usb.util.CTRL_OUT, usb.util.CTRL_TYPE_CLASS, usb.util.CTRL_RECIPIENT_INTERFACE)
 	REQ_HID_SET_REPORT = 0x09
 	HID_REPORT_TYPE_FEATURE = 0x03 << 8
 
 	magic_buf = [0xc4, 0xc6, 0xc0, 0x92, 0x40, 0x23, 0xdc, 0x96]
-	ctmp    = [0x84, 0x47, 0x56, 0xd6, 0x07, 0x93, 0x93, 0x56]
+	ctmp      = [0x84, 0x47, 0x56, 0xd6, 0x07, 0x93, 0x93, 0x56]
 
 	def __init__(self):
 		threading.Thread.__init__(self, name="mt")
 		self._event_stop = threading.Event()
-		#self._lock = threading.Lock()
+		self._lock = threading.Lock()
 		self._temperature  = None
 		self._concentration = None
 		self._had_driver = False
@@ -42,18 +42,18 @@ class mt8057(threading.Thread):
 
 	def run(self):
 		self._dev.ctrl_transfer(self.REQUEST_TYPE_SEND, self.REQ_HID_SET_REPORT, self.HID_REPORT_TYPE_FEATURE, 0x00, self.magic_buf, self.RW_TIMEOUT)
-		while not self._event_stop.isSet():
+		self._event_stop.clear()
+		while not self._event_stop.is_set():
 			data = self._read()
-			#print(data)
 			self._parse(data)
 			time.sleep(0.1)
 		self._release()
 
 
 	def get_data(self):
-		#self._lock.acquire()
+		self._lock.acquire()
 		value = (self._concentration, self._temperature)
-		#self._lock.release()
+		self._lock.release()
 		return value
 
 
@@ -89,13 +89,13 @@ class mt8057(threading.Thread):
 			w = (r1 << 8) + r2
 			if (r0 == 0x42): # Ambient Temperature
 				w = w * 0.0625 - 273.15
-				#self._lock.acquire()
+				self._lock.acquire()
 				self._temperature  = w
-				#self._lock.release()
+				self._lock.release()
 			elif (r0 == 0x50): # Relative Concentration of CO2
-				#self._lock.acquire()
+				self._lock.acquire()
 				self._concentration = w
-				#self._lock.release()
+				self._lock.release()
 			else:
 				pass
 
