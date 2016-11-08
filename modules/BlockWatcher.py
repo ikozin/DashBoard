@@ -44,13 +44,6 @@ class BlockWatcher(BlockSecondBase):
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
         self._stopTime = datetime.datetime.strptime(self._stopTime, "%H:%M:%S")
 
-        ###########################################################################
-        if sys.platform == "linux": # Only for Raspberry Pi
-            pass
-        else:
-            self._path = "calc.exe"
-        ###########################################################################
-
         self.updateInfo(isOnline)
         self.setTime(time)
 
@@ -70,9 +63,10 @@ class BlockWatcher(BlockSecondBase):
             if self._isWatching:
                 ###########################################################################
                 if sys.platform == "linux": # Only for Raspberry Pi
-                    subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
-                else:
+                    #subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
                     subprocess.Popen(self._path, shell=True)
+                else:
+                    subprocess.Popen("calc.exe", shell=True)
                 ###########################################################################
         except Exception as ex:
             self._logger.exception(ex)

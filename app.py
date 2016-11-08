@@ -149,7 +149,8 @@ class Mainboard :
             return
         ###########################################################################
         if sys.platform == "linux": # Only for Raspberry Pi
-            subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True)
+            #subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True)
+            subprocess.Popen("/opt/vc/bin/tvservice -o", shell=True)
             GPIO.output(LED_PIN, 0)
         else:
             pass
@@ -164,7 +165,8 @@ class Mainboard :
             return
         ###########################################################################
         if sys.platform == "linux": # Only for Raspberry Pi
-            subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True)
+            #subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True)
+            subprocess.Popen("/opt/vc/bin/tvservice -p", shell=True)
             GPIO.output(LED_PIN, 1)
         else:
             pass
