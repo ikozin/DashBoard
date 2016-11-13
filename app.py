@@ -147,31 +147,31 @@ class Mainboard :
     def displayOff(self):
         if (self._isDisplayOn == False):
             return
+        self._isDisplayOn = False
         ###########################################################################
         if sys.platform == "linux": # Only for Raspberry Pi
-            #subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True)
-            subprocess.Popen("/opt/vc/bin/tvservice -o", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+            subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True).wait()
+            #subprocess.Popen("/opt/vc/bin/tvservice -o", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
             GPIO.output(LED_PIN, 0)
         else:
             pass
         ###########################################################################
         self.setDisplayTimerOff()
-        self._isDisplayOn = False
 
 
     def displayOn(self):
         self.setDisplayTimerOn()
         if (self._isDisplayOn == True):
             return
+        self._isDisplayOn = True
         ###########################################################################
         if sys.platform == "linux": # Only for Raspberry Pi
-            #subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True)
-            subprocess.Popen("/opt/vc/bin/tvservice -p", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+            subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True).wait()
+            #subprocess.Popen("/opt/vc/bin/tvservice -p", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
             GPIO.output(LED_PIN, 1)
         else:
             pass
         ###########################################################################
-        self._isDisplayOn = True
         for module in self._modules:
             module.updateInfo(self._isDisplayOn)
 

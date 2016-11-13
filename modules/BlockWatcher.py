@@ -63,8 +63,8 @@ class BlockWatcher(BlockSecondBase):
             if self._isWatching:
                 ###########################################################################
                 if sys.platform == "linux": # Only for Raspberry Pi
-                    #subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
-                    subprocess.Popen(self._path, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
+                    subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
+                    #subprocess.Popen(self._path, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
                 else:
                     subprocess.Popen("calc.exe", shell=True)
                 ###########################################################################
