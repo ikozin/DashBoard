@@ -111,7 +111,6 @@
     <Compile Include="modules\BlockSwap.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockTextAgregator.py" />
     <Compile Include="modules\BlockTime.py">
       <SubType>Code</SubType>
     </Compile>

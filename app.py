@@ -18,7 +18,6 @@ from modules.BlockCalendar import BlockCalendar
 from modules.BlockYandexNews import BlockYandexNews
 from modules.BlockOpenWeatherMap import BlockOpenWeatherMap
 from modules.BlockVoice import BlockVoice
-from modules.BlockTextAgregator import BlockTextAgregator
 from modules.BlocklAlarm import BlocklAlarm
 from modules.BlockSwap import BlockSwap
 from modules.BlockWunderGround import BlockWunderGround
