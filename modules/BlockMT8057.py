@@ -26,6 +26,9 @@ class BlockMT8057(BlockSecondBase):
 		self._tempPos = None
 		self._valueCO2 = None
 		self._valueTemp = None
+		self._textCO2 = ""
+		self._textTemp = ""
+
 		if sys.platform == "linux": # Only for Raspberry Pi
 			self._t_mt8057 = None
 
@@ -94,31 +97,32 @@ class BlockMT8057(BlockSecondBase):
 			if (self._valueTemp is None): self._valueTemp = 24.970001
 			self._valueCO2 += 10
 			self._valueTemp += 0.1
+		self._textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
+		self._textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
+		self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._valueCO2, self._valueTemp)
 
 
 	def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
 		try:
 			if not isOnline: return
-			#print("CO2", self._valueCO2, "temp", "{:.1f}".format(self._valueTemp))
-			textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
-			textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
-			self._text = "{0}.{1}.".format(textCO2, textTemp)
+
 			color = foreColor
 			if self._valueCO2 >= self._warnZone:
 				color = self._warnColor
 			if self._valueCO2 >= self._critZone:
 				color = self._critColor
-			sz = self._co2Font.size(textCO2)
+
+			sz = self._co2Font.size(self._textCO2)
 			x = (size[0] - sz[0]) >> 1
 			y = self._co2Pos[1]
-			surf = self._co2Font.render(textCO2, True, color, backColor)
+			surf = self._co2Font.render(self._textCO2, True, color, backColor)
 			screen.blit(surf, (x, y))
 			#print(x)
 
-			sz = self._co2Font.size(textTemp)
+			sz = self._co2Font.size(self._textTemp)
 			x = (size[0] - sz[0]) >> 1
 			y = self._tempPos[1]
-			surf = self._tempFont.render(textTemp, True, foreColor, backColor)
+			surf = self._tempFont.render(self._textTemp, True, foreColor, backColor)
 			screen.blit(surf, (x, y))
 			#print(x)
 		except Exception as ex:
