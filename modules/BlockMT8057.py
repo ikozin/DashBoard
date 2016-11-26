@@ -102,7 +102,7 @@ class BlockMT8057(BlockSecondBase):
 			#print("CO2", self._valueCO2, "temp", "{:.1f}".format(self._valueTemp))
 			textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
 			textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
-
+			self._text = "{0}.{1}.".format(textCO2, textTemp)
 			color = foreColor
 			if self._valueCO2 >= self._warnZone:
 				color = self._warnColor
