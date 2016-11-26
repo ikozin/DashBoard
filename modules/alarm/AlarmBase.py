@@ -27,12 +27,10 @@ class AlarmBase(metaclass=ABCMeta):
             raise("Передаваемый параметр должен быть наследником configparser.SectionProxy")
 
 
-    @classmethod
     def updateState(self, currentTime):
         pass
 
 
-    @classmethod
     def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
         pass
 

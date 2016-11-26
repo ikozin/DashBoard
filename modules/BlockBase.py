@@ -27,32 +27,27 @@ class BlockBase(metaclass=ABCMeta):
         pass
 
 
-    @classmethod
     def proccedEvent(self, event, isOnline):
         """ """
         pass
 
 
-    @classmethod
     def updateInfo(self, isOnline):
         """ """
         if not isOnline: return
         pass
 
 
-    @classmethod
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         """ """
         pass
 
 
-    @classmethod
     def getText(self):
         """ """
         return self._text
 
 
-    @classmethod
     def done(self):
         """ """
         pass
