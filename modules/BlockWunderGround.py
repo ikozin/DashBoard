@@ -17,7 +17,7 @@ from modules.BlockMinuteBase import BlockMinuteBase
 MIN_UPDATE_TIME = 600
 CITY_URL = "zmw:00000.1.27612"
 WEATHER_FILE = "wunderground_data.xml"
-WEATHER_TEXT_FORMAT = "{0}, Температура {1:+d}°, Скорость ветра {2} метра в секунду, Влажность {3}, Давление {4} мм ртутного столба"
+WEATHER_TEXT_FORMAT = "{0}, Температура {1:+.1f}°, Скорость ветра {2} метра в секунду, Влажность {3}, Давление {4} мм ртутного столба"
 
 
 class BlockWunderGround(BlockMinuteBase):
@@ -187,9 +187,9 @@ class BlockWunderGround(BlockMinuteBase):
 
             root = ET.fromstring(data)
             self._weather_type = str(root.find("current_observation/weather").text).capitalize()
-            self._temperature = int(float(root.find("current_observation/temp_c").text))
+            self._temperature = float(root.find("current_observation/temp_c").text)
             self._humidity = str(root.find("current_observation/relative_humidity").text)
-            self._pressure = float(root.find("current_observation/pressure_mb").text)
+            self._pressure = str(root.find("current_observation/pressure_mb").text)
             self._wind_speed = float(root.find("current_observation/wind_mph").text)
             self._wind_direction = str(root.find("current_observation/wind_dir").text)
 
@@ -217,7 +217,7 @@ class BlockWunderGround(BlockMinuteBase):
                 surf = self._weatherTypeFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._weatherTypePos)
             if (self._temperature is not None):
-                text = "{0:+d}°".format(self._temperature)
+                text = "{0:+.1f}°".format(self._temperature)
                 surf = self._temperatureFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._temperaturePos)
             if (self._humidity is not None):
