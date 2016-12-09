@@ -217,7 +217,7 @@ class BlockWunderGround(BlockMinuteBase):
                 surf = self._weatherTypeFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._weatherTypePos)
             if (self._temperature is not None):
-                text = "{0:+.1f}°".format(self._temperature)
+                text = "{0:+.1f}".format(self._temperature)
                 surf = self._temperatureFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._temperaturePos)
             if (self._humidity is not None):
