@@ -15,7 +15,7 @@ from modules.BlockMinuteBase import BlockMinuteBase
 MIN_UPDATE_TIME = 600
 CITY_ID = 524901
 WEATHER_FILE = "openweathermap_data.xml"
-WEATHER_TEXT_FORMAT = "{0}, Температура {1:+.1f}°, Скорость ветра {2} метра в секунду, Влажность {3}%, Давление {4} мм ртутного столба"
+WEATHER_TEXT_FORMAT = "{0}, Температура {1:+.0f}°, Скорость ветра {2} метра в секунду, Влажность {3}%, Давление {4} мм ртутного столба"
 DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДавление {3} мм"
 
 
@@ -194,7 +194,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
                 surf = self._weatherTypeFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._weatherTypePos)
             if (self._temperature is not None):
-                text = "{0:+.1f}°".format(self._temperature)
+                text = "{0:+.0f}°".format(self._temperature)
                 surf = self._temperatureFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._temperaturePos)
             if (self._humidity is not None):
