@@ -97,9 +97,12 @@ class BlockMT8057(BlockSecondBase):
 			if (self._valueTemp is None): self._valueTemp = 24.970001
 			self._valueCO2 += 10
 			self._valueTemp += 0.1
-		self._textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
-		self._textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
-		self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._valueCO2, self._valueTemp)
+		if self._valueCO2:
+			self._textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
+		if self._valueTemp:
+			self._textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
+		if self._valueCO2 and self._valueTemp:
+			self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._valueCO2, self._valueTemp)
 
 
 	def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
