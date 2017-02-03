@@ -62,6 +62,25 @@ class Mainboard :
         # Загружаем настройки из конфиг файла
         self._config = Setting()
         self._config.load(FILE_SETTING)
+
+        self._managerList = {
+            "Time": BlockTime(logger, self._config),
+            "Alarm": BlocklAlarm(logger, self._config),
+            "Voice": BlockVoice(logger, self._config),
+            "YandexNews": BlockYandexNews(logger, self._config),
+            "OpenWeatherMap": BlockOpenWeatherMap(logger, self._config),
+            "WunderGround": BlockWunderGround(logger, self._config),
+            "Calendar": BlockCalendar(logger, self._config),
+            "Swap": BlockSwap(logger, self._config),
+            "Watcher": BlockWatcher(logger, self._config),
+            "MT8057": BlockMT8057(logger, self._config),
+        }
+
+        for name in self._config._blockList:
+            if name in self._managerList:
+                self._modules.append(self._managerList[name])
+                print(name)
+
         # Based on "Python GUI in Linux frame buffer"
         # http://www.karoltomala.com/blog/?p=679
         # Check which frame buffer drivers are available
@@ -100,23 +119,6 @@ class Mainboard :
 
         # Выключаем курсор
         pygame.mouse.set_visible(False)
-
-        self._managerList = {
-            "Time": BlockTime(logger, self._config),
-            "Alarm": BlocklAlarm(logger, self._config),
-            "Voice": BlockVoice(logger, self._config),
-            "YandexNews": BlockYandexNews(logger, self._config),
-            "OpenWeatherMap": BlockOpenWeatherMap(logger, self._config),
-            "WunderGround": BlockWunderGround(logger, self._config),
-            "Calendar": BlockCalendar(logger, self._config),
-            "Swap": BlockSwap(logger, self._config),
-            "Watcher": BlockWatcher(logger, self._config),
-            "MT8057": BlockMT8057(logger, self._config),
-        }
-
-        for name in self._config._blockList:
-            if name in self._managerList:
-                self._modules.append(self._managerList[name])
 
         for module in self._modules:
             module.init(FILE_SETTING, self._isDisplayOn, self._managerList)
