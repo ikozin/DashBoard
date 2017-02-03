@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractclassmethod
 from tkinter import ttk
 
+
 class BaseManager(ttk.LabelFrame, metaclass=ABCMeta):
 
     @abstractclassmethod

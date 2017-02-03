@@ -5,12 +5,15 @@ from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import colorchooser
 
+
 class ModalDialog:
 
     def _ok(self):
         pass
+
     def _cancel(self):
         pass
+
     def _waitDialog(self, modal, root):
         modal.bind('<Key-Return>', lambda e: self._ok())
         modal.bind('<Key-Escape>', lambda e: self._cancel())
@@ -29,20 +32,25 @@ class EntryModalDialog(ModalDialog):
 
     def __init__(self, title):
         self._title = str(title)
+
     def Execute(self, root, text):
         self._modal = Toplevel(root)
         self._modal.title(self._title)
         self._value = StringVar()
         self._value.set(text)
         entry = Entry(self._modal, textvariable=self._value)
-        entry.grid(row=0, column=0, columnspan=4, padx=10, pady=5, sticky=(N,S,E,W))
+        entry.grid(row=0, column=0, columnspan=4, padx=10, pady=5, sticky=(N, S, E, W))
         entry.focus_set()
-        ttk.Button(self._modal, text="OK", command=self._ok).grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky=(N,S,E,W))
-        ttk.Button(self._modal, text="Cancel", command=self._cancel).grid(row=1, column=2, columnspan=2, padx=10, pady=5, sticky=(N,S,E,W))
+        btn = ttk.Button(self._modal, text="OK", command=self._ok)
+        btn.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky=(N, S, E, W))
+        btn = ttk.Button(self._modal, text="Cancel", command=self._cancel)
+        btn.grid(row=1, column=2, columnspan=2, padx=10, pady=5, sticky=(N, S, E, W))
         self._waitDialog(self._modal, root)
         return self._value.get()
+
     def _ok(self):
         self._modal.destroy()
+
     def _cancel(self):
         self._modal.destroy()
         self._value.set("")
@@ -51,7 +59,8 @@ class EntryModalDialog(ModalDialog):
 class ColorsChooserFrame(ttk.LabelFrame):
 
     def __init__(self, root, text):
-        if not isinstance(text, str): raise TypeError("text")
+        if not isinstance(text, str):
+            raise TypeError("text")
         super(ColorsChooserFrame, self).__init__(root, text=text)
         self._root = root
         self.columnconfigure(0, weight=1)
@@ -59,31 +68,40 @@ class ColorsChooserFrame(ttk.LabelFrame):
         self._backColor = None
         self._foreColor = None
         self._backSelector = Button(self, text="Цвет фона", command=self._selectBackColor)
-        self._backSelector.grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._backSelector.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._foreSelector = Button(self, text="Цвет текста", command=self._selectForeColor)
-        self._foreSelector.grid(row=0, column=1, padx=2, pady=2, sticky=(N,S,E,W))
+        self._foreSelector.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
         self.load((0, 0, 0), (255, 255, 255))
+
     def load(self, backColor, foreColor):
-        if not isinstance(backColor, tuple): raise TypeError("backColor")
-        if not isinstance(foreColor, tuple): raise TypeError("foreColor")
+        if not isinstance(backColor, tuple):
+            raise TypeError("backColor")
+        if not isinstance(foreColor, tuple):
+            raise TypeError("foreColor")
         self._backColor = backColor
         self._foreColor = foreColor
         backColor = "#%02x%02x%02x" % backColor
         foreColor = "#%02x%02x%02x" % foreColor
         self._backSelector.configure(background=backColor, foreground=foreColor)
         self._foreSelector.configure(background=backColor, foreground=foreColor)
+
     def _selectBackColor(self):
         (tripleColor, tkColor) = colorchooser.askcolor(self._backColor)
-        if tripleColor is None: return
+        if tripleColor is None:
+            return
         self._backSelector.configure(background=tkColor)
         self._foreSelector.configure(background=tkColor)
+
         self._backColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
+
     def _selectForeColor(self):
         (tripleColor, tkColor) = colorchooser.askcolor(self._foreColor)
-        if tripleColor is None: return
+        if tripleColor is None:
+            return
         self._backSelector.configure(foreground=tkColor)
         self._foreSelector.configure(foreground=tkColor)
         self._foreColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
+
     def getResult(self):
         return (self._backColor, self._foreColor)
 
@@ -91,7 +109,8 @@ class ColorsChooserFrame(ttk.LabelFrame):
 class FontChooserFrame(ttk.LabelFrame):
 
     def __init__(self, root, text):
-        if not isinstance(text, str): raise TypeError("text")
+        if not isinstance(text, str):
+            raise TypeError("text")
         super(FontChooserFrame, self).__init__(root, text=text)
         self._root = root
         self._fontName = StringVar()
@@ -101,20 +120,31 @@ class FontChooserFrame(ttk.LabelFrame):
         ttk.Label(self, text="Шрифт").grid(row=0, column=0, padx=2, pady=2)
         fonts = list(font.families())
         list.sort(fonts)
-        ttk.Combobox(self, values=fonts, textvariable=self._fontName).grid(row=0, column=1, padx=2, pady=2)
-        ttk.Label(self, text="Размер").grid(row=0, column=2, padx=2, pady=2)
-        Spinbox(self, from_=1, to=500, increment=1, width=4, textvariable=self._fontSize).grid(row=0, column=3, padx=2, pady=2)
-        ttk.Checkbutton(self, text="Жирный", variable=self._isBold).grid(row=0, column=4, padx=2, pady=2)
-        ttk.Checkbutton(self, text="Наклон", variable=self._isItalic).grid(row=0, column=5, padx=2, pady=2)
+        combo = ttk.Combobox(self, values=fonts, textvariable=self._fontName)
+        combo.grid(row=0, column=1, padx=2, pady=2)
+        lbl = ttk.Label(self, text="Размер")
+        lbl.grid(row=0, column=2, padx=2, pady=2)
+        spin = Spinbox(self, from_=1, to=500, increment=1, width=4, textvariable=self._fontSize)
+        spin.grid(row=0, column=3, padx=2, pady=2)
+        chk = ttk.Checkbutton(self, text="Жирный", variable=self._isBold)
+        chk.grid(row=0, column=4, padx=2, pady=2)
+        chk = ttk.Checkbutton(self, text="Наклон", variable=self._isItalic)
+        chk.grid(row=0, column=5, padx=2, pady=2)
+
     def load(self, fontName, fontSize, isBold, isItalic):
-        if not isinstance(fontName, str):  raise TypeError("fontName")
-        if not isinstance(fontSize, int):  raise TypeError("fontSize")
-        if not isinstance(isBold, bool):   raise TypeError("isBold")
-        if not isinstance(isItalic, bool): raise TypeError("isItalic")
+        if not isinstance(fontName, str):
+            raise TypeError("fontName")
+        if not isinstance(fontSize, int):
+            raise TypeError("fontSize")
+        if not isinstance(isBold, bool):
+            raise TypeError("isBold")
+        if not isinstance(isItalic, bool):
+            raise TypeError("isItalic")
         self._fontName.set(fontName)
         self._fontSize.set(fontSize)
         self._isBold.set(isBold)
         self._isItalic.set(isItalic)
+
     def getResult(self):
         return (self._fontName.get(), self._fontSize.get(), self._isBold.get(), self._isItalic.get())
 
@@ -126,15 +156,22 @@ class XYFrame(ttk.LabelFrame):
         super(XYFrame, self).__init__(root, text=text)
         self._X = IntVar()
         self._Y = IntVar()
-        ttk.Label(self, text=textX).grid(row=0, column=0, padx=2, pady=2)
-        Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._X).grid(row=0, column=1, padx=2, pady=2)
-        ttk.Label(self, text=textY).grid(row=0, column=2, padx=2, pady=2)
-        Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._Y).grid(row=0, column=3, padx=2, pady=2)
+        lbl = ttk.Label(self, text=textX)
+        lbl.grid(row=0, column=0, padx=2, pady=2)
+        spin = Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._X)
+        spin.grid(row=0, column=1, padx=2, pady=2)
+        lbl = ttk.Label(self, text=textY)
+        lbl.grid(row=0, column=2, padx=2, pady=2)
+        spin = Spinbox(self, from_=0, to=1800, increment=1, width=5, textvariable=self._Y)
+        spin.grid(row=0, column=3, padx=2, pady=2)
+
     def load(self, x, y):
         self._X.set(x)
         self._Y.set(y)
+
     def getResult(self):
         return (self._X.get(), self._Y.get())
+
 
 class SelectFrame(ttk.LabelFrame):
 
@@ -142,58 +179,80 @@ class SelectFrame(ttk.LabelFrame):
         super(SelectFrame, self).__init__(root, text=text)
         self._selList = []
         self._srcList = []
-        Button(self, text="Вверх", command=self._command_up).grid(row=0, column=0, sticky=(N,S,E,W), padx=5, pady=5)
-        Button(self, text="Вниз", command=self._command_down).grid(row=1, column=0, sticky=(N,S,E,W), padx=5, pady=5)
+        btn = Button(self, text="Вверх", command=self._command_up)
+        btn.grid(row=0, column=0, sticky=(N, S, E, W), padx=5, pady=5)
+        btn = Button(self, text="Вниз", command=self._command_down)
+        btn.grid(row=1, column=0, sticky=(N, S, E, W), padx=5, pady=5)
         self._selListBox = Listbox(self)
         self._selListBox.grid(row=0, column=1, rowspan=2)
-        Button(self, text="Включить", command=self._command_include).grid(row=0, column=2, sticky=(N,S,E,W), padx=5, pady=5)
-        Button(self, text="Выключить", command=self._command_exclude).grid(row=1, column=2, sticky=(N,S,E,W), padx=5, pady=5)
+        btn = Button(self, text="Включить", command=self._command_include)
+        btn.grid(row=0, column=2, sticky=(N, S, E, W), padx=5, pady=5)
+        btn = Button(self, text="Выключить", command=self._command_exclude)
+        btn.grid(row=1, column=2, sticky=(N, S, E, W), padx=5, pady=5)
         self._srcListBox = Listbox(self)
         self._srcListBox.grid(row=0, column=3, rowspan=2)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(3, weight=1)
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
+
     def load(self, selection=[], modList=[]):
         self._selList = selection
         self._srcList = modList
-        for item in self._selList:  self._selListBox.insert("end", item)
+        for item in self._selList:
+            self._selListBox.insert("end", item)
         self._selListBox.selection_set(0)
-        for item in self._srcList:  self._srcListBox.insert("end", item)
+        for item in self._srcList:
+            self._srcListBox.insert("end", item)
         self._srcListBox.selection_set(0)
+
     def getResult(self):
         return ", ".join(self._selList)
+
     def _command_up(self):
         selection = self._selListBox.curselection()
-        if not selection: return
-        if selection[0] == 0: return
+        if not selection:
+            return
+        if selection[0] == 0:
+            return
         item = self._selList.pop(selection[0])
         self._selList.insert(selection[0] - 1, item)
         self._update_selected_list(selection[0] - 1)
+
     def _command_down(self):
         selection = self._selListBox.curselection()
-        if not selection: return
-        if selection[0] == len(self._selList) - 1: return
+        if not selection:
+            return
+        if selection[0] == len(self._selList) - 1:
+            return
         item = self._selList.pop(selection[0])
         self._selList.insert(selection[0] + 1, item)
         self._update_selected_list(selection[0] + 1)
+
     def _command_include(self):
         selection = self._srcListBox.curselection()
-        if not selection: return
+        if not selection:
+            return
         name = self._srcListBox.get(selection[0])
-        if name in self._selList: return
+        if name in self._selList:
+            return
         self._selList.append(name)
         self._update_selected_list()
+
     def _command_exclude(self):
         selection = self._srcListBox.curselection()
-        if not selection: return
+        if not selection:
+            return
         name = self._srcListBox.get(selection[0])
-        if name not in self._selList: return
+        if name not in self._selList:
+            return
         self._selList.remove(name)
         self._update_selected_list()
-    def _update_selected_list(self, selection = None):
+
+    def _update_selected_list(self, selection=None):
         self._selListBox.delete(0, 'end')
-        for item in self._selList:  self._selListBox.insert("end", item)
+        for item in self._selList:
+            self._selListBox.insert("end", item)
         if selection:
             self._selListBox.selection_set(selection)
 
@@ -240,4 +299,3 @@ class VerticalScrolledFrame(Frame):
                 # update the inner frame's width to fill the canvas
                 canvas.itemconfigure(interior_id, width=canvas.winfo_width())
         canvas.bind('<Configure>', _configure_canvas)
-

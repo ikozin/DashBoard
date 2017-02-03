@@ -11,6 +11,7 @@ from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
 from ext.ModalDialog import XYFrame
 
+
 class WunderGroundManager(BaseManager):
     """description of class"""
 
@@ -23,50 +24,62 @@ class WunderGroundManager(BaseManager):
         self._folderValue = StringVar()
 
         content = ttk.Frame(self)
-        content.grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        content.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
-        ttk.Label(content, justify=RIGHT, text="Время обновления").grid(row=0, column=0, padx=2, pady=2, sticky=(N,S,E))
-        Spinbox(content, from_=1, to=60, increment=1, width=5, textvariable=self._updateValue).grid(row=0, column=1, padx=2, pady=2, sticky=(N,S,E,W))
-        ttk.Label(content, justify=LEFT, text="минут").grid(row=0, column=2, padx=2, pady=2, sticky=(N,S,W))
+        lbl = ttk.Label(content, justify=RIGHT, text="Время обновления")
+        lbl.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E))
 
-        ttk.Label(content, justify=RIGHT, text="Ключ").grid(row=1, column=0, padx=2, pady=2, sticky=(N,S,E))
-        ttk.Entry(content, width=40, textvariable=self._keyValue).grid(row=1, column=1, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
+        spin = Spinbox(content, from_=1, to=60, increment=1, width=5, textvariable=self._updateValue)
+        spin.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
 
-        ttk.Label(content, justify=RIGHT, text="Директория для картинок").grid(row=2, column=0, padx=2, pady=2, sticky=(N,S,E))
-        ttk.Entry(content, width=5, textvariable=self._folderValue).grid(row=2, column=1, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
+        lbl = ttk.Label(content, justify=LEFT, text="минут")
+        lbl.grid(row=0, column=2, padx=2, pady=2, sticky=(N, S, W))
+
+        lbl = ttk.Label(content, justify=RIGHT, text="Ключ")
+        lbl.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E))
+
+        entr = ttk.Entry(content, width=40, textvariable=self._keyValue)
+        entr.grid(row=1, column=1, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+
+        lbl = ttk.Label(content, justify=RIGHT, text="Директория для картинок")
+        lbl.grid(row=2, column=0, padx=2, pady=2, sticky=(N, S, E))
+
+        entr = ttk.Entry(content, width=5, textvariable=self._folderValue)
+        entr.grid(row=2, column=1, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
         self._scaleIcon = XYFrame(self, "Масштаб для картинки", "Масштаб (X)", "Масштаб (Y)")
-        self._scaleIcon.grid(row=1, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._scaleIcon.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._posIcon = XYFrame(self, "Расположение для картинки", "Расположение (X)", "Расположение (Y)")
-        self._posIcon.grid(row=2, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._posIcon.grid(row=2, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
         self._posWeatherType = XYFrame(self, "Расположение для погоды", "Расположение (X)", "Расположение (Y)")
-        self._posWeatherType.grid(row=3, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._posWeatherType.grid(row=3, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._posTemperature = XYFrame(self, "Расположение для температуры", "Расположение (X)", "Расположение (Y)")
-        self._posTemperature.grid(row=4, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._posTemperature.grid(row=4, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._posHumidity = XYFrame(self, "Расположение для влажности", "Расположение (X)", "Расположение (Y)")
-        self._posHumidity.grid(row=5, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._posHumidity.grid(row=5, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._posPressure = XYFrame(self, "Расположение для давления", "Расположение (X)", "Расположение (Y)")
-        self._posPressure.grid(row=6, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._posPressure.grid(row=6, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._posWind = XYFrame(self, "Расположение для ветра", "Расположение (X)", "Расположение (Y)")
-        self._posWind.grid(row=7, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._posWind.grid(row=7, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
         self._weatherType = FontChooserFrame(self, "Параметры шрифта для погоды")
-        self._weatherType.grid(row=8, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._weatherType.grid(row=8, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._temperature = FontChooserFrame(self, "Параметры шрифта для температуры")
-        self._temperature.grid(row=9, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._temperature.grid(row=9, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._humidity = FontChooserFrame(self, "Параметры шрифта для влажности")
-        self._humidity.grid(row=10, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._humidity.grid(row=10, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._pressure = FontChooserFrame(self, "Параметры шрифта для давления")
-        self._pressure.grid(row=11, column=0, padx=2, pady=2, sticky=(N,S,E,W))
+        self._pressure.grid(row=11, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._wind = FontChooserFrame(self, "Параметры шрифта ветра")
-        self._wind.grid(row=12, column=0, padx=2, pady=2, sticky=(N,S,E,W))
-
+        self._wind.grid(row=12, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
     def load(self, config, modulelist):
         """ """
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not config.has_section("WunderGroundBlock"):      config.add_section("WunderGroundBlock")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("WunderGroundBlock"):
+            config.add_section("WunderGroundBlock")
         section = config["WunderGroundBlock"]
 
         self._updateValue.set(section.getint("UpdateTime", 15))
@@ -119,11 +132,12 @@ class WunderGroundManager(BaseManager):
         isItalic = section.getboolean("WindFontItalic", False)
         self._wind.load(fontName, fontSize, isBold, isItalic)
 
-
     def save(self, config):
         """ """
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not config.has_section("WunderGroundBlock"):      config.add_section("WunderGroundBlock")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("WunderGroundBlock"):
+            config.add_section("WunderGroundBlock")
         section = config["WunderGroundBlock"]
 
         section["UpdateTime"] = str(self._updateValue.get())
@@ -147,35 +161,34 @@ class WunderGroundManager(BaseManager):
         section["WindPos"] = "({0},{1})".format(posX, posY)
 
         (fontName, fontSize, isBold, isItalic) = self._weatherType.getResult()
-        section["WeatherTypeFontName"]   = fontName
-        section["WeatherTypeFontSize"]   = str(fontSize)
-        section["WeatherTypeFontBold"]   = str(isBold)
+        section["WeatherTypeFontName"] = fontName
+        section["WeatherTypeFontSize"] = str(fontSize)
+        section["WeatherTypeFontBold"] = str(isBold)
         section["WeatherTypeFontItalic"] = str(isItalic)
 
         (fontName, fontSize, isBold, isItalic) = self._temperature.getResult()
-        section["TemperatureFontName"]   = fontName
-        section["TemperatureFontSize"]   = str(fontSize)
-        section["TemperatureFontBold"]   = str(isBold)
+        section["TemperatureFontName"] = fontName
+        section["TemperatureFontSize"] = str(fontSize)
+        section["TemperatureFontBold"] = str(isBold)
         section["TemperatureFontItalic"] = str(isItalic)
 
         (fontName, fontSize, isBold, isItalic) = self._humidity.getResult()
-        section["HumidityFontName"]   = fontName
-        section["HumidityFontSize"]   = str(fontSize)
-        section["HumidityFontBold"]   = str(isBold)
+        section["HumidityFontName"] = fontName
+        section["HumidityFontSize"] = str(fontSize)
+        section["HumidityFontBold"] = str(isBold)
         section["HumidityFontItalic"] = str(isItalic)
 
         (fontName, fontSize, isBold, isItalic) = self._pressure.getResult()
-        section["PressureFontName"]   = fontName
-        section["PressureFontSize"]   = str(fontSize)
-        section["PressureFontBold"]   = str(isBold)
+        section["PressureFontName"] = fontName
+        section["PressureFontSize"] = str(fontSize)
+        section["PressureFontBold"] = str(isBold)
         section["PressureFontItalic"] = str(isItalic)
 
         (fontName, fontSize, isBold, isItalic) = self._wind.getResult()
-        section["WindFontName"]   = fontName
-        section["WindFontSize"]   = str(fontSize)
-        section["WindFontBold"]   = str(isBold)
+        section["WindFontName"] = fontName
+        section["WindFontSize"] = str(fontSize)
+        section["WindFontBold"] = str(isBold)
         section["WindFontItalic"] = str(isItalic)
-
 
     def _getTuple(self, value):
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
@@ -183,5 +196,3 @@ class WunderGroundManager(BaseManager):
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
         except Exception as ex:
             return None
-
-

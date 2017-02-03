@@ -27,16 +27,16 @@ from modules.BlockMT8057 import BlockMT8057
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
 
-FPS          = 60
-#WAIT_TIME    = 40
+FPS = 60
+# WAIT_TIME = 40
 FILE_SETTING = "setting.ini"
-PIR_PIN      = 13                #GPIO27 green
-LED_PIN      = 12                #GPIO18 red
-IDLE_EVENT   = (pygame.locals.USEREVENT + 1)
+PIR_PIN = 13  # GPIO27 green
+LED_PIN = 12  # GPIO18 red
+IDLE_EVENT = (pygame.locals.USEREVENT + 1)
 
 
 ###########################################################################
-if sys.platform == "linux": # Only for Raspberry Pi
+if sys.platform == "linux":  # Only for Raspberry Pi
     import RPi.GPIO as GPIO
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
@@ -44,18 +44,17 @@ if sys.platform == "linux": # Only for Raspberry Pi
     GPIO.setup(PIR_PIN, GPIO.IN)
     GPIO.output(LED_PIN, 1)
 
-
     def motionDetected(pin):
-        #logger.debug("Motion detected!")
+        # logger.debug("Motion detected!")
         app.displayOn()
 ###########################################################################
 
 
-class Mainboard :
+class Mainboard:
 
     def __init__(self):
         """ """
-        self._modules  = []
+        self._modules = []
         self._size = None
         self._screen = None
         self._isDisplayOn = True
@@ -94,7 +93,7 @@ class Mainboard :
             try:
                 pygame.display.init()
             except pygame.error:
-                print ("Driver: {0} failed.".format(driver))
+                print("Driver: {0} failed.".format(driver))
                 continue
             found = True
             break
@@ -102,7 +101,7 @@ class Mainboard :
         if not found:
             raise Exception("No suitable video driver found!")
         ###########################################################################
-        if sys.platform == "linux": # Only for Raspberry Pi
+        if sys.platform == "linux":  # Only for Raspberry Pi
             self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
             self._screen = pygame.display.set_mode(self._size, pygame.FULLSCREEN | pygame.HWSURFACE)
         else:
@@ -126,12 +125,10 @@ class Mainboard :
         pygame.time.set_timer(BLOCK_SECOND_UPDATE_EVENT, 1000)
         pygame.time.set_timer(BLOCK_MINUTE_UPDATE_EVENT, 60000)
 
-
     def __del__(self):
         """Destructor to make sure pygame shuts down, etc."""
-        #pygame.mixer.quit()
-        #pygame.display.quit()
-
+        # pygame.mixer.quit()
+        # pygame.display.quit()
 
     def setDisplayTimerOn(self):
         """Таймер для отключения дисплея"""
@@ -139,36 +136,31 @@ class Mainboard :
         pygame.time.set_timer(IDLE_EVENT, 0)
         pygame.time.set_timer(IDLE_EVENT, idleTime * 60000)
 
-
     def setDisplayTimerOff(self):
         """Таймер для отключения дисплея"""
         pygame.time.set_timer(IDLE_EVENT, 0)
 
-
     def displayOff(self):
-        if (self._isDisplayOn == False):
+        if (not self._isDisplayOn):
             return
         self._isDisplayOn = False
         ###########################################################################
-        if sys.platform == "linux": # Only for Raspberry Pi
+        if sys.platform == "linux":  # Only for Raspberry Pi
             subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True).wait()
-            #subprocess.Popen("/opt/vc/bin/tvservice -o", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
             GPIO.output(LED_PIN, 0)
         else:
             pass
         ###########################################################################
         self.setDisplayTimerOff()
 
-
     def displayOn(self):
         self.setDisplayTimerOn()
-        if (self._isDisplayOn == True):
+        if (self._isDisplayOn):
             return
         self._isDisplayOn = True
         ###########################################################################
-        if sys.platform == "linux": # Only for Raspberry Pi
+        if sys.platform == "linux":  # Only for Raspberry Pi
             subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True).wait()
-            #subprocess.Popen("/opt/vc/bin/tvservice -p", shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).wait()
             GPIO.output(LED_PIN, 1)
         else:
             pass
@@ -176,14 +168,15 @@ class Mainboard :
         for module in self._modules:
             module.updateInfo(self._isDisplayOn)
 
-
     def proccedEvent(self, events):
         for event in events:
-            if (event.type == pygame.locals.QUIT) or (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_ESCAPE):
+            if (event.type == pygame.locals.QUIT):
+                return 0
+            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_ESCAPE):
                 return 0
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_r):
                 ###########################################################################
-                if sys.platform == "linux": # Only for Raspberry Pi
+                if sys.platform == "linux":  # Only for Raspberry Pi
                     subprocess.Popen("sudo reboot", shell=True)
                 else:
                     pass
@@ -191,7 +184,7 @@ class Mainboard :
                 return 0
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_h):
                 ###########################################################################
-                if sys.platform == "linux": # Only for Raspberry Pi
+                if sys.platform == "linux":  # Only for Raspberry Pi
                     subprocess.Popen("sudo shutdown -h now", shell=True)
                 else:
                     pass
@@ -208,7 +201,6 @@ class Mainboard :
                 module.proccedEvent(event, self._isDisplayOn)
         return 1
 
-
     def loop(self):
         clock = pygame.time.Clock()
         while (self.proccedEvent(pygame.event.get())):
@@ -218,10 +210,16 @@ class Mainboard :
 
             time = datetime.datetime.now()
             for module in self._modules:
-                module.updateDisplay(self._isDisplayOn, self._screen, self._size, foregroundColor, backgroundColor, time)
+                module.updateDisplay(
+                    self._isDisplayOn,
+                    self._screen,
+                    self._size,
+                    foregroundColor,
+                    backgroundColor,
+                    time)
 
             pygame.display.update()
-            #pygame.time.delay(WAIT_TIME)
+            # pygame.time.delay(WAIT_TIME)
             clock.tick(FPS)
 
         for module in self._modules:
@@ -229,22 +227,21 @@ class Mainboard :
 
         pygame.quit()
 
-
 if __name__ == "__main__":
 
     print(pygame.version.ver)
-    # Create an instance of the mainboard class
+    # Create an instance of the Mainboard class
     app = Mainboard()
 
     ###########################################################################
-    if sys.platform == "linux": # Only for Raspberry Pi
+    if sys.platform == "linux":  # Only for Raspberry Pi
         GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=motionDetected)
     ###########################################################################
 
     app.loop()
 
     ###########################################################################
-    if sys.platform == "linux": # Only for Raspberry Pi
+    if sys.platform == "linux":  # Only for Raspberry Pi
         GPIO.cleanup()
     ###########################################################################
 

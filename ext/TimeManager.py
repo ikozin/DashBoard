@@ -10,6 +10,7 @@ from tkinter import colorchooser
 from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
 
+
 class TimeManager(BaseManager):
     """description of class"""
 
@@ -20,8 +21,10 @@ class TimeManager(BaseManager):
         self._font.grid(row=0, column=1)
 
     def load(self, config, modulelist):
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not config.has_section("TimeBlock"):      config.add_section("TimeBlock")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("TimeBlock"):
+            config.add_section("TimeBlock")
         section = config["TimeBlock"]
         fontName = section.get("FontName", "Helvetica")
         fontSize = section.getint("FontSize", 384)
@@ -30,12 +33,13 @@ class TimeManager(BaseManager):
         self._font.load(fontName, fontSize, isBold, isItalic)
 
     def save(self, config):
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not config.has_section("TimeBlock"):      config.add_section("TimeBlock")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("TimeBlock"):
+            config.add_section("TimeBlock")
         section = config["TimeBlock"]
         (fontName, fontSize, isBold, isItalic) = self._font.getResult()
-        section["FontName"]   = fontName
-        section["FontSize"]   = str(fontSize)
-        section["FontBold"]   = str(isBold)
+        section["FontName"] = fontName
+        section["FontSize"] = str(fontSize)
+        section["FontBold"] = str(isBold)
         section["FontItalic"] = str(isItalic)
-

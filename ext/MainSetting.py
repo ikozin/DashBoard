@@ -10,50 +10,70 @@ from tkinter import colorchooser
 from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
 
+
 class MainSetting(BaseSetting):
     """description of class"""
 
     def __init__(self, root, sectionName):
         """ """
-        if not isinstance(sectionName, str): raise TypeError("sectionName")
+        if not isinstance(sectionName, str):
+            raise TypeError("sectionName")
         super(MainSetting, self).__init__(root, text="Настройка расписания: {0}".format(sectionName))
         self.columnconfigure(9, weight=1)
         self._colorFrame = None
 
         self._time = None
-        self._hourVariable   = IntVar(0)
+        self._hourVariable = IntVar(0)
         self._minuteVariable = IntVar(0)
         self._secondVariable = IntVar(0)
-        self._idleVariable   = IntVar(0)
+        self._idleVariable = IntVar(0)
 
         timeFrame = ttk.LabelFrame(self, text="Время")
-        timeFrame.grid(row=1, column=0, sticky=(N,S,E,W))
+        timeFrame.grid(row=1, column=0, sticky=(N, S, E, W))
         timeFrame.columnconfigure(1, weight=1)
         timeFrame.columnconfigure(3, weight=1)
         timeFrame.columnconfigure(4, weight=1)
-        ttk.Label(timeFrame, text="Час:", justify=RIGHT).grid(row=0, column=0, pady=2)
-        Spinbox(timeFrame, from_=0, to=23, increment=1, width=3, textvariable=self._hourVariable).grid(row=0, column=1, padx=2, pady=2)
-        ttk.Label(timeFrame, text="Мин:", justify=RIGHT).grid(row=0, column=2, pady=2)
-        Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._minuteVariable).grid(row=0, column=3, padx=2, pady=2)
-        ttk.Label(timeFrame, text="Сек:", justify=RIGHT).grid(row=0, column=4, pady=2)
-        Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._secondVariable).grid(row=0, column=5, padx=2, pady=2)
+
+        lbl = ttk.Label(timeFrame, text="Час:", justify=RIGHT)
+        lbl.grid(row=0, column=0, pady=2)
+
+        spin = Spinbox(timeFrame, from_=0, to=23, increment=1, width=3, textvariable=self._hourVariable)
+        spin.grid(row=0, column=1, padx=2, pady=2)
+
+        lbl = ttk.Label(timeFrame, text="Мин:", justify=RIGHT)
+        lbl.grid(row=0, column=2, pady=2)
+
+        spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._minuteVariable)
+        spin.grid(row=0, column=3, padx=2, pady=2)
+
+        lbl = ttk.Label(timeFrame, text="Сек:", justify=RIGHT)
+        lbl.grid(row=0, column=4, pady=2)
+
+        spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._secondVariable)
+        spin.grid(row=0, column=5, padx=2, pady=2)
 
         idleFrame = ttk.LabelFrame(self, text="Время простоя")
-        idleFrame.grid(row=1, column=1, sticky=(N,S,E,W))
-        Spinbox(idleFrame, from_=5, to=60, increment=1, width=3, textvariable=self._idleVariable).grid(row=0, column=0, padx=2, pady=2)
-        ttk.Label(idleFrame, text="минут").grid(row=0, column=1, pady=2)
+        idleFrame.grid(row=1, column=1, sticky=(N, S, E, W))
+
+        spin = Spinbox(idleFrame, from_=5, to=60, increment=1, width=3, textvariable=self._idleVariable)
+        spin.grid(row=0, column=0, padx=2, pady=2)
+
+        lbl = ttk.Label(idleFrame, text="минут")
+        lbl.grid(row=0, column=1, pady=2)
 
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
-        self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N,S,E,W))
-
+        self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N, S, E, W))
 
     def load(self, config, sectionName):
         """ """
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not isinstance(sectionName, str):                  raise TypeError("sectionName")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not isinstance(sectionName, str):
+            raise TypeError("sectionName")
 
         section = config[sectionName]
-        if section is None: raise Exception("Section {0} not found".format(sectionName))
+        if section is None:
+            raise Exception("Section {0} not found".format(sectionName))
 
         date = section.get("starttime", "0:00:00")
         date = datetime.datetime.strptime(date, "%H:%M:%S")
@@ -69,7 +89,10 @@ class MainSetting(BaseSetting):
         self._colorFrame.load(backColor, foreColor)
 
     def pre_save(self):
-        date = datetime.datetime(year=1900, month=1, day=1,
+        date = datetime.datetime(
+            year=1900,
+            month=1,
+            day=1,
             hour=self._hourVariable.get(),
             minute=self._minuteVariable.get(),
             second=self._secondVariable.get())
@@ -77,10 +100,13 @@ class MainSetting(BaseSetting):
 
     def save(self, config, sectionName):
         """ """
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not isinstance(sectionName, str):                  raise TypeError("sectionName")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not isinstance(sectionName, str):
+            raise TypeError("sectionName")
 
-        if config.has_section(sectionName): config.remove_section(sectionName)
+        if config.has_section(sectionName):
+            config.remove_section(sectionName)
         config.add_section(sectionName)
         section = config[sectionName]
         (backgroundColor, foregroundColor) = self._colorFrame.getResult()
@@ -89,11 +115,10 @@ class MainSetting(BaseSetting):
         section["backgroundcolor"] = "(%d, %d, %d)" % backgroundColor
         section["foregroundcolor"] = "(%d, %d, %d)" % foregroundColor
 
-
     def rename(self, sectionName):
-        if not isinstance(sectionName, str): raise TypeError("sectionName")
+        if not isinstance(sectionName, str):
+            raise TypeError("sectionName")
         self.configure(text="Настройка расписания: {0}".format(sectionName))
-
 
     def _getTuple(self, value):
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """

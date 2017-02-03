@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractclassmethod
 from tkinter import ttk
 
+
 class BaseSetting(ttk.LabelFrame, metaclass=ABCMeta):
 
     @abstractclassmethod
@@ -18,4 +19,3 @@ class BaseSetting(ttk.LabelFrame, metaclass=ABCMeta):
     @abstractclassmethod
     def rename(self, sectionName):
         pass
-

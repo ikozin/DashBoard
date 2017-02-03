@@ -22,29 +22,46 @@ class MT8057Manager(BaseManager):
         self._critValue = IntVar()
         self._warnColor = None
         self._critColor = None
-        ttk.Label(self, text="Начальное значения для Предупреждения").grid(row=0, column=0, padx=2, pady=2)
-        ttk.Entry(self, textvariable=self._warnValue, width=4).grid(row=0, column=1, padx=2, pady=2)
-        ttk.Label(self, text="Цвет текста для Предупреждения").grid(row=1, column=0, padx=2, pady=2)
-        self._warnSelector = Button(self, text="Предупреждение", command=self._selectWarnColor)
-        self._warnSelector.grid(row=1, column=1, padx=2, pady=2, sticky=(N,S,E,W))
-        ttk.Label(self, text="Начальное значения для Опасности").grid(row=2, column=0, padx=2, pady=2)
-        ttk.Entry(self, textvariable=self._critValue, width=4).grid(row=2, column=1, padx=2, pady=2)
-        ttk.Label(self, text="Цвет текста для Опасности").grid(row=3, column=0, padx=2, pady=2)
-        self._critSelector = Button(self, text="Опасность", command=self._selectCritColor)
-        self._critSelector.grid(row=3, column=1, padx=2, pady=2, sticky=(N,S,E,W))
-        self._posCO2 = XYFrame(self, "Расположение CO2", "Расположение (X)", "Расположение (Y)")
-        self._posCO2.grid(row=4, column=0, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
-        self._posTemp = XYFrame(self, "Расположение Температуры", "Расположение (X)", "Расположение (Y)")
-        self._posTemp.grid(row=5, column=0, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
-        self._co2 = FontChooserFrame(self, "Параметры шрифта CO2")
-        self._co2.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
-        self._temp = FontChooserFrame(self, "Параметры шрифта Температуры")
-        self._temp.grid(row=7, column=0, columnspan=2, padx=2, pady=2, sticky=(N,S,E,W))
 
+        lbl = ttk.Label(self, text="Начальное значения для Предупреждения")
+        lbl.grid(row=0, column=0, padx=2, pady=2)
+
+        ttk.Entry(self, textvariable=self._warnValue, width=4).grid(row=0, column=1, padx=2, pady=2)
+
+        lbl = ttk.Label(self, text="Цвет текста для Предупреждения")
+        lbl.grid(row=1, column=0, padx=2, pady=2)
+
+        self._warnSelector = Button(self, text="Предупреждение", command=self._selectWarnColor)
+        self._warnSelector.grid(row=1, column=1, padx=2, pady=2, sticky=(N, S, E, W))
+
+        lbl = ttk.Label(self, text="Начальное значения для Опасности")
+        lbl.grid(row=2, column=0, padx=2, pady=2)
+
+        ttk.Entry(self, textvariable=self._critValue, width=4).grid(row=2, column=1, padx=2, pady=2)
+
+        lbl = ttk.Label(self, text="Цвет текста для Опасности")
+        lbl.grid(row=3, column=0, padx=2, pady=2)
+
+        self._critSelector = Button(self, text="Опасность", command=self._selectCritColor)
+        self._critSelector.grid(row=3, column=1, padx=2, pady=2, sticky=(N, S, E, W))
+
+        self._posCO2 = XYFrame(self, "Расположение CO2", "Расположение (X)", "Расположение (Y)")
+        self._posCO2.grid(row=4, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+
+        self._posTemp = XYFrame(self, "Расположение Температуры", "Расположение (X)", "Расположение (Y)")
+        self._posTemp.grid(row=5, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+
+        self._co2 = FontChooserFrame(self, "Параметры шрифта CO2")
+        self._co2.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+
+        self._temp = FontChooserFrame(self, "Параметры шрифта Температуры")
+        self._temp.grid(row=7, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
     def load(self, config, modulelist):
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not config.has_section("MT8057Block"):      config.add_section("MT8057Block")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("MT8057Block"):
+            config.add_section("MT8057Block")
         section = config["MT8057Block"]
         self._warnValue.set(section.getint("Warn", 800))
         self._critValue.set(section.getint("Crit", 1200))
@@ -71,10 +88,11 @@ class MT8057Manager(BaseManager):
         self._warnSelector.configure(foreground="#%02x%02x%02x" % self._warnColor)
         self._critSelector.configure(foreground="#%02x%02x%02x" % self._critColor)
 
-
     def save(self, config):
-        if not isinstance(config, configparser.ConfigParser): raise TypeError("config")
-        if not config.has_section("MT8057Block"):      config.add_section("MT8057Block")
+        if not isinstance(config, configparser.ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("MT8057Block"):
+            config.add_section("MT8057Block")
         section = config["MT8057Block"]
         section["Warn"] = str(self._warnValue.get())
         section["Crit"] = str(self._critValue.get())
@@ -82,15 +100,15 @@ class MT8057Manager(BaseManager):
         section["CritColor"] = "(%d, %d, %d)" % self._critColor
 
         (fontName, fontSize, isBold, isItalic) = self._co2.getResult()
-        section["CO2FontName"]   = fontName
-        section["CO2FontSize"]   = str(fontSize)
-        section["CO2FontBold"]   = str(isBold)
+        section["CO2FontName"] = fontName
+        section["CO2FontSize"] = str(fontSize)
+        section["CO2FontBold"] = str(isBold)
         section["CO2FontItalic"] = str(isItalic)
 
         (fontName, fontSize, isBold, isItalic) = self._temp.getResult()
-        section["TempFontName"]   = fontName
-        section["TempFontSize"]   = str(fontSize)
-        section["TempFontBold"]   = str(isBold)
+        section["TempFontName"] = fontName
+        section["TempFontSize"] = str(fontSize)
+        section["TempFontBold"] = str(isBold)
         section["TempFontItalic"] = str(isItalic)
 
         (posX, posY) = self._posCO2.getResult()
@@ -100,13 +118,15 @@ class MT8057Manager(BaseManager):
 
     def _selectWarnColor(self):
         (tripleColor, tkColor) = colorchooser.askcolor(self._warnColor)
-        if tripleColor is None: return
+        if tripleColor is None:
+            return
         self._warnSelector.configure(foreground=tkColor)
         self._warnColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
 
     def _selectCritColor(self):
         (tripleColor, tkColor) = colorchooser.askcolor(self._critColor)
-        if tripleColor is None: return
+        if tripleColor is None:
+            return
         self._critSelector.configure(foreground=tkColor)
         self._critColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
 
