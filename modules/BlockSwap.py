@@ -16,7 +16,6 @@ class BlockSwap(BlockSecondBase):
         self._blocks = []
         self._index = 0
 
-
     def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
@@ -24,7 +23,8 @@ class BlockSwap(BlockSecondBase):
         section = config["SwapBlock"]
 
         time = section.getint("UpdateTime")
-        if time is None:   raise ExceptionNotFound(section.name, "UpdateTime")
+        if time is None:
+            raise ExceptionNotFound(section.name, "UpdateTime")
 
         selection = section.get("BlockList", "")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
@@ -32,34 +32,32 @@ class BlockSwap(BlockSecondBase):
             if name in modList:
                 self.addBlock(modList[name])
 
-        if not self._blocks: raise Exception(EXCEPTION_TEXT)
+        if not self._blocks:
+            raise Exception(EXCEPTION_TEXT)
         for block in self._blocks:
             block.init(fileName, isOnline, modList)
 
         self.setTime(time)
         self.updateInfo(isOnline)
 
-
     def proccedEvent(self, event, isOnline):
         for block in self._blocks:
             block.proccedEvent(event, isOnline)
         super(BlockSwap, self).proccedEvent(event, isOnline)
-
 
     def updateInfo(self, isOnline):
         self._index = self._index + 1
         if self._index >= len(self._blocks):
             self._index = 0
 
-
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
-            if not isOnline: return
+            if not isOnline:
+                return
             block = self._blocks[self._index]
             block.updateDisplay(isOnline, screen, size, foreColor, backColor, current_time)
         except Exception as ex:
             self._logger.exception(ex)
-
 
     def getText(self):
         """ """
@@ -67,12 +65,10 @@ class BlockSwap(BlockSecondBase):
         self._text = block.getText()
         return self._text
 
-
     def done(self):
         """ """
         for block in self._blocks:
             block.done()
-
 
     def addBlock(self, block):
         """  """

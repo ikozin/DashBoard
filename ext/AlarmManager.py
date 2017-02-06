@@ -177,24 +177,24 @@ class AlarmCreateDialog(ModalDialog):
         self._valueType.set('1')
         lbl = ttk.Label(self._modal, text="Имя будильника")
         lbl.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        
+
         entry = ttk.Entry(self._modal, textvariable=self._valueName)
         entry.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         entry.focus_set()
         # vcmd = (entry.register(self._validateName), '%s', '%P')
         vcmd = (entry.register(self._validateName), '%P')
         entry.configure(validate="key", validatecommand=vcmd)
-        
+
         lbl = ttk.Label(self._modal, text="Тип будильника")
         lbl.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        
+
         combo = ttk.Combobox(self._modal, state="readonly", values=('1', '2', '3'), textvariable=self._valueType)
         combo.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         combo.bind('<<ComboboxSelected>>', lambda e: self._selectType())
-        
+
         self._btnOk = ttk.Button(self._modal, text="OK", state="disabled", command=self._ok)
         self._btnOk.grid(row=4, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
-        
+
         btn = ttk.Button(self._modal, text="Cancel", command=self._cancel)
         btn.grid(row=4, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 

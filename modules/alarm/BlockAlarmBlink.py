@@ -9,7 +9,8 @@ class BlockAlarmBlink(AlarmTimeBase):
 
     def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
         try:
-            if not self._isAlarm: return
+            if not self._isAlarm:
+                return
 
             value = datetime.datetime.today()
             if (value - self._startTime).seconds % 2 == 0:

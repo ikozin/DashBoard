@@ -95,10 +95,10 @@ class AlarmTimeSetting(BaseSetting):
 
         lbl = ttk.Label(fileFrame, text="Файл:")
         lbl.grid(row=0, column=0, pady=2)
-        
-        entr= ttk.Entry(fileFrame, width=34, textvariable=self._fileVariable)
+
+        entr = ttk.Entry(fileFrame, width=34, textvariable=self._fileVariable)
         entr.grid(row=0, column=1, pady=2)
-        
+
         btn = ttk.Button(fileFrame, text="...", command=self._selectFile, width=3)
         btn.grid(row=0, column=2, pady=2)
 

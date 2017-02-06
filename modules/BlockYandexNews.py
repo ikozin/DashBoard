@@ -24,7 +24,6 @@ class BlockYandexNews(BlockMinuteBase):
         self._font = None
         self._news = []
 
-
     def init(self, fileName, isOnline, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
@@ -43,36 +42,46 @@ class BlockYandexNews(BlockMinuteBase):
         isBold = section.getboolean("FontBold")
         isItalic = section.getboolean("FontItalic")
 
-        if self._url is None:    raise ExceptionNotFound(section.name, "Url")
-        if self._indent is None: raise ExceptionNotFound(section.name, "Indent")
-        if self._pos is None:    raise ExceptionNotFound(section.name, "Position")
-        if self._length is None: raise ExceptionNotFound(section.name, "Rows")
-        if time is None:         raise ExceptionNotFound(section.name, "UpdateTime")
+        if self._url is None:
+            raise ExceptionNotFound(section.name, "Url")
+        if self._indent is None:
+            raise ExceptionNotFound(section.name, "Indent")
+        if self._pos is None:
+            raise ExceptionNotFound(section.name, "Position")
+        if self._length is None:
+            raise ExceptionNotFound(section.name, "Rows")
+        if time is None:
+            raise ExceptionNotFound(section.name, "UpdateTime")
 
-        if fontName is None: raise ExceptionNotFound(section.name, "FontName")
-        if fontSize is None: raise ExceptionNotFound(section.name, "FontSize")
-        if isBold   is None: raise ExceptionNotFound(section.name, "FontBold")
-        if isItalic is None: raise ExceptionNotFound(section.name, "FontItalic")
+        if fontName is None:
+            raise ExceptionNotFound(section.name, "FontName")
+        if fontSize is None:
+            raise ExceptionNotFound(section.name, "FontSize")
+        if isBold is None:
+            raise ExceptionNotFound(section.name, "FontBold")
+        if isItalic is None:
+            raise ExceptionNotFound(section.name, "FontItalic")
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 
         self.updateInfo(isOnline)
         self.setTime(time)
 
-
     def updateInfo(self, isOnline):
         try:
-            if not isOnline: return
+            if not isOnline:
+                return
             self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
             self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
         except Exception as ex:
             self._logger.exception(ex)
 
-
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
-            if not isOnline: return
-            if not self._news: return
+            if not isOnline:
+                return
+            if not self._news:
+                return
 
             y = self._pos
             for text in self._news:
@@ -83,7 +92,6 @@ class BlockYandexNews(BlockMinuteBase):
                 y += sz[1] + self._indent
         except Exception as ex:
             self._logger.exception(ex)
-
 
     def __get_newsblock(self, url):
         news = []

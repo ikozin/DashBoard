@@ -38,27 +38,37 @@ class AlarmTimeBase(AlarmBase):
         self._foreColor = self._getTuple(configSection.get("ForegroundColor"))
         self._backColor = self._getTuple(configSection.get("BackgroundColor"))
         self._fileName = configSection.get("File")
-        if self._fileName and not os.path.exists(self._fileName): self._fileName = None
+        if self._fileName and not os.path.exists(self._fileName):
+            self._fileName = None
 
-        if self._startTime is None: raise ExceptionNotFound(configSection.name, "Time")
-        if self._weekDay is None:   raise ExceptionNotFound(configSection.name, "WeekDay")
-        if self._duration is None:  raise ExceptionNotFound(configSection.name, "Duration")
-        if self._foreColor is None: raise ExceptionNotFound(configSection.name, "ForegroundColor")
-        if self._backColor is None: raise ExceptionNotFound(configSection.name, "BackgroundColor")
-        if len(self._foreColor) != 3: raise ExceptionFormat(configSection.name, "ForegroundColor")
-        if len(self._backColor) != 3: raise ExceptionFormat(configSection.name, "BackgroundColor")
-        if len(self._weekDay) > 7:    raise ExceptionFormat(configSection.name, "WeekDay")
-        if not all(day >= 0 and day < 7 for day in self._weekDay): raise ExceptionFormat(configSection.name, "WeekDay")
+        if self._startTime is None:
+            raise ExceptionNotFound(configSection.name, "Time")
+        if self._weekDay is None:
+            raise ExceptionNotFound(configSection.name, "WeekDay")
+        if self._duration is None:
+            raise ExceptionNotFound(configSection.name, "Duration")
+        if self._foreColor is None:
+            raise ExceptionNotFound(configSection.name, "ForegroundColor")
+        if self._backColor is None:
+            raise ExceptionNotFound(configSection.name, "BackgroundColor")
+        if len(self._foreColor) != 3:
+            raise ExceptionFormat(configSection.name, "ForegroundColor")
+        if len(self._backColor) != 3:
+            raise ExceptionFormat(configSection.name, "BackgroundColor")
+        if len(self._weekDay) > 7:
+            raise ExceptionFormat(configSection.name, "WeekDay")
+        if not all(day >= 0 and day < 7 for day in self._weekDay):
+            raise ExceptionFormat(configSection.name, "WeekDay")
 
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
-        self._stopTime = self._startTime + datetime.timedelta(seconds = self._duration)
-
+        self._stopTime = self._startTime + datetime.timedelta(seconds=self._duration)
 
     def updateState(self, currentTime):
-        #if not isinstance(currentTime, datetime.datetime): raise("Передаваемый параметр должен быть наследником datetime")
+        # if not isinstance(currentTime, datetime.datetime):
+        #    raise("Передаваемый параметр должен быть наследником datetime")
         if not self._isAlarm:
             if any(currentTime.weekday() == day for day in self._weekDay):
-                if (currentTime - self._startTime).seconds <= 3: # 3 секунды на запуск, вдруг задержка какая-нить была
+                if (currentTime - self._startTime).seconds <= 3:  # 3 секунды на запуск, вдруг задержка какая-нить была
                     self._volume = ALARM_VOLUME_MIN
                     self.init_draw()
                     self._isAlarm = True
@@ -74,20 +84,18 @@ class AlarmTimeBase(AlarmBase):
                 self._volume += ALARM_VOLUME_STEP
                 pygame.mixer.music.set_volume(self._volume)
 
-
     def init_draw(self):
         """ """
-        if not self._fileName: return
+        if not self._fileName:
+            return
         pygame.mixer.music.set_volume(self._volume)
         pygame.mixer.music.load(self._fileName)
         pygame.mixer.music.play()
-
-        #if not pygame.mixer.get_busy():
+        # if not pygame.mixer.get_busy():
         #    soundFile = getvoicetext(self._weather_text)
         #    sound = pygame.mixer.Sound(soundFile)
         #    sound.set_volume(1.0)   # Now plays at 100% of full volume.
         #    sound.play()            # Sound plays at full volume by default
-
 
     def done_draw(self):
         """ """
