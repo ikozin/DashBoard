@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>tool.py</StartupFile>
+    <StartupFile>app.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -146,6 +146,7 @@
   <ItemGroup>
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
+    <Content Include="pep8.cmd" />
     <Content Include="requirements.txt" />
     <Content Include="weather\chanceflurries.gif" />
     <Content Include="weather\chancerain.gif" />

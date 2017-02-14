@@ -47,14 +47,7 @@ class BlockVoice(BlockBase):
     def proccedEvent(self, event, isOnline):
         try:
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE):
-                if self._blocks:
-                    text = ". ".join(map(lambda block: block.getText(), self._blocks))
-                    if not text:
-                        return
-                    soundFile = self.__getvoicetext(text)
-                    pygame.mixer.music.load(soundFile)
-                    pygame.mixer.music.set_volume(1.0)
-                    pygame.mixer.music.play()
+                self.execute()
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -63,6 +56,16 @@ class BlockVoice(BlockBase):
         if not isinstance(block, BlockBase):
             raise("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
+
+    def execute(self):
+        if self._blocks:
+            text = ". ".join(map(lambda block: block.getText(), self._blocks))
+            if not text:
+                return
+            soundFile = self.__getvoicetext(text)
+            pygame.mixer.music.load(soundFile)
+            pygame.mixer.music.set_volume(1.0)
+            pygame.mixer.music.play()
 
     def __getvoicetext(self, text):
         fileName = "text.wav"
