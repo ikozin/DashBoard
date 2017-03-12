@@ -55,7 +55,7 @@ class MainSetting(BaseSetting):
         idleFrame = ttk.LabelFrame(self, text="Время простоя")
         idleFrame.grid(row=1, column=1, sticky=(N, S, E, W))
 
-        spin = Spinbox(idleFrame, from_=5, to=60, increment=1, width=3, textvariable=self._idleVariable)
+        spin = Spinbox(idleFrame, from_=1, to=60, increment=1, width=3, textvariable=self._idleVariable)
         spin.grid(row=0, column=0, padx=2, pady=2)
 
         lbl = ttk.Label(idleFrame, text="минут")

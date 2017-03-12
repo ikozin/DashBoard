@@ -146,7 +146,8 @@ class Mainboard:
         self._isDisplayOn = False
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
-            subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True).wait()
+            # Работало до верси 2.1.0 (включительно)
+            # subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True).wait()
             GPIO.output(LED_PIN, 0)
         else:
             pass
@@ -160,7 +161,8 @@ class Mainboard:
         self._isDisplayOn = True
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
-            subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True).wait()
+            # Работало до верси 2.1.0 (включительно)
+            # subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True).wait()
             GPIO.output(LED_PIN, 1)
         else:
             pass
@@ -205,20 +207,23 @@ class Mainboard:
         clock = pygame.time.Clock()
         while (self.proccedEvent(pygame.event.get())):
 
-            (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
-            self._screen.fill(backgroundColor)
+            if self._isDisplayOn:
+                (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
+                self._screen.fill(backgroundColor)
+                time = datetime.datetime.now()
+                for module in self._modules:
+                    module.updateDisplay(
+                        self._isDisplayOn,
+                        self._screen,
+                        self._size,
+                        foregroundColor,
+                        backgroundColor,
+                        time)
 
-            time = datetime.datetime.now()
-            for module in self._modules:
-                module.updateDisplay(
-                    self._isDisplayOn,
-                    self._screen,
-                    self._size,
-                    foregroundColor,
-                    backgroundColor,
-                    time)
+                pygame.display.update()
+            else:
+                self._screen.fill((0, 0, 0))
 
-            pygame.display.update()
             # pygame.time.delay(WAIT_TIME)
             clock.tick(FPS)
 
