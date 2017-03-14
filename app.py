@@ -219,11 +219,10 @@ class Mainboard:
                         foregroundColor,
                         backgroundColor,
                         time)
-
-                pygame.display.update()
             else:
                 self._screen.fill((0, 0, 0))
 
+            pygame.display.update()
             # pygame.time.delay(WAIT_TIME)
             clock.tick(FPS)
 
