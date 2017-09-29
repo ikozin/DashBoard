@@ -203,9 +203,12 @@ class mt8057(threading.Thread):
             self.RW_TIMEOUT)
         self._event_stop.clear()
         while not self._event_stop.is_set():
-            data = self._read()
-            self._parse(data)
-            # time.sleep(0.1)
+            try:
+                data = self._read()
+                self._parse(data)
+                # time.sleep(0.1)
+            except:
+                pass
         self._release()
 
     def get_data(self):
