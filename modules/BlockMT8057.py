@@ -207,8 +207,9 @@ class mt8057(threading.Thread):
                 data = self._read()
                 self._parse(data)
                 # time.sleep(0.1)
-            except:
-                pass
+            except Exception as ex:
+                self._logger.exception(ex)
+                time.sleep(100)
         self._release()
 
     def get_data(self):
