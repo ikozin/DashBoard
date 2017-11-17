@@ -9,18 +9,18 @@
 			
 		<traffic region="213" zoom="10" lat="55.75396" lon="37.620393">
 			<region id="213">
-  <length>564459.668548</length>
-  <level>7</level>
-  <icon>red</icon>
-  <timestamp>1510928741</timestamp>
-  <time>17:25</time>
-  <hint lang="ru">Серьёзные пробки</hint>
-  <hint lang="en">Roads congested</hint>
-  <hint lang="be">Сур'ёзныя пробкі</hint>
-  <hint lang="kk">Айтарлықтай кептелістер</hint>
-  <hint lang="tr">Trafik durma noktasında</hint>
-  <hint lang="uk">Серйозні затори</hint>
-  <tend>1</tend>
+  <length>297083.282306</length>
+  <level>3</level>
+  <icon>green</icon>
+  <timestamp>1510940075</timestamp>
+  <time>20:34</time>
+  <hint lang="ru">Местами затруднения</hint>
+  <hint lang="en">Congested in places</hint>
+  <hint lang="be">Дзе-нідзе перашкоды</hint>
+  <hint lang="kk">Кей жерде қозғалыс қиыншылықты</hint>
+  <hint lang="tr">Yer yer yoğun, akıcı trafik</hint>
+  <hint lang="uk">Місцями ускладнення</hint>
+  <tend>-1</tend>
   <url>https://yandex.ru/maps/213/moscow/probki</url>
 </region>
 			<title>Москва</title>
@@ -45,7 +45,7 @@
 				<daytime>n</daytime>
 			</date>
 			
-		<day_part typeid="2" type="день">
+		<day_part typeid="3" type="вечер">
 			<weather_type>облачно</weather_type>
 			<weather_code>overcast</weather_code>
 			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
@@ -53,28 +53,18 @@
 			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
 			<image_number>5</image_number>
 			<wind_speed>1</wind_speed>
-			<wind_direction id="s">юг</wind_direction>
+			<wind_direction id="sw">юго-запад</wind_direction>
 			<dampness>79</dampness>
-			<hectopascal>1000</hectopascal>
-			<torr>750</torr>
-			<pressure>750</pressure>
+			<hectopascal>999</hectopascal>
+			<torr>749</torr>
+			<pressure>749</pressure>
 			<temperature class_name="t0" color="F0EFF0">0</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>14:00</observation_time>
-			<observation>2017-11-17T14:00:00</observation>
+			<observation_time>17:00</observation_time>
+			<observation>2017-11-17T17:00:00</observation>
 		</day_part>
 	
 			
-		<day_part typeid="3" type="вечер">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_0.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
-			
-			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
-			<temperature_to class_name="t2" color="F0F0EC">+1</temperature_to>
-		
-		</day_part>
-	
-
 		<day_part typeid="4" type="ночь">
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_0.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
@@ -88,10 +78,7 @@
 		<day_part typeid="1" type="утро">
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_0.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
-			
-			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
-			<temperature_to class_name="t2" color="F0F0EC">+1</temperature_to>
-		
+			<temperature class_name="t2" color="F0F0EC">+1</temperature>
 		</day_part>
 	
 
@@ -99,6 +86,16 @@
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_+2.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
 			<temperature class_name="t2" color="F0F0EC">+2</temperature>
+		</day_part>
+	
+
+		<day_part typeid="3" type="вечер">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_0.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+			
+			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
+			<temperature_to class_name="t2" color="F0F0EC">+1</temperature_to>
+		
 		</day_part>
 	
 			
