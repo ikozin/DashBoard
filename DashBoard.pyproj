@@ -151,6 +151,7 @@
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
     <Content Include="pycodestyle.cmd" />
+    <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="weather\chanceflurries.gif" />
     <Content Include="weather\chancerain.gif" />
