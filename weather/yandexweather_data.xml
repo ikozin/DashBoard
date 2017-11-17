@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+		<info lang="ru">
+			
+		<region id="213" zoom="10" lat="55.75396" lon="37.620393">
+			<title>Москва</title>
+		</region>
+	
+			
+		<traffic region="213" zoom="10" lat="55.75396" lon="37.620393">
+			<region id="213">
+  <length>476268.081414</length>
+  <level>6</level>
+  <icon>yellow</icon>
+  <timestamp>1510925807</timestamp>
+  <time>16:36</time>
+  <hint lang="ru">Движение затруднено</hint>
+  <hint lang="en">Heavy traffic</hint>
+  <hint lang="be">Рухацца цяжка</hint>
+  <hint lang="kk">Қозғалыс қиыншылықты</hint>
+  <hint lang="tr">Çok yoğun trafik</hint>
+  <hint lang="uk">Рух ускладнений</hint>
+  <tend>1</tend>
+  <url>https://yandex.ru/maps/213/moscow/probki</url>
+</region>
+			<title>Москва</title>
+		</traffic>
+	
+			
+		<weather climate="1" region="213">
+			<source>mb3d</source>
+			
+		<day>
+			<title>Москва</title>
+			<country>Россия</country>
+			<time_zone>Europe/Moscow</time_zone>
+			<summer-time>1</summer-time>
+			<sun_rise>08:08</sun_rise>
+			<sunset>16:19</sunset>
+			<daytime>n</daytime>
+			<date date="2017-11-17T00:00:00Z">
+				<day weekday="пт">17</day>
+				<month name="ноября">11</month>
+				<year>2017</year>
+				<daytime>n</daytime>
+			</date>
+			
+		<day_part typeid="2" type="день">
+			<weather_type>облачно</weather_type>
+			<weather_code>overcast</weather_code>
+			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc.png</image-v2>
+			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
+			<image_number>5</image_number>
+			<wind_speed>1</wind_speed>
+			<wind_direction id="w">запад</wind_direction>
+			<dampness>79</dampness>
+			<hectopascal>1000</hectopascal>
+			<torr>750</torr>
+			<pressure>750</pressure>
+			<temperature class_name="t0" color="F0EFF0">0</temperature>
+			<time_zone>Europe/Moscow</time_zone>
+			<observation_time>13:00</observation_time>
+			<observation>2017-11-17T13:00:00</observation>
+		</day_part>
+	
+			
+		<day_part typeid="3" type="вечер">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_0.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+			
+			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
+			<temperature_to class_name="t2" color="F0F0EC">+1</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="4" type="ночь">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_0.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
+			
+			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
+			<temperature_to class_name="t2" color="F0F0EC">+1</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="1" type="утро">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_0.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+			
+			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
+			<temperature_to class_name="t2" color="F0F0EC">+1</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="2" type="день">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_+2.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+			<temperature class_name="t2" color="F0F0EC">+2</temperature>
+		</day_part>
+	
+			
+			<night_short><temperature class_name="t0" color="F0EFF0">0</temperature></night_short>,
+			<tomorrow><temperature class_name="t2" color="F0F0EC">+2</temperature></tomorrow>
+		
+		</day>
+	
+			<url slug="moscow">http://pogoda.yandex.ru/moscow/</url>
+		</weather>
+	
+		</info>
+	

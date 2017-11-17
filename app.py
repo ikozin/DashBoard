@@ -23,6 +23,7 @@ from modules.BlockSwap import BlockSwap
 from modules.BlockWunderGround import BlockWunderGround
 from modules.BlockWatcher import BlockWatcher
 from modules.BlockMT8057 import BlockMT8057
+from modules.BlockYandexWeather import BlockYandexWeather
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -73,6 +74,7 @@ class Mainboard:
             "Swap": BlockSwap(logger, self._config),
             "Watcher": BlockWatcher(logger, self._config),
             "MT8057": BlockMT8057(logger, self._config),
+            "YandexWeather": BlockYandexWeather(logger, self._config),
         }
 
         for name in self._config._blockList:
@@ -230,6 +232,7 @@ class Mainboard:
             module.done()
 
         pygame.quit()
+
 
 if __name__ == "__main__":
 

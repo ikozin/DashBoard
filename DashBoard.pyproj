@@ -132,6 +132,7 @@
     <Compile Include="modules\BlockMT8057.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\BlockYandexWeather.py" />
     <Compile Include="modules\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -146,7 +147,7 @@
   <ItemGroup>
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
-    <Content Include="pep8.cmd" />
+    <Content Include="pycodestyle.cmd" />
     <Content Include="requirements.txt" />
     <Content Include="weather\chanceflurries.gif" />
     <Content Include="weather\chancerain.gif" />
