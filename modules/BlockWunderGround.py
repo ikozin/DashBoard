@@ -230,6 +230,13 @@ class BlockWunderGround(BlockMinuteBase):
             self._wind_speed = float(root.find("current_observation/wind_mph").text)
             self._wind_direction = str(root.find("current_observation/wind_dir").text)
 
+            self._text = WEATHER_TEXT_FORMAT.format(
+                self._weather_type,
+                self._temperature,
+                self._wind_speed,
+                self._humidity,
+                self._pressure)
+
             imageName = str(root.find("current_observation/icon_url").text)
             imageName = imageName[imageName.rfind("/") + 1:]
             self._load(imageName, self._folder)
@@ -237,13 +244,6 @@ class BlockWunderGround(BlockMinuteBase):
 
             self._weather_image = pygame.image.load(imageName)
             self._weather_image = pygame.transform.scale(self._weather_image, self._iconScale)
-
-            self._text = WEATHER_TEXT_FORMAT.format(
-                self._weather_type,
-                self._temperature,
-                self._wind_speed,
-                self._humidity,
-                self._pressure)
         except Exception as ex:
             self._logger.exception(ex)
 
