@@ -9,17 +9,17 @@
 			
 		<traffic region="213" zoom="10" lat="55.75396" lon="37.620393">
 			<region id="213">
-  <length>476268.081414</length>
-  <level>6</level>
-  <icon>yellow</icon>
-  <timestamp>1510925807</timestamp>
-  <time>16:36</time>
-  <hint lang="ru">Движение затруднено</hint>
-  <hint lang="en">Heavy traffic</hint>
-  <hint lang="be">Рухацца цяжка</hint>
-  <hint lang="kk">Қозғалыс қиыншылықты</hint>
-  <hint lang="tr">Çok yoğun trafik</hint>
-  <hint lang="uk">Рух ускладнений</hint>
+  <length>564459.668548</length>
+  <level>7</level>
+  <icon>red</icon>
+  <timestamp>1510928741</timestamp>
+  <time>17:25</time>
+  <hint lang="ru">Серьёзные пробки</hint>
+  <hint lang="en">Roads congested</hint>
+  <hint lang="be">Сур'ёзныя пробкі</hint>
+  <hint lang="kk">Айтарлықтай кептелістер</hint>
+  <hint lang="tr">Trafik durma noktasında</hint>
+  <hint lang="uk">Серйозні затори</hint>
   <tend>1</tend>
   <url>https://yandex.ru/maps/213/moscow/probki</url>
 </region>
@@ -53,15 +53,15 @@
 			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
 			<image_number>5</image_number>
 			<wind_speed>1</wind_speed>
-			<wind_direction id="w">запад</wind_direction>
+			<wind_direction id="s">юг</wind_direction>
 			<dampness>79</dampness>
 			<hectopascal>1000</hectopascal>
 			<torr>750</torr>
 			<pressure>750</pressure>
 			<temperature class_name="t0" color="F0EFF0">0</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>13:00</observation_time>
-			<observation>2017-11-17T13:00:00</observation>
+			<observation_time>14:00</observation_time>
+			<observation>2017-11-17T14:00:00</observation>
 		</day_part>
 	
 			

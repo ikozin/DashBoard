@@ -1,3 +1,4 @@
+@echo off
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 app.py
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 exceptions.py
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 setting.py
@@ -19,6 +20,7 @@
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 ext\WatcherManager.py
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 ext\WunderGroundManager.py
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 ext\YandexNewsManager.py
+"C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 ext\YandexWeatherManager.py
 
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 modules\BlockBase.py
 "C:\Program Files\Python36\Scripts\pycodestyle.exe" --show-source --show-pep8 --max-line-length=120 modules\BlockCalendar.py
