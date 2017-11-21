@@ -148,8 +148,9 @@ class Mainboard:
         self._isDisplayOn = False
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
-            # Работало до верси 2.1.0 (включительно)
-            # subprocess.Popen("/opt/vc/bin/tvservice -o > /dev/null 2>&1", shell=True).wait()
+            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5, 
+            # https://elinux.org/RPI_vcgencmd_usage
+            subprocess.Popen("vcgencmd display_power 0 > /dev/null 2>&1", shell=True).wait()
             GPIO.output(LED_PIN, 0)
         else:
             pass
@@ -163,8 +164,9 @@ class Mainboard:
         self._isDisplayOn = True
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
-            # Работало до верси 2.1.0 (включительно)
-            # subprocess.Popen("/opt/vc/bin/tvservice -p > /dev/null 2>&1", shell=True).wait()
+            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5, 
+            # https://elinux.org/RPI_vcgencmd_usage
+            subprocess.Popen("vcgencmd display_power 1 > /dev/null 2>&1", shell=True).wait()
             GPIO.output(LED_PIN, 1)
         else:
             pass
