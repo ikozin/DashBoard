@@ -250,13 +250,11 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
-/modules/__pycache__
 /__pycache__
-/log.txt
-/text.wav
-/Images
+/modules/__pycache__
 /modules/alarm/__pycache__
-/new_setting.ini
 /ext/__pycache__
-/weather/openweathermap_data.xml
-/weather/wunderground_data.xml
+/log.txt
+/log.txt.*
+/text.wav
+/weather/*.xml

@@ -24,8 +24,8 @@ class BlockMT8057(BlockSecondBase):
         self._tempFont = None
         self._co2Pos = None
         self._tempPos = None
-        self._valueCO2 = None
-        self._valueTemp = None
+        self._valueCO2 = 0
+        self._valueTemp = 0.0
         self._textCO2 = ""
         self._textTemp = ""
 
@@ -110,18 +110,11 @@ class BlockMT8057(BlockSecondBase):
         if sys.platform == "linux":  # Only for Raspberry Pi
             (self._valueCO2, self._valueTemp) = self._t_mt8057.get_data()
         else:
-            if (self._valueCO2 is None):
-                self._valueCO2 = 500
-            if (self._valueTemp is None):
-                self._valueTemp = 24.970001
             self._valueCO2 += 10
             self._valueTemp += 0.1
-        if self._valueCO2:
-            self._textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
-        if self._valueTemp:
-            self._textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
-        if self._valueCO2 and self._valueTemp:
-            self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._valueCO2, self._valueTemp)
+        self._textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
+        self._textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
+        self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._valueCO2, self._valueTemp)
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
@@ -175,8 +168,8 @@ class mt8057(threading.Thread):
         threading.Thread.__init__(self, name="mt")
         self._event_stop = threading.Event()
         self._lock = threading.Lock()
-        self._temperature = None
-        self._concentration = None
+        self._temperature = 0.0
+        self._concentration = 0
         self._had_driver = False
         self._dev = usb.core.find(idVendor=self.VID, idProduct=self.PID)
 
