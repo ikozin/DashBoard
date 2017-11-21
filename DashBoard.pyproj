@@ -184,6 +184,8 @@
     <Content Include="weather\nt_snow.gif" />
     <Content Include="weather\nt_sunny.gif" />
     <Content Include="weather\nt_tstorms.gif" />
+    <Content Include="weather\ovc.png" />
+    <Content Include="weather\ovc_ra_sn.png" />
     <Content Include="weather\partlycloudy.gif" />
     <Content Include="weather\partlysunny.gif" />
     <Content Include="weather\rain.gif" />
