@@ -86,7 +86,7 @@ class Mainboard:
         # http://www.karoltomala.com/blog/?p=679
         # Check which frame buffer drivers are available
         # Start with fbcon since directfb hangs with composite output
-        drivers = ["fbcon", "directfb", "svgalib", "xvfb", "x11", "directx", "windib"]
+        drivers = ["x11", "windib"]
         found = False
         for driver in drivers:
             # Make sure that SDL_VIDEODRIVER is set
