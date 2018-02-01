@@ -9,17 +9,17 @@
 			
 		<traffic region="213" zoom="10" lat="55.75396" lon="37.620393">
 			<region id="213">
-  <length>439749.832637</length>
-  <level>5</level>
-  <icon>yellow</icon>
-  <timestamp>1511259501</timestamp>
-  <time>13:18</time>
-  <hint lang="ru">Движение плотное</hint>
-  <hint lang="en">Medium traffic</hint>
-  <hint lang="be">Рух шчыльны</hint>
-  <hint lang="kk">Тығыз қозғалыс</hint>
-  <hint lang="tr">Yoğun trafik</hint>
-  <hint lang="uk">Рух щільний</hint>
+  <length>331492.613602</length>
+  <level>3</level>
+  <icon>green</icon>
+  <timestamp>1517231318</timestamp>
+  <time>16:08</time>
+  <hint lang="ru">Местами затруднения</hint>
+  <hint lang="en">Congested in places</hint>
+  <hint lang="be">Дзе-нідзе перашкоды</hint>
+  <hint lang="kk">Кей жерде қозғалыс қиыншылықты</hint>
+  <hint lang="tr">Yer yer yoğun, akıcı trafik</hint>
+  <hint lang="uk">Місцями ускладнення</hint>
   <tend>0</tend>
   <url>https://yandex.ru/maps/213/moscow/probki</url>
 </region>
@@ -35,13 +35,13 @@
 			<country>Россия</country>
 			<time_zone>Europe/Moscow</time_zone>
 			<summer-time>1</summer-time>
-			<sun_rise>08:16</sun_rise>
-			<sunset>16:13</sunset>
+			<sun_rise>08:29</sun_rise>
+			<sunset>16:56</sunset>
 			<daytime>d</daytime>
-			<date date="2017-11-21T00:00:00Z">
-				<day weekday="вт">21</day>
-				<month name="ноября">11</month>
-				<year>2017</year>
+			<date date="2018-01-29T00:00:00Z">
+				<day weekday="пн">29</day>
+				<month name="января">1</month>
+				<year>2018</year>
 				<daytime>d</daytime>
 			</date>
 			
@@ -49,61 +49,64 @@
 			<weather_type>облачно</weather_type>
 			<weather_code>overcast</weather_code>
 			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_0.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-6.png</image-v2>
 			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
 			<image_number>5</image_number>
-			<wind_speed>2</wind_speed>
-			<wind_direction id="nw">северо-запад</wind_direction>
-			<dampness>85</dampness>
-			<hectopascal>987</hectopascal>
-			<torr>740</torr>
-			<pressure>740</pressure>
-			<temperature class_name="t-2" color="EAEDEF">-1</temperature>
+			<wind_speed>1</wind_speed>
+			<wind_direction id="e">восток</wind_direction>
+			<dampness>76</dampness>
+			<hectopascal>990</hectopascal>
+			<torr>742</torr>
+			<pressure>742</pressure>
+			<temperature class_name="t-6" color="E0E7EE">-6</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>10:00</observation_time>
-			<observation>2017-11-21T10:00:00</observation>
+			<observation_time>13:00</observation_time>
+			<observation>2018-01-29T13:00:00</observation>
 		</day_part>
 	
 			
 		<day_part typeid="3" type="вечер">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_0.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-4.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
-			<temperature class_name="t-2" color="EAEDEF">-1</temperature>
+			
+			<temperature_from class_name="t-6" color="E0E7EE">-6</temperature_from>
+			<temperature_to class_name="t-6" color="E0E7EE">-5</temperature_to>
+		
 		</day_part>
 	
 
 		<day_part typeid="4" type="ночь">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_0.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-2.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
 			
-			<temperature_from class_name="t-2" color="EAEDEF">-2</temperature_from>
-			<temperature_to class_name="t-2" color="EAEDEF">-1</temperature_to>
+			<temperature_from class_name="t-4" color="E5EAEE">-4</temperature_from>
+			<temperature_to class_name="t-2" color="EAEDEF">-2</temperature_to>
 		
 		</day_part>
 	
 
 		<day_part typeid="1" type="утро">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-2.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
 			
-			<temperature_from class_name="t-4" color="E5EAEE">-3</temperature_from>
-			<temperature_to class_name="t-2" color="EAEDEF">-2</temperature_to>
+			<temperature_from class_name="t-2" color="EAEDEF">-2</temperature_from>
+			<temperature_to class_name="t0" color="F0EFF0">0</temperature_to>
 		
 		</day_part>
 	
 
 		<day_part typeid="2" type="день">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-2.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_sn_0.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_sn.png</image-v3>
 			
-			<temperature_from class_name="t-4" color="E5EAEE">-3</temperature_from>
-			<temperature_to class_name="t-2" color="EAEDEF">-2</temperature_to>
+			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
+			<temperature_to class_name="t2" color="F0F0EC">+1</temperature_to>
 		
 		</day_part>
 	
 			
-			<night_short><temperature class_name="t-2" color="EAEDEF">-2</temperature></night_short>,
-			<tomorrow><temperature class_name="t-2" color="EAEDEF">-2</temperature></tomorrow>
+			<night_short><temperature class_name="t-10" color="D5E2EC">-9</temperature></night_short>,
+			<tomorrow><temperature class_name="t2" color="F0F0EC">+1</temperature></tomorrow>
 		
 		</day>
 	
