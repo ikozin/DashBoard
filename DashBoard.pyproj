@@ -153,6 +153,10 @@
     <Content Include="pycodestyle.cmd" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
+    <Content Include="weather\bkn_-sn_d.png" />
+    <Content Include="weather\bkn_-sn_n.png" />
+    <Content Include="weather\bkn_d.png" />
+    <Content Include="weather\bkn_n.png" />
     <Content Include="weather\chanceflurries.gif" />
     <Content Include="weather\chancerain.gif" />
     <Content Include="weather\chancesleet.gif" />
