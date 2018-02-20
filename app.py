@@ -107,7 +107,7 @@ class Mainboard:
             self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
             self._screen = pygame.display.set_mode(self._size, pygame.FULLSCREEN | pygame.HWSURFACE)
         else:
-            self._size = (1280, 1024)
+            self._size = (1824, 984)
             self._screen = pygame.display.set_mode(self._size)
         ###########################################################################
         print("Framebuffer size: {0}".format(self._size))

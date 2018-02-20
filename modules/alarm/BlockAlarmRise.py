@@ -60,9 +60,9 @@ class BlockAlarmRise(AlarmTimeBase):
         self._stopR = self._backColor[0]
         self._stopG = self._backColor[1]
         self._stopB = self._backColor[2]
-        self._stepR = (self._stopR - self._startR) / 4
-        self._stepG = (self._stopG - self._startG) / 4
-        self._stepB = (self._stopB - self._startB) / 4
+        self._stepR = (self._stopR - self._startR) / 20
+        self._stepG = (self._stopG - self._startG) / 20
+        self._stepB = (self._stopB - self._startB) / 20
         self._currentR = self._startR
         self._currentG = self._startG
         self._currentB = self._startB
