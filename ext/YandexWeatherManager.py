@@ -127,28 +127,16 @@ class YandexWeatherManager(BaseManager):
         (posX, posY) = self._getTuple(section.get("WindPos", "(620, 26)"))
         self._posWind.load(posX, posY)
 
-        fontName = section.get("WeatherTypeFontName", "Helvetica")
-        fontSize = section.getint("WeatherTypeFontSize", 64)
-        isBold = section.getboolean("WeatherTypeFontBold", True)
-        isItalic = section.getboolean("WeatherTypeFontItalic", False)
+        (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "WeatherTypeFont", isBoldDef=True)
         self._weatherType.load(fontName, fontSize, isBold, isItalic)
 
-        fontName = section.get("TemperatureFontName", "Helvetica")
-        fontSize = section.getint("TemperatureFontSize", 160)
-        isBold = section.getboolean("TemperatureFontBold", True)
-        isItalic = section.getboolean("TemperatureFontItalic", False)
+        (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "TemperatureFont", fontSizeDef=160, isBoldDef=True)
         self._temperature.load(fontName, fontSize, isBold, isItalic)
 
-        fontName = section.get("HumidityFontName", "Helvetica")
-        fontSize = section.getint("HumidityFontSize", 64)
-        isBold = section.getboolean("HumidityFontBold", False)
-        isItalic = section.getboolean("HumidityFontItalic", False)
+        (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "HumidityFont")
         self._humidity.load(fontName, fontSize, isBold, isItalic)
 
-        fontName = section.get("PressureFontName", "Helvetica")
-        fontSize = section.getint("PressureFontSize", 64)
-        isBold = section.getboolean("PressureFontBold", False)
-        isItalic = section.getboolean("PressureFontItalic", False)
+        (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "PressureFont")
         self._pressure.load(fontName, fontSize, isBold, isItalic)
 
         fontName = section.get("WindFontName", "Helvetica")
