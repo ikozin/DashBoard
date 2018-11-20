@@ -1,4 +1,4 @@
-﻿import datetime
+import datetime
 import os
 import sys
 import subprocess
@@ -31,8 +31,8 @@ logger = logging.getLogger("root")
 FPS = 60
 # WAIT_TIME = 40
 FILE_SETTING = "setting.ini"
-PIR_PIN = 13  # GPIO27 green
-LED_PIN = 12  # GPIO18 red
+PIR_PIN = 27  # GPIO27 green
+LED_PIN = 17  # GPIO17 red
 IDLE_EVENT = (pygame.locals.USEREVENT + 1)
 
 
@@ -40,7 +40,7 @@ IDLE_EVENT = (pygame.locals.USEREVENT + 1)
 if sys.platform == "linux":  # Only for Raspberry Pi
     import RPi.GPIO as GPIO
     GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
     GPIO.setup(LED_PIN, GPIO.OUT)
     GPIO.setup(PIR_PIN, GPIO.IN)
     GPIO.output(LED_PIN, 1)
