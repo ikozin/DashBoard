@@ -1,20 +1,22 @@
-import configparser
+from typing import *
+
+from configparser import ConfigParser, SectionProxy
 from abc import ABCMeta, abstractclassmethod
-from tkinter import ttk
+from tkinter import LabelFrame
 
 
-class BaseManager(ttk.LabelFrame, metaclass=ABCMeta):
+class BaseManager(LabelFrame, metaclass=ABCMeta):
 
     @abstractclassmethod
-    def load(self, config, modulelist):
+    def load(self, config: ConfigParser, modulelist: Dict[str, 'BaseManager']) -> None:
         pass
 
     @abstractclassmethod
-    def save(self, config):
+    def save(self, config: ConfigParser) -> None:
         pass
 
-    def loadFont(self, section, name, fontNameDef = "Helvetica", fontSizeDef = 32, isBoldDef = False, isItalicDef = False):
-        if not isinstance(section, configparser.SectionProxy):
+    def loadFont(self, section: SectionProxy, name: str, fontNameDef: str = "Helvetica", fontSizeDef: int = 32, isBoldDef: bool = False, isItalicDef: bool = False) -> Tuple[str, int, bool, bool]:
+        if not isinstance(section, SectionProxy):
             raise TypeError("section")
         fontName = section.get(name + "Name", fontNameDef)
         fontSize = section.getint(name + "Size", fontSizeDef)

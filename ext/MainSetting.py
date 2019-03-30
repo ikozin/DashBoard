@@ -1,11 +1,8 @@
-import datetime
-import configparser
+from typing import *
 
+from datetime import datetime
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
-from tkinter import colorchooser
 
 from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
@@ -14,7 +11,7 @@ from ext.ModalDialog import ColorsChooserFrame
 class MainSetting(BaseSetting):
     """description of class"""
 
-    def __init__(self, root, sectionName):
+    def __init__(self, root: LabelFrame, sectionName: str):
         """ """
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
@@ -28,45 +25,45 @@ class MainSetting(BaseSetting):
         self._secondVariable = IntVar(0)
         self._idleVariable = IntVar(0)
 
-        timeFrame = ttk.LabelFrame(self, text="Время")
+        timeFrame = LabelFrame(self, text="Время")
         timeFrame.grid(row=1, column=0, sticky=(N, S, E, W))
         timeFrame.columnconfigure(1, weight=1)
         timeFrame.columnconfigure(3, weight=1)
         timeFrame.columnconfigure(4, weight=1)
 
-        lbl = ttk.Label(timeFrame, text="Час:", justify=RIGHT)
+        lbl = Label(timeFrame, text="Час:", justify=RIGHT)
         lbl.grid(row=0, column=0, pady=2)
 
         spin = Spinbox(timeFrame, from_=0, to=23, increment=1, width=3, textvariable=self._hourVariable)
         spin.grid(row=0, column=1, padx=2, pady=2)
 
-        lbl = ttk.Label(timeFrame, text="Мин:", justify=RIGHT)
+        lbl = Label(timeFrame, text="Мин:", justify=RIGHT)
         lbl.grid(row=0, column=2, pady=2)
 
         spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._minuteVariable)
         spin.grid(row=0, column=3, padx=2, pady=2)
 
-        lbl = ttk.Label(timeFrame, text="Сек:", justify=RIGHT)
+        lbl = Label(timeFrame, text="Сек:", justify=RIGHT)
         lbl.grid(row=0, column=4, pady=2)
 
         spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._secondVariable)
         spin.grid(row=0, column=5, padx=2, pady=2)
 
-        idleFrame = ttk.LabelFrame(self, text="Время простоя")
+        idleFrame = LabelFrame(self, text="Время простоя")
         idleFrame.grid(row=1, column=1, sticky=(N, S, E, W))
 
         spin = Spinbox(idleFrame, from_=1, to=60, increment=1, width=3, textvariable=self._idleVariable)
         spin.grid(row=0, column=0, padx=2, pady=2)
 
-        lbl = ttk.Label(idleFrame, text="минут")
+        lbl = Label(idleFrame, text="минут")
         lbl.grid(row=0, column=1, pady=2)
 
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
         self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N, S, E, W))
 
-    def load(self, config, sectionName):
+    def load(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        if not isinstance(config, configparser.ConfigParser):
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
@@ -76,7 +73,7 @@ class MainSetting(BaseSetting):
             raise Exception("Section {0} not found".format(sectionName))
 
         date = section.get("starttime", "0:00:00")
-        date = datetime.datetime.strptime(date, "%H:%M:%S")
+        date = datetime.strptime(date, "%H:%M:%S")
         idle = section.getint("idletime", 1)
 
         self._hourVariable.set(date.hour)
@@ -88,19 +85,19 @@ class MainSetting(BaseSetting):
         foreColor = self._getTuple(section.get("foregroundcolor", "(255, 255, 255)"))
         self._colorFrame.load(backColor, foreColor)
 
-    def pre_save(self):
-        date = datetime.datetime(
+    def pre_save(self) -> None:
+        date = datetime(
             year=1900,
             month=1,
             day=1,
             hour=self._hourVariable.get(),
             minute=self._minuteVariable.get(),
             second=self._secondVariable.get())
-        self._time = datetime.datetime.strftime(date, "%H:%M:%S")
+        self._time = datetime.strftime(date, "%H:%M:%S")
 
-    def save(self, config, sectionName):
+    def save(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        if not isinstance(config, configparser.ConfigParser):
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
@@ -115,12 +112,12 @@ class MainSetting(BaseSetting):
         section["backgroundcolor"] = "(%d, %d, %d)" % backgroundColor
         section["foregroundcolor"] = "(%d, %d, %d)" % foregroundColor
 
-    def rename(self, sectionName):
+    def rename(self, sectionName: str) -> None:
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
         self.configure(text="Настройка расписания: {0}".format(sectionName))
 
-    def _getTuple(self, value):
+    def _getTuple(self, value: str) -> Tuple[int, int, int]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
         try:
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

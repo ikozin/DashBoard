@@ -1,11 +1,7 @@
-import configparser
+from typing import *
 
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import font
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
-from tkinter import colorchooser
 
 from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
@@ -14,14 +10,14 @@ from ext.ModalDialog import FontChooserFrame
 class TimeManager(BaseManager):
     """description of class"""
 
-    def __init__(self, root):
+    def __init__(self, root: LabelFrame):
         """ """
         super(TimeManager, self).__init__(root, text="Настройки часов")
         self._font = FontChooserFrame(self, "Параметры шрифта")
         self._font.grid(row=0, column=1)
 
-    def load(self, config, modulelist):
-        if not isinstance(config, configparser.ConfigParser):
+    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("TimeBlock"):
             config.add_section("TimeBlock")
@@ -32,8 +28,8 @@ class TimeManager(BaseManager):
         isItalic = section.getboolean("FontItalic", False)
         self._font.load(fontName, fontSize, isBold, isItalic)
 
-    def save(self, config):
-        if not isinstance(config, configparser.ConfigParser):
+    def save(self, config: ConfigParser) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("TimeBlock"):
             config.add_section("TimeBlock")

@@ -1,11 +1,9 @@
-import datetime
-import configparser
+from typing import *
 
+from datetime import datetime
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
 from tkinter import filedialog
-from tkinter import colorchooser
 
 from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
@@ -14,7 +12,7 @@ from ext.ModalDialog import ColorsChooserFrame
 class AlarmTimeSetting(BaseSetting):
     """description of class"""
 
-    def __init__(self, root, sectionName):
+    def __init__(self, root: LabelFrame, sectionName: str):
         """ """
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
@@ -36,75 +34,75 @@ class AlarmTimeSetting(BaseSetting):
         self._durationVariable = IntVar(value=0)
         self._fileVariable = StringVar(value="")
 
-        weekDayFrame = ttk.LabelFrame(self, text="Дни недели")
+        weekDayFrame = LabelFrame(self, text="Дни недели")
         weekDayFrame.grid(row=0, column=0, columnspan=2, sticky=(N, S, E, W))
 
-        chk = ttk.Checkbutton(weekDayFrame, text="ПН", takefocus=True, variable=self._weekDay0)
+        chk = Checkbutton(weekDayFrame, text="ПН", takefocus=True, variable=self._weekDay0)
         chk.grid(row=0, column=0, padx=2, pady=2)
-        chk = ttk.Checkbutton(weekDayFrame, text="ВТ", takefocus=True, variable=self._weekDay1)
+        chk = Checkbutton(weekDayFrame, text="ВТ", takefocus=True, variable=self._weekDay1)
         chk.grid(row=0, column=1, padx=2, pady=2)
-        chk = ttk.Checkbutton(weekDayFrame, text="СР", takefocus=True, variable=self._weekDay2)
+        chk = Checkbutton(weekDayFrame, text="СР", takefocus=True, variable=self._weekDay2)
         chk.grid(row=0, column=2, padx=2, pady=2)
-        chk = ttk.Checkbutton(weekDayFrame, text="ЧТ", takefocus=True, variable=self._weekDay3)
+        chk = Checkbutton(weekDayFrame, text="ЧТ", takefocus=True, variable=self._weekDay3)
         chk.grid(row=0, column=3, padx=2, pady=2)
-        chk = ttk.Checkbutton(weekDayFrame, text="ПТ", takefocus=True, variable=self._weekDay4)
+        chk = Checkbutton(weekDayFrame, text="ПТ", takefocus=True, variable=self._weekDay4)
         chk.grid(row=0, column=4, padx=2, pady=2)
-        chk = ttk.Checkbutton(weekDayFrame, text="СБ", takefocus=True, variable=self._weekDay5)
+        chk = Checkbutton(weekDayFrame, text="СБ", takefocus=True, variable=self._weekDay5)
         chk.grid(row=0, column=5, padx=2, pady=2)
-        chk = ttk.Checkbutton(weekDayFrame, text="ВС", takefocus=True, variable=self._weekDay6)
+        chk = Checkbutton(weekDayFrame, text="ВС", takefocus=True, variable=self._weekDay6)
         chk.grid(row=0, column=6, padx=2, pady=2)
 
-        timeFrame = ttk.LabelFrame(self, text="Время")
+        timeFrame = LabelFrame(self, text="Время")
         timeFrame.grid(row=1, column=0, sticky=(N, S, E, W))
         timeFrame.columnconfigure(1, weight=1)
         timeFrame.columnconfigure(3, weight=1)
         timeFrame.columnconfigure(4, weight=1)
 
-        lbl = ttk.Label(timeFrame, text="Час:", justify=RIGHT)
+        lbl = Label(timeFrame, text="Час:", justify=RIGHT)
         lbl.grid(row=0, column=0, pady=2)
 
         spin = Spinbox(timeFrame, from_=0, to=23, increment=1, width=3, textvariable=self._hourVariable)
         spin.grid(row=0, column=1, padx=2, pady=2)
 
-        lbl = ttk.Label(timeFrame, text="Мин:", justify=RIGHT)
+        lbl = Label(timeFrame, text="Мин:", justify=RIGHT)
         lbl.grid(row=0, column=2, pady=2)
 
         spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._minuteVariable)
         spin.grid(row=0, column=3, padx=2, pady=2)
 
-        lbl = ttk.Label(timeFrame, text="Сек:", justify=RIGHT)
+        lbl = Label(timeFrame, text="Сек:", justify=RIGHT)
         lbl.grid(row=0, column=4, pady=2)
 
         spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._secondVariable)
         spin.grid(row=0, column=5, padx=2, pady=2)
 
-        durationFrame = ttk.LabelFrame(self, text="Длительность")
+        durationFrame = LabelFrame(self, text="Длительность")
         durationFrame.grid(row=1, column=1, sticky=(N, S, E, W))
 
         spin = Spinbox(durationFrame, from_=5, to=60, increment=1, width=3, textvariable=self._durationVariable)
         spin.grid(row=0, column=0, padx=2, pady=2)
 
-        lbl = ttk.Label(durationFrame, text="секунд")
+        lbl = Label(durationFrame, text="секунд")
         lbl.grid(row=0, column=1, pady=2)
 
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
         self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N, S, E, W))
 
-        fileFrame = ttk.LabelFrame(self, text="Файл для проигрывания")
+        fileFrame = LabelFrame(self, text="Файл для проигрывания")
         fileFrame.grid(row=3, column=0, columnspan=2, sticky=(N, S, E, W))
 
-        lbl = ttk.Label(fileFrame, text="Файл:")
+        lbl = Label(fileFrame, text="Файл:")
         lbl.grid(row=0, column=0, pady=2)
 
-        entr = ttk.Entry(fileFrame, width=34, textvariable=self._fileVariable)
+        entr = Entry(fileFrame, width=34, textvariable=self._fileVariable)
         entr.grid(row=0, column=1, pady=2)
 
-        btn = ttk.Button(fileFrame, text="...", command=self._selectFile, width=3)
+        btn = Button(fileFrame, text="...", command=self._selectFile, width=3)
         btn.grid(row=0, column=2, pady=2)
 
-    def load(self, config, sectionName):
+    def load(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        if not isinstance(config, configparser.ConfigParser):
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
@@ -118,7 +116,7 @@ class AlarmTimeSetting(BaseSetting):
 
         # self._type = section.getint("Type", self._type)
         date = section.get("Time", "0:00:00")
-        date = datetime.datetime.strptime(date, "%H:%M:%S")
+        date = datetime.strptime(date, "%H:%M:%S")
         weekDay = self._getTuple(section.get("WeekDay", "(0, 1, 2, 3, 4)"))
         duration = section.getint("Duration", 5)
         if any(day == 0 for day in weekDay):
@@ -144,19 +142,19 @@ class AlarmTimeSetting(BaseSetting):
         self._colorFrame.load(backColor, foreColor)
         self._fileVariable.set(section.get("File", ""))
 
-    def pre_save(self):
-        date = datetime.datetime(
+    def pre_save(self) -> None:
+        date = datetime(
             year=1900,
             month=1,
             day=1,
             hour=self._hourVariable.get(),
             minute=self._minuteVariable.get(),
             second=self._secondVariable.get())
-        self._time = datetime.datetime.strftime(date, "%H:%M:%S")
+        self._time = datetime.strftime(date, "%H:%M:%S")
 
-    def save(self, config, sectionName):
+    def save(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        if not isinstance(config, configparser.ConfigParser):
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
@@ -186,18 +184,18 @@ class AlarmTimeSetting(BaseSetting):
         section["ForegroundColor"] = "(%d, %d, %d)" % foregroundColor
         section["File"] = self._fileVariable.get()
 
-    def rename(self, sectionName):
+    def rename(self, sectionName: str) -> None:
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
         self.configure(text="Настройка будильника: {0}".format(sectionName))
 
-    def _selectFile(self):
+    def _selectFile(self) -> None:
         fileName = filedialog.Open(self, filetypes=[('*.* all files', '.*')]).show()
         if fileName == '':
             return
         self._fileVariable.set(fileName)
 
-    def _getTuple(self, value):
+    def _getTuple(self, value: str) -> Tuple[int, int, int]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
         try:
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
@@ -206,21 +204,21 @@ class AlarmTimeSetting(BaseSetting):
 
 
 class AlarmSimpleSetting(AlarmTimeSetting):
-    def __init__(self, root, sectionName):
+    def __init__(self, root, sectionName: str):
         """ """
         super(AlarmSimpleSetting, self).__init__(root, sectionName)
         self._type = 1
 
 
 class AlarmBlinkSetting(AlarmTimeSetting):
-    def __init__(self, root, sectionName):
+    def __init__(self, root, sectionName: str):
         """ """
         super(AlarmBlinkSetting, self).__init__(root, sectionName)
         self._type = 2
 
 
 class AlarmRiseSetting(AlarmTimeSetting):
-    def __init__(self, root, sectionName):
+    def __init__(self, root, sectionName: str):
         """ """
         super(AlarmRiseSetting, self).__init__(root, sectionName)
         self._type = 3

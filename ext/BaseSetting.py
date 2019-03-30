@@ -1,11 +1,14 @@
+from typing import *
+
+from  configparser import ConfigParser
 from abc import ABCMeta, abstractclassmethod
-from tkinter import ttk
+from tkinter import LabelFrame
 
 
-class BaseSetting(ttk.LabelFrame, metaclass=ABCMeta):
+class BaseSetting(LabelFrame, metaclass=ABCMeta):
 
     @abstractclassmethod
-    def load(self, config, sectionName):
+    def load(self, config: ConfigParser, sectionName: str) -> None:
         pass
 
     @abstractclassmethod
@@ -13,9 +16,9 @@ class BaseSetting(ttk.LabelFrame, metaclass=ABCMeta):
         pass
 
     @abstractclassmethod
-    def save(self, config, sectionName):
+    def save(self, config: ConfigParser, sectionName: str) -> None:
         pass
 
     @abstractclassmethod
-    def rename(self, sectionName):
+    def rename(self, sectionName: str) -> None:
         pass
