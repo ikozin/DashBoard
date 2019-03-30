@@ -1,11 +1,7 @@
-import configparser
+from typing import *
 
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import font
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
-from tkinter import colorchooser
 
 from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
@@ -15,7 +11,7 @@ from ext.ModalDialog import XYFrame
 class WunderGroundManager(BaseManager):
     """description of class"""
 
-    def __init__(self, root):
+    def __init__(self, root: LabelFrame):
         """ """
         super(WunderGroundManager, self).__init__(root, text="Настройки WunderGround")
 
@@ -26,25 +22,25 @@ class WunderGroundManager(BaseManager):
         content = ttk.Frame(self)
         content.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
-        lbl = ttk.Label(content, justify=RIGHT, text="Время обновления")
+        lbl = Label(content, justify=RIGHT, text="Время обновления")
         lbl.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E))
 
         spin = Spinbox(content, from_=1, to=60, increment=1, width=5, textvariable=self._updateValue)
         spin.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
 
-        lbl = ttk.Label(content, justify=LEFT, text="минут")
+        lbl = Label(content, justify=LEFT, text="минут")
         lbl.grid(row=0, column=2, padx=2, pady=2, sticky=(N, S, W))
 
-        lbl = ttk.Label(content, justify=RIGHT, text="Ключ")
+        lbl = Label(content, justify=RIGHT, text="Ключ")
         lbl.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E))
 
-        entr = ttk.Entry(content, width=40, textvariable=self._keyValue)
+        entr = Entry(content, width=40, textvariable=self._keyValue)
         entr.grid(row=1, column=1, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
-        lbl = ttk.Label(content, justify=RIGHT, text="Директория для картинок")
+        lbl = Label(content, justify=RIGHT, text="Директория для картинок")
         lbl.grid(row=2, column=0, padx=2, pady=2, sticky=(N, S, E))
 
-        entr = ttk.Entry(content, width=5, textvariable=self._folderValue)
+        entr = Entry(content, width=5, textvariable=self._folderValue)
         entr.grid(row=2, column=1, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
         self._scaleIcon = XYFrame(self, "Масштаб для картинки", "Масштаб (X)", "Масштаб (Y)")
@@ -74,9 +70,9 @@ class WunderGroundManager(BaseManager):
         self._wind = FontChooserFrame(self, "Параметры шрифта ветра")
         self._wind.grid(row=12, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
-    def load(self, config, modulelist):
+    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
         """ """
-        if not isinstance(config, configparser.ConfigParser):
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("WunderGroundBlock"):
             config.add_section("WunderGroundBlock")
@@ -132,9 +128,9 @@ class WunderGroundManager(BaseManager):
         isItalic = section.getboolean("WindFontItalic", False)
         self._wind.load(fontName, fontSize, isBold, isItalic)
 
-    def save(self, config):
+    def save(self, config: ConfigParser) -> None:
         """ """
-        if not isinstance(config, configparser.ConfigParser):
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("WunderGroundBlock"):
             config.add_section("WunderGroundBlock")
@@ -190,7 +186,7 @@ class WunderGroundManager(BaseManager):
         section["WindFontBold"] = str(isBold)
         section["WindFontItalic"] = str(isItalic)
 
-    def _getTuple(self, value):
+    def _getTuple(self, value: str) -> Tuple[int, int, int]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
         try:
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

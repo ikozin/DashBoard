@@ -1,10 +1,7 @@
-import configparser
+from typing import *
 
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import font
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
 from tkinter import colorchooser
 
 from ext.BaseManager import BaseManager
@@ -15,7 +12,7 @@ from ext.ModalDialog import XYFrame
 class MT8057Manager(BaseManager):
     """description of class"""
 
-    def __init__(self, root):
+    def __init__(self, root: LabelFrame):
         """ """
         super(MT8057Manager, self).__init__(root, text="Настройки MT8057")
         self._warnValue = IntVar()
@@ -23,23 +20,23 @@ class MT8057Manager(BaseManager):
         self._warnColor = None
         self._critColor = None
 
-        lbl = ttk.Label(self, text="Начальное значения для Предупреждения")
+        lbl = Label(self, text="Начальное значения для Предупреждения")
         lbl.grid(row=0, column=0, padx=2, pady=2)
 
-        ttk.Entry(self, textvariable=self._warnValue, width=4).grid(row=0, column=1, padx=2, pady=2)
+        Entry(self, textvariable=self._warnValue, width=4).grid(row=0, column=1, padx=2, pady=2)
 
-        lbl = ttk.Label(self, text="Цвет текста для Предупреждения")
+        lbl = Label(self, text="Цвет текста для Предупреждения")
         lbl.grid(row=1, column=0, padx=2, pady=2)
 
         self._warnSelector = Button(self, text="Предупреждение", command=self._selectWarnColor)
         self._warnSelector.grid(row=1, column=1, padx=2, pady=2, sticky=(N, S, E, W))
 
-        lbl = ttk.Label(self, text="Начальное значения для Опасности")
+        lbl = Label(self, text="Начальное значения для Опасности")
         lbl.grid(row=2, column=0, padx=2, pady=2)
 
-        ttk.Entry(self, textvariable=self._critValue, width=4).grid(row=2, column=1, padx=2, pady=2)
+        Entry(self, textvariable=self._critValue, width=4).grid(row=2, column=1, padx=2, pady=2)
 
-        lbl = ttk.Label(self, text="Цвет текста для Опасности")
+        lbl = Label(self, text="Цвет текста для Опасности")
         lbl.grid(row=3, column=0, padx=2, pady=2)
 
         self._critSelector = Button(self, text="Опасность", command=self._selectCritColor)
@@ -57,8 +54,8 @@ class MT8057Manager(BaseManager):
         self._temp = FontChooserFrame(self, "Параметры шрифта Температуры")
         self._temp.grid(row=7, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
-    def load(self, config, modulelist):
-        if not isinstance(config, configparser.ConfigParser):
+    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("MT8057Block"):
             config.add_section("MT8057Block")
@@ -88,8 +85,8 @@ class MT8057Manager(BaseManager):
         self._warnSelector.configure(foreground="#%02x%02x%02x" % self._warnColor)
         self._critSelector.configure(foreground="#%02x%02x%02x" % self._critColor)
 
-    def save(self, config):
-        if not isinstance(config, configparser.ConfigParser):
+    def save(self, config: ConfigParser) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("MT8057Block"):
             config.add_section("MT8057Block")
@@ -116,21 +113,21 @@ class MT8057Manager(BaseManager):
         (posX, posY) = self._posTemp.getResult()
         section["TempPos"] = "({0},{1})".format(posX, posY)
 
-    def _selectWarnColor(self):
+    def _selectWarnColor(self) -> None:
         (tripleColor, tkColor) = colorchooser.askcolor(self._warnColor)
         if tripleColor is None:
             return
         self._warnSelector.configure(foreground=tkColor)
         self._warnColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
 
-    def _selectCritColor(self):
+    def _selectCritColor(self) -> None:
         (tripleColor, tkColor) = colorchooser.askcolor(self._critColor)
         if tripleColor is None:
             return
         self._critSelector.configure(foreground=tkColor)
         self._critColor = (int(tripleColor[0]), int(tripleColor[1]), int(tripleColor[2]))
 
-    def _getTuple(self, value):
+    def _getTuple(self, value: str) -> Tuple[int, int, int]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
         try:
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

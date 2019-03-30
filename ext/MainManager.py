@@ -1,11 +1,7 @@
-import datetime
-import configparser
+from typing import *
 
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
-from tkinter import colorchooser
 
 from ext.BaseManager import BaseManager
 from ext.ModalDialog import ColorsChooserFrame
@@ -17,7 +13,7 @@ from ext.MainSetting import MainSetting
 class MainManager(BaseManager):
     """description of class"""
 
-    def __init__(self, root):
+    def __init__(self, root: LabelFrame):
         """ """
         super(MainManager, self).__init__(root, text="Основные настройки")
         self.columnconfigure(4, weight=1)
@@ -31,22 +27,22 @@ class MainManager(BaseManager):
         commandFrame = ttk.Frame(self, padding=(2, 2, 2, 2))
         commandFrame.grid(row=0, column=1, rowspan=3, sticky=(N, S, E, W))
 
-        btn = ttk.Button(commandFrame, text="Создать", command=self._createSection)
+        btn = Button(commandFrame, text="Создать", command=self._createSection)
         btn.grid(row=0, column=0, sticky=(N, S, E, W))
 
-        btn = ttk.Button(commandFrame, text="Переименовать", command=self._renameSection)
+        btn = Button(commandFrame, text="Переименовать", command=self._renameSection)
         btn.grid(row=1, column=0, sticky=(N, S, E, W))
 
-        btn = ttk.Button(commandFrame, text="Удалить", command=self._deleteSection)
+        btn = Button(commandFrame, text="Удалить", command=self._deleteSection)
         btn.grid(row=2, column=0, sticky=(N, S, E, W))
 
-        idleFrame = ttk.LabelFrame(self, text="Время простоя")
+        idleFrame = LabelFrame(self, text="Время простоя")
         idleFrame.grid(row=0, column=2, sticky=(N, E, W))
 
         spin = Spinbox(idleFrame, from_=5, to=60, increment=1, width=3, textvariable=self._idleVariable)
         spin.grid(row=0, column=0, padx=2, pady=2)
 
-        lbl = ttk.Label(idleFrame, text="минут")
+        lbl = Label(idleFrame, text="минут")
         lbl.grid(row=0, column=2, pady=2)
 
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
@@ -58,8 +54,8 @@ class MainManager(BaseManager):
         self._frame = SelectFrame(self, "Выбор модулей для загрузки")
         self._frame.grid(row=3, column=0, columnspan=3, sticky=(N, S, E, W), padx=2, pady=2)
 
-    def load(self, config, modulelist):
-        if not isinstance(config, configparser.ConfigParser):
+    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("MAIN"):
             config.add_section("MAIN")
@@ -92,8 +88,8 @@ class MainManager(BaseManager):
                 self._sectionlist[item] = sectionBlock
                 self._listBox.insert("end", item)
 
-    def save(self, config):
-        if not isinstance(config, configparser.ConfigParser):
+    def save(self, config: ConfigParser) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("MAIN"):
             config.add_section("MAIN")
@@ -117,7 +113,7 @@ class MainManager(BaseManager):
             sectionBlock = self._sectionlist[sectionName]
             sectionBlock.save(config, sectionName)
 
-    def _selectSection(self, event):
+    def _selectSection(self, event) -> None:
         listBox = event.widget
         selection = listBox.curselection()
         if not selection:
@@ -132,7 +128,7 @@ class MainManager(BaseManager):
         self._currentName = name
         sectionBlock.grid(row=0, column=0, sticky=(N, S, E, W))
 
-    def _createSection(self):
+    def _createSection(self) -> None:
         item = EntryModalDialog("Создать").Execute(self, "")
         if item == "":
             return
@@ -143,7 +139,7 @@ class MainManager(BaseManager):
         self._sectionlist[item] = sectionBlock
         self._listBox.insert("end", item)
 
-    def _renameSection(self):
+    def _renameSection(self) -> None:
         selection = self._listBox.curselection()
         if not selection:
             return
@@ -163,7 +159,7 @@ class MainManager(BaseManager):
         self._listBox.delete(selection)
         self._listBox.insert(selection, newname)
 
-    def _deleteSection(self):
+    def _deleteSection(self) -> None:
         selection = self._listBox.curselection()
         if not selection:
             return
@@ -177,7 +173,7 @@ class MainManager(BaseManager):
         if self._currentName == name:
             self._currentName = None
 
-    def _getTuple(self, value):
+    def _getTuple(self, value: str) -> Tuple[int, int, int]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
         try:
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

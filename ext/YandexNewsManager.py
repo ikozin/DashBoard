@@ -1,11 +1,7 @@
-import configparser
+from typing import *
 
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import font
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
-from tkinter import colorchooser
 
 from ext.BaseManager import BaseManager
 from ext.ModalDialog import FontChooserFrame
@@ -14,7 +10,7 @@ from ext.ModalDialog import FontChooserFrame
 class YandexNewsManager(BaseManager):
     """description of class"""
 
-    def __init__(self, root):
+    def __init__(self, root: LabelFrame):
         """ """
         super(YandexNewsManager, self).__init__(root, text="Настройки новостей от Яндекса")
 
@@ -27,37 +23,37 @@ class YandexNewsManager(BaseManager):
         content1 = ttk.Frame(self)
         content1.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
-        lbl = ttk.Label(content1, text="Адрес")
+        lbl = Label(content1, text="Адрес")
         lbl.grid(row=0, column=0, padx=2, pady=2)
 
-        entr = ttk.Entry(content1, textvariable=self._urlValue, width=32)
+        entr = Entry(content1, textvariable=self._urlValue, width=32)
         entr.grid(row=0, column=1, padx=2, pady=2)
 
-        lbl = ttk.Label(content1, text="Время обновления")
+        lbl = Label(content1, text="Время обновления")
         lbl.grid(row=0, column=2, padx=2, pady=2)
 
         spin = Spinbox(content1, from_=5, to=60, increment=1, width=3, textvariable=self._updateValue)
         spin.grid(row=0, column=3, padx=2, pady=2)
 
-        lbl = ttk.Label(content1, text="минут")
+        lbl = Label(content1, text="минут")
         lbl.grid(row=0, column=4, padx=2, pady=2)
 
         content2 = ttk.Frame(self)
         content2.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
-        lbl = ttk.Label(content2, text="Распложение (Y)")
+        lbl = Label(content2, text="Распложение (Y)")
         lbl.grid(row=0, column=0, padx=2, pady=2)
 
         spin = Spinbox(content2, from_=1, to=1000, increment=1, width=5, textvariable=self._posValue)
         spin.grid(row=0, column=1, padx=2, pady=2)
 
-        lbl = ttk.Label(content2, text="Отступ по верикали")
+        lbl = Label(content2, text="Отступ по верикали")
         lbl.grid(row=0, column=2, padx=2, pady=2)
 
         spin = Spinbox(content2, from_=1, to=300, increment=1, width=3, textvariable=self._indentValue)
         spin.grid(row=0, column=3, padx=2, pady=2)
 
-        lbl = ttk.Label(content2, text="Кол-во новостей")
+        lbl = Label(content2, text="Кол-во новостей")
         lbl.grid(row=0, column=4, padx=2, pady=2)
 
         spin = Spinbox(content2, from_=1, to=10, increment=1, width=3, textvariable=self._rowsValue)
@@ -66,8 +62,8 @@ class YandexNewsManager(BaseManager):
         self._font = FontChooserFrame(self, "Параметры шрифта")
         self._font.grid(row=2, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
-    def load(self, config, modulelist):
-        if not isinstance(config, configparser.ConfigParser):
+    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("YandexNewsBlock"):
             config.add_section("YandexNewsBlock")
@@ -83,8 +79,8 @@ class YandexNewsManager(BaseManager):
         self._indentValue.set(section.getint("Indent", 16))
         self._rowsValue.set(section.getint("Rows", 5))
 
-    def save(self, config):
-        if not isinstance(config, configparser.ConfigParser):
+    def save(self, config: ConfigParser) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("YandexNewsBlock"):
             config.add_section("YandexNewsBlock")

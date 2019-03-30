@@ -71,7 +71,7 @@ class ColorsChooserFrame(ttk.LabelFrame):
         self._backSelector.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E, W))
         self._foreSelector = Button(self, text="Цвет текста", command=self._selectForeColor)
         self._foreSelector.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
-        self.load((0, 0, 0), (255, 255, 255))
+        self.load((0, 0, 0), (0, 0, 0))
 
     def load(self, backColor, foreColor):
         if not isinstance(backColor, tuple):

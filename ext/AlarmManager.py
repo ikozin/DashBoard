@@ -1,12 +1,9 @@
-import datetime
-import configparser
+from typing import *
 
+from configparser import ConfigParser
 from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
-from tkinter import filedialog
-from tkinter import colorchooser
 
+from ext.BaseSetting import BaseSetting
 from ext.BaseManager import BaseManager
 from ext.ModalDialog import ModalDialog
 from ext.ModalDialog import EntryModalDialog
@@ -19,7 +16,7 @@ from ext.AlarmSetting import AlarmRiseSetting
 class AlarmManager(BaseManager):
     """description of class"""
 
-    def __init__(self, root):
+    def __init__(self, root: LabelFrame):
         """ """
         super(AlarmManager, self).__init__(root, text="Выбор будильника")
         self.columnconfigure(2, weight=1)
@@ -33,13 +30,13 @@ class AlarmManager(BaseManager):
         commandFrame = ttk.Frame(self, padding=(2, 2, 2, 2))
         commandFrame.grid(row=0, column=1, sticky=(N, S, W))
 
-        btn = ttk.Button(commandFrame, text="Создать", command=self._createAlarm)
+        btn = Button(commandFrame, text="Создать", command=self._createAlarm)
         btn.grid(row=0, column=0, sticky=(N, S, E, W))
 
-        btn = ttk.Button(commandFrame, text="Переименовать", command=self._renameAlarm)
+        btn = Button(commandFrame, text="Переименовать", command=self._renameAlarm)
         btn.grid(row=1, column=0, sticky=(N, S, E, W))
 
-        btn = ttk.Button(commandFrame, text="Удалить", command=self._deleteAlarm)
+        btn = Button(commandFrame, text="Удалить", command=self._deleteAlarm)
         btn.grid(row=2, column=0, sticky=(N, S, E, W))
 
         self._alarmFrame = ttk.Frame(self, padding=(2, 2, 2, 2))
@@ -48,8 +45,8 @@ class AlarmManager(BaseManager):
         self._frame = SelectFrame(self, "Выбор модулей для отображения во время срабатывания будильника")
         self._frame.grid(row=1, column=0, columnspan=3, sticky=(N, S, E, W), padx=2, pady=2)
 
-    def load(self, config, modulelist):
-        if not isinstance(config, configparser.ConfigParser):
+    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("AlarmBlock"):
             config.add_section("AlarmBlock")
@@ -80,8 +77,8 @@ class AlarmManager(BaseManager):
                 self._alarmlist[item] = alarmBlock
                 self._listBox.insert("end", item)
 
-    def save(self, config):
-        if not isinstance(config, configparser.ConfigParser):
+    def save(self, config: ConfigParser) -> None:
+        if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("AlarmBlock"):
             config.add_section("AlarmBlock")
@@ -97,7 +94,7 @@ class AlarmManager(BaseManager):
             alarmBlock.save(config, schemaName)
         section["BlockList"] = self._frame.getResult()
 
-    def _selectAlarm(self, event):
+    def _selectAlarm(self, event) -> None:
         listBox = event.widget
         selection = listBox.curselection()
         if not selection:
@@ -113,7 +110,7 @@ class AlarmManager(BaseManager):
         self._currentName = name
         alarmBlock.grid(row=0, column=0, sticky=(N, S, E, W))
 
-    def _createAlarm(self):
+    def _createAlarm(self) -> None:
         (item, type) = AlarmCreateDialog().Execute(self)
         if item is None:
             return
@@ -125,7 +122,7 @@ class AlarmManager(BaseManager):
             self._alarmlist[item] = alarmBlock
             self._listBox.insert("end", item)
 
-    def _renameAlarm(self):
+    def _renameAlarm(self) -> None:
         selection = self._listBox.curselection()
         if not selection:
             return
@@ -145,7 +142,7 @@ class AlarmManager(BaseManager):
         self._listBox.delete(selection)
         self._listBox.insert(selection, newname)
 
-    def _deleteAlarm(self):
+    def _deleteAlarm(self) -> None:
         selection = self._listBox.curselection()
         if not selection:
             return
@@ -159,7 +156,7 @@ class AlarmManager(BaseManager):
         if self._currentName == name:
             self._currentName = None
 
-    def _createAlarmByType(self, type, item):
+    def _createAlarmByType(self, type: int, item: str) -> BaseSetting:
         func = self._functions.get(type, None)
         if func is None:
             return None
@@ -175,27 +172,27 @@ class AlarmCreateDialog(ModalDialog):
         self._valueName = StringVar()
         self._valueType = StringVar()
         self._valueType.set('1')
-        lbl = ttk.Label(self._modal, text="Имя будильника")
+        lbl = Label(self._modal, text="Имя будильника")
         lbl.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
 
-        entry = ttk.Entry(self._modal, textvariable=self._valueName)
+        entry = Entry(self._modal, textvariable=self._valueName)
         entry.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         entry.focus_set()
         # vcmd = (entry.register(self._validateName), '%s', '%P')
         vcmd = (entry.register(self._validateName), '%P')
         entry.configure(validate="key", validatecommand=vcmd)
 
-        lbl = ttk.Label(self._modal, text="Тип будильника")
+        lbl = Label(self._modal, text="Тип будильника")
         lbl.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
 
         combo = ttk.Combobox(self._modal, state="readonly", values=('1', '2', '3'), textvariable=self._valueType)
         combo.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         combo.bind('<<ComboboxSelected>>', lambda e: self._selectType())
 
-        self._btnOk = ttk.Button(self._modal, text="OK", state="disabled", command=self._ok)
+        self._btnOk = Button(self._modal, text="OK", state="disabled", command=self._ok)
         self._btnOk.grid(row=4, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
-        btn = ttk.Button(self._modal, text="Cancel", command=self._cancel)
+        btn = Button(self._modal, text="Cancel", command=self._cancel)
         btn.grid(row=4, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
         self._waitDialog(self._modal, root)
@@ -207,7 +204,7 @@ class AlarmCreateDialog(ModalDialog):
         return (name, type)
 
     # def _validateName(self, old, new):
-    def _validateName(self, new):
+    def _validateName(self, new: str) -> bool:
         if " " in new:
             return False
         if "," in new:
@@ -228,14 +225,13 @@ class AlarmCreateDialog(ModalDialog):
             self._btnOk.configure(state="normal")
         return True
 
-    def _selectType(self):
+    def _selectType(self) -> None:
         self._btnOk.configure(state="normal")
-        pass
 
-    def _ok(self):
+    def _ok(self) -> None:
         self._modal.destroy()
 
-    def _cancel(self):
+    def _cancel(self) -> None:
         self._modal.destroy()
         self._valueName.set("")
         self._valueType.set("")
