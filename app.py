@@ -31,8 +31,8 @@ logger = logging.getLogger("root")
 FPS = 60
 # WAIT_TIME = 40
 FILE_SETTING = "setting.ini"
-PIR_PIN = 27  # GPIO27 green
-LED_PIN = 17  # GPIO17 red
+PIR_PIN = 22  # GPIO22
+LED_PIN = 23  # GPIO23
 IDLE_EVENT = (pygame.locals.USEREVENT + 1)
 
 
