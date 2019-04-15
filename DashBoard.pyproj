@@ -29,6 +29,9 @@
     <Compile Include="ext\BaseSetting.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ext\IRManager.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ext\MT8057Manager.py">
       <SubType>Code</SubType>
     </Compile>
@@ -96,6 +99,12 @@
     <Compile Include="modules\alarm\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\BlockExecuteBase.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\BlockIR.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\BlocklAlarm.py">
       <SubType>Code</SubType>
     </Compile>
@@ -149,12 +158,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="excludelist.txt" />
+    <Content Include="IR.ini" />
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
     <Content Include="deploy_rasppi.cmd" />
     <Content Include="pycodestyle.cmd" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
+    <Content Include="weather\01d.png" />
+    <Content Include="weather\01n.png" />
+    <Content Include="weather\02d.png" />
+    <Content Include="weather\02n.png" />
+    <Content Include="weather\03d.png" />
+    <Content Include="weather\03n.png" />
+    <Content Include="weather\04d.png" />
+    <Content Include="weather\04n.png" />
+    <Content Include="weather\09d.png" />
+    <Content Include="weather\09n.png" />
+    <Content Include="weather\10d.png" />
+    <Content Include="weather\10n.png" />
+    <Content Include="weather\11d.png" />
+    <Content Include="weather\11n.png" />
+    <Content Include="weather\13d.png" />
+    <Content Include="weather\13n.png" />
+    <Content Include="weather\50d.png" />
+    <Content Include="weather\50n.png" />
     <Content Include="weather\bkn_+ra_d.png" />
     <Content Include="weather\bkn_-ra_d.png" />
     <Content Include="weather\bkn_-ra_n.png" />

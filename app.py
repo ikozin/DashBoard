@@ -24,6 +24,7 @@ from modules.BlockWunderGround import BlockWunderGround
 from modules.BlockWatcher import BlockWatcher
 from modules.BlockMT8057 import BlockMT8057
 from modules.BlockYandexWeather import BlockYandexWeather
+from modules.BlockIR import BlockIR
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -75,6 +76,7 @@ class Mainboard:
             "Watcher": BlockWatcher(logger, self._config),
             "MT8057": BlockMT8057(logger, self._config),
             "YandexWeather": BlockYandexWeather(logger, self._config),
+            "IR": BlockIR(logger, self._config),
         }
 
         for name in self._config._blockList:

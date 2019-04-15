@@ -20,6 +20,7 @@ from ext.SwapManager import SwapManager
 from ext.WatcherManager import WatcherManager
 from ext.MT8057Manager import MT8057Manager
 from ext.YandexWeatherManager import YandexWeatherManager
+from ext.IRManager import IRManager
 
 
 class App(object):
@@ -39,6 +40,7 @@ class App(object):
            "Watcher": WatcherManager,
            "MT8057": MT8057Manager,
            "YandexWeather": YandexWeatherManager,
+           "IR": IRManager,
         }
         self._list = dict()
         self._currentName = None
