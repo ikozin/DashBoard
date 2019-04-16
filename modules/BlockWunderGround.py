@@ -217,33 +217,7 @@ class BlockWunderGround(BlockMinuteBase):
         try:
             if not isOnline:
                 return
-
-            data = self._getData()
-            if data is None:
-                return
-
-            root = ET.fromstring(data)
-            self._weather_type = str(root.find("current_observation/weather").text).capitalize()
-            self._temperature = float(root.find("current_observation/temp_c").text)
-            self._humidity = str(root.find("current_observation/relative_humidity").text)
-            self._pressure = str(root.find("current_observation/pressure_mb").text)
-            self._wind_speed = float(root.find("current_observation/wind_mph").text)
-            self._wind_direction = str(root.find("current_observation/wind_dir").text)
-
-            self._text = WEATHER_TEXT_FORMAT.format(
-                self._weather_type,
-                self._temperature,
-                self._wind_speed,
-                self._humidity,
-                self._pressure)
-
-            imageName = str(root.find("current_observation/icon_url").text)
-            imageName = imageName[imageName.rfind("/") + 1:]
-            self._load(imageName, self._folder)
-            imageName = os.path.join(self._folder, imageName)
-
-            self._weather_image = pygame.image.load(imageName)
-            self._weather_image = pygame.transform.scale(self._weather_image, self._iconScale)
+            self.execute()
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -276,6 +250,34 @@ class BlockWunderGround(BlockMinuteBase):
                 screen.blit(surf, self._windPos)
         except Exception as ex:
             self._logger.exception(ex)
+
+    def execute(self):
+        data = self._getData()
+        if data is None:
+            return
+
+        root = ET.fromstring(data)
+        self._weather_type = str(root.find("current_observation/weather").text).capitalize()
+        self._temperature = float(root.find("current_observation/temp_c").text)
+        self._humidity = str(root.find("current_observation/relative_humidity").text)
+        self._pressure = str(root.find("current_observation/pressure_mb").text)
+        self._wind_speed = float(root.find("current_observation/wind_mph").text)
+        self._wind_direction = str(root.find("current_observation/wind_dir").text)
+
+        self._text = WEATHER_TEXT_FORMAT.format(
+            self._weather_type,
+            self._temperature,
+            self._wind_speed,
+            self._humidity,
+            self._pressure)
+
+        imageName = str(root.find("current_observation/icon_url").text)
+        imageName = imageName[imageName.rfind("/") + 1:]
+        self._load(imageName, self._folder)
+        imageName = os.path.join(self._folder, imageName)
+
+        self._weather_image = pygame.image.load(imageName)
+        self._weather_image = pygame.transform.scale(self._weather_image, self._iconScale)
 
     def _load(self, imageName, path):
         filePath = os.path.join(path, imageName)

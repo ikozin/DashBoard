@@ -1,4 +1,4 @@
- from typing import *
+from typing import *
 
 from configparser import ConfigParser
 from tkinter import *

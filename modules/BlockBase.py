@@ -27,25 +27,26 @@ class BlockBase(metaclass=ABCMeta):
         pass
 
     def proccedEvent(self, event, isOnline):
-        """ """
         pass
 
     def updateInfo(self, isOnline):
-        """ """
         if not isOnline:
             return
         pass
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
-        """ """
         pass
 
+    def addBlock(self, block):
+        raise("NotImplemented")
+
+    def execute(self):
+        raise("NotImplemented")
+    
     def getText(self):
-        """ """
         return self._text
 
     def done(self):
-        """ """
         pass
 
     def _getTuple(self, value):

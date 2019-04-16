@@ -99,9 +99,6 @@
     <Compile Include="modules\alarm\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockExecuteBase.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="modules\BlockIR.py">
       <SubType>Code</SubType>
     </Compile>

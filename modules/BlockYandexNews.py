@@ -71,8 +71,7 @@ class BlockYandexNews(BlockMinuteBase):
         try:
             if not isOnline:
                 return
-            self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
-            self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
+            self.execute()
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -92,6 +91,10 @@ class BlockYandexNews(BlockMinuteBase):
                 y += sz[1] + self._indent
         except Exception as ex:
             self._logger.exception(ex)
+
+    def execute(self):
+        self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
+        self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
 
     def __get_newsblock(self, url):
         news = []

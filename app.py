@@ -255,5 +255,3 @@ if __name__ == "__main__":
     if sys.platform == "linux":  # Only for Raspberry Pi
         GPIO.cleanup()
     ###########################################################################
-
-    sys.exit(0)

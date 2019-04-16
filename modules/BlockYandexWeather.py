@@ -201,31 +201,7 @@ class BlockYandexWeather(BlockMinuteBase):
         try:
             if not isOnline:
                 return
-
-            data = self._getData()
-            if data is None:
-                return
-
-            root = ET.fromstring(data)
-            self._weather_type = str(root.find("weather/day/day_part/weather_type").text).capitalize()
-            self._temperature = float(root.find("weather/day/day_part/temperature").text)
-            self._humidity = str(root.find("weather/day/day_part/dampness").text)
-            self._pressure = str(root.find("weather/day/day_part/pressure").text)
-            self._wind_speed = str(root.find("weather/day/day_part/wind_speed").text)
-            self._wind_direction = str(root.find("weather/day/day_part/wind_direction").text)
-
-            loadPath = root.find("weather/day/day_part/image-v3").text
-            imageName = os.path.basename(loadPath)
-            self._load(imageName, self._folder, loadPath)
-            imageName = os.path.join(self._folder, imageName)
-            self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
-
-            self._text = WEATHER_TEXT_FORMAT.format(
-                self._weather_type,
-                self._temperature,
-                self._wind_speed,
-                self._humidity,
-                self._pressure)
+            self.execute()
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -258,6 +234,32 @@ class BlockYandexWeather(BlockMinuteBase):
                 screen.blit(surf, self._windPos)
         except Exception as ex:
             self._logger.exception(ex)
+
+    def execute(self):
+        data = self._getData()
+        if data is None:
+            return
+
+        root = ET.fromstring(data)
+        self._weather_type = str(root.find("weather/day/day_part/weather_type").text).capitalize()
+        self._temperature = float(root.find("weather/day/day_part/temperature").text)
+        self._humidity = str(root.find("weather/day/day_part/dampness").text)
+        self._pressure = str(root.find("weather/day/day_part/pressure").text)
+        self._wind_speed = str(root.find("weather/day/day_part/wind_speed").text)
+        self._wind_direction = str(root.find("weather/day/day_part/wind_direction").text)
+
+        loadPath = root.find("weather/day/day_part/image-v3").text
+        imageName = os.path.basename(loadPath)
+        self._load(imageName, self._folder, loadPath)
+        imageName = os.path.join(self._folder, imageName)
+        self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
+
+        self._text = WEATHER_TEXT_FORMAT.format(
+            self._weather_type,
+            self._temperature,
+            self._wind_speed,
+            self._humidity,
+            self._pressure)
 
     def _load(self, imageName, path, url):
         filePath = os.path.join(path, imageName)

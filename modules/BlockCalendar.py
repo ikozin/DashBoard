@@ -110,11 +110,13 @@ class BlockCalendar(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def getText(self):
-        """ """
+    def execute(self):
         self._text = "{0}, {1} {2} {3} год".format(
             self._weekDayLong[self._time.weekday()],
             self._daysLong[self._time.day-1],
             self._months[self._time.month-1],
             self._time.year)
+
+    def getText(self):
+        self.execute()
         return self._text

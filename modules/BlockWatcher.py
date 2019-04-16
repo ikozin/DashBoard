@@ -63,10 +63,8 @@ class BlockWatcher(BlockSecondBase):
             if not self._isWatching:
                 if any(currentTime.weekday() == day for day in self._weekDay):
                     if currentTime.time() >= self._startTime.time():
-                        self._isWatching = True
-            if self._isWatching:
-                if currentTime.time() > self._stopTime.time():
-                    self._isWatching = False
+                        # self._isWatching = True
+                        self.execute()
             if self._isWatching:
                 ###########################################################################
                 if sys.platform == "linux":  # Only for Raspberry Pi
@@ -80,5 +78,11 @@ class BlockWatcher(BlockSecondBase):
                 else:
                     subprocess.Popen("calc.exe", shell=True)
                 ###########################################################################
+            if self._isWatching:
+                if currentTime.time() > self._stopTime.time():
+                    self._isWatching = False
         except Exception as ex:
             self._logger.exception(ex)
+
+    def execute(self):
+        self._isWatching = True
