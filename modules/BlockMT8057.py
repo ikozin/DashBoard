@@ -32,7 +32,7 @@ class BlockMT8057(BlockSecondBase):
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = None
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
@@ -103,7 +103,7 @@ class BlockMT8057(BlockSecondBase):
             self._t_mt8057 = mt8057(self._logger)
             self._t_mt8057.start()
 
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
         self.setTime(2)
 
     def updateInfo(self, isOnline):

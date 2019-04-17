@@ -21,14 +21,14 @@ class BlockIR(BlockBase):
             lirc.init("dashboard", "IR.ini", blocking=False)
 ###########################################################################
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
         section = config["IRBlock"]
         self._voice = modList['Voice'];
 
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
         try:

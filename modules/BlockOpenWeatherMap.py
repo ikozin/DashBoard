@@ -53,7 +53,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         self._pressureFont = None
         self._windFont = None
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
@@ -190,7 +190,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
                           "11d.png", "11n.png", "13d.png", "13n.png", "50d.png", "50n.png"]:
             self._load(imageName, self._folder)
 
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
         self.setTime(time)
 
     def updateInfo(self, isOnline):

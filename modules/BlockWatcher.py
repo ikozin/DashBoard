@@ -19,7 +19,7 @@ class BlockWatcher(BlockSecondBase):
         self._path = None
         self._isWatching = False
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
@@ -50,7 +50,7 @@ class BlockWatcher(BlockSecondBase):
         self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
         self._stopTime = datetime.datetime.strptime(self._stopTime, "%H:%M:%S")
 
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
         self.setTime(time)
 
     def updateInfo(self, isOnline):

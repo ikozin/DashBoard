@@ -16,7 +16,7 @@ class BlockSwap(BlockSecondBase):
         self._blocks = []
         self._index = 0
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
@@ -35,10 +35,10 @@ class BlockSwap(BlockSecondBase):
         if not self._blocks:
             raise Exception(EXCEPTION_TEXT)
         for block in self._blocks:
-            block.init(fileName, isOnline, modList)
+            block.init(fileName, modList)
 
         self.setTime(time)
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
         for block in self._blocks:

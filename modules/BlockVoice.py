@@ -21,7 +21,7 @@ class BlockVoice(BlockBase):
         self._speed = 1
         self._key = None
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
@@ -42,7 +42,7 @@ class BlockVoice(BlockBase):
         if not self._blocks:
             raise ExceptionNotFound(section.name, "BlockList")
 
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
         try:

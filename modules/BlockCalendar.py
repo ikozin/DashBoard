@@ -66,7 +66,7 @@ class BlockCalendar(BlockBase):
         self._pos = None
         self._time = None
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         config = configparser.ConfigParser()
         config.read(fileName, "utf-8")
@@ -90,7 +90,7 @@ class BlockCalendar(BlockBase):
             raise ExceptionNotFound(section.name, "Position")
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:

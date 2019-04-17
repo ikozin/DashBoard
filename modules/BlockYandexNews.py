@@ -24,7 +24,7 @@ class BlockYandexNews(BlockMinuteBase):
         self._font = None
         self._news = []
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
@@ -64,7 +64,7 @@ class BlockYandexNews(BlockMinuteBase):
 
         self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
 
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
         self.setTime(time)
 
     def updateInfo(self, isOnline):

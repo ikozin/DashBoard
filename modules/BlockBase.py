@@ -22,7 +22,7 @@ class BlockBase(metaclass=ABCMeta):
         pass
 
     @abstractclassmethod
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         pass
 

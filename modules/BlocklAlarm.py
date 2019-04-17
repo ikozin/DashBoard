@@ -22,7 +22,7 @@ class BlocklAlarm(BlockBase):
         self._alarmBlock = []
         self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise}
 
-    def init(self, fileName, isOnline, modList):
+    def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         config = configparser.ConfigParser()
@@ -60,7 +60,7 @@ class BlocklAlarm(BlockBase):
             self._alarmBlock.append(alarm)
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
-        self.updateInfo(isOnline)
+        self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
         if event.type == BLOCK_ALARM_UPDATE_EVENT:
