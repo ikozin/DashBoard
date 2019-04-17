@@ -9,11 +9,11 @@
 			
 		<traffic region="213" zoom="10" lat="55.753215" lon="37.622504">
 			<region id="213">
-  <length>280056.700076</length>
+  <length>283143.899912</length>
   <level>2</level>
   <icon>green</icon>
-  <timestamp>1555527270</timestamp>
-  <time>21:54</time>
+  <timestamp>1555527600</timestamp>
+  <time>22:00</time>
   <hint lang="ru">Дороги почти свободны</hint>
   <hint lang="en">Light traffic</hint>
   <hint lang="uz">Yo‘llar deyarli bo‘sh</hint>

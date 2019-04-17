@@ -13,6 +13,7 @@ class Setting:
 
     def __init__(self):
         """Ininitializes a new instanse"""
+        self._config = None
         self._backgroundColor = None
         self._foregroundColor = None
         self._blockList = []
@@ -21,10 +22,10 @@ class Setting:
 
     def load(self, fileName):
         # Загружаем настройки
-        config = configparser.ConfigParser()
-        config.read(fileName, encoding="utf-8")
+        self._config = configparser.ConfigParser()
+        self._config.read(fileName, encoding="utf-8")
 
-        section = config["MAIN"]
+        section = self._config["MAIN"]
         self._backgroundColor = self.getTuple(section.get("BackgroundColor"))
         self._foregroundColor = self.getTuple(section.get("ForegroundColor"))
         self._idleTime = section.getint("IdleTime")
@@ -45,14 +46,14 @@ class Setting:
         if len(self._foregroundColor) != 3:
             raise ExceptionFormat(section.name, "ForegroundColor")
 
-        section = config["TIMELINE"]
+        section = self._config["TIMELINE"]
         schemas = section.get("sections")
         if schemas:
             schemas = [item.strip(" '") for item in schemas.split(",") if item.strip()]
             for schema in schemas:
-                if not config.has_section(schema):
+                if not self._config.has_section(schema):
                     raise Exception("Ошибка конфигурации! Нет секции [{0}]".format(schema))
-                section = config[schema]
+                section = self._config[schema]
                 start = section.get("StartTime")
                 if not start:
                     raise ExceptionNotFound(section.name, "StartTime")
