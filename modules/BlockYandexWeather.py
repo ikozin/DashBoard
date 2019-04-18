@@ -51,11 +51,10 @@ class BlockYandexWeather(BlockMinuteBase):
         self._pressureFont = None
         self._windFont = None
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["YandexWeatherBlock"]
+        # Загружаем настройки
+        section = self._setting.Configuration["YandexWeatherBlock"]
 
         self._folder = section.get("Folder")
         time = section.getint("UpdateTime")
