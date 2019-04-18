@@ -21,11 +21,11 @@ class BlockIR(BlockBase):
             lirc.init("dashboard", "IR.ini", blocking=False)
 ###########################################################################
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["IRBlock"]
+        # Загружаем настройки
+        section = self._setting.Configuration["IRBlock"]
+
         self._voice = modList['Voice'];
 
         self.updateInfo(True)
