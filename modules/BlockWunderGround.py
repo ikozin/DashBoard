@@ -54,11 +54,10 @@ class BlockWunderGround(BlockMinuteBase):
         self._pressureFont = None
         self._windFont = None
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["WunderGroundBlock"]
+        # Загружаем настройки
+        section = self._setting.Configuration["WunderGroundBlock"]
 
         self._key = section.get("Key")
         self._folder = section.get("Folder")
