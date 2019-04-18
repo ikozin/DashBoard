@@ -21,11 +21,10 @@ class BlockVoice(BlockBase):
         self._speed = 1
         self._key = None
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["VoiceBlock"]
+        # Загружаем настройки
+        section = self._setting.Configuration["VoiceBlock"]
 
         self._speaker = section.get("Speaker")
         self._key = section.get("Key")
