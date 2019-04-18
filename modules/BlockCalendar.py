@@ -66,11 +66,10 @@ class BlockCalendar(BlockBase):
         self._pos = None
         self._time = None
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["CalendarBlock"]
+        # Загружаем настройки
+        section = self._setting.Configuration["CalendarBlock"]
 
         fontSize = section.getint("FontSize")
         fontName = section.get("FontName")
