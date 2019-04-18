@@ -18,13 +18,11 @@ class BlockTime(BlockBase):
         super(BlockTime, self).__init__(logger, setting)
         self._font = None
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
+        section = self._setting.Configuration["TimeBlock"]
 
-        section = config["TimeBlock"]
         fontName = section.get("FontName")
         fontSize = section.getint("FontSize")
         isBold = section.getboolean("FontBold")
