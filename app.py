@@ -18,7 +18,7 @@ from modules.BlockCalendar import BlockCalendar
 from modules.BlockYandexNews import BlockYandexNews
 from modules.BlockOpenWeatherMap import BlockOpenWeatherMap
 from modules.BlockVoice import BlockVoice
-from modules.BlocklAlarm import BlocklAlarm
+from modules.BlockAlarm import BlockAlarm
 from modules.BlockSwap import BlockSwap
 from modules.BlockWunderGround import BlockWunderGround
 from modules.BlockWatcher import BlockWatcher
@@ -66,7 +66,7 @@ class Mainboard:
 
         self._managerList = {
             "Time": BlockTime(logger, self._config),
-            "Alarm": BlocklAlarm(logger, self._config),
+            "Alarm": BlockAlarm(logger, self._config),
             "Voice": BlockVoice(logger, self._config),
             "YandexNews": BlockYandexNews(logger, self._config),
             "OpenWeatherMap": BlockOpenWeatherMap(logger, self._config),
