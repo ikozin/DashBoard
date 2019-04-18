@@ -22,8 +22,11 @@ class BlockBase(metaclass=ABCMeta):
         pass
 
     @abstractclassmethod
-    def init(self, fileName, modList):
-        """Initializes (initialize internal variables)"""
+    def init(self, modList):
+        """Вызывается после создания для начальной инициализации плагина.
+           Читаем настройки из конфиг файла.
+           Устанавливаем таймер срабатывания для наследников BlockSecondBase и BlockMinuteBase.
+           В конце, при необходимости, для обновления информации вызываем updateInfo(True)"""
         pass
 
     def proccedEvent(self, event, isOnline):
@@ -47,6 +50,8 @@ class BlockBase(metaclass=ABCMeta):
         return self._text
 
     def done(self):
+        """Вызывается перед завершением.
+           Освобождаем ресурсы, завершаем потоки и т.п."""
         pass
 
     def _getTuple(self, value):
