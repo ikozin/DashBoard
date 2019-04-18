@@ -53,11 +53,10 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         self._pressureFont = None
         self._windFont = None
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["OpenWeatherMapBlock"]
+        # Загружаем настройки
+        section = self._setting.Configuration["OpenWeatherMapBlock"]
 
         self._key = section.get("Key")
         self._folder = section.get("Folder")
