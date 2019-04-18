@@ -9,18 +9,18 @@
 			
 		<traffic region="213" zoom="10" lat="55.753215" lon="37.622504">
 			<region id="213">
-  <length>283143.899912</length>
-  <level>2</level>
-  <icon>green</icon>
-  <timestamp>1555527600</timestamp>
-  <time>22:00</time>
-  <hint lang="ru">Дороги почти свободны</hint>
-  <hint lang="en">Light traffic</hint>
-  <hint lang="uz">Yo‘llar deyarli bo‘sh</hint>
-  <hint lang="kk">Жолдар бостың қасы</hint>
-  <hint lang="tr">Trafik akıcı</hint>
-  <hint lang="uk">Дороги майже вільні</hint>
-  <hint lang="be">Дарогі амаль свабодныя</hint>
+  <length>555500.79984</length>
+  <level>7</level>
+  <icon>red</icon>
+  <timestamp>1555604640</timestamp>
+  <time>19:24</time>
+  <hint lang="ru">Серьёзные пробки</hint>
+  <hint lang="en">Roads congested</hint>
+  <hint lang="uz">Jiddiy tirbandliklar</hint>
+  <hint lang="kk">Айтарлықтай кептелістер</hint>
+  <hint lang="tr">Trafik durma noktasında</hint>
+  <hint lang="uk">Серйозні затори</hint>
+  <hint lang="be">Сур'ёзныя пробкі</hint>
   <tend>0</tend>
   <url>https://yandex.ru/maps/213/moscow/probki</url>
 </region>
@@ -36,72 +36,72 @@
 			<country>Россия</country>
 			<time_zone>Europe/Moscow</time_zone>
 			<summer-time>1</summer-time>
-			<sun_rise>05:20</sun_rise>
-			<sunset>19:38</sunset>
-			<daytime>n</daytime>
-			<date date="2019-04-17T00:00:00Z">
-				<day weekday="ср">17</day>
+			<sun_rise>05:18</sun_rise>
+			<sunset>19:40</sunset>
+			<daytime>d</daytime>
+			<date date="2019-04-18T00:00:00Z">
+				<day weekday="чт">18</day>
 				<month name="апреля">4</month>
 				<year>2019</year>
-				<daytime>n</daytime>
+				<daytime>d</daytime>
 			</date>
 			
-		<day_part typeid="3" type="вечер">
-			<weather_type>ясно</weather_type>
-			<weather_code>clear</weather_code>
-			<image>https://yastatic.net/weather/i/icons/blueye/24/skc_n.png</image>
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+2.png</image-v2>
-			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/skc_n.png</image-v3>
-			<image_number></image_number>
-			<wind_speed>1</wind_speed>
+		<day_part typeid="2" type="день">
+			<weather_type>облачно</weather_type>
+			<weather_code>overcast</weather_code>
+			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_+8.png</image-v2>
+			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
+			<image_number>5</image_number>
+			<wind_speed>2</wind_speed>
 			<wind_direction id="ne">северо-восток</wind_direction>
-			<dampness>26</dampness>
-			<hectopascal>1012</hectopascal>
-			<torr>759</torr>
-			<pressure>759</pressure>
-			<temperature class_name="t4" color="F1F0E9">+3</temperature>
+			<dampness>28</dampness>
+			<hectopascal>1007</hectopascal>
+			<torr>755</torr>
+			<pressure>755</pressure>
+			<temperature class_name="t10" color="F4F1E0">+9</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>18:43</observation_time>
-			<observation>2019-04-17T18:43:13</observation>
+			<observation_time>16:12</observation_time>
+			<observation>2019-04-18T16:12:00</observation>
 		</day_part>
 	
 			
-		<day_part typeid="4" type="ночь">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+2.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/skc_n.png</image-v3>
+		<day_part typeid="3" type="вечер">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_n_+10.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_n.png</image-v3>
 			
-			<temperature_from class_name="t2" color="F0F0EC">+1</temperature_from>
-			<temperature_to class_name="t4" color="F1F0E9">+3</temperature_to>
-		
-		</day_part>
-	
-
-		<day_part typeid="1" type="утро">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_d_+10.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_d.png</image-v3>
-			
-			<temperature_from class_name="t2" color="F0F0EC">+1</temperature_from>
+			<temperature_from class_name="t6" color="F2F0E6">+5</temperature_from>
 			<temperature_to class_name="t10" color="F4F1E0">+10</temperature_to>
 		
 		</day_part>
 	
 
-		<day_part typeid="2" type="день">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_+10.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+		<day_part typeid="4" type="ночь">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+4.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/skc_n.png</image-v3>
 			
-			<temperature_from class_name="t10" color="F4F1E0">+10</temperature_from>
-			<temperature_to class_name="t12" color="F5F2DC">+11</temperature_to>
+			<temperature_from class_name="t2" color="F0F0EC">+1</temperature_from>
+			<temperature_to class_name="t6" color="F2F0E6">+5</temperature_to>
 		
 		</day_part>
 	
 
-		<day_part typeid="3" type="вечер">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_+8.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+		<day_part typeid="1" type="утро">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_d_+8.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/skc_d.png</image-v3>
 			
-			<temperature_from class_name="t6" color="F2F0E6">+5</temperature_from>
+			<temperature_from class_name="t2" color="F0F0EC">+1</temperature_from>
 			<temperature_to class_name="t10" color="F4F1E0">+9</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="2" type="день">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_d_+10.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_d.png</image-v3>
+			
+			<temperature_from class_name="t10" color="F4F1E0">+10</temperature_from>
+			<temperature_to class_name="t12" color="F5F2DC">+11</temperature_to>
 		
 		</day_part>
 	
