@@ -37,7 +37,7 @@ class BlockSwap(BlockSecondBase):
             block.init(modList)
 
         self.setTime(time)
-        self.updateInfo(True)
+        #self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
         for block in self._blocks:
