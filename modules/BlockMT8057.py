@@ -34,12 +34,8 @@ class BlockMT8057(BlockSecondBase):
 
     def init(self, fileName, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-
-        section = config["MT8057Block"]
-        if section is None:
-            return
+        # Загружаем настройки
+        section = self._setting.Configuration["MT8057Block"]
 
         self._warnZone = section.getint("Warn")
         self._critZone = section.getint("Crit")
