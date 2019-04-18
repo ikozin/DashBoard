@@ -16,11 +16,10 @@ class BlockSwap(BlockSecondBase):
         self._blocks = []
         self._index = 0
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["SwapBlock"]
+        # Загружаем настройки
+        section = self._setting.Configuration["SwapBlock"]
 
         time = section.getint("UpdateTime")
         if time is None:
