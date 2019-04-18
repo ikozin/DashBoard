@@ -102,7 +102,7 @@
     <Compile Include="modules\BlockIR.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlocklAlarm.py">
+    <Compile Include="modules\BlockAlarm.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\BlockCalendar.py">
