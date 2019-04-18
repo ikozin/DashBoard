@@ -22,15 +22,10 @@ class BlocklAlarm(BlockBase):
         self._alarmBlock = []
         self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise}
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-
-        section = config["AlarmBlock"]
-        if section is None:
-            return
+        section = self._setting.Configuration["AlarmBlock"]
 
         selection = section.get("BlockList", "")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
