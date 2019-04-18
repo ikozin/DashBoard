@@ -82,6 +82,10 @@ class Setting:
             self._timeLine.append(entry)
         list.sort(self._timeLine, key=lambda entry: entry[0])
 
+    @property
+    def Configuration(self):
+        return self._config
+
     def get_curret_setting(self):
         value = datetime.datetime.today()
         current = self._timeLine[0]
