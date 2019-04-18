@@ -24,12 +24,10 @@ class BlockYandexNews(BlockMinuteBase):
         self._font = None
         self._news = []
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["YandexNewsBlock"]
+        section = self._setting.Configuration["YandexNewsBlock"]
 
         self._url = section.get("Url")
         self._indent = section.getint("Indent")
