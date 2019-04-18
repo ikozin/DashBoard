@@ -34,7 +34,7 @@ class BlockSwap(BlockSecondBase):
         if not self._blocks:
             raise Exception(EXCEPTION_TEXT)
         for block in self._blocks:
-            block.init(fileName, modList)
+            block.init(modList)
 
         self.setTime(time)
         self.updateInfo(True)
