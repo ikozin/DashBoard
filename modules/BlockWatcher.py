@@ -19,12 +19,11 @@ class BlockWatcher(BlockSecondBase):
         self._path = None
         self._isWatching = False
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        config = configparser.ConfigParser()
-        config.read(fileName, "utf-8")
-        section = config["WatcherBlock"]
+        section = self._setting.Configuration["WatcherBlock"]
+
         self._weekDay = self._getTuple(section.get("WeekDay"))
         self._startTime = section.get("StartTime")
         self._stopTime = section.get("FinishTime")
