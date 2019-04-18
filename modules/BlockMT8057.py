@@ -32,7 +32,7 @@ class BlockMT8057(BlockSecondBase):
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = None
 
-    def init(self, fileName, modList):
+    def init(self, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["MT8057Block"]
