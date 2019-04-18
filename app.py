@@ -124,7 +124,7 @@ class Mainboard:
         pygame.mouse.set_visible(False)
 
         for module in self._modules:
-            module.init(FILE_SETTING, self._managerList)
+            module.init(self._managerList)
 
         pygame.time.set_timer(BLOCK_SECOND_UPDATE_EVENT, 1000)
         pygame.time.set_timer(BLOCK_MINUTE_UPDATE_EVENT, 60000)
