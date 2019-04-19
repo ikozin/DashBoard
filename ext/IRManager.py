@@ -6,6 +6,7 @@ from tkinter import *
 from ext.BaseManager import BaseManager
 from ext.ModalDialog import ModalDialog
 
+LISTBOX_FORMAT = "{0}: {1}"
 KEY_CODE_LIST = (
 'KEY_0',
 'KEY_1',
@@ -555,6 +556,9 @@ class IRManager(BaseManager):
         btn = Button(commandFrame, text="Создать", command=self._createCode)
         btn.grid(row=0, column=0, sticky=(N, S, E, W))
 
+        Button(commandFrame, text="Изменить", command=self._changeCode)
+        btn.grid(row=1, column=0, sticky=(N, S, E, W))
+
         btn = Button(commandFrame, text="Удалить", command=self._deleteCode)
         btn.grid(row=2, column=0, sticky=(N, S, E, W))
 
@@ -569,7 +573,8 @@ class IRManager(BaseManager):
         for keyCode in section:
             key = keyCode.upper()
             self._list[key] = section.get(keyCode)
-            self._listBox.insert("end", "{0}: {1}".format(key, self._list[key]))
+            self._listBox.insert("end", LISTBOX_FORMAT.format(key, self._list[key]))
+
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
@@ -579,12 +584,14 @@ class IRManager(BaseManager):
 
         section = config["IRBlock"]
 
+
     def _selectCode(self, event) -> None:
         listBox = event.widget
         selection = listBox.curselection()
         if not selection:
             return
         name = listBox.get(selection[0])
+
 
     def _createCode(self) -> None:
         (code, module, param) = KeyCodeCreateDialog().Execute(self, self._modulelist)
@@ -593,18 +600,29 @@ class IRManager(BaseManager):
         if code in self._list:
             messagebox.showerror("Ошибка", "Код {0} уже существует".format(code))
             return
-        value = "{0}, {1}".format(module, param);
+        value = "{0},{1}".format(module, param);
         self._list[code] = value
-        self._listBox.insert("end", "{0}: {1}".format(code, value))
+        self._listBox.insert("end", LISTBOX_FORMAT.format(code, value))
+
+
+    def _changeCode(self) -> None:
+        selection = self._listBox.curselection()
+        if not selection:
+            return
+        name = self._listBox.get(selection[0])
+
 
     def _deleteCode(self) -> None:
         selection = self._listBox.curselection()
         if not selection:
             return
         name = self._listBox.get(selection[0])
+        name = name.split(":", 1)[0]
         if messagebox.askquestion("Удалить", "Вы действительно хотите удалить {0}".format(name)) == "no":
             return
+        del self._list[name]
         self._listBox.delete(selection)
+
 
 class KeyCodeCreateDialog(ModalDialog):
 
