@@ -543,6 +543,7 @@ class IRManager(BaseManager):
         """ """
         super(IRManager, self).__init__(root, text="Настройки IR")
         self._modulelist = None
+        self._list = dict()
 
         self._listBox = Listbox(self, width=25)
         self._listBox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
@@ -559,15 +560,16 @@ class IRManager(BaseManager):
 
 
     def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
-        if not isinstance(config, ConfigParser):
-            raise TypeError("config")
         if not config.has_section("IRBlock"):
             config.add_section("IRBlock")
-
         section = config["IRBlock"]
-        self._listBox.delete(0, "end")
 
         self._modulelist = modulelist
+        self._listBox.delete(0, "end")
+        for keyCode in section:
+            key = keyCode.upper()
+            self._list[key] = section.get(keyCode)
+            self._listBox.insert("end", "{0}: {1}".format(key, self._list[key]))
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
@@ -588,21 +590,19 @@ class IRManager(BaseManager):
         (code, module, param) = KeyCodeCreateDialog().Execute(self, self._modulelist)
         if code is None:
             return
-        #if item in self._alarmlist:
-        #    messagebox.showerror("Ошибка", "Код {0} уже существует".format(item))
-        #    return
-        #alarmBlock = self._createAlarmByType(type, item)
-        #if alarmBlock is not None:
-        #    self._alarmlist[item] = alarmBlock
-        #    self._listBox.insert("end", item)
-        self._listBox.insert("end", code)
+        if code in self._list:
+            messagebox.showerror("Ошибка", "Код {0} уже существует".format(code))
+            return
+        value = "{0}, {1}".format(module, param);
+        self._list[code] = value
+        self._listBox.insert("end", "{0}: {1}".format(code, value))
 
     def _deleteCode(self) -> None:
         selection = self._listBox.curselection()
         if not selection:
             return
         name = self._listBox.get(selection[0])
-        if messagebox.askquestion("Удалить", "Вы действительно хотите удалить код {0}".format(name)) == "no":
+        if messagebox.askquestion("Удалить", "Вы действительно хотите удалить {0}".format(name)) == "no":
             return
         self._listBox.delete(selection)
 
@@ -644,11 +644,9 @@ class KeyCodeCreateDialog(ModalDialog):
         self._waitDialog(self._modal, root)
 
         code = self._valueKeyCode.get()
+        code = code if code else None
         module  = self._valueModule.get()
         param = self._valueParam.get()
-
-        code = code if code else None
-
         return (code, module, param)
 
     def _selectCode(self) -> None:
