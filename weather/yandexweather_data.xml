@@ -9,11 +9,11 @@
 			
 		<traffic region="213" zoom="10" lat="55.753215" lon="37.622504">
 			<region id="213">
-  <length>279589.699685</length>
+  <length>273823.399863</length>
   <level>2</level>
   <icon>green</icon>
-  <timestamp>1555864500</timestamp>
-  <time>19:35</time>
+  <timestamp>1555867320</timestamp>
+  <time>20:22</time>
   <hint lang="ru">Дороги почти свободны</hint>
   <hint lang="en">Light traffic</hint>
   <hint lang="uz">Yo‘llar deyarli bo‘sh</hint>
@@ -38,44 +38,34 @@
 			<summer-time>1</summer-time>
 			<sun_rise>05:11</sun_rise>
 			<sunset>19:46</sunset>
-			<daytime>d</daytime>
+			<daytime>n</daytime>
 			<date date="2019-04-21T00:00:00Z">
 				<day weekday="вс">21</day>
 				<month name="апреля">4</month>
 				<year>2019</year>
-				<daytime>d</daytime>
+				<daytime>n</daytime>
 			</date>
 			
-		<day_part typeid="2" type="день">
-			<weather_type>облачно с прояснениями</weather_type>
-			<weather_code>cloudy</weather_code>
-			<image>https://yastatic.net/weather/i/icons/blueye/24/bkn_d.png</image>
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_d_+12.png</image-v2>
-			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/bkn_d.png</image-v3>
+		<day_part typeid="3" type="вечер">
+			<weather_type>ясно</weather_type>
+			<weather_code>clear</weather_code>
+			<image>https://yastatic.net/weather/i/icons/blueye/24/skc_n.png</image>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+10.png</image-v2>
+			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/skc_n.png</image-v3>
 			<image_number></image_number>
-			<wind_speed>0</wind_speed>
-			<wind_direction id="n">север</wind_direction>
-			<dampness>19</dampness>
+			<wind_speed>1.1</wind_speed>
+			<wind_direction id="ne">северо-восток</wind_direction>
+			<dampness>30</dampness>
 			<hectopascal>1008</hectopascal>
 			<torr>756</torr>
 			<pressure>756</pressure>
-			<temperature class_name="t14" color="F5F2D9">+13</temperature>
+			<temperature class_name="t12" color="F5F2DC">+11</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>16:21</observation_time>
-			<observation>2019-04-21T16:21:41</observation>
+			<observation_time>17:00</observation_time>
+			<observation>2019-04-21T17:00:00</observation>
 		</day_part>
 	
 			
-		<day_part typeid="3" type="вечер">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+16.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/skc_n.png</image-v3>
-			
-			<temperature_from class_name="t10" color="F4F1E0">+9</temperature_from>
-			<temperature_to class_name="t18" color="F7F3D3">+17</temperature_to>
-		
-		</day_part>
-	
-
 		<day_part typeid="4" type="ночь">
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+8.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/skc_n.png</image-v3>
@@ -102,6 +92,16 @@
 			
 			<temperature_from class_name="t18" color="F7F3D3">+18</temperature_from>
 			<temperature_to class_name="t20" color="F8F4D0">+19</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="3" type="вечер">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+18.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/skc_n.png</image-v3>
+			
+			<temperature_from class_name="t12" color="F5F2DC">+11</temperature_from>
+			<temperature_to class_name="t18" color="F7F3D3">+18</temperature_to>
 		
 		</day_part>
 	

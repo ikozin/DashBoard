@@ -8,6 +8,7 @@ from modules.BlockBase import BlockBase
 from modules.alarm.BlockAlarmSimple import BlockAlarmSimple
 from modules.alarm.BlockAlarmBlink import BlockAlarmBlink
 from modules.alarm.BlockAlarmRise import BlockAlarmRise
+from modules.alarm.BlockAlarmExecute import BlockAlarmExecute
 
 BLOCK_ALARM_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 
@@ -20,7 +21,7 @@ class BlockAlarm(BlockBase):
         super(BlockAlarm, self).__init__(logger, setting)
         self._blocks = []
         self._alarmBlock = []
-        self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise}
+        self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise, 4: BlockAlarmExecute}
 
     def init(self, modList):
         """Initializes (initialize internal variables)"""

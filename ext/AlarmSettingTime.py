@@ -9,14 +9,14 @@ from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
 
 
-class AlarmTimeSetting(BaseSetting):
+class AlarmSettingTime(BaseSetting):
     """description of class"""
 
     def __init__(self, root: LabelFrame, sectionName: str):
         """ """
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
-        super(AlarmTimeSetting, self).__init__(root, text="Настройка будильника: {0}".format(sectionName))
+        super(AlarmSettingTime, self).__init__(root, text="Настройка будильника: {0}".format(sectionName))
         self.columnconfigure(9, weight=1)
         self._type = None
         self._colorFrame = None
@@ -32,7 +32,6 @@ class AlarmTimeSetting(BaseSetting):
         self._minuteVariable = IntVar(value=0)
         self._secondVariable = IntVar(value=0)
         self._durationVariable = IntVar(value=0)
-        self._fileVariable = StringVar(value="")
 
         weekDayFrame = LabelFrame(self, text="Дни недели")
         weekDayFrame.grid(row=0, column=0, columnspan=2, sticky=(N, S, E, W))
@@ -88,18 +87,6 @@ class AlarmTimeSetting(BaseSetting):
         self._colorFrame = ColorsChooserFrame(self, "Цвет")
         self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N, S, E, W))
 
-        fileFrame = LabelFrame(self, text="Файл для проигрывания")
-        fileFrame.grid(row=3, column=0, columnspan=2, sticky=(N, S, E, W))
-
-        lbl = Label(fileFrame, text="Файл:")
-        lbl.grid(row=0, column=0, pady=2)
-
-        entr = Entry(fileFrame, width=34, textvariable=self._fileVariable)
-        entr.grid(row=0, column=1, pady=2)
-
-        btn = Button(fileFrame, text="...", command=self._selectFile, width=3)
-        btn.grid(row=0, column=2, pady=2)
-
     def load(self, config: ConfigParser, sectionName: str) -> None:
         """ """
         if not isinstance(config, ConfigParser):
@@ -140,7 +127,6 @@ class AlarmTimeSetting(BaseSetting):
         backColor = self._getTuple(section.get("BackgroundColor", "(0, 0, 0)"))
         foreColor = self._getTuple(section.get("ForegroundColor", "(255, 255, 255)"))
         self._colorFrame.load(backColor, foreColor)
-        self._fileVariable.set(section.get("File", ""))
 
     def pre_save(self) -> None:
         date = datetime(
@@ -182,18 +168,11 @@ class AlarmTimeSetting(BaseSetting):
         section["Duration"] = str(self._durationVariable.get())
         section["BackgroundColor"] = "(%d, %d, %d)" % backgroundColor
         section["ForegroundColor"] = "(%d, %d, %d)" % foregroundColor
-        section["File"] = self._fileVariable.get()
 
     def rename(self, sectionName: str) -> None:
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
         self.configure(text="Настройка будильника: {0}".format(sectionName))
-
-    def _selectFile(self) -> None:
-        fileName = filedialog.Open(self, filetypes=[('*.* all files', '.*')]).show()
-        if fileName == '':
-            return
-        self._fileVariable.set(fileName)
 
     def _getTuple(self, value: str) -> Tuple[int, int, int]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
@@ -201,24 +180,3 @@ class AlarmTimeSetting(BaseSetting):
             return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
         except Exception as ex:
             return None
-
-
-class AlarmSimpleSetting(AlarmTimeSetting):
-    def __init__(self, root, sectionName: str):
-        """ """
-        super(AlarmSimpleSetting, self).__init__(root, sectionName)
-        self._type = 1
-
-
-class AlarmBlinkSetting(AlarmTimeSetting):
-    def __init__(self, root, sectionName: str):
-        """ """
-        super(AlarmBlinkSetting, self).__init__(root, sectionName)
-        self._type = 2
-
-
-class AlarmRiseSetting(AlarmTimeSetting):
-    def __init__(self, root, sectionName: str):
-        """ """
-        super(AlarmRiseSetting, self).__init__(root, sectionName)
-        self._type = 3

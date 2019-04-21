@@ -8,9 +8,10 @@ from ext.BaseManager import BaseManager
 from ext.ModalDialog import ModalDialog
 from ext.ModalDialog import EntryModalDialog
 from ext.ModalDialog import SelectFrame
-from ext.AlarmSetting import AlarmSimpleSetting
-from ext.AlarmSetting import AlarmBlinkSetting
-from ext.AlarmSetting import AlarmRiseSetting
+from ext.AlarmSettingSimple import AlarmSettingSimple
+from ext.AlarmSettingBlink import AlarmSettingBlink
+from ext.AlarmSettingRise import AlarmSettingRise
+from ext.AlarmSettingExecute import AlarmSettingExecute
 
 
 class AlarmManager(BaseManager):
@@ -20,7 +21,7 @@ class AlarmManager(BaseManager):
         """ """
         super(AlarmManager, self).__init__(root, text="Выбор будильника")
         self.columnconfigure(2, weight=1)
-        self._functions = {1: AlarmSimpleSetting, 2: AlarmBlinkSetting, 3: AlarmRiseSetting}
+        self._functions = {1: AlarmSettingSimple, 2: AlarmSettingBlink, 3: AlarmSettingRise, 4: AlarmSettingExecute}
         self._alarmlist = dict()
         self._currentName = None
         self._listBox = Listbox(self, width=25)
@@ -185,7 +186,7 @@ class AlarmCreateDialog(ModalDialog):
         lbl = Label(self._modal, text="Тип будильника")
         lbl.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
 
-        combo = ttk.Combobox(self._modal, state="readonly", values=('1', '2', '3'), textvariable=self._valueType)
+        combo = ttk.Combobox(self._modal, state="readonly", values=('1', '2', '3', '4'), textvariable=self._valueType)
         combo.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         combo.bind('<<ComboboxSelected>>', lambda e: self._selectType())
 

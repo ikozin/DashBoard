@@ -23,6 +23,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.py" />
+    <Compile Include="ext\AlarmSettingBlink.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\AlarmSettingExecute.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\AlarmSettingRise.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\AlarmSettingSimple.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\AlarmSettingTimeFile.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ext\BaseManager.py">
       <SubType>Code</SubType>
     </Compile>
@@ -44,6 +59,7 @@
     <Compile Include="ext\YandexWeatherManager.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\alarm\BlockAlarmExecute.py" />
     <Compile Include="modules\BlockBase.py">
       <SubType>Code</SubType>
     </Compile>
@@ -53,7 +69,7 @@
     <Compile Include="ext\AlarmManager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\AlarmSetting.py">
+    <Compile Include="ext\AlarmSettingTime.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\CalendarManager.py">
