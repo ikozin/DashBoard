@@ -20,25 +20,25 @@ class BlockIR(BlockBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockIR, self).__init__(logger, setting)
+        self._moduleList = None
+        self._list = None
 
     def init(self, modList):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["IRBlock"]
-        keyList = dict()
+        self._list = dict()
         for keyCode in section:
-            keyList[keyCode.upper()] = section.get(keyCode)
+            self._list[keyCode.upper()] = section.get(keyCode)
         with open(CONFIG_FILE_NMAE, "w", encoding="utf-8") as file:
-            for keyCode in keyList.keys():
+            for keyCode in self._list.keys():
                 file.write("begin\n\tprog={1}\n\tbutton={0}\n\tconfig={0}\n\trepeat=0\nend\n".format(keyCode, PROG_NAME))
+        self._moduleList = modList
 ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
             lirc.init(PROG_NAME, CONFIG_FILE_NMAE, blocking=False)
 ###########################################################################
-
-        self._voice = modList['Voice'];
-
-        self.updateInfo(True)
+        #self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
         try:
@@ -50,7 +50,11 @@ class BlockIR(BlockBase):
 ###########################################################################
             if len(code) == 0:
                 return
-            self._voice.execute()
+            keyCode = code[0]
+            if keyCode not in self._list:
+                return
+            values = self._list[keyCode].split(",")
+            self._moduleList[values[0]].execute()
 
         except Exception as ex:
             self._logger.exception(ex)
