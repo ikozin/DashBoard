@@ -545,45 +545,37 @@ class IRManager(BaseManager):
         super(IRManager, self).__init__(root, text="Настройки IR")
         self._modulelist = None
         self._list = dict()
-
         self._listBox = Listbox(self, width=25)
         self._listBox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
         self._listBox.bind('<<ListboxSelect>>', self._selectCode)
-
         commandFrame = ttk.Frame(self, padding=(2, 2, 2, 2))
         commandFrame.grid(row=0, column=1, sticky=(N, S, W))
-
         btn = Button(commandFrame, text="Создать", command=self._createCode)
         btn.grid(row=0, column=0, sticky=(N, S, E, W))
-
-        Button(commandFrame, text="Изменить", command=self._changeCode)
+        btn = Button(commandFrame, text="Изменить", command=self._changeCode)
         btn.grid(row=1, column=0, sticky=(N, S, E, W))
-
         btn = Button(commandFrame, text="Удалить", command=self._deleteCode)
         btn.grid(row=2, column=0, sticky=(N, S, E, W))
-
 
     def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
         if not config.has_section("IRBlock"):
             config.add_section("IRBlock")
         section = config["IRBlock"]
-
-        self._modulelist = modulelist
         self._listBox.delete(0, "end")
+        self._modulelist = modulelist
         for keyCode in section:
             key = keyCode.upper()
             self._list[key] = section.get(keyCode)
             self._listBox.insert("end", LISTBOX_FORMAT.format(key, self._list[key]))
-
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("IRBlock"):
             config.add_section("IRBlock")
-
         section = config["IRBlock"]
-
+        for key, value in self._list.items():
+            section[key] = str(value)
 
     def _selectCode(self, event) -> None:
         listBox = event.widget
@@ -591,7 +583,6 @@ class IRManager(BaseManager):
         if not selection:
             return
         name = listBox.get(selection[0])
-
 
     def _createCode(self) -> None:
         (code, module, param) = KeyCodeCreateDialog().Execute(self, self._modulelist)
@@ -609,8 +600,17 @@ class IRManager(BaseManager):
         selection = self._listBox.curselection()
         if not selection:
             return
+        values = self._listBox.get(selection[0]).split(": ")
         name = self._listBox.get(selection[0])
-
+        (code, module, param) = KeyCodeChangeDialog().Execute(self, self._modulelist, values[0], values[1])
+        if code is None:
+            return
+        if (code != values[0]):
+            return
+        value = "{0},{1}".format(module, param);
+        self._list[code] = value
+        self._listBox.delete(selection)
+        self._listBox.insert(selection, LISTBOX_FORMAT.format(code, value))
 
     def _deleteCode(self) -> None:
         selection = self._listBox.curselection()
@@ -633,34 +633,70 @@ class KeyCodeCreateDialog(ModalDialog):
         self._valueKeyCode = StringVar()
         self._valueModule = StringVar()
         self._valueParam  = StringVar()
-
         lblCode = Label(self._modal, text="Код кнопки")
         lblCode.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-
         comboCode = ttk.Combobox(self._modal, state="readonly", values=KEY_CODE_LIST, textvariable=self._valueKeyCode)
         comboCode.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         comboCode.bind('<<ComboboxSelected>>', lambda e: self._selectCode())
-
         lblMod = Label(self._modal, text="Модуль")
         lblMod.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-
         comboModule = ttk.Combobox(self._modal, state="readonly", values=modulelist, textvariable=self._valueModule)
         comboModule.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-
         lblParam = Label(self._modal, text="Параметры")
         lblParam.grid(row=4, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-        
         entry = Entry(self._modal, textvariable=self._valueParam)
         entry.grid(row=5, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-
         self._btnOk = Button(self._modal, text="OK", state="disabled", command=self._ok)
         self._btnOk.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
-
         btn = Button(self._modal, text="Cancel", command=self._cancel)
         btn.grid(row=6, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
-
         self._waitDialog(self._modal, root)
+        code = self._valueKeyCode.get()
+        code = code if code else None
+        module  = self._valueModule.get()
+        param = self._valueParam.get()
+        return (code, module, param)
 
+    def _selectCode(self) -> None:
+        self._btnOk.configure(state="normal")
+
+    def _ok(self) -> None:
+        self._modal.destroy()
+
+    def _cancel(self) -> None:
+        self._modal.destroy()
+        self._valueKeyCode.set("")
+        self._valueModule.set("")
+        self._valueParam.set("")
+
+class KeyCodeChangeDialog(ModalDialog):
+
+    def Execute(self, root, modulelist: Dict[str, BaseManager], code: str, value: str) -> Tuple[str, str, str]:
+        self._modal = Toplevel(root)
+        self._modal.title("Изменить")
+        # self._modal.geometry('+400+400')
+        params = value.split(",")
+        self._valueKeyCode = StringVar(value=code)
+        self._valueModule = StringVar(value=params[0])
+        self._valueParam  = StringVar(value=params[1])
+        lblCode = Label(self._modal, text="Код кнопки")
+        lblCode.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        comboCode = ttk.Combobox(self._modal, state="disabled", values=KEY_CODE_LIST, textvariable=self._valueKeyCode)
+        comboCode.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
+        comboCode.bind('<<ComboboxSelected>>', lambda e: self._selectCode())
+        lblMod = Label(self._modal, text="Модуль")
+        lblMod.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        comboModule = ttk.Combobox(self._modal, state="readonly", values=modulelist, textvariable=self._valueModule)
+        comboModule.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
+        lblParam = Label(self._modal, text="Параметры")
+        lblParam.grid(row=4, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        entry = Entry(self._modal, textvariable=self._valueParam)
+        entry.grid(row=5, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
+        self._btnOk = Button(self._modal, text="OK", command=self._ok)
+        self._btnOk.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+        btn = Button(self._modal, text="Cancel", command=self._cancel)
+        btn.grid(row=6, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+        self._waitDialog(self._modal, root)
         code = self._valueKeyCode.get()
         code = code if code else None
         module  = self._valueModule.get()
