@@ -77,10 +77,10 @@ class BlockCalendar(BlockBase):
         isItalic = section.getboolean("FontItalic")
         self._pos = section.getint("Position")
 
-        if fontSize is None:
-            raise ExceptionNotFound(section.name, "FontSize")
         if fontName is None:
             raise ExceptionNotFound(section.name, "FontName")
+        if fontSize is None:
+            raise ExceptionNotFound(section.name, "FontSize")
         if isBold is None:
             raise ExceptionNotFound(section.name, "FontBold")
         if isItalic is None:
