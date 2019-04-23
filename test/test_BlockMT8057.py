@@ -1,6 +1,8 @@
 import unittest
+import pygame
 from logging import Logger
 from setting import Setting
+from modules.BlockBase import BlockBase
 from modules.BlockMT8057 import BlockMT8057
 from exceptions import ExceptionNotFound
 
@@ -31,6 +33,10 @@ class Test_BlockMT8057(unittest.TestCase):
 
         block = BlockMT8057(self.logger, config)
         self.assertIsNotNone(block, "BlockMT8057")
+        self.assertIsInstance(block, BlockBase, "BlockBase")
+
+        with self.assertRaises(KeyError):
+            block.init({})
 
 if __name__ == '__main__':
     unittest.main()

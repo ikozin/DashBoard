@@ -1,6 +1,8 @@
 import unittest
+import pygame
 from logging import Logger
 from setting import Setting
+from modules.BlockBase import BlockBase
 from modules.BlockCalendar import BlockCalendar
 from exceptions import ExceptionNotFound
 
@@ -31,16 +33,8 @@ class Test_BlockCalendar(unittest.TestCase):
 
         block = BlockCalendar(self.logger, config)
         self.assertIsNotNone(block, "BlockCalendar")
+        self.assertIsInstance(block, BlockBase, "BlockBase")
 
-    def test_Init_creator(self):
-        config = Setting()
-
-        with self.assertRaises(TypeError): BlockCalendar(None, None)
-        with self.assertRaises(TypeError): BlockCalendar(None, config)
-        with self.assertRaises(TypeError): BlockCalendar(self.logger, None)
-        
-        block = BlockCalendar(self.logger, config)
-        self.assertIsNotNone(block, "BlockCalendar")
         with self.assertRaises(KeyError):
             block.init({})
 
@@ -94,10 +88,10 @@ class Test_BlockCalendar(unittest.TestCase):
         config = self._getSetting(None)
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
-        with self.assertRaises(BaseException) as ErrFont:
-            block.init({})
-        self.assertEqual(ErrFont.exception.__str__(), "font not initialized", "Font")
-
+        pygame.font.init()
+        block.init({})
+        self.assertIsNotNone(block._font, "_font")
+        self.assertIsNotNone(block._pos, "_pos")
 
     def _getSetting(self, name):
         params = {

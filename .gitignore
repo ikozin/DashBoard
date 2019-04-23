@@ -251,11 +251,7 @@ paket-files/
 .idea/
 *.sln.iml
 
-/__pycache__
-/modules/__pycache__
-/modules/alarm/__pycache__
-/ext/__pycache__
-/test/__pycache__
+__pycache__/
 /log.txt
 /log.txt.*
 /text.wav

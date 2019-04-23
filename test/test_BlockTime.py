@@ -1,6 +1,8 @@
 import unittest
+import pygame
 from logging import Logger
 from setting import Setting
+from modules.BlockBase import BlockBase
 from modules.BlockTime import BlockTime
 from exceptions import ExceptionNotFound
 
@@ -31,6 +33,10 @@ class Test_BlockTime(unittest.TestCase):
 
         block = BlockTime(self.logger, config)
         self.assertIsNotNone(block, "BlockTime")
+        self.assertIsInstance(block, BlockBase, "BlockBase")
+
+        with self.assertRaises(KeyError):
+            block.init({})
 
     def test_Init_creator(self):
         config = Setting()
@@ -85,9 +91,9 @@ class Test_BlockTime(unittest.TestCase):
         config = self._getSetting(None)
         block = BlockTime(self.logger, config)
         self.assertTrue(block is not None, "BlockTime")
-        with self.assertRaises(BaseException) as ErrFont:
-            block.init({})
-        self.assertEqual(ErrFont.exception.__str__(), "font not initialized", "Font")
+        pygame.font.init()
+        block.init({})
+        self.assertIsNotNone(block._font, "_font")
 
 
     def _getSetting(self, name):

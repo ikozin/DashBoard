@@ -1,6 +1,8 @@
 import unittest
+import pygame
 from logging import Logger
 from setting import Setting
+from modules.BlockBase import BlockBase
 from modules.BlockYandexNews import BlockYandexNews
 from exceptions import ExceptionNotFound
 
@@ -31,6 +33,10 @@ class Test_BlockYandexNews(unittest.TestCase):
 
         block = BlockYandexNews(self.logger, config)
         self.assertIsNotNone(block, "BlockYandexNews")
+        self.assertIsInstance(block, BlockBase, "BlockBase")
+
+        with self.assertRaises(KeyError):
+            block.init({})
 
 if __name__ == '__main__':
     unittest.main()

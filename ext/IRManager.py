@@ -626,7 +626,7 @@ class IRManager(BaseManager):
 
 class KeyCodeCreateDialog(ModalDialog):
 
-    def Execute(self, root, modulelist: Dict[str, BaseManager]) -> Tuple[str, str, str]:
+    def Execute(self, root: IRManager, modulelist: Dict[str, BaseManager]) -> Tuple[str, str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Создать")
         # self._modal.geometry('+400+400')
@@ -671,7 +671,7 @@ class KeyCodeCreateDialog(ModalDialog):
 
 class KeyCodeChangeDialog(ModalDialog):
 
-    def Execute(self, root, modulelist: Dict[str, BaseManager], code: str, value: str) -> Tuple[str, str, str]:
+    def Execute(self, root: IRManager, modulelist: Dict[str, BaseManager], code: str, value: str) -> Tuple[str, str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Изменить")
         # self._modal.geometry('+400+400')

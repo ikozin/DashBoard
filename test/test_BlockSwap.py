@@ -1,6 +1,8 @@
 import unittest
+import pygame
 from logging import Logger
 from setting import Setting
+from modules.BlockBase import BlockBase
 from modules.BlockSwap import BlockSwap
 from exceptions import ExceptionNotFound
 
@@ -31,6 +33,10 @@ class Test_BlockSwap(unittest.TestCase):
 
         block = BlockSwap(self.logger, config)
         self.assertIsNotNone(block, "BlockSwap")
+        self.assertIsInstance(block, BlockBase, "BlockBase")
+
+        with self.assertRaises(KeyError):
+            block.init({})
 
 if __name__ == '__main__':
     unittest.main()

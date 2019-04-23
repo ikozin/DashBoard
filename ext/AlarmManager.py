@@ -166,7 +166,7 @@ class AlarmManager(BaseManager):
 
 class AlarmCreateDialog(ModalDialog):
 
-    def Execute(self, root):
+    def Execute(self, root: AlarmManager) -> Tuple[str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Создать")
         # self._modal.geometry('+400+400')

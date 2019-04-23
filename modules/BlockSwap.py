@@ -45,9 +45,7 @@ class BlockSwap(BlockSecondBase):
         super(BlockSwap, self).proccedEvent(event, isOnline)
 
     def updateInfo(self, isOnline):
-        self._index = self._index + 1
-        if self._index >= len(self._blocks):
-            self._index = 0
+        self.execute()
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         try:
@@ -57,6 +55,10 @@ class BlockSwap(BlockSecondBase):
             block.updateDisplay(isOnline, screen, size, foreColor, backColor, current_time)
         except Exception as ex:
             self._logger.exception(ex)
+
+    def execute(self):
+        self._index +=  1
+        self._index %= len(self._blocks)
 
     def getText(self):
         """ """
