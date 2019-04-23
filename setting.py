@@ -1,4 +1,4 @@
-﻿import configparser
+import configparser
 import datetime
 import pygame
 import pygame.locals
@@ -13,7 +13,7 @@ class Setting:
 
     def __init__(self):
         """Ininitializes a new instanse"""
-        self._config = None
+        self._config = configparser.ConfigParser()
         self._backgroundColor = None
         self._foregroundColor = None
         self._blockList = []
@@ -22,7 +22,6 @@ class Setting:
 
     def load(self, fileName):
         # Загружаем настройки
-        self._config = configparser.ConfigParser()
         self._config.read(fileName, encoding="utf-8")
 
         section = self._config["MAIN"]
