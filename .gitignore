@@ -255,6 +255,7 @@ paket-files/
 /modules/__pycache__
 /modules/alarm/__pycache__
 /ext/__pycache__
+/test/__pycache__
 /log.txt
 /log.txt.*
 /text.wav
