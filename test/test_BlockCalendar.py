@@ -26,21 +26,17 @@ class Test_BlockCalendar(unittest.TestCase):
 
     def test_BlockCalendar(self):
         config = Setting()
-
         with self.assertRaises(TypeError): BlockCalendar(None, None)
         with self.assertRaises(TypeError): BlockCalendar(None, config)
         with self.assertRaises(TypeError): BlockCalendar(self.logger, None)
-
         block = BlockCalendar(self.logger, config)
         self.assertIsNotNone(block, "BlockCalendar")
         self.assertIsInstance(block, BlockBase, "BlockBase")
-
         with self.assertRaises(KeyError):
             block.init({})
 
     def test_Init_FontName(self):
         config = self._getSetting("")
-        
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
         with self.assertRaises(ExceptionNotFound) as ErrNotFound:
