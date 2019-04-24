@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "components": [
+    "Microsoft.VisualStudio.Component.CoreEditor",
+    "Microsoft.VisualStudio.Workload.CoreEditor",
+    "Microsoft.Net.Core.Component.SDK.2.1",
+    "Microsoft.VisualStudio.ComponentGroup.WebToolsExtensions",
+    "Component.Microsoft.Web.LibraryManager",
+    "Microsoft.Component.PythonTools",
+    "Component.CPython3.x64",
+    "Microsoft.VisualStudio.Workload.Python"
+  ]
+}
