@@ -26,33 +26,17 @@ class Test_BlockTime(unittest.TestCase):
 
     def test_BlockTime(self):
         config = Setting()
-
         with self.assertRaises(TypeError): BlockTime(None, None)
         with self.assertRaises(TypeError): BlockTime(None, config)
         with self.assertRaises(TypeError): BlockTime(self.logger, None)
-
         block = BlockTime(self.logger, config)
         self.assertIsNotNone(block, "BlockTime")
         self.assertIsInstance(block, BlockBase, "BlockBase")
-
-        with self.assertRaises(KeyError):
-            block.init({})
-
-    def test_Init_creator(self):
-        config = Setting()
-
-        with self.assertRaises(TypeError): BlockTime(None, None)
-        with self.assertRaises(TypeError): BlockTime(None, config)
-        with self.assertRaises(TypeError): BlockTime(self.logger, None)
-        
-        block = BlockTime(self.logger, config)
-        self.assertIsNotNone(block, "BlockTime")
         with self.assertRaises(KeyError):
             block.init({})
 
     def test_Init_FontName(self):
         config = self._getSetting("")
-        
         block = BlockTime(self.logger, config)
         self.assertTrue(block is not None, "BlockTime")
         with self.assertRaises(ExceptionNotFound) as ErrNotFound:
@@ -94,7 +78,6 @@ class Test_BlockTime(unittest.TestCase):
         pygame.font.init()
         block.init({})
         self.assertIsNotNone(block._font, "_font")
-
 
     def _getSetting(self, name):
         params = {
