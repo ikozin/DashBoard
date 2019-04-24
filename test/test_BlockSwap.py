@@ -26,15 +26,12 @@ class Test_BlockSwap(unittest.TestCase):
 
     def test_BlockSwap(self):
         config = Setting()
-
         with self.assertRaises(TypeError): BlockSwap(None, None)
         with self.assertRaises(TypeError): BlockSwap(None, config)
         with self.assertRaises(TypeError): BlockSwap(self.logger, None)
-
         block = BlockSwap(self.logger, config)
         self.assertIsNotNone(block, "BlockSwap")
         self.assertIsInstance(block, BlockBase, "BlockBase")
-
         with self.assertRaises(KeyError):
             block.init({})
 

@@ -26,15 +26,12 @@ class Test_BlockOpenWeatherMap(unittest.TestCase):
 
     def test_BlockCalendar(self):
         config = Setting()
-
         with self.assertRaises(TypeError): BlockOpenWeatherMap(None, None)
         with self.assertRaises(TypeError): BlockOpenWeatherMap(None, config)
         with self.assertRaises(TypeError): BlockOpenWeatherMap(self.logger, None)
-
         block = BlockOpenWeatherMap(self.logger, config)
         self.assertIsNotNone(block, "BlockOpenWeatherMap")
         self.assertIsInstance(block, BlockBase, "BlockBase")
-
         with self.assertRaises(KeyError):
             block.init({})
 

@@ -26,15 +26,12 @@ class Test_BlockIR(unittest.TestCase):
 
     def test_BlockIR(self):
         config = Setting()
-
         with self.assertRaises(TypeError): BlockIR(None, None)
         with self.assertRaises(TypeError): BlockIR(None, config)
         with self.assertRaises(TypeError): BlockIR(self.logger, None)
-
         block = BlockIR(self.logger, config)
         self.assertIsNotNone(block, "BlockIR")
         self.assertIsInstance(block, BlockBase, "BlockBase")
-
         with self.assertRaises(KeyError):
             block.init({})
 

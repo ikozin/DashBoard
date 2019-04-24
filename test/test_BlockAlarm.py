@@ -26,11 +26,9 @@ class Test_BlockAlarm(unittest.TestCase):
 
     def test_BlockAlarm(self):
         config = Setting()
-
         with self.assertRaises(TypeError): BlockAlarm(None, None)
         with self.assertRaises(TypeError): BlockAlarm(None, config)
         with self.assertRaises(TypeError): BlockAlarm(self.logger, None)
-
         block = BlockAlarm(self.logger, config)
         self.assertIsNotNone(block, "BlockAlarm")
         self.assertIsInstance(block, BlockBase, "BlockBase")

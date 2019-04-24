@@ -112,7 +112,7 @@ class AlarmManager(BaseManager):
         alarmBlock.grid(row=0, column=0, sticky=(N, S, E, W))
 
     def _createAlarm(self) -> None:
-        (item, type) = AlarmCreateDialog().Execute(self)
+        (item, type) = AlarmCreateDialog().Execute(self, list(self._functions.keys()))
         if item is None:
             return
         if item in self._alarmlist:
@@ -166,7 +166,7 @@ class AlarmManager(BaseManager):
 
 class AlarmCreateDialog(ModalDialog):
 
-    def Execute(self, root: AlarmManager) -> Tuple[str, str]:
+    def Execute(self, root: AlarmManager, list: List[int]) -> Tuple[str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Создать")
         # self._modal.geometry('+400+400')
@@ -186,7 +186,7 @@ class AlarmCreateDialog(ModalDialog):
         lbl = Label(self._modal, text="Тип будильника")
         lbl.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
 
-        combo = ttk.Combobox(self._modal, state="readonly", values=('1', '2', '3', '4'), textvariable=self._valueType)
+        combo = ttk.Combobox(self._modal, state="readonly", values=list, textvariable=self._valueType)
         combo.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         combo.bind('<<ComboboxSelected>>', lambda e: self._selectType())
 
