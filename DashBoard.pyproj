@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>tool.py</StartupFile>
+    <StartupFile>app.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -209,6 +209,7 @@
     <Content Include="weather\50d.png" />
     <Content Include="weather\50n.png" />
     <Content Include="weather\bkn_+ra_d.png" />
+    <Content Include="weather\bkn_+ra_n.png" />
     <Content Include="weather\bkn_-ra_d.png" />
     <Content Include="weather\bkn_-ra_n.png" />
     <Content Include="weather\bkn_-sn_d.png" />
