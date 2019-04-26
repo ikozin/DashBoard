@@ -21,7 +21,7 @@ class AlarmBase(metaclass=ABCMeta):
         pass
 
     @abstractclassmethod
-    def init(self, configSection):
+    def init(self, configSection, modList):
         """Initializes (initialize internal variables)"""
         if not isinstance(configSection, configparser.SectionProxy):
             raise("Передаваемый параметр должен быть наследником configparser.SectionProxy")

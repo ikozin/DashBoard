@@ -1,10 +1,10 @@
 import configparser
 import datetime
 
-from modules.alarm.AlarmTimeBase import AlarmTimeBase
+from modules.alarm.AlarmTimeFileBase import AlarmTimeFileBase
 
 
-class BlockAlarmRise(AlarmTimeBase):
+class BlockAlarmRise(AlarmTimeFileBase):
     """description of class"""
 
     def __init__(self, logger, setting):

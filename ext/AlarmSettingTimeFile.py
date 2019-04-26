@@ -11,9 +11,9 @@ from ext.AlarmSettingTime import AlarmSettingTime
 
 
 class AlarmSettingTimeFile(AlarmSettingTime):
-    def __init__(self, root, sectionName: str):
+    def __init__(self, root, sectionName: str, modList: List[str]):
         """ """
-        super(AlarmSettingTimeFile, self).__init__(root, sectionName)
+        super(AlarmSettingTimeFile, self).__init__(root, sectionName, modList)
         self._fileVariable = StringVar(value="")
 
         fileFrame = LabelFrame(self, text="Файл для проигрывания")

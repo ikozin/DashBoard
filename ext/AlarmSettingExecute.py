@@ -7,9 +7,9 @@ from ext.AlarmSettingTime import AlarmSettingTime
 
 
 class AlarmSettingExecute(AlarmSettingTime):
-    def __init__(self, root, sectionName: str):
+    def __init__(self, root, sectionName: str, modList: List[str]):
         """ """
-        super(AlarmSettingExecute, self).__init__(root, sectionName)
+        super(AlarmSettingExecute, self).__init__(root, sectionName, modList)
         self._type = 4
 
         self._moduleVariable = StringVar(value="")
@@ -20,7 +20,7 @@ class AlarmSettingExecute(AlarmSettingTime):
         lbl = Label(frame, text="Модуль:")
         lbl.grid(row=0, column=0, pady=2)
 
-        combo = ttk.Combobox(frame, state="readonly", values=["1", "2"], textvariable=self._moduleVariable)
+        combo = ttk.Combobox(frame, state="readonly", values=self._modList, textvariable=self._moduleVariable)
         combo.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
 
     def load(self, config: ConfigParser, sectionName: str) -> None:

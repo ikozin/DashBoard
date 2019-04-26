@@ -12,11 +12,12 @@ from ext.ModalDialog import ColorsChooserFrame
 class AlarmSettingTime(BaseSetting):
     """description of class"""
 
-    def __init__(self, root: LabelFrame, sectionName: str):
+    def __init__(self, root: LabelFrame, sectionName: str, modList: List[str]):
         """ """
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
         super(AlarmSettingTime, self).__init__(root, text="Настройка будильника: {0}".format(sectionName))
+        self._modList = modList
         self.columnconfigure(9, weight=1)
         self._type = None
         self._colorFrame = None

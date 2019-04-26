@@ -1,10 +1,10 @@
 import configparser
 import datetime
 
-from modules.alarm.AlarmTimeBase import AlarmTimeBase
+from modules.alarm.AlarmTimeFileBase import AlarmTimeFileBase
 
 
-class BlockAlarmBlink(AlarmTimeBase):
+class BlockAlarmBlink(AlarmTimeFileBase):
     """description of class"""
 
     def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):

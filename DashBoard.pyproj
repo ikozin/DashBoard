@@ -59,6 +59,9 @@
     <Compile Include="ext\YandexWeatherManager.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\alarm\AlarmTimeFileBase.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\alarm\BlockAlarmExecute.py" />
     <Compile Include="modules\BlockBase.py">
       <SubType>Code</SubType>

@@ -4,8 +4,8 @@ from ext.AlarmSettingTimeFile import AlarmSettingTimeFile
 
 
 class AlarmSettingBlink(AlarmSettingTimeFile):
-    def __init__(self, root, sectionName: str):
+    def __init__(self, root, sectionName: str, modList: List[str]):
         """ """
-        super(AlarmSettingBlink, self).__init__(root, sectionName)
+        super(AlarmSettingBlink, self).__init__(root, sectionName, modList)
         self._type = 2
 

@@ -20,6 +20,7 @@ class AlarmManager(BaseManager):
     def __init__(self, root: LabelFrame):
         """ """
         super(AlarmManager, self).__init__(root, text="Выбор будильника")
+        self._modList = None
         self.columnconfigure(2, weight=1)
         self._functions = {1: AlarmSettingSimple, 2: AlarmSettingBlink, 3: AlarmSettingRise, 4: AlarmSettingExecute}
         self._alarmlist = dict()
@@ -27,22 +28,16 @@ class AlarmManager(BaseManager):
         self._listBox = Listbox(self, width=25)
         self._listBox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
         self._listBox.bind('<<ListboxSelect>>', self._selectAlarm)
-
         commandFrame = ttk.Frame(self, padding=(2, 2, 2, 2))
         commandFrame.grid(row=0, column=1, sticky=(N, S, W))
-
         btn = Button(commandFrame, text="Создать", command=self._createAlarm)
         btn.grid(row=0, column=0, sticky=(N, S, E, W))
-
         btn = Button(commandFrame, text="Переименовать", command=self._renameAlarm)
         btn.grid(row=1, column=0, sticky=(N, S, E, W))
-
         btn = Button(commandFrame, text="Удалить", command=self._deleteAlarm)
         btn.grid(row=2, column=0, sticky=(N, S, E, W))
-
         self._alarmFrame = ttk.Frame(self, padding=(2, 2, 2, 2))
         self._alarmFrame.grid(row=0, column=2, sticky=(N, S, E, W))
-
         self._frame = SelectFrame(self, "Выбор модулей для отображения во время срабатывания будильника")
         self._frame.grid(row=1, column=0, columnspan=3, sticky=(N, S, E, W), padx=2, pady=2)
 
@@ -51,7 +46,7 @@ class AlarmManager(BaseManager):
             raise TypeError("config")
         if not config.has_section("AlarmBlock"):
             config.add_section("AlarmBlock")
-
+        self._modList = modulelist
         self._currentName = None
         for schemaName in self._alarmlist.keys():
             alarmBlock = self._alarmlist[schemaName]
@@ -71,7 +66,7 @@ class AlarmManager(BaseManager):
                 type = section.getint("Type")
                 if type is None:
                     continue
-                alarmBlock = self._createAlarmByType(type, item)
+                alarmBlock = self._createAlarmByType(type, item, self._modList)
                 if alarmBlock is None:
                     continue
                 alarmBlock.load(config, item)
@@ -118,7 +113,7 @@ class AlarmManager(BaseManager):
         if item in self._alarmlist:
             messagebox.showerror("Ошибка", "Будильник {0} уже существует".format(item))
             return
-        alarmBlock = self._createAlarmByType(type, item)
+        alarmBlock = self._createAlarmByType(type, item, self._modList)
         if alarmBlock is not None:
             self._alarmlist[item] = alarmBlock
             self._listBox.insert("end", item)
@@ -157,11 +152,11 @@ class AlarmManager(BaseManager):
         if self._currentName == name:
             self._currentName = None
 
-    def _createAlarmByType(self, type: int, item: str) -> BaseSetting:
+    def _createAlarmByType(self, type: int, item: str, modList: List[str]) -> BaseSetting:
         func = self._functions.get(type, None)
         if func is None:
             return None
-        return func(self._alarmFrame, item)
+        return func(self._alarmFrame, item, modList)
 
 
 class AlarmCreateDialog(ModalDialog):
@@ -175,29 +170,22 @@ class AlarmCreateDialog(ModalDialog):
         self._valueType.set('1')
         lbl = Label(self._modal, text="Имя будильника")
         lbl.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-
         entry = Entry(self._modal, textvariable=self._valueName)
         entry.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         entry.focus_set()
         # vcmd = (entry.register(self._validateName), '%s', '%P')
         vcmd = (entry.register(self._validateName), '%P')
         entry.configure(validate="key", validatecommand=vcmd)
-
         lbl = Label(self._modal, text="Тип будильника")
         lbl.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-
         combo = ttk.Combobox(self._modal, state="readonly", values=list, textvariable=self._valueType)
         combo.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
         combo.bind('<<ComboboxSelected>>', lambda e: self._selectType())
-
         self._btnOk = Button(self._modal, text="OK", state="disabled", command=self._ok)
         self._btnOk.grid(row=4, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
-
         btn = Button(self._modal, text="Cancel", command=self._cancel)
         btn.grid(row=4, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
-
         self._waitDialog(self._modal, root)
-
         name = self._valueName.get()
         type = self._valueType.get()
         name = name if name else None

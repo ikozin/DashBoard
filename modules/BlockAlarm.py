@@ -52,7 +52,7 @@ class BlockAlarm(BlockBase):
             if func is None:
                 raise ExceptionFormat(schema, "Type")
             alarm = func(self._logger, self._setting)
-            alarm.init(section)
+            alarm.init(section, modList)
             self._alarmBlock.append(alarm)
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
