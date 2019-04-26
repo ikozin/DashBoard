@@ -103,10 +103,9 @@ class Test_BlockCalendar(unittest.TestCase):
         self.assertTrue(block is not None, "BlockCalendar")
         pygame.font.init()
         block.init({})
-        block._time = datetime.now()
         block.execute();
-        self.assertIsNotNone(block._time, "_time")
         self.assertIsNotNone(block._text, "_text")
+        self.assertIsNone(block._time, "_time")
 
     def test_GetText(self):
         config = self._getSetting(None)
@@ -114,9 +113,9 @@ class Test_BlockCalendar(unittest.TestCase):
         self.assertTrue(block is not None, "BlockCalendar")
         pygame.font.init()
         block.init({})
-        block._time = datetime.now()
         text = block.getText();
-        self.assertIsNotNone(text, "text")
+        self.assertIsNotNone(block._text, "_text")
+        self.assertIsNone(block._time, "_time")
 
     def _getSetting(self, name):
         params = {

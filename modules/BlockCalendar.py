@@ -1,9 +1,8 @@
-import datetime
 import configparser
 import pygame
 import pygame.locals
-from datetime import date
 
+from datetime import datetime
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 
@@ -110,7 +109,7 @@ class BlockCalendar(BlockBase):
             self._logger.exception(ex)
 
     def execute(self):
-        if self._time is None: self._time = datetime.datetime.now()
+        if self._time is None: self._time = datetime.now()
         self._text = "{0}, {1} {2} {3} год".format(
             self._weekDayLong[self._time.weekday()],
             self._daysLong[self._time.day-1],

@@ -79,6 +79,26 @@ class Test_BlockTime(unittest.TestCase):
         block.init({})
         self.assertIsNotNone(block._font, "_font")
 
+    def test_Execute(self):
+        config = self._getSetting(None)
+        block = BlockTime(self.logger, config)
+        self.assertTrue(block is not None, "BlockTime")
+        pygame.font.init()
+        block.init({})
+        block.execute();
+        self.assertIsNotNone(block._text, "_text")
+        self.assertIsNone(block._time, "_time")
+
+    def test_GetText(self):
+        config = self._getSetting(None)
+        block = BlockTime(self.logger, config)
+        self.assertTrue(block is not None, "BlockTime")
+        pygame.font.init()
+        block.init({})
+        text = block.getText();
+        self.assertIsNotNone(block._text, "_text")
+        self.assertIsNone(block._time, "_time")
+
     def _getSetting(self, name):
         params = {
             "FontName": "Helvetica",
