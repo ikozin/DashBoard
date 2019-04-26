@@ -71,8 +71,8 @@ class BlockCalendar(BlockBase):
         # Загружаем настройки
         section = self._setting.Configuration["CalendarBlock"]
 
-        fontSize = section.getint("FontSize")
         fontName = section.get("FontName")
+        fontSize = section.getint("FontSize")
         isBold = section.getboolean("FontBold")
         isItalic = section.getboolean("FontItalic")
         self._pos = section.getint("Position")
