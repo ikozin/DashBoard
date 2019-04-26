@@ -3,6 +3,7 @@ import configparser
 import pygame
 import pygame.locals
 
+from datetime import datetime
 from modules.BlockBase import BlockBase
 from exceptions import ExceptionFormat, ExceptionNotFound
 
@@ -17,6 +18,7 @@ class BlockTime(BlockBase):
         """Initializes (declare internal variables)"""
         super(BlockTime, self).__init__(logger, setting)
         self._font = None
+        self._time = None
 
     def init(self, modList):
         """Initializes (initialize internal variables)"""
@@ -50,6 +52,15 @@ class BlockTime(BlockBase):
             y = (size[1] - sz[1]) >> 1
             surf = self._font.render(text, True, foreColor, backColor)
             screen.blit(surf, (x, y))
-            self._text = BLOCK_TIME_TIME_TEXT.format(current_time)
+            self._time = current_time
         except Exception as ex:
             self._logger.exception(ex)
+
+    def execute(self):
+        if self._time is None: self._time = datetime.now()
+        self._text = BLOCK_TIME_TIME_TEXT.format(current_time)
+        self._time = None
+
+    def getText(self):
+        self.execute()
+        return self._text
