@@ -1,5 +1,6 @@
 import unittest
 import pygame
+from datetime import datetime
 from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
@@ -86,8 +87,36 @@ class Test_BlockCalendar(unittest.TestCase):
         self.assertTrue(block is not None, "BlockCalendar")
         pygame.font.init()
         block.init({})
+        self.assertIsNotNone(block._daysLong, "_daysLong")
+        self.assertIsNotNone(block._months, "_months")
+        self.assertIsNotNone(block._weekDayShot, "_weekDayShot")
+        self.assertEqual(len(block._weekDayShot), 7, "_weekDayShot")
+        self.assertIsNotNone(block._weekDayLong, "_weekDayLong")
+        self.assertEqual(len(block._weekDayLong), 7, "_weekDayLong")
         self.assertIsNotNone(block._font, "_font")
         self.assertIsNotNone(block._pos, "_pos")
+        self.assertIsNone(block._time, "_time")
+
+    def test_Execute(self):
+        config = self._getSetting(None)
+        block = BlockCalendar(self.logger, config)
+        self.assertTrue(block is not None, "BlockCalendar")
+        pygame.font.init()
+        block.init({})
+        block._time = datetime.now()
+        block.execute();
+        self.assertIsNotNone(block._time, "_time")
+        self.assertIsNotNone(block._text, "_text")
+
+    def test_GetText(self):
+        config = self._getSetting(None)
+        block = BlockCalendar(self.logger, config)
+        self.assertTrue(block is not None, "BlockCalendar")
+        pygame.font.init()
+        block.init({})
+        block._time = datetime.now()
+        text = block.getText();
+        self.assertIsNotNone(text, "text")
 
     def _getSetting(self, name):
         params = {
