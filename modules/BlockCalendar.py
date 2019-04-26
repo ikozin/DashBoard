@@ -110,11 +110,13 @@ class BlockCalendar(BlockBase):
             self._logger.exception(ex)
 
     def execute(self):
+        if self._time is None: self._time = datetime.datetime.now()
         self._text = "{0}, {1} {2} {3} год".format(
             self._weekDayLong[self._time.weekday()],
             self._daysLong[self._time.day-1],
             self._months[self._time.month-1],
             self._time.year)
+        self._time = None
 
     def getText(self):
         self.execute()
