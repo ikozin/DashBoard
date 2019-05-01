@@ -41,4 +41,5 @@ class AlarmTimeBase(AlarmBase):
                 return
 
     def execute(self):
+        #  необходима самомтоятельная проверка на повторнй запуск, из-за поправки на задержку в 3 сек.
         pass

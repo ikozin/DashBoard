@@ -10,9 +10,9 @@ class AlarmBase(metaclass=ABCMeta):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         if not isinstance(logger, Logger):
-            raise("Передаваемый параметр logger должен быть классом Logger")
+            raise TypeError("Передаваемый параметр logger должен быть классом Logger")
         if not isinstance(setting, Setting):
-            raise("Передаваемый параметр setting должен быть классом Setting")
+            raise TypeError("Передаваемый параметр setting должен быть классом Setting")
         self._logger = logger
         self._setting = setting
 
@@ -24,7 +24,7 @@ class AlarmBase(metaclass=ABCMeta):
     def init(self, configSection, modList):
         """Initializes (initialize internal variables)"""
         if not isinstance(configSection, configparser.SectionProxy):
-            raise("Передаваемый параметр должен быть наследником configparser.SectionProxy")
+            raise TypeError("Передаваемый параметр должен быть наследником configparser.SectionProxy")
 
     def updateState(self, currentTime):
         pass

@@ -28,12 +28,15 @@ class BlockIR(BlockBase):
         # Загружаем настройки
         section = self._setting.Configuration["IRBlock"]
         self._list = dict()
+        self._moduleList = modList
         for keyCode in section:
             self._list[keyCode.upper()] = section.get(keyCode)
+            moduleName = self._list[keyCode.upper()].split(",")[0]
+            if moduleName not in self._moduleList:
+                raise ExceptionNotFound(section.name, keyCode.upper())
         with open(CONFIG_FILE_NMAE, "w", encoding="utf-8") as file:
             for keyCode in self._list.keys():
                 file.write("begin\n\tprog={1}\n\tbutton={0}\n\tconfig={0}\n\trepeat=0\nend\n".format(keyCode, PROG_NAME))
-        self._moduleList = modList
 ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
             lirc.init(PROG_NAME, CONFIG_FILE_NMAE, blocking=False)
@@ -54,7 +57,8 @@ class BlockIR(BlockBase):
             if keyCode not in self._list:
                 return
             values = self._list[keyCode].split(",")
-            self._moduleList[values[0]].execute()
+            if values[0] in self._moduleList:
+                self._moduleList[values[0]].execute()
 
         except Exception as ex:
             self._logger.exception(ex)

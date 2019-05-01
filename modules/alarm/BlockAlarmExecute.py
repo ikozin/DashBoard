@@ -1,6 +1,7 @@
 import configparser
 import datetime
 
+from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.AlarmTimeBase import AlarmTimeBase
 
 
@@ -17,17 +18,8 @@ class BlockAlarmExecute(AlarmTimeBase):
         super(BlockAlarmExecute, self).init(configSection, modList)
         self._modList = modList
         self._module = configSection.get("Module")
-
-    def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
-        try:
-            if not self._isAlarm:
-                return
-            screen.fill(backColor)
-            for block in blocks:
-                block.updateDisplay(True, screen, size, foreColor, backColor, current_time)
-
-        except Exception as ex:
-            self._logger.exception(ex)
+        if self._module not in self._modList:
+            raise ExceptionNotFound(section.name, "Module")
 
     def execute(self):
         if self._isAlarm: return
