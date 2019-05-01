@@ -11,15 +11,11 @@ class AlarmSettingExecute(AlarmSettingTime):
         """ """
         super(AlarmSettingExecute, self).__init__(root, sectionName, modList)
         self._type = 4
-
         self._moduleVariable = StringVar(value="")
-
         frame = LabelFrame(self, text="Модуль для запуска")
         frame.grid(row=3, column=0, columnspan=2, sticky=(N, S, E, W))
-
         lbl = Label(frame, text="Модуль:")
         lbl.grid(row=0, column=0, pady=2)
-
         combo = ttk.Combobox(frame, state="readonly", values=self._modList, textvariable=self._moduleVariable)
         combo.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
 

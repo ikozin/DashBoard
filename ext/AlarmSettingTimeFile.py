@@ -7,24 +7,20 @@ from tkinter import filedialog
 
 from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
-from ext.AlarmSettingTime import AlarmSettingTime
+from ext.AlarmSettingTimeExt import AlarmSettingTimeExt
 
 
-class AlarmSettingTimeFile(AlarmSettingTime):
+class AlarmSettingTimeFile(AlarmSettingTimeExt):
     def __init__(self, root, sectionName: str, modList: List[str]):
         """ """
         super(AlarmSettingTimeFile, self).__init__(root, sectionName, modList)
         self._fileVariable = StringVar(value="")
-
         fileFrame = LabelFrame(self, text="Файл для проигрывания")
         fileFrame.grid(row=3, column=0, columnspan=2, sticky=(N, S, E, W))
-
         lbl = Label(fileFrame, text="Файл:")
         lbl.grid(row=0, column=0, pady=2)
-
         entr = Entry(fileFrame, width=34, textvariable=self._fileVariable)
         entr.grid(row=0, column=1, pady=2)
-
         btn = Button(fileFrame, text="...", command=self._selectFile, width=3)
         btn.grid(row=0, column=2, pady=2)
 

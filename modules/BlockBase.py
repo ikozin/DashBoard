@@ -41,10 +41,10 @@ class BlockBase(metaclass=ABCMeta):
         pass
 
     def addBlock(self, block):
-        raise("NotImplemented")
+        raise NotImplementedError()
 
     def execute(self):
-        raise("NotImplemented")
+        raise NotImplementedError()
     
     def getText(self):
         return self._text

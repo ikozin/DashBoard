@@ -53,7 +53,7 @@ class BlockVoice(BlockBase):
     def addBlock(self, block):
         """  """
         if not isinstance(block, BlockBase):
-            raise("Передаваемый параметр должен быть наследником BlockBase")
+            raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
 
     def execute(self):

@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>tool.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -33,6 +33,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\AlarmSettingSimple.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\AlarmSettingTimeExt.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\AlarmSettingTimeFile.py">

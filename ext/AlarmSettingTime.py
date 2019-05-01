@@ -20,7 +20,6 @@ class AlarmSettingTime(BaseSetting):
         self._modList = modList
         self.columnconfigure(9, weight=1)
         self._type = None
-        self._colorFrame = None
         self._time = None
         self._weekDay0 = IntVar(value=0)
         self._weekDay1 = IntVar(value=0)
@@ -32,11 +31,8 @@ class AlarmSettingTime(BaseSetting):
         self._hourVariable = IntVar(value=0)
         self._minuteVariable = IntVar(value=0)
         self._secondVariable = IntVar(value=0)
-        self._durationVariable = IntVar(value=0)
-
         weekDayFrame = LabelFrame(self, text="Дни недели")
         weekDayFrame.grid(row=0, column=0, columnspan=2, sticky=(N, S, E, W))
-
         chk = Checkbutton(weekDayFrame, text="ПН", takefocus=True, variable=self._weekDay0)
         chk.grid(row=0, column=0, padx=2, pady=2)
         chk = Checkbutton(weekDayFrame, text="ВТ", takefocus=True, variable=self._weekDay1)
@@ -51,42 +47,23 @@ class AlarmSettingTime(BaseSetting):
         chk.grid(row=0, column=5, padx=2, pady=2)
         chk = Checkbutton(weekDayFrame, text="ВС", takefocus=True, variable=self._weekDay6)
         chk.grid(row=0, column=6, padx=2, pady=2)
-
         timeFrame = LabelFrame(self, text="Время")
         timeFrame.grid(row=1, column=0, sticky=(N, S, E, W))
         timeFrame.columnconfigure(1, weight=1)
         timeFrame.columnconfigure(3, weight=1)
         timeFrame.columnconfigure(4, weight=1)
-
         lbl = Label(timeFrame, text="Час:", justify=RIGHT)
         lbl.grid(row=0, column=0, pady=2)
-
         spin = Spinbox(timeFrame, from_=0, to=23, increment=1, width=3, textvariable=self._hourVariable)
         spin.grid(row=0, column=1, padx=2, pady=2)
-
         lbl = Label(timeFrame, text="Мин:", justify=RIGHT)
         lbl.grid(row=0, column=2, pady=2)
-
         spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._minuteVariable)
         spin.grid(row=0, column=3, padx=2, pady=2)
-
         lbl = Label(timeFrame, text="Сек:", justify=RIGHT)
         lbl.grid(row=0, column=4, pady=2)
-
         spin = Spinbox(timeFrame, from_=0, to=59, increment=1, width=3, textvariable=self._secondVariable)
         spin.grid(row=0, column=5, padx=2, pady=2)
-
-        durationFrame = LabelFrame(self, text="Длительность")
-        durationFrame.grid(row=1, column=1, sticky=(N, S, E, W))
-
-        spin = Spinbox(durationFrame, from_=5, to=60, increment=1, width=3, textvariable=self._durationVariable)
-        spin.grid(row=0, column=0, padx=2, pady=2)
-
-        lbl = Label(durationFrame, text="секунд")
-        lbl.grid(row=0, column=1, pady=2)
-
-        self._colorFrame = ColorsChooserFrame(self, "Цвет")
-        self._colorFrame.grid(row=2, column=0, columnspan=2, sticky=(N, S, E, W))
 
     def load(self, config: ConfigParser, sectionName: str) -> None:
         """ """
@@ -97,11 +74,9 @@ class AlarmSettingTime(BaseSetting):
         if self._type is None:
             raise Exception("Type is None")
         self.config(text="Настройка будильника: {0} (Тип {1})".format(sectionName, self._type))
-
         section = config[sectionName]
         if section is None:
             raise Exception("Section {0} not found".format(sectionName))
-
         # self._type = section.getint("Type", self._type)
         date = section.get("Time", "0:00:00")
         date = datetime.strptime(date, "%H:%M:%S")
@@ -124,10 +99,6 @@ class AlarmSettingTime(BaseSetting):
         self._hourVariable.set(date.hour)
         self._minuteVariable.set(date.minute)
         self._secondVariable.set(date.second)
-        self._durationVariable.set(duration)
-        backColor = self._getTuple(section.get("BackgroundColor", "(0, 0, 0)"))
-        foreColor = self._getTuple(section.get("ForegroundColor", "(255, 255, 255)"))
-        self._colorFrame.load(backColor, foreColor)
 
     def pre_save(self) -> None:
         date = datetime(
@@ -162,13 +133,9 @@ class AlarmSettingTime(BaseSetting):
                     self._weekDay6.get(),
                   )
         weekday = [str(index) for (index, value) in enumerate(weekday) if value != 0]
-        (backgroundColor, foregroundColor) = self._colorFrame.getResult()
         section["Type"] = str(self._type)
         section["Time"] = self._time
         section["WeekDay"] = ", ".join(weekday)
-        section["Duration"] = str(self._durationVariable.get())
-        section["BackgroundColor"] = "(%d, %d, %d)" % backgroundColor
-        section["ForegroundColor"] = "(%d, %d, %d)" % foregroundColor
 
     def rename(self, sectionName: str) -> None:
         if not isinstance(sectionName, str):

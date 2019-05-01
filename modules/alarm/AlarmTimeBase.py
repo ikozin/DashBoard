@@ -34,7 +34,7 @@ class AlarmTimeBase(AlarmBase):
 
     def updateState(self, currentTime):
         # if not isinstance(currentTime, datetime.datetime):
-        #    raise("Передаваемый параметр должен быть наследником datetime")
+        #    raise TypeError("Передаваемый параметр должен быть наследником datetime")
         if any(currentTime.weekday() == day for day in self._weekDay):
             if (currentTime - self._startTime).seconds <= 3:  # 3 секунды на запуск, вдруг задержка какая-нить была
                 self.execute()
