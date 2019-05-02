@@ -3,13 +3,13 @@ from typing import *
 from configparser import ConfigParser
 from tkinter import *
 
-from ext.AlarmSettingTime import AlarmSettingTime
+from ext.alarm.AlarmSetting import AlarmSetting
 
 
-class AlarmSettingExecute(AlarmSettingTime):
+class AlarmSetting_Execute(AlarmSetting):
     def __init__(self, root, sectionName: str, modList: List[str]):
         """ """
-        super(AlarmSettingExecute, self).__init__(root, sectionName, modList)
+        super(AlarmSetting_Execute, self).__init__(root, sectionName, modList)
         self._type = 4
         self._moduleVariable = StringVar(value="")
         frame = LabelFrame(self, text="Модуль для запуска")
@@ -21,12 +21,12 @@ class AlarmSettingExecute(AlarmSettingTime):
 
     def load(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        super(AlarmSettingExecute, self).load(config, sectionName)
+        super(AlarmSetting_Execute, self).load(config, sectionName)
         section = config[sectionName]
         self._moduleVariable.set(section.get("Module", ""))
 
     def save(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        super(AlarmSettingExecute, self).save(config, sectionName)
+        super(AlarmSetting_Execute, self).save(config, sectionName)
         section = config[sectionName]
         section["Module"] = self._moduleVariable.get()

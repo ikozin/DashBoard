@@ -9,14 +9,14 @@ from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
 
 
-class AlarmSettingTime(BaseSetting):
+class AlarmSetting(BaseSetting):
     """description of class"""
 
     def __init__(self, root: LabelFrame, sectionName: str, modList: List[str]):
         """ """
         if not isinstance(sectionName, str):
             raise TypeError("sectionName")
-        super(AlarmSettingTime, self).__init__(root, text="Настройка будильника: {0}".format(sectionName))
+        super(AlarmSetting, self).__init__(root, text="Настройка будильника: {0}".format(sectionName))
         self._modList = modList
         self.columnconfigure(9, weight=1)
         self._type = None
@@ -118,7 +118,6 @@ class AlarmSettingTime(BaseSetting):
             raise TypeError("sectionName")
         if self._type is None:
             raise Exception("Type is None")
-
         if config.has_section(sectionName):
             config.remove_section(sectionName)
         config.add_section(sectionName)

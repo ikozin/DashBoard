@@ -8,10 +8,10 @@ from ext.BaseManager import BaseManager
 from ext.ModalDialog import ModalDialog
 from ext.ModalDialog import EntryModalDialog
 from ext.ModalDialog import SelectFrame
-from ext.AlarmSettingSimple import AlarmSettingSimple
-from ext.AlarmSettingBlink import AlarmSettingBlink
-from ext.AlarmSettingRise import AlarmSettingRise
-from ext.AlarmSettingExecute import AlarmSettingExecute
+from ext.alarm.ui.AlarmSettingUI_Simple import AlarmSettingUI_Simple
+from ext.alarm.ui.AlarmSettingUI_Blink import AlarmSettingUI_Blink
+from ext.alarm.ui.AlarmSettingUI_Rise import AlarmSettingUI_Rise
+from ext.alarm.AlarmSetting_Execute import AlarmSetting_Execute
 
 
 class AlarmManager(BaseManager):
@@ -22,7 +22,7 @@ class AlarmManager(BaseManager):
         super(AlarmManager, self).__init__(root, text="Выбор будильника")
         self._modList = None
         self.columnconfigure(2, weight=1)
-        self._functions = {1: AlarmSettingSimple, 2: AlarmSettingBlink, 3: AlarmSettingRise, 4: AlarmSettingExecute}
+        self._functions = {1: AlarmSettingUI_Simple, 2: AlarmSettingUI_Blink, 3: AlarmSettingUI_Rise, 4: AlarmSetting_Execute}
         self._alarmlist = dict()
         self._currentName = None
         self._listBox = Listbox(self, width=25)

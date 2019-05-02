@@ -7,15 +7,15 @@ from tkinter import filedialog
 
 from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
-from ext.AlarmSettingTime import AlarmSettingTime
+from ext.alarm.AlarmSetting import AlarmSetting
 
 
-class AlarmSettingTimeExt(AlarmSettingTime):
+class AlarmSettingUI(AlarmSetting):
     """description of class"""
 
     def __init__(self, root: LabelFrame, sectionName: str, modList: List[str]):
         """ """
-        super(AlarmSettingTimeExt, self).__init__(root, sectionName, modList)
+        super(AlarmSettingUI, self).__init__(root, sectionName, modList)
         self._colorFrame = None
         self._durationVariable = IntVar(value=0)
         durationFrame = LabelFrame(self, text="Длительность")
@@ -29,7 +29,7 @@ class AlarmSettingTimeExt(AlarmSettingTime):
 
     def load(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        super(AlarmSettingTimeExt, self).load(config, sectionName)
+        super(AlarmSettingUI, self).load(config, sectionName)
         section = config[sectionName]
         duration = section.getint("Duration", 5)
         self._durationVariable.set(duration)
@@ -39,7 +39,7 @@ class AlarmSettingTimeExt(AlarmSettingTime):
 
     def save(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        super(AlarmSettingTimeExt, self).save(config, sectionName)
+        super(AlarmSettingUI, self).save(config, sectionName)
         section = config[sectionName]
         (backgroundColor, foregroundColor) = self._colorFrame.getResult()
         section["Duration"] = str(self._durationVariable.get())

@@ -23,24 +23,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.py" />
-    <Compile Include="ext\AlarmSettingBlink.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ext\AlarmSettingExecute.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ext\AlarmSettingRise.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ext\AlarmSettingSimple.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ext\AlarmSettingTimeExt.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ext\AlarmSettingTimeFile.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="ext\alarm\ui\AlarmSettingUIFile.py" />
+    <Compile Include="ext\alarm\ui\AlarmSettingUI_Rise.py" />
+    <Compile Include="ext\alarm\ui\AlarmSettingUI_Simple.py" />
+    <Compile Include="ext\alarm\ui\AlarmSettingUI_Blink.py" />
+    <Compile Include="ext\alarm\ui\AlarmSettingUI.py" />
+    <Compile Include="ext\alarm\ui\__init__.py" />
+    <Compile Include="ext\alarm\AlarmSetting.py" />
+    <Compile Include="ext\alarm\AlarmSetting_Execute.py" />
+    <Compile Include="ext\alarm\__init__.py" />
     <Compile Include="ext\BaseManager.py">
       <SubType>Code</SubType>
     </Compile>
@@ -73,9 +64,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\AlarmManager.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ext\AlarmSettingTime.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\CalendarManager.py">
@@ -278,6 +266,8 @@
     <Content Include="webcam.sh" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ext\alarm\" />
+    <Folder Include="ext\alarm\ui\" />
     <Folder Include="music\" />
     <Folder Include="test\" />
     <Folder Include="weather\" />

@@ -7,13 +7,13 @@ from tkinter import filedialog
 
 from ext.BaseSetting import BaseSetting
 from ext.ModalDialog import ColorsChooserFrame
-from ext.AlarmSettingTimeExt import AlarmSettingTimeExt
+from ext.alarm.ui.AlarmSettingUI import AlarmSettingUI
 
 
-class AlarmSettingTimeFile(AlarmSettingTimeExt):
+class AlarmSettingUIFile(AlarmSettingUI):
     def __init__(self, root, sectionName: str, modList: List[str]):
         """ """
-        super(AlarmSettingTimeFile, self).__init__(root, sectionName, modList)
+        super(AlarmSettingUIFile, self).__init__(root, sectionName, modList)
         self._fileVariable = StringVar(value="")
         fileFrame = LabelFrame(self, text="Файл для проигрывания")
         fileFrame.grid(row=3, column=0, columnspan=2, sticky=(N, S, E, W))
@@ -26,13 +26,13 @@ class AlarmSettingTimeFile(AlarmSettingTimeExt):
 
     def load(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        super(AlarmSettingTimeFile, self).load(config, sectionName)
+        super(AlarmSettingUIFile, self).load(config, sectionName)
         section = config[sectionName]
         self._fileVariable.set(section.get("File", ""))
 
     def save(self, config: ConfigParser, sectionName: str) -> None:
         """ """
-        super(AlarmSettingTimeFile, self).save(config, sectionName)
+        super(AlarmSettingUIFile, self).save(config, sectionName)
         section = config[sectionName]
         section["File"] = self._fileVariable.get()
 
