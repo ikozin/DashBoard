@@ -25,3 +25,4 @@ class BlockAlarmExecute(AlarmTimeBase):
         if self._isAlarm: return
         self._isAlarm = True
         self._modList[self._module].execute()
+        self._isAlarm = False

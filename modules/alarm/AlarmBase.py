@@ -32,5 +32,9 @@ class AlarmBase(metaclass=ABCMeta):
     def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
         pass
 
+    @abstractclassmethod
+    def execute(self):
+        pass
+
     def _getTuple(self, value):
         return self._setting.getTuple(value, self._logger)
