@@ -1,3 +1,4 @@
+rmdir "\\RASPBERRYPI\obmen\DashBoard" /S /Q
 xcopy "*.py"        "\\RASPBERRYPI\obmen\DashBoard\" /E /Y /EXCLUDE:excludelist.txt
 xcopy "*.ini"       "\\RASPBERRYPI\obmen\DashBoard\" /E /Y /EXCLUDE:excludelist.txt
 xcopy "*.sh"        "\\RASPBERRYPI\obmen\DashBoard\" /E /Y /EXCLUDE:excludelist.txt
