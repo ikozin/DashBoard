@@ -55,7 +55,7 @@ class BlockTime(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self):
+    def execute(self, *args):
         if self._time is None: self._time = datetime.now()
         self._text = BLOCK_TIME_TIME_TEXT.format(self._time)
         self._time = None
