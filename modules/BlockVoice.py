@@ -56,7 +56,7 @@ class BlockVoice(BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
 
-    def execute(self):
+    def execute(self, *args):
         if self._blocks:
             text = ". ".join(map(lambda block: block.getText(), self._blocks))
             if not text:
