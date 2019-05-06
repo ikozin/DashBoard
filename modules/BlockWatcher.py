@@ -83,5 +83,5 @@ class BlockWatcher(BlockSecondBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self):
+    def execute(self, *args):
         self._isWatching = True
