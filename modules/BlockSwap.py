@@ -56,8 +56,9 @@ class BlockSwap(BlockSecondBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self):
-        self._index +=  1
+    def execute(self, *args):
+        value = int(args[0]) if len(args) == 1 else 1
+        self._index +=  value
         self._index %= len(self._blocks)
 
     def getText(self):
