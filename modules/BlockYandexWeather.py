@@ -234,7 +234,7 @@ class BlockYandexWeather(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self):
+    def execute(self, *args):
         data = self._getData()
         if data is None:
             return
