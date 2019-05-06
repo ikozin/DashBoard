@@ -90,7 +90,7 @@ class BlockYandexNews(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self):
+    def execute(self, *args):
         self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
         self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
 
