@@ -43,7 +43,7 @@ class BlockBase(metaclass=ABCMeta):
     def addBlock(self, block):
         raise NotImplementedError()
 
-    def execute(self):
+    def execute(self, *args):
         raise NotImplementedError()
     
     def getText(self):
