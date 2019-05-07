@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo chmod -R 777 "../DashBoard"
-sudo mkdir ~/DashBoard -p
-sudo cp ../DashBoard/* ~/DashBoard -R
+chmod -R 777 "../DashBoard"
+mkdir ~/DashBoard -p
+cp ../DashBoard/* ~/DashBoard -R
 cd ~/DashBoard
