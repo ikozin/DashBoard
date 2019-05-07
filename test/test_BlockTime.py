@@ -71,7 +71,7 @@ class Test_BlockTime(unittest.TestCase):
         self.assertEqual(ErrNotFound.exception.configName, SECTION_NAME, SECTION_NAME)
         self.assertEqual(ErrNotFound.exception.paramName, "FontItalic", "FontItalic")
     
-    def test_Init_finalize(self):
+    def test_Init(self):
         config = self._getSetting(None)
         block = BlockTime(self.logger, config)
         self.assertTrue(block is not None, "BlockTime")

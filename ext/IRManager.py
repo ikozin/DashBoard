@@ -545,7 +545,7 @@ class IRManager(BaseManager):
         super(IRManager, self).__init__(root, text="Настройки IR")
         self._modulelist = None
         self._list = dict()
-        self._listBox = Listbox(self, width=25)
+        self._listBox = Listbox(self, width=45)
         self._listBox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
         self._listBox.bind('<<ListboxSelect>>', self._selectCode)
         commandFrame = ttk.Frame(self, padding=(2, 2, 2, 2))

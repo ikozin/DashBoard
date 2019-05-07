@@ -81,7 +81,7 @@ class Test_BlockCalendar(unittest.TestCase):
         self.assertEqual(ErrNotFound.exception.configName, SECTION_NAME, SECTION_NAME)
         self.assertEqual(ErrNotFound.exception.paramName, "Position", "Position")
     
-    def test_Init_finalize(self):
+    def test_Init(self):
         config = self._getSetting(None)
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
