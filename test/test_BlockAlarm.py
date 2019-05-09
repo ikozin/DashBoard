@@ -12,6 +12,7 @@ class Test_BlockAlarm(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        pygame.font.init()
         cls.logger = Logger("Log")
 
     #def setUp(self):
@@ -35,6 +36,31 @@ class Test_BlockAlarm(unittest.TestCase):
 
         with self.assertRaises(KeyError):
             block.init({})
+
+    def test_Init(self):
+        config = self._getSetting(None)
+        block = BlockAlarm(self.logger, config)
+        self.assertTrue(block is not None, "BlockAlarm")
+        block.init({})
+        self.assertIsNotNone(block._blocks, "_blocks")
+        self.assertIsNotNone(block._alarmBlock, "_alarmBlock")
+        self.assertIsNotNone(block._functions, "_functions")
+
+    def _getSetting(self, name):
+        params = {
+            "BlockList": "Time",
+            "List": "Alarm1",
+        }
+        config = Setting()
+        config.Configuration.add_section(SECTION_NAME)
+        if name == "":
+            return config
+        section = config.Configuration[SECTION_NAME]
+        for key, value in params.items():
+            section[key] = value.__str__()
+            if key == name:
+                break
+        return config
 
 if __name__ == '__main__':
     unittest.main()

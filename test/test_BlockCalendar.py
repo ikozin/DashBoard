@@ -13,6 +13,7 @@ class Test_BlockCalendar(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        pygame.font.init()
         cls.logger = Logger("Log")
 
     #def setUp(self):
@@ -85,7 +86,6 @@ class Test_BlockCalendar(unittest.TestCase):
         config = self._getSetting(None)
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
-        pygame.font.init()
         block.init({})
         self.assertIsNotNone(block._daysLong, "_daysLong")
         self.assertIsNotNone(block._months, "_months")
@@ -101,7 +101,6 @@ class Test_BlockCalendar(unittest.TestCase):
         config = self._getSetting(None)
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
-        pygame.font.init()
         block.init({})
         block.execute();
         self.assertIsNotNone(block._text, "_text")
@@ -111,7 +110,6 @@ class Test_BlockCalendar(unittest.TestCase):
         config = self._getSetting(None)
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
-        pygame.font.init()
         block.init({})
         text = block.getText();
         self.assertIsNotNone(block._text, "_text")

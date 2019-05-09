@@ -1,14 +1,13 @@
 import datetime
-import os
-import sys
-import subprocess
-import configparser
+import os as os
+import sys as sys
+import subprocess as subprocess
+import configparser as configparser
 import logging
 import logging.config
 import logging.handlers
-import locale
-import pygame
-import pygame.locals
+import locale as locale
+import pygame as pygame
 
 from setting import Setting
 from setting import BLOCK_SECOND_UPDATE_EVENT
@@ -96,7 +95,7 @@ class Mainboard:
                 os.putenv("SDL_VIDEODRIVER", driver)
             try:
                 pygame.display.init()
-            except pygame.error:
+            except:
                 print("Driver: {0} failed.".format(driver))
                 continue
             found = True

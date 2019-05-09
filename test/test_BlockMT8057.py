@@ -12,6 +12,7 @@ class Test_BlockMT8057(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        pygame.font.init()
         cls.logger = Logger("Log")
 
     #def setUp(self):

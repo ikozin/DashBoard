@@ -4,7 +4,8 @@
 #data = ('1', '2', '3')
 #print ('%s.' % ', '.join(data))
 
-
+print("1,".split(","))
+print("1,".split(","))
 print()
 
 def func(*args):

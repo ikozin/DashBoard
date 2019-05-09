@@ -12,6 +12,7 @@ class Test_BlockIR(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        pygame.font.init()
         cls.logger = Logger("Log")
 
     #def setUp(self):

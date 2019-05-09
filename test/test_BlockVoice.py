@@ -12,6 +12,7 @@ class Test_BlockVoice(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        pygame.font.init()
         cls.logger = Logger("Log")
 
     #def setUp(self):
@@ -62,7 +63,7 @@ class Test_BlockVoice(unittest.TestCase):
         self.assertEqual(ErrNotFound.exception.configName, SECTION_NAME, SECTION_NAME)
         self.assertEqual(ErrNotFound.exception.paramName, "BlockList", "BlockList")
 
-    def test_Init_finalize(self):
+    def test_Init(self):
         config = self._getSetting(None)
         block = BlockVoice(self.logger, config)
         self.assertTrue(block is not None, "BlockVoice")

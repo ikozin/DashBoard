@@ -37,20 +37,15 @@ class BlockIR(BlockBase):
         with open(CONFIG_FILE_NMAE, "w", encoding="utf-8") as file:
             for keyCode in self._list.keys():
                 file.write("begin\n\tprog={1}\n\tbutton={0}\n\tconfig={0}\n\trepeat=0\nend\n".format(keyCode, PROG_NAME))
-###########################################################################
-        if sys.platform == "linux":  # Only for Raspberry Pi
-            lirc.init(PROG_NAME, CONFIG_FILE_NMAE, blocking=False)
-###########################################################################
+        self.module_init()
         #self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
+        self.execute()
+
+    def execute(self, *args):
         try:
-###########################################################################
-            if sys.platform == "linux":  # Only for Raspberry Pi
-                code = lirc.nextcode()
-            else:
-                code = []
-###########################################################################
+            code = args[0] if len(args) == 1 else self.module_getcode()
             if len(code) == 0:
                 return
             keyCode = code[0]
@@ -68,7 +63,30 @@ class BlockIR(BlockBase):
 
     def done(self):
         """ """
+        self.module_done()
+
+
 ###########################################################################
-        if sys.platform == "linux":  # Only for Raspberry Pi
+    if sys.platform == "linux":  # Only for Raspberry Pi
+
+        def module_init(self):
+            lirc.init(PROG_NAME, CONFIG_FILE_NMAE, blocking=False)
+
+        def module_done(self):
             lirc.deinit()
+
+        def module_getcode(self, code=None):
+            code = lirc.nextcode()
+            return code
+
+    else:
+        def module_init(self):
+            pass
+
+        def module_done(self):
+            pass
+
+        def module_getcode(self, code=[]):
+            return code
 ###########################################################################
+ 
