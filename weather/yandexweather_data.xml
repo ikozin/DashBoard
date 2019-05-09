@@ -9,18 +9,18 @@
 			
 		<traffic region="213" zoom="10" lat="55.753215" lon="37.622504">
 			<region id="213">
-  <length>173894.999882</length>
-  <level>1</level>
+  <length>276103.699797</length>
+  <level>2</level>
   <icon>green</icon>
-  <timestamp>1557392070</timestamp>
-  <time>11:54</time>
-  <hint lang="ru">На дорогах свободно</hint>
-  <hint lang="en">Clear roads</hint>
-  <hint lang="uz">Yo‘llar bo‘sh</hint>
-  <hint lang="kk">Жолдар бос</hint>
-  <hint lang="tr">Trafik açık</hint>
-  <hint lang="uk">На дорогах вільно</hint>
-  <hint lang="be">На дарогах свабодна</hint>
+  <timestamp>1557412350</timestamp>
+  <time>17:32</time>
+  <hint lang="ru">Дороги почти свободны</hint>
+  <hint lang="en">Light traffic</hint>
+  <hint lang="uz">Yo‘llar deyarli bo‘sh</hint>
+  <hint lang="kk">Жолдар бостың қасы</hint>
+  <hint lang="tr">Trafik akıcı</hint>
+  <hint lang="uk">Дороги майже вільні</hint>
+  <hint lang="be">Дарогі амаль свабодныя</hint>
   <tend>0</tend>
   <url>https://yandex.ru/maps/213/moscow/probki</url>
 </region>
@@ -47,41 +47,41 @@
 			</date>
 			
 		<day_part typeid="2" type="день">
-			<weather_type>облачно</weather_type>
-			<weather_code>overcast</weather_code>
-			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_+20.png</image-v2>
-			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
-			<image_number>5</image_number>
-			<wind_speed>3.2</wind_speed>
-			<wind_direction id="ne">северо-восток</wind_direction>
-			<dampness>61</dampness>
-			<hectopascal>995</hectopascal>
-			<torr>746</torr>
-			<pressure>746</pressure>
-			<temperature class_name="t20" color="F8F4D0">+20</temperature>
+			<weather_type>облачно, дождь</weather_type>
+			<weather_code>overcast-and-rain</weather_code>
+			<image>https://yastatic.net/weather/i/icons/blueye/24/bkn_+ra_d.png</image>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_+ra_d_+20.png</image-v2>
+			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/bkn_+ra_d.png</image-v3>
+			<image_number></image_number>
+			<wind_speed>3.8</wind_speed>
+			<wind_direction id="se">юго-восток</wind_direction>
+			<dampness>59</dampness>
+			<hectopascal>994</hectopascal>
+			<torr>745</torr>
+			<pressure>745</pressure>
+			<temperature class_name="t22" color="F8F1C8">+21</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>08:00</observation_time>
-			<observation>2019-05-09T08:00:00</observation>
+			<observation_time>14:00</observation_time>
+			<observation>2019-05-09T14:00:00</observation>
 		</day_part>
 	
 			
 		<day_part typeid="3" type="вечер">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_-ra_d_+22.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_-ra_d.png</image-v3>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_ra_d_+20.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_ra_d.png</image-v3>
 			
 			<temperature_from class_name="t18" color="F7F3D3">+17</temperature_from>
-			<temperature_to class_name="t22" color="F8F1C8">+22</temperature_to>
+			<temperature_to class_name="t20" color="F8F4D0">+20</temperature_to>
 		
 		</day_part>
 	
 
 		<day_part typeid="4" type="ночь">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_-ra_n_+18.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_-ra_n.png</image-v3>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_n_+16.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_n.png</image-v3>
 			
 			<temperature_from class_name="t16" color="F6F3D6">+16</temperature_from>
-			<temperature_to class_name="t18" color="F7F3D3">+18</temperature_to>
+			<temperature_to class_name="t18" color="F7F3D3">+17</temperature_to>
 		
 		</day_part>
 	
@@ -90,8 +90,8 @@
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_-ra_d_+20.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_-ra_d.png</image-v3>
 			
-			<temperature_from class_name="t18" color="F7F3D3">+17</temperature_from>
-			<temperature_to class_name="t22" color="F8F1C8">+21</temperature_to>
+			<temperature_from class_name="t16" color="F6F3D6">+16</temperature_from>
+			<temperature_to class_name="t20" color="F8F4D0">+20</temperature_to>
 		
 		</day_part>
 	
@@ -100,7 +100,7 @@
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_-ra_d_+22.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_-ra_d.png</image-v3>
 			
-			<temperature_from class_name="t22" color="F8F1C8">+22</temperature_from>
+			<temperature_from class_name="t22" color="F8F1C8">+21</temperature_from>
 			<temperature_to class_name="t24" color="F9EEC0">+23</temperature_to>
 		
 		</day_part>

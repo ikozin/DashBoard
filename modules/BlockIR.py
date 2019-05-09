@@ -1,8 +1,4 @@
 import sys
-###########################################################################
-if sys.platform == "linux":  # Only for Raspberry Pi
-    import lirc
-###########################################################################
 import configparser
 import pygame
 import pygame.locals
@@ -68,6 +64,7 @@ class BlockIR(BlockBase):
 
 ###########################################################################
     if sys.platform == "linux":  # Only for Raspberry Pi
+        import lirc
 
         def module_init(self):
             lirc.init(PROG_NAME, CONFIG_FILE_NMAE, blocking=False)
