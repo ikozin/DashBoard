@@ -1,6 +1,6 @@
 from typing import *
 
-from  configparser import ConfigParser
+from configparser import ConfigParser
 from abc import ABCMeta, abstractclassmethod
 from tkinter import LabelFrame
 

@@ -66,7 +66,8 @@ class AlarmTimeFileBase(AlarmTimeBase):
                 pygame.mixer.music.set_volume(self._volume)
 
     def execute(self):
-        if self._isAlarm: return
+        if self._isAlarm:
+            return
         self._volume = ALARM_VOLUME_MIN
         self.init_draw()
         self._isAlarm = True
@@ -87,4 +88,3 @@ class AlarmTimeFileBase(AlarmTimeBase):
     def done_draw(self):
         """ """
         pass
-

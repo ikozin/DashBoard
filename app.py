@@ -95,7 +95,7 @@ class Mainboard:
                 os.putenv("SDL_VIDEODRIVER", driver)
             try:
                 pygame.display.init()
-            except:
+            except Exception:
                 print("Driver: {0} failed.".format(driver))
                 continue
             found = True
@@ -149,7 +149,7 @@ class Mainboard:
         self._isDisplayOn = False
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
-            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5, 
+            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5,
             # https://elinux.org/RPI_vcgencmd_usage
             subprocess.Popen("vcgencmd display_power 0 > /dev/null 2>&1", shell=True).wait()
             GPIO.output(LED_PIN, 0)
@@ -165,7 +165,7 @@ class Mainboard:
         self._isDisplayOn = True
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
-            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5, 
+            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5,
             # https://elinux.org/RPI_vcgencmd_usage
             subprocess.Popen("vcgencmd display_power 1 > /dev/null 2>&1", shell=True).wait()
             GPIO.output(LED_PIN, 1)

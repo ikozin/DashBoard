@@ -45,7 +45,7 @@ class BlockBase(metaclass=ABCMeta):
 
     def execute(self, *args):
         raise NotImplementedError()
-    
+
     def getText(self):
         return self._text
 

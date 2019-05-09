@@ -537,6 +537,7 @@ KEY_CODE_LIST = (
     'BTN_Z'
 )
 
+
 class IRManager(BaseManager):
     """description of class"""
 
@@ -591,10 +592,9 @@ class IRManager(BaseManager):
         if code in self._list:
             messagebox.showerror("Ошибка", "Код {0} уже существует".format(code))
             return
-        value = "{0},{1}".format(module, param);
+        value = "{0},{1}".format(module, param)
         self._list[code] = value
         self._listBox.insert("end", LISTBOX_FORMAT.format(code, value))
-
 
     def _changeCode(self) -> None:
         selection = self._listBox.curselection()
@@ -607,7 +607,7 @@ class IRManager(BaseManager):
             return
         if (code != values[0]):
             return
-        value = "{0},{1}".format(module, param);
+        value = "{0},{1}".format(module, param)
         self._list[code] = value
         self._listBox.delete(selection)
         self._listBox.insert(selection, LISTBOX_FORMAT.format(code, value))
@@ -632,7 +632,7 @@ class KeyCodeCreateDialog(ModalDialog):
         # self._modal.geometry('+400+400')
         self._valueKeyCode = StringVar()
         self._valueModule = StringVar()
-        self._valueParam  = StringVar()
+        self._valueParam = StringVar()
         lblCode = Label(self._modal, text="Код кнопки")
         lblCode.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
         comboCode = ttk.Combobox(self._modal, state="readonly", values=KEY_CODE_LIST, textvariable=self._valueKeyCode)
@@ -653,7 +653,7 @@ class KeyCodeCreateDialog(ModalDialog):
         self._waitDialog(self._modal, root)
         code = self._valueKeyCode.get()
         code = code if code else None
-        module  = self._valueModule.get()
+        module = self._valueModule.get()
         param = self._valueParam.get()
         return (code, module, param)
 
@@ -669,6 +669,7 @@ class KeyCodeCreateDialog(ModalDialog):
         self._valueModule.set("")
         self._valueParam.set("")
 
+
 class KeyCodeChangeDialog(ModalDialog):
 
     def Execute(self, root: IRManager, modulelist: Dict[str, BaseManager], code: str, value: str) -> Tuple[str, str, str]:
@@ -678,7 +679,7 @@ class KeyCodeChangeDialog(ModalDialog):
         params = value.split(",")
         self._valueKeyCode = StringVar(value=code)
         self._valueModule = StringVar(value=params[0])
-        self._valueParam  = StringVar(value=params[1])
+        self._valueParam = StringVar(value=params[1])
         lblCode = Label(self._modal, text="Код кнопки")
         lblCode.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
         comboCode = ttk.Combobox(self._modal, state="disabled", values=KEY_CODE_LIST, textvariable=self._valueKeyCode)
@@ -699,7 +700,7 @@ class KeyCodeChangeDialog(ModalDialog):
         self._waitDialog(self._modal, root)
         code = self._valueKeyCode.get()
         code = code if code else None
-        module  = self._valueModule.get()
+        module = self._valueModule.get()
         param = self._valueParam.get()
         return (code, module, param)
 

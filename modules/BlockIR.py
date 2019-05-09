@@ -34,7 +34,7 @@ class BlockIR(BlockBase):
             for keyCode in self._list.keys():
                 file.write("begin\n\tprog={1}\n\tbutton={0}\n\tconfig={0}\n\trepeat=0\nend\n".format(keyCode, PROG_NAME))
         self.module_init()
-        #self.updateInfo(True)
+        # self.updateInfo(True)
 
     def proccedEvent(self, event, isOnline):
         self.execute()
@@ -86,4 +86,3 @@ class BlockIR(BlockBase):
         def module_getcode(self, code=[]):
             return code
 ###########################################################################
- 

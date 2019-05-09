@@ -22,7 +22,12 @@ class AlarmManager(BaseManager):
         super(AlarmManager, self).__init__(root, text="Выбор будильника")
         self._modList = None
         self.columnconfigure(2, weight=1)
-        self._functions = {1: AlarmSettingUI_Simple, 2: AlarmSettingUI_Blink, 3: AlarmSettingUI_Rise, 4: AlarmSetting_Execute}
+        self._functions = {
+            1: AlarmSettingUI_Simple,
+            2: AlarmSettingUI_Blink,
+            3: AlarmSettingUI_Rise,
+            4: AlarmSetting_Execute
+        }
         self._alarmlist = dict()
         self._currentName = None
         self._listBox = Listbox(self, width=25)

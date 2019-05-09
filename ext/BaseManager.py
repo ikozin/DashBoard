@@ -15,7 +15,9 @@ class BaseManager(LabelFrame, metaclass=ABCMeta):
     def save(self, config: ConfigParser) -> None:
         pass
 
-    def loadFont(self, section: SectionProxy, name: str, fontNameDef: str = "Helvetica", fontSizeDef: int = 32, isBoldDef: bool = False, isItalicDef: bool = False) -> Tuple[str, int, bool, bool]:
+    def loadFont(self, section: SectionProxy, name: str,
+                 fontNameDef: str = "Helvetica", fontSizeDef: int = 32,
+                 isBoldDef: bool = False, isItalicDef: bool = False) -> Tuple[str, int, bool, bool]:
         if not isinstance(section, SectionProxy):
             raise TypeError("section")
         fontName = section.get(name + "Name", fontNameDef)
