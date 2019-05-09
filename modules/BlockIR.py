@@ -32,7 +32,8 @@ class BlockIR(BlockBase):
                 raise ExceptionNotFound(section.name, keyCode.upper())
         with open(CONFIG_FILE_NMAE, "w", encoding="utf-8") as file:
             for keyCode in self._list.keys():
-                file.write("begin\n\tprog={1}\n\tbutton={0}\n\tconfig={0}\n\trepeat=0\nend\n".format(keyCode, PROG_NAME))
+                file.write("begin\n\tprog={1}\n\tbutton={0}\n\t"
+                           "config={0}\n\trepeat=0\nend\n".format(keyCode, PROG_NAME))
         self.module_init()
         # self.updateInfo(True)
 

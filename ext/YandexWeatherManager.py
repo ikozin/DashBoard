@@ -126,7 +126,8 @@ class YandexWeatherManager(BaseManager):
         (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "WeatherTypeFont", isBoldDef=True)
         self._weatherType.load(fontName, fontSize, isBold, isItalic)
 
-        (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "TemperatureFont", fontSizeDef=160, isBoldDef=True)
+        (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "TemperatureFont",
+                                                               fontSizeDef=160, isBoldDef=True)
         self._temperature.load(fontName, fontSize, isBold, isItalic)
 
         (fontName, fontSize, isBold, isItalic) = self.loadFont(section, "HumidityFont")
