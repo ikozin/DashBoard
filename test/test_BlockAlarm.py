@@ -49,7 +49,7 @@ class Test_BlockAlarm(unittest.TestCase):
     def _getSetting(self, name):
         params = {
             "BlockList": "Time",
-            "List": "Alarm1",
+            "List": "",
         }
         config = Setting()
         config.Configuration.add_section(SECTION_NAME)
