@@ -1,0 +1,178 @@
+from typing import Dict, Tuple
+from configparser import ConfigParser
+from tkinter import messagebox, StringVar, LabelFrame, Label, Spinbox, Listbox, Button, N, S, E, W
+from tkinter.ttk import Frame
+from ext.base_manager import BaseManager
+from ext.modal_dialog import ColorsChooserFrame, EntryModalDialog, SelectFrame
+from ext.main_setting import MainSetting
+
+
+class MainManager(BaseManager):
+    """description of class"""
+
+    def __init__(self, root: LabelFrame):
+        """ """
+        super(MainManager, self).__init__(root, text="Основные настройки")
+        self.columnconfigure(4, weight=1)
+        self._section_list = dict()
+        self._current_name = None
+        self._idle_variable = StringVar()
+        self._listbox = Listbox(self)
+        self._listbox.grid(row=0, column=0, rowspan=3, padx=2, pady=2)
+        self._listbox.bind('<<ListboxSelect>>', self._select_section)
+
+        command_frame = Frame(self, padding=(2, 2, 2, 2))
+        command_frame.grid(row=0, column=1, rowspan=3, sticky=(N, S, E, W))
+
+        btn = Button(command_frame, text="Создать", command=self._create_section)
+        btn.grid(row=0, column=0, sticky=(N, S, E, W))
+
+        btn = Button(command_frame, text="Переименовать", command=self._rename_section)
+        btn.grid(row=1, column=0, sticky=(N, S, E, W))
+
+        btn = Button(command_frame, text="Удалить", command=self._delete_section)
+        btn.grid(row=2, column=0, sticky=(N, S, E, W))
+
+        idle_frame = LabelFrame(self, text="Время простоя")
+        idle_frame.grid(row=0, column=2, sticky=(N, E, W))
+
+        spin = Spinbox(idle_frame, from_=5, to=60, increment=1, width=3, textvariable=self._idle_variable)
+        spin.grid(row=0, column=0, padx=2, pady=2)
+
+        lbl = Label(idle_frame, text="минут")
+        lbl.grid(row=0, column=2, pady=2)
+
+        self._color_frame = ColorsChooserFrame(self, "Цвет")
+        self._color_frame.grid(row=0, column=3, sticky=(N, E, W))
+
+        self._section_frame = Frame(self, padding=(2, 2, 2, 2))
+        self._section_frame.grid(row=1, column=2, rowspan=2, columnspan=3, sticky=(N, S, E, W))
+
+        self._frame = SelectFrame(self, "Выбор модулей для загрузки")
+        self._frame.grid(row=3, column=0, columnspan=3, sticky=(N, S, E, W), padx=2, pady=2)
+
+    def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
+        if not isinstance(config, ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("MAIN"):
+            config.add_section("MAIN")
+        if not config.has_section("TIMELINE"):
+            config.add_section("TIMELINE")
+        self._current_name = None
+        for section_name in self._section_list:
+            section_block = self._section_list[section_name]
+            section_block.destroy()
+        self._section_list.clear()
+        self._listbox.delete(0, "end")
+        section = config["MAIN"]
+        idle = section.getint("idletime", 1)
+        self._idle_variable.set(idle)
+        back_color = self._get_tuple(section.get("backgroundcolor", "(0, 0, 0)"))
+        fore_color = self._get_tuple(section.get("foregroundcolor", "(255, 255, 255)"))
+        self._color_frame.load(back_color, fore_color)
+        selection = section.get("BlockList", "")
+        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in module_list]
+        self._frame.load(selection, module_list)
+        section = config["TIMELINE"]
+        csv_value = section.get("sections")
+        if csv_value:
+            section_schemas = [item.strip(" '") for item in csv_value.split(",") if item.strip()]
+            section_schemas = [str(item) for item in section_schemas if config.has_section(item)]
+            for item in section_schemas:
+                section = config[item]
+                section_block = MainSetting(self._section_frame, item)
+                section_block.load(config, item)
+                self._section_list[item] = section_block
+                self._listbox.insert("end", item)
+
+    def save(self, config: ConfigParser) -> None:
+        if not isinstance(config, ConfigParser):
+            raise TypeError("config")
+        if not config.has_section("MAIN"):
+            config.add_section("MAIN")
+        if not config.has_section("TIMELINE"):
+            config.add_section("TIMELINE")
+        section = config["MAIN"]
+        (background_color, foreground_color) = self._color_frame.get_result()
+        section["idletime"] = str(self._idle_variable.get())
+        section["backgroundcolor"] = "(%d, %d, %d)" % background_color
+        section["foregroundcolor"] = "(%d, %d, %d)" % foreground_color
+        section["BlockList"] = self._frame.get_result()
+
+        section = config["TIMELINE"]
+
+        parts = [x for x in iter(self._section_list)]
+        for schema_name in parts:
+            self._section_list[schema_name].pre_save()
+        list.sort(parts, key=lambda entry: self._section_list[entry]._time)
+        section["sections"] = ", ".join(parts)
+        for section_name in parts:
+            section_block = self._section_list[section_name]
+            section_block.save(config, section_name)
+
+    def _select_section(self, event) -> None:
+        listbox = event.widget
+        selection = listbox.curselection()
+        if not selection:
+            return
+        name = listbox.get(selection[0])
+        if self._current_name:
+            section_block = self._section_list[self._current_name]
+            section_block.grid_forget()
+        if not self._section_list:
+            return
+        section_block = self._section_list[name]
+        self._current_name = name
+        section_block.grid(row=0, column=0, sticky=(N, S, E, W))
+
+    def _create_section(self) -> None:
+        item = EntryModalDialog("Создать").execute(self, "")
+        if item == "":
+            return
+        if item in self._section_list:
+            messagebox.showerror("Ошибка", "Расписание {0} уже существует".format(item))
+            return
+        section_block = MainSetting(self._section_frame, item)
+        self._section_list[item] = section_block
+        self._listbox.insert("end", item)
+
+    def _rename_section(self) -> None:
+        selection = self._listbox.curselection()
+        if not selection:
+            return
+        name = self._listbox.get(selection[0])
+        section_block = self._section_list[name]
+        newname = EntryModalDialog("Переименовать").execute(self, name)
+        if newname == "":
+            return
+        if newname in self._section_list:
+            messagebox.showerror("Ошибка", "Расписание {0} уже существует".format(newname))
+            return
+        section_block.rename(newname)
+        del self._section_list[name]
+        self._section_list[newname] = section_block
+        if self._current_name == name:
+            self._current_name = newname
+        self._listbox.delete(selection)
+        self._listbox.insert(selection, newname)
+
+    def _delete_section(self) -> None:
+        selection = self._listbox.curselection()
+        if not selection:
+            return
+        name = self._listbox.get(selection[0])
+        if messagebox.askquestion("Удалить", "Вы действительно хотите удалить расписание {0}".format(name)) == "no":
+            return
+        section_block = self._section_list[name]
+        self._listbox.delete(selection)
+        del self._section_list[name]
+        section_block.destroy()
+        if self._current_name == name:
+            self._current_name = None
+
+    def _get_tuple(self, value: str) -> Tuple[int, int, int]:
+        """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
+        try:
+            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
+        except ValueError:
+            return None

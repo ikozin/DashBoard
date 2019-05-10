@@ -23,71 +23,74 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.py" />
-    <Compile Include="ext\alarm\ui\AlarmSettingUIFile.py" />
-    <Compile Include="ext\alarm\ui\AlarmSettingUI_Rise.py" />
-    <Compile Include="ext\alarm\ui\AlarmSettingUI_Simple.py" />
-    <Compile Include="ext\alarm\ui\AlarmSettingUI_Blink.py" />
-    <Compile Include="ext\alarm\ui\AlarmSettingUI.py" />
+    <Compile Include="ext\alarm\ui\alarm_setting_ui_file.py" />
+    <Compile Include="ext\alarm\ui\alarm_setting_ui_file_rise.py" />
+    <Compile Include="ext\alarm\ui\alarm_setting_ui_file_simple.py" />
+    <Compile Include="ext\alarm\ui\alarm_setting_ui_file_blink.py" />
+    <Compile Include="ext\alarm\ui\alarm_setting_ui.py" />
     <Compile Include="ext\alarm\ui\__init__.py" />
-    <Compile Include="ext\alarm\AlarmSetting.py" />
-    <Compile Include="ext\alarm\AlarmSetting_Execute.py" />
+    <Compile Include="ext\alarm\alarm_setting.py" />
+    <Compile Include="ext\alarm\alarm_setting_execute.py" />
     <Compile Include="ext\alarm\__init__.py" />
-    <Compile Include="ext\BaseManager.py">
+    <Compile Include="ext\base_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\BaseSetting.py">
+    <Compile Include="ext\base_setting.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\IRManager.py">
+    <Compile Include="ext\ir_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\MT8057Manager.py">
+    <Compile Include="ext\mt8057_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\SwapManager.py">
+    <Compile Include="ext\swap_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\WatcherManager.py">
+    <Compile Include="ext\watcher_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\YandexWeatherManager.py">
+    <Compile Include="ext\yandex_weather_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\alarm\AlarmTimeFileBase.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\alarm\BlockAlarmBlink.py" />
     <Compile Include="modules\alarm\BlockAlarmExecute.py" />
+    <Compile Include="modules\alarm\BlockAlarmRise.py" />
+    <Compile Include="modules\alarm\BlockAlarmSimple.py" />
     <Compile Include="modules\BlockBase.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="exceptions.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\AlarmManager.py">
+    <Compile Include="ext\alarm_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\CalendarManager.py">
+    <Compile Include="ext\calendar_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\MainManager.py">
+    <Compile Include="ext\main_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\MainSetting.py">
+    <Compile Include="ext\main_setting.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\ModalDialog.py">
+    <Compile Include="ext\modal_dialog.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\OpenWeatherMapManager.py">
+    <Compile Include="ext\open_weather_map_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\TimeManager.py">
+    <Compile Include="ext\time_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\VoiceManager.py">
+    <Compile Include="ext\voice_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\YandexNewsManager.py">
+    <Compile Include="ext\yandex_news_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\__init__.py">
@@ -95,15 +98,6 @@
     </Compile>
     <Compile Include="modules\alarm\AlarmTimeBase.py" />
     <Compile Include="modules\alarm\AlarmBase.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="modules\alarm\BlockAlarmBlink.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="modules\alarm\BlockAlarmRise.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="modules\alarm\BlockAlarmSimple.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\alarm\__init__.py">
@@ -145,7 +139,7 @@
     <Compile Include="modules\BlockYandexNews.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ext\WunderGroundManager.py">
+    <Compile Include="ext\wunder_ground_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\BlockMT8057.py">
@@ -181,6 +175,7 @@
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
     <Content Include="deploy_rasppi.cmd" />
+    <Content Include="pylint.cmd" />
     <Content Include="pycodestyle.cmd" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />

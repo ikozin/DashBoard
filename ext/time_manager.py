@@ -1,10 +1,8 @@
-from typing import *
-
+from typing import Dict
 from configparser import ConfigParser
-from tkinter import *
-
-from ext.BaseManager import BaseManager
-from ext.ModalDialog import FontChooserFrame
+from tkinter import LabelFrame
+from ext.base_manager import BaseManager
+from ext.modal_dialog import FontChooserFrame
 
 
 class TimeManager(BaseManager):
@@ -16,17 +14,17 @@ class TimeManager(BaseManager):
         self._font = FontChooserFrame(self, "Параметры шрифта")
         self._font.grid(row=0, column=1)
 
-    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
+    def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("TimeBlock"):
             config.add_section("TimeBlock")
         section = config["TimeBlock"]
-        fontName = section.get("FontName", "Helvetica")
-        fontSize = section.getint("FontSize", 384)
-        isBold = section.getboolean("FontBold", True)
-        isItalic = section.getboolean("FontItalic", False)
-        self._font.load(fontName, fontSize, isBold, isItalic)
+        font_name = section.get("FontName", "Helvetica")
+        font_size = section.getint("FontSize", 384)
+        is_bold = section.getboolean("FontBold", True)
+        is_italic = section.getboolean("FontItalic", False)
+        self._font.load(font_name, font_size, is_bold, is_italic)
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
@@ -34,8 +32,8 @@ class TimeManager(BaseManager):
         if not config.has_section("TimeBlock"):
             config.add_section("TimeBlock")
         section = config["TimeBlock"]
-        (fontName, fontSize, isBold, isItalic) = self._font.getResult()
-        section["FontName"] = fontName
-        section["FontSize"] = str(fontSize)
-        section["FontBold"] = str(isBold)
-        section["FontItalic"] = str(isItalic)
+        (font_name, font_size, is_bold, is_italic) = self._font.get_result()
+        section["FontName"] = font_name
+        section["FontSize"] = str(font_size)
+        section["FontBold"] = str(is_bold)
+        section["FontItalic"] = str(is_italic)

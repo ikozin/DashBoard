@@ -1,10 +1,9 @@
-from typing import *
-
+from typing import Dict, Tuple
 from configparser import ConfigParser
-from tkinter import *
-
-from ext.BaseManager import BaseManager
-from ext.ModalDialog import ModalDialog
+from tkinter import messagebox, StringVar, Toplevel, LabelFrame, Label, Entry, Listbox, Button, N, S, E, W
+from tkinter.ttk import Frame, Combobox
+from ext.base_manager import BaseManager
+from ext.modal_dialog import ModalDialog
 
 LISTBOX_FORMAT = "{0}: {1}"
 KEY_CODE_LIST = (
@@ -544,30 +543,30 @@ class IRManager(BaseManager):
     def __init__(self, root: LabelFrame):
         """ """
         super(IRManager, self).__init__(root, text="Настройки IR")
-        self._modulelist = None
+        self._module_list = None
         self._list = dict()
-        self._listBox = Listbox(self, width=45)
-        self._listBox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
-        self._listBox.bind('<<ListboxSelect>>', self._selectCode)
-        commandFrame = ttk.Frame(self, padding=(2, 2, 2, 2))
-        commandFrame.grid(row=0, column=1, sticky=(N, S, W))
-        btn = Button(commandFrame, text="Создать", command=self._createCode)
+        self._listbox = Listbox(self, width=45)
+        self._listbox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
+        self._listbox.bind('<<ListboxSelect>>', self._select_code)
+        command_frame = Frame(self, padding=(2, 2, 2, 2))
+        command_frame.grid(row=0, column=1, sticky=(N, S, W))
+        btn = Button(command_frame, text="Создать", command=self._create_code)
         btn.grid(row=0, column=0, sticky=(N, S, E, W))
-        btn = Button(commandFrame, text="Изменить", command=self._changeCode)
+        btn = Button(command_frame, text="Изменить", command=self._change_code)
         btn.grid(row=1, column=0, sticky=(N, S, E, W))
-        btn = Button(commandFrame, text="Удалить", command=self._deleteCode)
+        btn = Button(command_frame, text="Удалить", command=self._delete_code)
         btn.grid(row=2, column=0, sticky=(N, S, E, W))
 
-    def load(self, config: ConfigParser, modulelist: Dict[str, BaseManager]) -> None:
+    def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not config.has_section("IRBlock"):
             config.add_section("IRBlock")
         section = config["IRBlock"]
-        self._listBox.delete(0, "end")
-        self._modulelist = modulelist
-        for keyCode in section:
-            key = keyCode.upper()
-            self._list[key] = section.get(keyCode)
-            self._listBox.insert("end", LISTBOX_FORMAT.format(key, self._list[key]))
+        self._listbox.delete(0, "end")
+        self._module_list = module_list
+        for key_code in section:
+            key = key_code.upper()
+            self._list[key] = section.get(key_code)
+            self._listbox.insert("end", LISTBOX_FORMAT.format(key, self._list[key]))
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
@@ -578,15 +577,15 @@ class IRManager(BaseManager):
         for key, value in self._list.items():
             section[key] = str(value)
 
-    def _selectCode(self, event) -> None:
-        listBox = event.widget
-        selection = listBox.curselection()
+    def _select_code(self, event) -> None:
+        listbox = event.widget
+        selection = listbox.curselection()
         if not selection:
             return
-        name = listBox.get(selection[0])
+        # name = listbox.get(selection[0])
 
-    def _createCode(self) -> None:
-        (code, module, param) = KeyCodeCreateDialog().Execute(self, self._modulelist)
+    def _create_code(self) -> None:
+        (code, module, param) = KeyCodeCreateDialog().execute(self, self._module_list)
         if code is None:
             return
         if code in self._list:
@@ -594,125 +593,139 @@ class IRManager(BaseManager):
             return
         value = "{0},{1}".format(module, param)
         self._list[code] = value
-        self._listBox.insert("end", LISTBOX_FORMAT.format(code, value))
+        self._listbox.insert("end", LISTBOX_FORMAT.format(code, value))
 
-    def _changeCode(self) -> None:
-        selection = self._listBox.curselection()
+    def _change_code(self) -> None:
+        selection = self._listbox.curselection()
         if not selection:
             return
-        values = self._listBox.get(selection[0]).split(": ")
-        name = self._listBox.get(selection[0])
-        (code, module, param) = KeyCodeChangeDialog().Execute(self, self._modulelist, values[0], values[1])
+        values = self._listbox.get(selection[0]).split(": ")
+        # name = self._listbox.get(selection[0])
+        (code, module, param) = KeyCodeChangeDialog().execute(self, self._module_list, values[0], values[1])
         if code is None:
             return
-        if (code != values[0]):
+        if code != values[0]:
             return
         value = "{0},{1}".format(module, param)
         self._list[code] = value
-        self._listBox.delete(selection)
-        self._listBox.insert(selection, LISTBOX_FORMAT.format(code, value))
+        self._listbox.delete(selection)
+        self._listbox.insert(selection, LISTBOX_FORMAT.format(code, value))
 
-    def _deleteCode(self) -> None:
-        selection = self._listBox.curselection()
+    def _delete_code(self) -> None:
+        selection = self._listbox.curselection()
         if not selection:
             return
-        name = self._listBox.get(selection[0])
+        name = self._listbox.get(selection[0])
         name = name.split(":", 1)[0]
         if messagebox.askquestion("Удалить", "Вы действительно хотите удалить {0}".format(name)) == "no":
             return
         del self._list[name]
-        self._listBox.delete(selection)
+        self._listbox.delete(selection)
 
 
 class KeyCodeCreateDialog(ModalDialog):
 
-    def Execute(self, root: IRManager, modulelist: Dict[str, BaseManager]) -> Tuple[str, str, str]:
+    def __init__(self):
+        self._value_key_code = None
+        self._value_module = None
+        self._value_param = None
+        self._modal = None
+        self._btn_ok = None
+
+    def execute(self, root: IRManager, module_list: Dict[str, BaseManager]) -> Tuple[str, str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Создать")
         # self._modal.geometry('+400+400')
-        self._valueKeyCode = StringVar()
-        self._valueModule = StringVar()
-        self._valueParam = StringVar()
-        lblCode = Label(self._modal, text="Код кнопки")
-        lblCode.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-        comboCode = ttk.Combobox(self._modal, state="readonly", values=KEY_CODE_LIST, textvariable=self._valueKeyCode)
-        comboCode.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        comboCode.bind('<<ComboboxSelected>>', lambda e: self._selectCode())
-        lblMod = Label(self._modal, text="Модуль")
-        lblMod.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-        comboModule = ttk.Combobox(self._modal, state="readonly", values=modulelist, textvariable=self._valueModule)
-        comboModule.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        lblParam = Label(self._modal, text="Параметры")
-        lblParam.grid(row=4, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-        entry = Entry(self._modal, textvariable=self._valueParam)
+        self._value_key_code = StringVar()
+        self._value_module = StringVar()
+        self._value_param = StringVar()
+        lbl_code = Label(self._modal, text="Код кнопки")
+        lbl_code.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        combo_code = Combobox(self._modal, state="readonly", values=KEY_CODE_LIST, textvariable=self._value_key_code)
+        combo_code.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
+        combo_code.bind('<<ComboboxSelected>>', lambda e: self._select_code())
+        lbl_mod = Label(self._modal, text="Модуль")
+        lbl_mod.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        combo_module = Combobox(self._modal, state="readonly", values=module_list, textvariable=self._value_module)
+        combo_module.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
+        lbl_param = Label(self._modal, text="Параметры")
+        lbl_param.grid(row=4, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        entry = Entry(self._modal, textvariable=self._value_param)
         entry.grid(row=5, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        self._btnOk = Button(self._modal, text="OK", state="disabled", command=self._ok)
-        self._btnOk.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+        self._btn_ok = Button(self._modal, text="OK", state="disabled", command=self._ok)
+        self._btn_ok.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
         btn = Button(self._modal, text="Cancel", command=self._cancel)
         btn.grid(row=6, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
-        self._waitDialog(self._modal, root)
-        code = self._valueKeyCode.get()
+        self._wait_dialog(self._modal, root)
+        code = self._value_key_code.get()
         code = code if code else None
-        module = self._valueModule.get()
-        param = self._valueParam.get()
+        module = self._value_module.get()
+        param = self._value_param.get()
         return (code, module, param)
 
-    def _selectCode(self) -> None:
-        self._btnOk.configure(state="normal")
+    def _select_code(self) -> None:
+        self._btn_ok.configure(state="normal")
 
     def _ok(self) -> None:
         self._modal.destroy()
 
     def _cancel(self) -> None:
         self._modal.destroy()
-        self._valueKeyCode.set("")
-        self._valueModule.set("")
-        self._valueParam.set("")
+        self._value_key_code.set("")
+        self._value_module.set("")
+        self._value_param.set("")
 
 
 class KeyCodeChangeDialog(ModalDialog):
 
-    def Execute(self, root: IRManager, modulelist: Dict[str, BaseManager],
+    def __init__(self):
+        self._value_key_code = None
+        self._value_module = None
+        self._value_param = None
+        self._modal = None
+        self._btn_ok = None
+
+    def execute(self, root: IRManager, module_list: Dict[str, BaseManager],
                 code: str, value: str) -> Tuple[str, str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Изменить")
         # self._modal.geometry('+400+400')
         params = value.split(",")
-        self._valueKeyCode = StringVar(value=code)
-        self._valueModule = StringVar(value=params[0])
-        self._valueParam = StringVar(value=params[1])
-        lblCode = Label(self._modal, text="Код кнопки")
-        lblCode.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-        comboCode = ttk.Combobox(self._modal, state="disabled", values=KEY_CODE_LIST, textvariable=self._valueKeyCode)
-        comboCode.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        comboCode.bind('<<ComboboxSelected>>', lambda e: self._selectCode())
-        lblMod = Label(self._modal, text="Модуль")
-        lblMod.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-        comboModule = ttk.Combobox(self._modal, state="readonly", values=modulelist, textvariable=self._valueModule)
-        comboModule.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        lblParam = Label(self._modal, text="Параметры")
-        lblParam.grid(row=4, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
-        entry = Entry(self._modal, textvariable=self._valueParam)
+        self._value_key_code = StringVar(value=code)
+        self._value_module = StringVar(value=params[0])
+        self._value_param = StringVar(value=params[1])
+        lbl_code = Label(self._modal, text="Код кнопки")
+        lbl_code.grid(row=0, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        combo_code = Combobox(self._modal, state="disabled", values=KEY_CODE_LIST, textvariable=self._value_key_code)
+        combo_code.grid(row=1, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
+        combo_code.bind('<<ComboboxSelected>>', lambda e: self._select_code())
+        lbl_mod = Label(self._modal, text="Модуль")
+        lbl_mod.grid(row=2, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        combo_module = Combobox(self._modal, state="readonly", values=module_list, textvariable=self._value_module)
+        combo_module.grid(row=3, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
+        lbl_param = Label(self._modal, text="Параметры")
+        lbl_param.grid(row=4, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, W))
+        entry = Entry(self._modal, textvariable=self._value_param)
         entry.grid(row=5, column=0, columnspan=4, padx=2, pady=2, sticky=(N, S, E, W))
-        self._btnOk = Button(self._modal, text="OK", command=self._ok)
-        self._btnOk.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+        self._btn_ok = Button(self._modal, text="OK", command=self._ok)
+        self._btn_ok.grid(row=6, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
         btn = Button(self._modal, text="Cancel", command=self._cancel)
         btn.grid(row=6, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
-        self._waitDialog(self._modal, root)
-        code = self._valueKeyCode.get()
+        self._wait_dialog(self._modal, root)
+        code = self._value_key_code.get()
         code = code if code else None
-        module = self._valueModule.get()
-        param = self._valueParam.get()
+        module = self._value_module.get()
+        param = self._value_param.get()
         return (code, module, param)
 
-    def _selectCode(self) -> None:
-        self._btnOk.configure(state="normal")
+    def _select_code(self) -> None:
+        self._btn_ok.configure(state="normal")
 
     def _ok(self) -> None:
         self._modal.destroy()
 
     def _cancel(self) -> None:
         self._modal.destroy()
-        self._valueKeyCode.set("")
-        self._valueModule.set("")
-        self._valueParam.set("")
+        self._value_key_code.set("")
+        self._value_module.set("")
+        self._value_param.set("")
