@@ -19,7 +19,7 @@ class BlockAlarmExecute(AlarmTimeBase):
         self._modList = modList
         self._module = configSection.get("Module")
         if self._module not in self._modList:
-            raise ExceptionNotFound(section.name, "Module")
+            raise ExceptionNotFound(configSection.name, "Module")
 
     def execute(self):
         if self._isAlarm:
