@@ -21,7 +21,7 @@ class AlarmSettingExecute(AlarmSetting):
     def load(self, config: ConfigParser, section_name: str) -> None:
         super(AlarmSettingExecute, self).load(config, section_name)
         section = config[section_name]
-        self._module_variable.set(section.get("Module", ""))
+        self._module_variable.set(section.get("Module", fallback=""))
 
     def save(self, config: ConfigParser, section_name: str) -> None:
         super(AlarmSettingExecute, self).save(config, section_name)

@@ -23,8 +23,8 @@ class BaseManager(LabelFrame, metaclass=ABCMeta):
         """ Загрузка шрифта """
         if not isinstance(section, SectionProxy):
             raise TypeError("section")
-        font_name = section.get(name + "Name", font_name_def)
-        font_size = section.getint(name + "Size", font_size_def)
-        is_bold = section.getboolean(name + "Bold", is_bold_def)
-        is_italic = section.getboolean(name + "Italic", is_italic_def)
+        font_name = section.get(name + "Name", fallback=font_name_def)
+        font_size = section.getint(name + "Size", fallback=font_size_def)
+        is_bold = section.getboolean(name + "Bold", fallback=is_bold_def)
+        is_italic = section.getboolean(name + "Italic", fallback=is_italic_def)
         return (font_name, font_size, is_bold, is_italic)

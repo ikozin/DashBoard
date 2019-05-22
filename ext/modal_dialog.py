@@ -1,3 +1,4 @@
+from typing import Tuple
 from tkinter import font, colorchooser, BooleanVar, IntVar, StringVar, Toplevel, LabelFrame, Label, Entry, Checkbutton, Spinbox, Listbox, Button, Scrollbar, Canvas, N, S, E, W, RIGHT, VERTICAL, FALSE, TRUE, LEFT, BOTH, Y, NW
 from tkinter.ttk import Frame, Combobox
 
@@ -100,7 +101,7 @@ class ColorsChooserFrame(LabelFrame):
         self._fore_selector.configure(foreground=tk_color)
         self._fore_color = (int(triple_color[0]), int(triple_color[1]), int(triple_color[2]))
 
-    def get_result(self):
+    def get_result(self) -> Tuple[Tuple[int, int, int], Tuple[int, int, int]]:
         return (self._back_color, self._fore_color)
 
 

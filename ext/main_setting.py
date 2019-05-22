@@ -15,13 +15,12 @@ class MainSetting(BaseSetting):
             raise TypeError("section_name")
         super(MainSetting, self).__init__(root, text="Настройка расписания: {0}".format(section_name))
         self.columnconfigure(9, weight=1)
-        self._color_frame = None
 
-        self._time = None
-        self._hour_variable = IntVar(0)
-        self._minute_variable = IntVar(0)
-        self._second_variable = IntVar(0)
-        self._idle_variable = IntVar(0)
+        self._time = ""
+        self._hour_variable = IntVar(value=0)
+        self._minute_variable = IntVar(value=0)
+        self._second_variable = IntVar(value=0)
+        self._idle_variable = IntVar(value=0)
 
         time_frame = LabelFrame(self, text="Время")
         time_frame.grid(row=1, column=0, sticky=(N, S, E, W))
@@ -70,17 +69,16 @@ class MainSetting(BaseSetting):
         if section is None:
             raise Exception("Section {0} not found".format(section_name))
 
-        date = section.get("starttime", "0:00:00")
-        date = datetime.strptime(date, "%H:%M:%S")
-        idle = section.getint("idletime", 1)
+        date = datetime.strptime(section.get("starttime", fallback="0:00:00"), "%H:%M:%S")
+        idle = section.getint("idletime", fallback=1)
 
         self._hour_variable.set(date.hour)
         self._minute_variable.set(date.minute)
         self._second_variable.set(date.second)
         self._idle_variable.set(idle)
 
-        back_color = self._get_tuple(section.get("backgroundcolor", "(0, 0, 0)"))
-        fore_color = self._get_tuple(section.get("foregroundcolor", "(255, 255, 255)"))
+        back_color = self._get_tuple(section.get("backgroundcolor", fallback="(0, 0, 0)"))
+        fore_color = self._get_tuple(section.get("foregroundcolor", fallback="(255, 255, 255)"))
         self._color_frame.load(back_color, fore_color)
 
     def pre_save(self) -> None:
@@ -117,9 +115,6 @@ class MainSetting(BaseSetting):
             raise TypeError("section_name")
         self.configure(text="Настройка расписания: {0}".format(section_name))
 
-    def _get_tuple(self, value: str) -> Tuple[int, int, int]:
+    def _get_tuple(self, value: str) -> Tuple[int, ...]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except ValueError:
-            return None
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

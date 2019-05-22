@@ -256,3 +256,4 @@ __pycache__/
 /log.txt.*
 /text.wav
 /weather/*.xml
+/.mypy_cache/

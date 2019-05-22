@@ -20,10 +20,10 @@ class TimeManager(BaseManager):
         if not config.has_section("TimeBlock"):
             config.add_section("TimeBlock")
         section = config["TimeBlock"]
-        font_name = section.get("FontName", "Helvetica")
-        font_size = section.getint("FontSize", 384)
-        is_bold = section.getboolean("FontBold", True)
-        is_italic = section.getboolean("FontItalic", False)
+        font_name = section.get("FontName", fallback="Helvetica")
+        font_size = section.getint("FontSize", fallback=384)
+        is_bold = section.getboolean("FontBold", fallback=True)
+        is_italic = section.getboolean("FontItalic", fallback=False)
         self._font.load(font_name, font_size, is_bold, is_italic)
 
     def save(self, config: ConfigParser) -> None:

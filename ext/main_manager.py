@@ -45,7 +45,7 @@ class MainManager(BaseManager):
         self._color_frame = ColorsChooserFrame(self, "Цвет")
         self._color_frame.grid(row=0, column=3, sticky=(N, E, W))
 
-        self._section_frame = Frame(self, padding=(2, 2, 2, 2))
+        self._section_frame = LabelFrame(self)
         self._section_frame.grid(row=1, column=2, rowspan=2, columnspan=3, sticky=(N, S, E, W))
 
         self._frame = SelectFrame(self, "Выбор модулей для загрузки")
@@ -65,13 +65,12 @@ class MainManager(BaseManager):
         self._section_list.clear()
         self._listbox.delete(0, "end")
         section = config["MAIN"]
-        idle = section.getint("idletime", 1)
+        idle = section.getint("idletime", fallback=1)
         self._idle_variable.set(idle)
-        back_color = self._get_tuple(section.get("backgroundcolor", "(0, 0, 0)"))
-        fore_color = self._get_tuple(section.get("foregroundcolor", "(255, 255, 255)"))
+        back_color = self._get_tuple(section.get("backgroundcolor", fallback="(0, 0, 0)"))
+        fore_color = self._get_tuple(section.get("foregroundcolor", fallback="(255, 255, 255)"))
         self._color_frame.load(back_color, fore_color)
-        selection = section.get("BlockList", "")
-        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in module_list]
+        selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",") if item.strip() in module_list]
         self._frame.load(selection, module_list)
         section = config["TIMELINE"]
         csv_value = section.get("sections")
@@ -170,9 +169,6 @@ class MainManager(BaseManager):
         if self._current_name == name:
             self._current_name = None
 
-    def _get_tuple(self, value: str) -> Tuple[int, int, int]:
+    def _get_tuple(self, value: str) -> Tuple[int, ...]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except ValueError:
-            return None
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

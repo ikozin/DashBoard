@@ -38,10 +38,9 @@ class VoiceManager(BaseManager):
         if not config.has_section("VoiceBlock"):
             config.add_section("VoiceBlock")
         section = config["VoiceBlock"]
-        self._speaker_value.set(section.get("Speaker", "omazh"))
-        self._key_value.set(section.get("Key", ""))
-        selection = section.get("BlockList", "")
-        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in module_list]
+        self._speaker_value.set(section.get("Speaker", fallback="omazh"))
+        self._key_value.set(section.get("Key", fallback=""))
+        selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",") if item.strip() in module_list]
         self._frame.load(selection, module_list)
 
     def save(self, config: ConfigParser) -> None:

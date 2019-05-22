@@ -28,7 +28,7 @@ class BlockVoice(BlockBase):
 
         self._speaker = section.get("Speaker")
         self._key = section.get("Key")
-        selection = section.get("BlockList", "")
+        selection = section.get("BlockList", fallback="")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
         for name in selection:
             if name in modList:

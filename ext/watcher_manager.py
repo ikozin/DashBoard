@@ -117,7 +117,7 @@ class WatcherManager(BaseManager):
             config.add_section("WatcherBlock")
         section = config["WatcherBlock"]
 
-        weekday = self._get_tuple(section.get("WeekDay", "(0, 1, 2, 3, 4)"))
+        weekday = self._get_tuple(section.get("WeekDay", fallback="(0, 1, 2, 3, 4)"))
         if any(day == 0 for day in weekday):
             self._weekday0.set(1)
         if any(day == 1 for day in weekday):
@@ -133,20 +133,18 @@ class WatcherManager(BaseManager):
         if any(day == 6 for day in weekday):
             self._weekday6.set(1)
 
-        date = section.get("StartTime", "9:00:00")
-        date = datetime.strptime(date, "%H:%M:%S")
+        date = datetime.strptime(section.get("StartTime", fallback="9:00:00"), "%H:%M:%S")
         self._hour_start_variable.set(date.hour)
         self._minute_start_variable.set(date.minute)
         self._second_start_variable.set(date.second)
 
-        date = section.get("FinishTime", "20:00:00")
-        date = datetime.strptime(date, "%H:%M:%S")
+        date = datetime.strptime(section.get("FinishTime", fallback="20:00:00"), "%H:%M:%S")
         self._hour_finish_variable.set(date.hour)
         self._minute_finish_variable.set(date.minute)
         self._second_finish_variable.set(date.second)
 
-        self._update_value.set(section.getint("UpdateTime", 1))
-        self._path_value.set(section.get("Path", ""))
+        self._update_value.set(section.getint("UpdateTime", fallback=1))
+        self._path_value.set(section.get("Path", fallback=""))
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
@@ -155,7 +153,7 @@ class WatcherManager(BaseManager):
             config.add_section("WatcherBlock")
         section = config["WatcherBlock"]
 
-        weekday = (
+        var_weekday = (
             self._weekday0.get(),
             self._weekday1.get(),
             self._weekday2.get(),
@@ -164,7 +162,7 @@ class WatcherManager(BaseManager):
             self._weekday5.get(),
             self._weekday6.get(),
         )
-        weekday = [str(index) for (index, value) in enumerate(weekday) if value != 0]
+        weekday = [str(index) for (index, value) in enumerate(var_weekday) if value != 0]
         section["WeekDay"] = ", ".join(weekday)
 
         date = datetime(
@@ -193,9 +191,6 @@ class WatcherManager(BaseManager):
             return
         self._path_value.set(file_name)
 
-    def _get_tuple(self, value: str) -> Tuple[int, int, int]:
+    def _get_tuple(self, value: str) -> Tuple[int, ...]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except ValueError:
-            return None
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

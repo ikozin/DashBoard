@@ -67,16 +67,16 @@ class YandexNewsManager(BaseManager):
         if not config.has_section("YandexNewsBlock"):
             config.add_section("YandexNewsBlock")
         section = config["YandexNewsBlock"]
-        font_name = section.get("FontName", "Helvetica")
-        font_size = section.getint("FontSize", 34)
-        is_bold = section.getboolean("FontBold", False)
-        is_italic = section.getboolean("FontItalic", False)
+        font_name = section.get("FontName", fallback="Helvetica")
+        font_size = section.getint("FontSize", fallback=34)
+        is_bold = section.getboolean("FontBold", fallback=False)
+        is_italic = section.getboolean("FontItalic", fallback=False)
         self._font.load(font_name, font_size, is_bold, is_italic)
-        self._url_value.set(section.get("Url", "https://news.yandex.ru/index.rss"))
-        self._update_value.set(section.getint("UpdateTime", 15))
-        self._pos_value.set(section.getint("Position", 720))
-        self._indent_value.set(section.getint("Indent", 16))
-        self._rows_value.set(section.getint("Rows", 5))
+        self._url_value.set(section.get("Url", fallback="https://news.yandex.ru/index.rss"))
+        self._update_value.set(section.getint("UpdateTime", fallback=15))
+        self._pos_value.set(section.getint("Position", fallback=720))
+        self._indent_value.set(section.getint("Indent", fallback=16))
+        self._rows_value.set(section.getint("Rows", fallback=5))
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):

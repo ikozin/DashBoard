@@ -28,12 +28,12 @@ class CalendarManager(BaseManager):
         if not config.has_section("CalendarBlock"):
             config.add_section("CalendarBlock")
         section = config["CalendarBlock"]
-        font_name = section.get("FontName", "Helvetica")
-        font_size = section.getint("FontSize", 150)
-        is_bold = section.getboolean("FontBold", True)
-        is_italic = section.getboolean("FontItalic", False)
+        font_name = section.get("FontName", fallback="Helvetica")
+        font_size = section.getint("FontSize", fallback=150)
+        is_bold = section.getboolean("FontBold", fallback=True)
+        is_italic = section.getboolean("FontItalic", fallback=False)
         self._font.load(font_name, font_size, is_bold, is_italic)
-        self._pos_value.set(section.getint("Position", 80))
+        self._pos_value.set(section.getint("Position", fallback=80))
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):

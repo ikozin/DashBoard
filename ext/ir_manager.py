@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional
 from configparser import ConfigParser
 from tkinter import messagebox, StringVar, Toplevel, LabelFrame, Label, Entry, Listbox, Button, N, S, E, W
 from tkinter.ttk import Frame, Combobox
@@ -543,7 +543,7 @@ class IRManager(BaseManager):
     def __init__(self, root: LabelFrame):
         """ """
         super(IRManager, self).__init__(root, text="Настройки IR")
-        self._module_list = None
+        self._module_list: Dict[str, BaseManager] = dict()
         self._list = dict()
         self._listbox = Listbox(self, width=45)
         self._listbox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
@@ -632,7 +632,7 @@ class KeyCodeCreateDialog(ModalDialog):
         self._modal = None
         self._btn_ok = None
 
-    def execute(self, root: IRManager, module_list: Dict[str, BaseManager]) -> Tuple[str, str, str]:
+    def execute(self, root: IRManager, module_list: Dict[str, BaseManager]) -> Tuple[Optional[str], str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Создать")
         # self._modal.geometry('+400+400')
@@ -686,7 +686,7 @@ class KeyCodeChangeDialog(ModalDialog):
         self._btn_ok = None
 
     def execute(self, root: IRManager, module_list: Dict[str, BaseManager],
-                code: str, value: str) -> Tuple[str, str, str]:
+                code: str, value: str) -> Tuple[Optional[str], str, str]:
         self._modal = Toplevel(root)
         self._modal.title("Изменить")
         # self._modal.geometry('+400+400')

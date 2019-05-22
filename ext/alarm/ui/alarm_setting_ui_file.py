@@ -21,7 +21,7 @@ class AlarmSettingUIFile(AlarmSettingUI):
     def load(self, config: ConfigParser, section_name: str) -> None:
         super(AlarmSettingUIFile, self).load(config, section_name)
         section = config[section_name]
-        self._file_variable.set(section.get("File", ""))
+        self._file_variable.set(section.get("File", fallback=""))
 
     def save(self, config: ConfigParser, section_name: str) -> None:
         super(AlarmSettingUIFile, self).save(config, section_name)

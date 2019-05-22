@@ -25,7 +25,7 @@ class BlockSwap(BlockSecondBase):
         if time is None:
             raise ExceptionNotFound(section.name, "UpdateTime")
 
-        selection = section.get("BlockList", "")
+        selection = section.get("BlockList", fallback="")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
         for name in selection:
             if name in modList:

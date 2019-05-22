@@ -10,7 +10,6 @@ class AlarmSettingUI(AlarmSetting):
 
     def __init__(self, root: LabelFrame, section_name: str, mod_list: List[str]):
         super(AlarmSettingUI, self).__init__(root, section_name, mod_list)
-        self._color_frame = None
         self._duration_variable = IntVar(value=0)
         duration_frame = LabelFrame(self, text="Длительность")
         duration_frame.grid(row=1, column=1, sticky=(N, S, E, W))
@@ -24,10 +23,10 @@ class AlarmSettingUI(AlarmSetting):
     def load(self, config: ConfigParser, section_name: str) -> None:
         super(AlarmSettingUI, self).load(config, section_name)
         section = config[section_name]
-        duration = section.getint("Duration", 5)
+        duration = section.getint("Duration", fallback=5)
         self._duration_variable.set(duration)
-        back_color = self._get_tuple(section.get("BackgroundColor", "(0, 0, 0)"))
-        fore_color = self._get_tuple(section.get("ForegroundColor", "(255, 255, 255)"))
+        back_color = self._get_tuple(section.get("BackgroundColor", fallback="(0, 0, 0)"))
+        fore_color = self._get_tuple(section.get("ForegroundColor", fallback="(255, 255, 255)"))
         self._color_frame.load(back_color, fore_color)
 
     def save(self, config: ConfigParser, section_name: str) -> None:

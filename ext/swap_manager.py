@@ -27,9 +27,8 @@ class SwapManager(BaseManager):
         if not config.has_section("SwapBlock"):
             config.add_section("SwapBlock")
         section = config["SwapBlock"]
-        self._update_value.set(section.getint("UpdateTime", 10))
-        selection = section.get("BlockList", "")
-        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in module_list]
+        self._update_value.set(section.getint("UpdateTime", fallback=10))
+        selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",") if item.strip() in module_list]
         self._frame.load(selection, module_list)
 
     def save(self, config: ConfigParser) -> None:

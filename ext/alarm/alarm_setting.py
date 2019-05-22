@@ -14,8 +14,8 @@ class AlarmSetting(BaseSetting):
         super(AlarmSetting, self).__init__(root, text="Настройка будильника: {0}".format(section_name))
         self._mod_list = mod_List
         self.columnconfigure(9, weight=1)
-        self._type = None
-        self._time = None
+        self._type = -1
+        self._time = ""
         self._weekday0 = IntVar(value=0)
         self._weekday1 = IntVar(value=0)
         self._weekday2 = IntVar(value=0)
@@ -71,11 +71,10 @@ class AlarmSetting(BaseSetting):
         section = config[section_name]
         if section is None:
             raise Exception("Section {0} not found".format(section_name))
-        # self._type = section.getint("Type", self._type)
-        date = section.get("Time", "0:00:00")
-        date = datetime.strptime(date, "%H:%M:%S")
-        weekday = self._get_tuple(section.get("weekday", "(0, 1, 2, 3, 4)"))
-        # duration = section.getint("Duration", 5)
+        # self._type = section.getint("Type", fallback=self._type)
+        date = datetime.strptime(section.get("Time", fallback="0:00:00"), "%H:%M:%S")
+        weekday = self._get_tuple(section.get("weekday", fallback="(0, 1, 2, 3, 4)"))
+        # duration = section.getint("Duration", fallback=5)
         if any(day == 0 for day in weekday):
             self._weekday0.set(1)
         if any(day == 1 for day in weekday):
@@ -115,7 +114,7 @@ class AlarmSetting(BaseSetting):
             config.remove_section(section_name)
         config.add_section(section_name)
         section = config[section_name]
-        weekday = (
+        weekday_var = (
             self._weekday0.get(),
             self._weekday1.get(),
             self._weekday2.get(),
@@ -124,7 +123,7 @@ class AlarmSetting(BaseSetting):
             self._weekday5.get(),
             self._weekday6.get(),
         )
-        weekday = [str(index) for (index, value) in enumerate(weekday) if value != 0]
+        weekday = [str(index) for (index, value) in enumerate(weekday_var) if value != 0]
         section["Type"] = str(self._type)
         section["Time"] = self._time
         section["weekday"] = ", ".join(weekday)
@@ -134,9 +133,6 @@ class AlarmSetting(BaseSetting):
             raise TypeError("section_name")
         self.configure(text="Настройка будильника: {0}".format(section_name))
 
-    def _get_tuple(self, value: str) -> Tuple[int, int, int]:
+    def _get_tuple(self, value: str) -> Tuple[int, ...]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except ValueError:
-            return None
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

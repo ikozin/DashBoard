@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional, Union
 from configparser import ConfigParser
 from tkinter import colorchooser, IntVar, LabelFrame, Label, Entry, Button, N, S, E, W
 from ext.base_manager import BaseManager
@@ -56,26 +56,26 @@ class MT8057Manager(BaseManager):
         if not config.has_section("MT8057Block"):
             config.add_section("MT8057Block")
         section = config["MT8057Block"]
-        self._warn_value.set(section.getint("Warn", 800))
-        self._crit_value.set(section.getint("Crit", 1200))
-        self._warn_color = self._get_tuple(section.get("WarnColor", "(255, 127, 0)"))
-        self._crit_color = self._get_tuple(section.get("CritColor", "(255, 63, 63)"))
+        self._warn_value.set(section.getint("Warn", fallback=800))
+        self._crit_value.set(section.getint("Crit", fallback=1200))
+        self._warn_color = self._get_tuple(section.get("WarnColor", fallback="(255, 127, 0)"))
+        self._crit_color = self._get_tuple(section.get("CritColor", fallback="(255, 63, 63)"))
 
-        font_name = section.get("CO2FontName", "Helvetica")
-        font_size = section.getint("CO2FontSize", 100)
-        is_bold = section.getboolean("CO2FontBold", True)
-        is_italic = section.getboolean("CO2FontItalic", False)
+        font_name = section.get("CO2FontName", fallback="Helvetica")
+        font_size = section.getint("CO2FontSize", fallback=100)
+        is_bold = section.getboolean("CO2FontBold", fallback=True)
+        is_italic = section.getboolean("CO2FontItalic", fallback=False)
         self._co2.load(font_name, font_size, is_bold, is_italic)
 
-        font_name = section.get("TempFontName", "Helvetica")
-        font_size = section.getint("TempFontSize", 100)
-        is_bold = section.getboolean("TempFontBold", True)
-        is_italic = section.getboolean("TempFontItalic", False)
+        font_name = section.get("TempFontName", fallback="Helvetica")
+        font_size = section.getint("TempFontSize", fallback=100)
+        is_bold = section.getboolean("TempFontBold", fallback=True)
+        is_italic = section.getboolean("TempFontItalic", fallback=False)
         self._temp.load(font_name, font_size, is_bold, is_italic)
 
-        (pos_x, pos_y) = self._get_tuple(section.get("CO2Pos", "(0, 0)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("CO2Pos", fallback="(0, 0)"))
         self._pos_co2.load(pos_x, pos_y)
-        (pos_x, pos_y) = self._get_tuple(section.get("TempPos", "(0, 0)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("TempPos", fallback="(0, 0)"))
         self._pos_temp.load(pos_x, pos_y)
 
         self._warn_selector.configure(foreground="#%02x%02x%02x" % self._warn_color)
@@ -123,9 +123,7 @@ class MT8057Manager(BaseManager):
         self._crit_selector.configure(foreground=tk_color)
         self._crit_color = (int(triple_color[0]), int(triple_color[1]), int(triple_color[2]))
 
-    def _get_tuple(self, value: str) -> Tuple[int, int, int]:
-        """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except ValueError:
-            return None
+    def _get_tuple(self, value: str) -> Tuple[int, ...]:
+        """  Конвертирует строку '0, 0' в кортеж (0, 0)
+             Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

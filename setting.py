@@ -28,7 +28,7 @@ class Setting:
         self._backgroundColor = self.getTuple(section.get("BackgroundColor"))
         self._foregroundColor = self.getTuple(section.get("ForegroundColor"))
         self._idleTime = section.getint("IdleTime")
-        selection = section.get("BlockList", "")
+        selection = section.get("BlockList", fallback="")
         self._blockList = [item.strip(" '") for item in selection.split(",") if item.strip()]
 
         if not self._backgroundColor:
@@ -59,7 +59,7 @@ class Setting:
                 start = datetime.datetime.strptime(start, "%H:%M:%S")
                 BackgroundColor = self.getTuple(section.get("BackgroundColor"))
                 ForegroundColor = self.getTuple(section.get("ForegroundColor"))
-                idleTime = section.getint('IdleTime', self._idleTime)
+                idleTime = section.getint('IdleTime', fallback=self._idleTime)
 
                 if not BackgroundColor:
                     BackgroundColor = self._backgroundColor

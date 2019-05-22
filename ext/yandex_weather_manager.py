@@ -99,26 +99,26 @@ class YandexWeatherManager(BaseManager):
             config.add_section("YandexWeatherBlock")
         section = config["YandexWeatherBlock"]
 
-        self._update_value.set(section.getint("UpdateTime", 15))
-        self._region_id_value.set(section.getint("RegionId", 213))
-        self._lat_value.set(section.get("Lat", ""))
-        self._lon_value.set(section.get("Lon", ""))
-        self._folder_value.set(section.get("Folder", ""))
+        self._update_value.set(section.getint("UpdateTime", fallback=15))
+        self._region_id_value.set(section.getint("RegionId", fallback=213))
+        self._lat_value.set(section.get("Lat", fallback=""))
+        self._lon_value.set(section.get("Lon", fallback=""))
+        self._folder_value.set(section.get("Folder", fallback=""))
 
-        (pos_x, pos_y) = self._get_tuple(section.get("IconScale", "(256, 256)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("IconScale", fallback="(256, 256)"))
         self._scale_icon.load(pos_x, pos_y)
-        (pos_x, pos_y) = self._get_tuple(section.get("IconPos", "(0, 0)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("IconPos", fallback="(0, 0)"))
         self._pos_icon.load(pos_x, pos_y)
 
-        (pos_x, pos_y) = self._get_tuple(section.get("WeatherTypePos", "(260, 242)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("WeatherTypePos", fallback="(260, 242)"))
         self._pos_weather_type.load(pos_x, pos_y)
-        (pos_x, pos_y) = self._get_tuple(section.get("TemperaturePos", "(240, 50)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("TemperaturePos", fallback="(240, 50)"))
         self._pos_temperature.load(pos_x, pos_y)
-        (pos_x, pos_y) = self._get_tuple(section.get("HumidityPos", "(620, 98)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("HumidityPos", fallback="(620, 98)"))
         self._pos_humidity.load(pos_x, pos_y)
-        (pos_x, pos_y) = self._get_tuple(section.get("PressurePos", "(620, 170)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("PressurePos", fallback="(620, 170)"))
         self._pos_pressure.load(pos_x, pos_y)
-        (pos_x, pos_y) = self._get_tuple(section.get("WindPos", "(620, 26)"))
+        (pos_x, pos_y) = self._get_tuple(section.get("WindPos", fallback="(620, 26)"))
         self._pos_wind.load(pos_x, pos_y)
 
         (font_name, font_size, is_bold, is_italic) = self.load_font(section, "WeatherTypeFont", is_bold_def=True)
@@ -134,10 +134,10 @@ class YandexWeatherManager(BaseManager):
         (font_name, font_size, is_bold, is_italic) = self.load_font(section, "PressureFont")
         self._pressure.load(font_name, font_size, is_bold, is_italic)
 
-        font_name = section.get("WindFontName", "Helvetica")
-        font_size = section.getint("WindFontSize", 64)
-        is_bold = section.getboolean("WindFontBold", False)
-        is_italic = section.getboolean("WindFontItalic", False)
+        font_name = section.get("WindFontName", fallback="Helvetica")
+        font_size = section.getint("WindFontSize", fallback=64)
+        is_bold = section.getboolean("WindFontBold", fallback=False)
+        is_italic = section.getboolean("WindFontItalic", fallback=False)
         self._wind.load(font_name, font_size, is_bold, is_italic)
 
     def save(self, config: ConfigParser) -> None:
@@ -200,9 +200,6 @@ class YandexWeatherManager(BaseManager):
         section["WindFontBold"] = str(is_bold)
         section["WindFontItalic"] = str(is_italic)
 
-    def _get_tuple(self, value: str) -> Tuple[int, int, int]:
+    def _get_tuple(self, value: str) -> Tuple[int, ...]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except ValueError:
-            return None
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

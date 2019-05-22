@@ -1,4 +1,4 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Optional, Iterable
 from configparser import ConfigParser
 from tkinter import messagebox, StringVar, Toplevel, LabelFrame, Label, Entry, Listbox, Button, N, S, E, W
 from tkinter.ttk import Frame, Combobox
@@ -9,6 +9,7 @@ from ext.alarm.ui.alarm_setting_ui_file_simple import AlarmSettingUISimple
 from ext.alarm.ui.alarm_setting_ui_file_blink import AlarmSettingUIBlink
 from ext.alarm.ui.alarm_setting_ui_file_rise import AlarmSettingUIRise
 from ext.alarm.alarm_setting_execute import AlarmSettingExecute
+from ext.alarm.alarm_setting import AlarmSetting
 
 
 class AlarmManager(BaseManager):
@@ -17,7 +18,7 @@ class AlarmManager(BaseManager):
     def __init__(self, root: LabelFrame):
         """ """
         super(AlarmManager, self).__init__(root, text="Выбор будильника")
-        self._mod_list = None
+        self._mod_list: Dict[str, BaseManager] = dict()
         self.columnconfigure(2, weight=1)
         self._functions = {
             1: AlarmSettingUISimple,
@@ -25,7 +26,7 @@ class AlarmManager(BaseManager):
             3: AlarmSettingUIRise,
             4: AlarmSettingExecute
         }
-        self._alarm_list = dict()
+        self._alarm_list: Dict[str, AlarmSetting] = dict()
         self._current_name = None
         self._listbox = Listbox(self, width=25)
         self._listbox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
@@ -56,10 +57,9 @@ class AlarmManager(BaseManager):
         self._alarm_list.clear()
         self._listbox.delete(0, "end")
         section = config["AlarmBlock"]
-        selection = section.get("blocklist", "")
-        selection = [item.strip(" '") for item in selection.split(",") if item.strip() in module_list]
+        selection = [item.strip(" '") for item in section.get("blocklist", fallback="").split(",") if item.strip() in module_list]
         self._frame.load(selection, module_list)
-        csv_value = section.get("List", "")
+        csv_value = section.get("List", fallback="")
         if csv_value:
             alarm_schemas = [item.strip(" '") for item in csv_value.split(",") if item.strip()]
             alarm_schemas = [str(item) for item in alarm_schemas if config.has_section(item)]
@@ -68,7 +68,7 @@ class AlarmManager(BaseManager):
                 section_type = section.getint("Type")
                 if section_type is None:
                     continue
-                alarm_block = self._create_alarm_by_type(section_type, item, self._mod_list)
+                alarm_block = self._create_alarm_by_type(section_type, item, list(self._mod_list))
                 if alarm_block is None:
                     continue
                 alarm_block.load(config, item)
@@ -115,7 +115,7 @@ class AlarmManager(BaseManager):
         if item in self._alarm_list:
             messagebox.showerror("Ошибка", "Будильник {0} уже существует".format(item))
             return
-        alarm_block = self._create_alarm_by_type(section_type, item, self._mod_list)
+        alarm_block = self._create_alarm_by_type(section_type, item, list(self._mod_list))
         if alarm_block is not None:
             self._alarm_list[item] = alarm_block
             self._listbox.insert("end", item)
@@ -154,7 +154,7 @@ class AlarmManager(BaseManager):
         if self._current_name == name:
             self._current_name = None
 
-    def _create_alarm_by_type(self, section_type: int, item: str, mod_list: List[str]) -> BaseSetting:
+    def _create_alarm_by_type(self, section_type: int, item: str, mod_list: List[str]) -> Optional[AlarmSetting]:
         func = self._functions.get(section_type, None)
         if func is None:
             return None
@@ -169,7 +169,7 @@ class AlarmCreateDialog(ModalDialog):
         self._modal = None
         self._btn_ok = None
 
-    def execute(self, root: AlarmManager, mod_list: List[int]) -> Tuple[str, str]:
+    def execute(self, root: AlarmManager, mod_list: List[int]) -> Tuple[str, int]:
         self._modal = Toplevel(root)
         self._modal.title("Создать")
         # self._modal.geometry('+400+400')
