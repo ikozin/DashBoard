@@ -4,7 +4,6 @@ from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.BlockWunderGround import BlockWunderGround
-from exceptions import ExceptionNotFound
 
 SECTION_NAME = "WunderGroundBlock"
 
@@ -24,7 +23,6 @@ class Test_BlockWunderGround(unittest.TestCase):
     #def tearDownClass(cls):    
     #    super().tearDownClass()
 
-
     def test_BlockWunderGround(self):
         config = Setting()
         with self.assertRaises(TypeError): BlockWunderGround(None, None)
@@ -38,4 +36,3 @@ class Test_BlockWunderGround(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

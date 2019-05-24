@@ -1,10 +1,9 @@
 import urllib.request as request
 import urllib.parse as parse
-import configparser
 import pygame
 import pygame.locals
 
-from exceptions import ExceptionFormat, ExceptionNotFound
+from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 
 # "Использует сервис "Yandex SpeechKit Cloud" https://tech.yandex.ru/speechkit/cloud/
@@ -51,7 +50,6 @@ class BlockVoice(BlockBase):
             self._logger.exception(ex)
 
     def addBlock(self, block):
-        """  """
         if not isinstance(block, BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)

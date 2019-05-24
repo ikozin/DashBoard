@@ -1,9 +1,8 @@
-import configparser
 import pygame
 import pygame.locals
 
 from datetime import datetime
-from exceptions import ExceptionFormat, ExceptionNotFound
+from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 
 

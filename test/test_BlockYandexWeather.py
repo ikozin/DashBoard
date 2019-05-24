@@ -4,7 +4,6 @@ from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.BlockYandexWeather import BlockYandexWeather
-from exceptions import ExceptionNotFound
 
 SECTION_NAME = "YandexWeatherBlock"
 
@@ -23,7 +22,6 @@ class Test_BlockYandexWeather(unittest.TestCase):
 
     #def tearDownClass(cls):    
     #    super().tearDownClass()
-
 
     def test_BlockYandexWeather(self):
         config = Setting()

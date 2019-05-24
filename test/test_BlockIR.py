@@ -4,7 +4,6 @@ from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.BlockIR import BlockIR
-from exceptions import ExceptionNotFound
 
 SECTION_NAME = "IRBlock"
 
@@ -23,7 +22,6 @@ class Test_BlockIR(unittest.TestCase):
 
     #def tearDownClass(cls):    
     #    super().tearDownClass()
-
 
     def test_BlockIR(self):
         config = Setting()

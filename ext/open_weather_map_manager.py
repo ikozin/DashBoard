@@ -77,7 +77,6 @@ class OpenWeatherMapManager(BaseManager):
         self._wind.grid(row=12, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
     def load(self, config, module_list):
-        """ """
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("OpenWeatherMapBlock"):
@@ -135,7 +134,6 @@ class OpenWeatherMapManager(BaseManager):
         self._wind.load(font_name, font_size, is_bold, is_italic)
 
     def save(self, config):
-        """ """
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("OpenWeatherMapBlock"):
@@ -194,7 +192,4 @@ class OpenWeatherMapManager(BaseManager):
 
     def _get_tuple(self, value):
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except ValueError:
-            return None
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

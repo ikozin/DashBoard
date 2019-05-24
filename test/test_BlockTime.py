@@ -24,7 +24,6 @@ class Test_BlockTime(unittest.TestCase):
     #def tearDownClass(cls):    
     #    super().tearDownClass()
 
-
     def test_BlockTime(self):
         config = Setting()
         with self.assertRaises(TypeError): BlockTime(None, None)
@@ -85,7 +84,7 @@ class Test_BlockTime(unittest.TestCase):
         block = BlockTime(self.logger, config)
         self.assertTrue(block is not None, "BlockTime")
         block.init({})
-        block.execute();
+        block.execute()
         self.assertIsNotNone(block._text, "_text")
         self.assertIsNone(block._time, "_time")
 
@@ -94,7 +93,8 @@ class Test_BlockTime(unittest.TestCase):
         block = BlockTime(self.logger, config)
         self.assertTrue(block is not None, "BlockTime")
         block.init({})
-        text = block.getText();
+        text = block.getText()
+        self.assertIsNotNone(text, "text")
         self.assertIsNotNone(block._text, "_text")
         self.assertIsNone(block._time, "_time")
 

@@ -2,6 +2,7 @@ class ExceptionFormat(Exception):
     """description of class"""
 
     def __init__(self, configName, paramName):
+        super(ExceptionFormat, self).__init__()
         self.configName = configName
         self.paramName = paramName
 
@@ -14,6 +15,7 @@ class ExceptionNotFound(Exception):
     """description of class"""
 
     def __init__(self, configName, paramName):
+        super(ExceptionNotFound, self).__init__()
         self.configName = configName
         self.paramName = paramName
 

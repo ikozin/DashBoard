@@ -1,13 +1,11 @@
 import datetime
-import os as os
-import sys as sys
-import subprocess as subprocess
-import configparser as configparser
+import os
+import sys
+import subprocess
 import logging
 import logging.config
 import logging.handlers
-import locale as locale
-import pygame as pygame
+import pygame
 
 from setting import Setting
 from setting import BLOCK_SECOND_UPDATE_EVENT
@@ -135,7 +133,7 @@ class Mainboard:
 
     def setDisplayTimerOn(self):
         """Таймер для отключения дисплея"""
-        (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
+        (_, _, _, idleTime) = self._config.get_curret_setting()
         pygame.time.set_timer(IDLE_EVENT, 0)
         pygame.time.set_timer(IDLE_EVENT, idleTime * 60000)
 
@@ -144,7 +142,7 @@ class Mainboard:
         pygame.time.set_timer(IDLE_EVENT, 0)
 
     def displayOff(self):
-        if (not self._isDisplayOn):
+        if not self._isDisplayOn:
             return
         self._isDisplayOn = False
         ###########################################################################
@@ -160,7 +158,7 @@ class Mainboard:
 
     def displayOn(self):
         self.setDisplayTimerOn()
-        if (self._isDisplayOn):
+        if self._isDisplayOn:
             return
         self._isDisplayOn = True
         ###########################################################################
@@ -177,11 +175,11 @@ class Mainboard:
 
     def proccedEvent(self, events):
         for event in events:
-            if (event.type == pygame.locals.QUIT):
+            if event.type == pygame.locals.QUIT:
                 return 0
-            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_ESCAPE):
+            if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_ESCAPE:
                 return 0
-            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_r):
+            if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_r:
                 ###########################################################################
                 if sys.platform == "linux":  # Only for Raspberry Pi
                     subprocess.Popen("sudo reboot", shell=True)
@@ -189,7 +187,7 @@ class Mainboard:
                     pass
                 ###########################################################################
                 return 0
-            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_h):
+            if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_h:
                 ###########################################################################
                 if sys.platform == "linux":  # Only for Raspberry Pi
                     subprocess.Popen("sudo shutdown -h now", shell=True)
@@ -197,9 +195,9 @@ class Mainboard:
                     pass
                 ###########################################################################
                 return 0
-            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_o):
+            if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_o:
                 self.displayOff()
-            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_p):
+            if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_p:
                 self.displayOn()
             if event.type == IDLE_EVENT:
                 self.displayOff()
@@ -210,10 +208,10 @@ class Mainboard:
 
     def loop(self):
         clock = pygame.time.Clock()
-        while (self.proccedEvent(pygame.event.get())):
+        while self.proccedEvent(pygame.event.get()):
 
             if self._isDisplayOn:
-                (start, backgroundColor, foregroundColor, idleTime) = self._config.get_curret_setting()
+                (_, backgroundColor, foregroundColor, _) = self._config.get_curret_setting()
                 self._screen.fill(backgroundColor)
                 time = datetime.datetime.now()
                 for module in self._modules:

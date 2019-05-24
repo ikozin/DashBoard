@@ -1,4 +1,4 @@
-from typing import Dict, Tuple, Optional, Union
+from typing import Dict, Tuple
 from configparser import ConfigParser
 from tkinter import colorchooser, IntVar, LabelFrame, Label, Entry, Button, N, S, E, W
 from ext.base_manager import BaseManager

@@ -1,6 +1,3 @@
-import configparser
-import datetime
-
 from modules.alarm.AlarmTimeFileBase import AlarmTimeFileBase
 
 
@@ -53,7 +50,7 @@ class BlockAlarmRise(AlarmTimeFileBase):
 
     def init_draw(self):
         super(BlockAlarmRise, self).init_draw()
-        (start, backgroundColor, foregroundColor, idleTime) = self._setting.get_curret_setting()
+        (_, backgroundColor, _, _) = self._setting.get_curret_setting()
         self._startR = backgroundColor[0]
         self._startG = backgroundColor[1]
         self._startB = backgroundColor[2]
@@ -69,10 +66,10 @@ class BlockAlarmRise(AlarmTimeFileBase):
 
     def _calculateColorPart(self, start, stop, step, current):
         current += step
-        if (current > stop):
+        if current > stop:
             step = -step
             current += step
-        if (current < start):
+        if current < start:
             step = -step
             current += step
         return (current, step)

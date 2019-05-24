@@ -1,6 +1,5 @@
 import unittest
 import pygame
-from datetime import datetime
 from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
@@ -22,9 +21,8 @@ class Test_BlockCalendar(unittest.TestCase):
     #def tearDown(self):
     #    super().tearDown()
 
-    #def tearDownClass(cls):    
+    #def tearDownClass(cls):
     #    super().tearDownClass()
-
 
     def test_BlockCalendar(self):
         config = Setting()
@@ -102,7 +100,7 @@ class Test_BlockCalendar(unittest.TestCase):
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
         block.init({})
-        block.execute();
+        block.execute()
         self.assertIsNotNone(block._text, "_text")
         self.assertIsNone(block._time, "_time")
 
@@ -111,7 +109,8 @@ class Test_BlockCalendar(unittest.TestCase):
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
         block.init({})
-        text = block.getText();
+        text = block.getText()
+        self.assertIsNotNone(text, "text")
         self.assertIsNotNone(block._text, "_text")
         self.assertIsNone(block._time, "_time")
 

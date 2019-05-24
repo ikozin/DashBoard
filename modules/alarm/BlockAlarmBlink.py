@@ -1,4 +1,3 @@
-import configparser
 import datetime
 
 from modules.alarm.AlarmTimeFileBase import AlarmTimeFileBase

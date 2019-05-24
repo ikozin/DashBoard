@@ -1,5 +1,5 @@
 ﻿import configparser
-from abc import ABCMeta, abstractclassmethod
+from abc import ABCMeta, abstractmethod
 from logging import Logger
 from setting import Setting
 
@@ -18,9 +18,8 @@ class AlarmBase(metaclass=ABCMeta):
 
     def __del__(self):
         """Destructor"""
-        pass
 
-    @abstractclassmethod
+    @abstractmethod
     def init(self, configSection, modList):
         """Initializes (initialize internal variables)"""
         if not isinstance(configSection, configparser.SectionProxy):
@@ -32,9 +31,9 @@ class AlarmBase(metaclass=ABCMeta):
     def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
         pass
 
-    @abstractclassmethod
+    @abstractmethod
     def execute(self):
         pass
 
     def _getTuple(self, value):
-        return self._setting.getTuple(value, self._logger)
+        return self._setting.getTuple(value)

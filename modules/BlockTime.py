@@ -1,10 +1,9 @@
-﻿import configparser
-import pygame
+﻿import pygame
 import pygame.locals
 
 from datetime import datetime
 from modules.BlockBase import BlockBase
-from exceptions import ExceptionFormat, ExceptionNotFound
+from exceptions import ExceptionNotFound
 
 BLOCK_TIME_DISPLAY_FORMAT = "{:%H:%M}"
 BLOCK_TIME_TIME_TEXT = "Московское время {:%H:%M}"

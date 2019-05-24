@@ -4,7 +4,6 @@ from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.BlockSwap import BlockSwap
-from exceptions import ExceptionNotFound
 
 SECTION_NAME = "SwapBlock"
 

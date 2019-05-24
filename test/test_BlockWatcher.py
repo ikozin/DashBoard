@@ -4,7 +4,6 @@ from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.BlockWatcher import BlockWatcher
-from exceptions import ExceptionNotFound
 
 SECTION_NAME = "WatcherBlock"
 
@@ -23,7 +22,6 @@ class Test_BlockWatcher(unittest.TestCase):
 
     #def tearDownClass(cls):    
     #    super().tearDownClass()
-
 
     def test_BlockWatcher(self):
         config = Setting()

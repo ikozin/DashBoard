@@ -110,7 +110,6 @@ class WatcherManager(BaseManager):
         Button(file_frame, text="...", command=self._select_file, width=3).grid(row=0, column=2, pady=2)
 
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
-        """ """
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("WatcherBlock"):

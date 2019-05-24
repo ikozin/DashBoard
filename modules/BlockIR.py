@@ -1,9 +1,6 @@
 import sys
-import configparser
-import pygame
-import pygame.locals
 
-from exceptions import ExceptionFormat, ExceptionNotFound
+from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 
 CONFIG_FILE_NMAE = "IR.ini"
@@ -50,7 +47,7 @@ class BlockIR(BlockBase):
                 return
             values = self._list[keyCode].split(",")
             if values[0] in self._moduleList:
-                if (len(values) == 2):
+                if len(values) == 2:
                     self._moduleList[values[0]].execute(values[1])
                 else:
                     self._moduleList[values[0]].execute()
@@ -59,7 +56,6 @@ class BlockIR(BlockBase):
             self._logger.exception(ex)
 
     def done(self):
-        """ """
         self.module_done()
 
 

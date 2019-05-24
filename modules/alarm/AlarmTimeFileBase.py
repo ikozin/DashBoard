@@ -1,5 +1,4 @@
 import os
-import configparser
 import datetime
 import pygame
 import pygame.locals
@@ -73,7 +72,6 @@ class AlarmTimeFileBase(AlarmTimeBase):
         self._isAlarm = True
 
     def init_draw(self):
-        """ """
         if not self._fileName:
             return
         pygame.mixer.music.set_volume(self._volume)
@@ -86,5 +84,4 @@ class AlarmTimeFileBase(AlarmTimeBase):
         #    sound.play()            # Sound plays at full volume by default
 
     def done_draw(self):
-        """ """
         pass

@@ -1,7 +1,4 @@
-import configparser
-import datetime
-
-from exceptions import ExceptionFormat, ExceptionNotFound
+from exceptions import ExceptionNotFound
 from modules.alarm.AlarmTimeBase import AlarmTimeBase
 
 
@@ -12,6 +9,8 @@ class BlockAlarmExecute(AlarmTimeBase):
         """Initializes (declare internal variables)"""
         super(BlockAlarmExecute, self).__init__(logger, setting)
         self._isAlarm = False
+        self._modList = None
+        self._module = None
 
     def init(self, configSection, modList):
         """Initializes (initialize internal variables)"""

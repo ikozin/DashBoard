@@ -1,8 +1,7 @@
-from typing import Dict, List, Tuple, Optional, Iterable
+from typing import Dict, List, Tuple, Optional
 from configparser import ConfigParser
 from tkinter import messagebox, StringVar, Toplevel, LabelFrame, Label, Entry, Listbox, Button, N, S, E, W
 from tkinter.ttk import Frame, Combobox
-from ext.base_setting import BaseSetting
 from ext.base_manager import BaseManager
 from ext.modal_dialog import ModalDialog, EntryModalDialog, SelectFrame
 from ext.alarm.ui.alarm_setting_ui_file_simple import AlarmSettingUISimple

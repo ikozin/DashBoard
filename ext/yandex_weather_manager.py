@@ -92,7 +92,6 @@ class YandexWeatherManager(BaseManager):
         self._wind.grid(row=12, column=0, padx=2, pady=2, sticky=(N, S, E, W))
 
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
-        """ """
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("YandexWeatherBlock"):
@@ -141,7 +140,6 @@ class YandexWeatherManager(BaseManager):
         self._wind.load(font_name, font_size, is_bold, is_italic)
 
     def save(self, config: ConfigParser) -> None:
-        """ """
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
         if not config.has_section("YandexWeatherBlock"):

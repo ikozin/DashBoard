@@ -4,7 +4,6 @@ from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.BlockOpenWeatherMap import BlockOpenWeatherMap
-from exceptions import ExceptionNotFound
 
 SECTION_NAME = "OpenWeatherMapBlock"
 
@@ -23,7 +22,6 @@ class Test_BlockOpenWeatherMap(unittest.TestCase):
 
     #def tearDownClass(cls):    
     #    super().tearDownClass()
-
 
     def test_BlockCalendar(self):
         config = Setting()

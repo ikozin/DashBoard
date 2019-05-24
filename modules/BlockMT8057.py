@@ -1,4 +1,3 @@
-import configparser
 import pygame
 import pygame.locals
 import sys
@@ -140,7 +139,6 @@ class BlockMT8057(BlockSecondBase):
             self._logger.exception(ex)
 
     def done(self):
-        """ """
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057.stop()
             self._t_mt8057.join()
@@ -236,12 +234,12 @@ class mt8057(threading.Thread):
         checksum = (r0 + r1 + r2) & 0xff
         if (checksum == r3 and item[4] == 0x0d):
             w = (r1 << 8) + r2
-            if (r0 == 0x42):  # Ambient Temperature
+            if r0 == 0x42:  # Ambient Temperature
                 w = w * 0.0625 - 273.15
                 self._lock.acquire()
                 self._temperature = w
                 self._lock.release()
-            elif (r0 == 0x50):  # Relative Concentration of CO2
+            elif r0 == 0x50:  # Relative Concentration of CO2
                 self._lock.acquire()
                 self._concentration = w
                 self._lock.release()

@@ -89,20 +89,15 @@ class Setting:
         value = datetime.datetime.today()
         current = self._timeLine[0]
         for line in self._timeLine[1:]:
-            if (value.hour < line[0].hour):
+            if value.hour < line[0].hour:
                 break
-            if (value.minute < line[0].minute):
+            if value.minute < line[0].minute:
                 break
-            if (value.second < line[0].second):
+            if value.second < line[0].second:
                 break
             current = line
         return current
 
-    def getTuple(self, value, logger=None):
+    def getTuple(self, value):
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        try:
-            return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
-        except Exception as ex:
-            if logger:
-                logger.exception(ex)
-            return None
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

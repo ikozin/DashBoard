@@ -18,6 +18,6 @@ class BlockMinuteBase(BlockBase):
     def proccedEvent(self, event, isOnline):
         if event.type == BLOCK_MINUTE_UPDATE_EVENT:
             self._timeValue -= 1
-            if (not self._timeValue):
+            if not self._timeValue:
                 self._timeValue = self._time
                 self.updateInfo(isOnline)

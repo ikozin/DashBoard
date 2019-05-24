@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractclassmethod
+from abc import ABCMeta, abstractmethod
 
 from logging import Logger
 from setting import Setting
@@ -19,15 +19,13 @@ class BlockBase(metaclass=ABCMeta):
 
     def __del__(self):
         """Destructor"""
-        pass
 
-    @abstractclassmethod
+    @abstractmethod
     def init(self, modList):
         """Вызывается после создания для начальной инициализации плагина.
            Читаем настройки из конфиг файла.
            Устанавливаем таймер срабатывания для наследников BlockSecondBase и BlockMinuteBase.
            В конце, при необходимости, для обновления информации вызываем updateInfo(True)"""
-        pass
 
     def proccedEvent(self, event, isOnline):
         pass
@@ -35,16 +33,15 @@ class BlockBase(metaclass=ABCMeta):
     def updateInfo(self, isOnline):
         if not isOnline:
             return
-        pass
 
     def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
         pass
 
     def addBlock(self, block):
-        raise NotImplementedError()
+        pass
 
     def execute(self, *args):
-        raise NotImplementedError()
+        pass
 
     def getText(self):
         return self._text
@@ -52,7 +49,6 @@ class BlockBase(metaclass=ABCMeta):
     def done(self):
         """Вызывается перед завершением.
            Освобождаем ресурсы, завершаем потоки и т.п."""
-        pass
 
     def _getTuple(self, value):
-        return self._setting.getTuple(value, self._logger)
+        return self._setting.getTuple(value)

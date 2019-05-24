@@ -1,6 +1,4 @@
-import configparser
-
-from exceptions import ExceptionFormat, ExceptionNotFound
+from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
 
@@ -62,18 +60,15 @@ class BlockSwap(BlockSecondBase):
         self._index %= len(self._blocks)
 
     def getText(self):
-        """ """
         block = self._blocks[self._index]
         self._text = block.getText()
         return self._text
 
     def done(self):
-        """ """
         for block in self._blocks:
             block.done()
 
     def addBlock(self, block):
-        """  """
         if not isinstance(block, BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)

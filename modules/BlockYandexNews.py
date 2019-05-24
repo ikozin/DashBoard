@@ -1,11 +1,10 @@
-import configparser
 import urllib.request as request
 import urllib.parse as parse
 import xml.etree.ElementTree as ET
 import pygame
 import pygame.locals
 
-from exceptions import ExceptionFormat, ExceptionNotFound
+from exceptions import ExceptionNotFound
 from modules.BlockMinuteBase import BlockMinuteBase
 
 BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В секции [YandexNewsBlock] пропущен параметр {0}"

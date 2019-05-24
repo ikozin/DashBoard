@@ -1,8 +1,6 @@
 import os
-import sys
 import urllib.request as request
 import xml.etree.ElementTree as ET
-import configparser
 import pygame
 from datetime import datetime, timedelta
 
@@ -209,25 +207,25 @@ class BlockYandexWeather(BlockMinuteBase):
             if not isOnline:
                 return
 
-            if (self._weather_image is not None):
+            if self._weather_image is not None:
                 screen.blit(self._weather_image, self._iconPos)
-            if (self._weather_type is not None):
+            if self._weather_type is not None:
                 text = "{0}".format(self._weather_type)
                 surf = self._weatherTypeFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._weatherTypePos)
-            if (self._temperature is not None):
+            if self._temperature is not None:
                 text = "{0:+.0f}°".format(self._temperature)
                 surf = self._temperatureFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._temperaturePos)
-            if (self._humidity is not None):
+            if self._humidity is not None:
                 text = "Влажность {0}%".format(self._humidity)
                 surf = self._humidityFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._humidityPos)
-            if (self._pressure is not None):
+            if self._pressure is not None:
                 text = "Давление {0} мм".format(self._pressure)
                 surf = self._pressureFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._pressurePos)
-            if (self._wind_speed is not None):
+            if self._wind_speed is not None:
                 text = "Ветер {0} м/с {1}".format(self._wind_speed, self._wind_direction)
                 surf = self._windFont.render(text, True, foreColor, backColor)
                 screen.blit(surf, self._windPos)

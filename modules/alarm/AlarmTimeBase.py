@@ -1,8 +1,4 @@
-﻿import os
-import configparser
-import datetime
-import pygame
-import pygame.locals
+﻿import datetime
 
 from modules.alarm.AlarmBase import AlarmBase
 from exceptions import ExceptionFormat, ExceptionNotFound

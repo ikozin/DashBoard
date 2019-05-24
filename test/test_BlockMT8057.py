@@ -4,7 +4,6 @@ from logging import Logger
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.BlockMT8057 import BlockMT8057
-from exceptions import ExceptionNotFound
 
 SECTION_NAME = "MT8057Block"
 
@@ -23,7 +22,6 @@ class Test_BlockMT8057(unittest.TestCase):
 
     #def tearDownClass(cls):    
     #    super().tearDownClass()
-
 
     def test_BlockMT8057(self):
         config = Setting()
