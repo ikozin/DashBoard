@@ -544,7 +544,7 @@ class IRManager(BaseManager):
         """ """
         super(IRManager, self).__init__(root, text="Настройки IR")
         self._module_list: Dict[str, BaseManager] = dict()
-        self._list = dict()
+        self._list: Dict[str, str] = dict()
         self._listbox = Listbox(self, width=45)
         self._listbox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
         self._listbox.bind('<<ListboxSelect>>', self._select_code)
@@ -712,11 +712,11 @@ class KeyCodeChangeDialog(ModalDialog):
         btn = Button(self._modal, text="Cancel", command=self._cancel)
         btn.grid(row=6, column=2, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
         self._wait_dialog(self._modal, root)
-        code = self._value_key_code.get()
-        code = code if code else None
+        key_code = self._value_key_code.get()
+        key_code = key_code if key_code else None
         module = self._value_module.get()
         param = self._value_param.get()
-        return (code, module, param)
+        return (key_code, module, param)
 
     def _select_code(self) -> None:
         self._btn_ok.configure(state="normal")

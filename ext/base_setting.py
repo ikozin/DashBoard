@@ -11,7 +11,7 @@ class BaseSetting(LabelFrame, metaclass=ABCMeta):
         """ Загрузка данных секции """
 
     @abstractmethod
-    def pre_save(self):
+    def pre_save(self) -> None:
         """ Подготовка к сохранению секции """
 
     @abstractmethod

@@ -13,8 +13,8 @@ class MT8057Manager(BaseManager):
         super(MT8057Manager, self).__init__(root, text="Настройки MT8057")
         self._warn_value = IntVar()
         self._crit_value = IntVar()
-        self._warn_color = None
-        self._crit_color = None
+        self._warn_color = (0, 0, 0)
+        self._crit_color = (0, 0, 0)
 
         lbl = Label(self, text="Начальное значения для Предупреждения")
         lbl.grid(row=0, column=0, padx=2, pady=2)

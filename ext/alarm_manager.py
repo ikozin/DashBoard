@@ -52,8 +52,8 @@ class AlarmManager(BaseManager):
         self._mod_list = module_list
         self._current_name = None
         for schema_name in self._alarm_list:
-            alarm_block = self._alarm_list[schema_name]
-            alarm_block.destroy()
+            block = self._alarm_list[schema_name]
+            block.destroy()
         self._alarm_list.clear()
         self._listbox.delete(0, "end")
         section = config["AlarmBlock"]

@@ -14,7 +14,7 @@ class MainManager(BaseManager):
         """ """
         super(MainManager, self).__init__(root, text="Основные настройки")
         self.columnconfigure(4, weight=1)
-        self._section_list = dict()
+        self._section_list: Dict[str, MainSetting] = dict()
         self._current_name = None
         self._idle_variable = StringVar()
         self._listbox = Listbox(self)
