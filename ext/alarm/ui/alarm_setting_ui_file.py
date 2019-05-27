@@ -6,8 +6,8 @@ from ext.alarm.ui.alarm_setting_ui import AlarmSettingUI
 
 class AlarmSettingUIFile(AlarmSettingUI):
 
-    def __init__(self, root, section_name: str, modList: List[str]):
-        super(AlarmSettingUIFile, self).__init__(root, section_name, modList)
+    def __init__(self, root, section_name: str, mod_list: List[str]):
+        super(AlarmSettingUIFile, self).__init__(root, section_name, mod_list)
         self._file_variable = StringVar(value="")
         file_frame = LabelFrame(self, text="Файл для проигрывания")
         file_frame.grid(row=3, column=0, columnspan=2, sticky=(N, S, E, W))

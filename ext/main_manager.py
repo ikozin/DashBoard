@@ -15,7 +15,7 @@ class MainManager(BaseManager):
         super(MainManager, self).__init__(root, text="Основные настройки")
         self.columnconfigure(4, weight=1)
         self._section_list: Dict[str, MainSetting] = dict()
-        self._current_name = None
+        self._current__name = None
         self._idle_variable = StringVar()
         self._listbox = Listbox(self)
         self._listbox.grid(row=0, column=0, rowspan=3, padx=2, pady=2)
@@ -58,7 +58,7 @@ class MainManager(BaseManager):
             config.add_section("MAIN")
         if not config.has_section("TIMELINE"):
             config.add_section("TIMELINE")
-        self._current_name = None
+        self._current__name = None
         for section_name in self._section_list:
             section_block = self._section_list[section_name]
             section_block.destroy()
@@ -67,8 +67,8 @@ class MainManager(BaseManager):
         section = config["MAIN"]
         idle = section.getint("idletime", fallback=1)
         self._idle_variable.set(idle)
-        back_color = self._get_tuple(section.get("backgroundcolor", fallback="(0, 0, 0)"))
-        fore_color = self._get_tuple(section.get("foregroundcolor", fallback="(255, 255, 255)"))
+        back_color = self._get_tuple(section.get("BackgroundColor", fallback="(0, 0, 0)"))
+        fore_color = self._get_tuple(section.get("ForegroundColor", fallback="(255, 255, 255)"))
         self._color_frame.load(back_color, fore_color)
         selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",") if item.strip() in module_list]
         self._frame.load(selection, module_list)
@@ -94,8 +94,8 @@ class MainManager(BaseManager):
         section = config["MAIN"]
         (background_color, foreground_color) = self._color_frame.get_result()
         section["idletime"] = str(self._idle_variable.get())
-        section["backgroundcolor"] = "(%d, %d, %d)" % background_color
-        section["foregroundcolor"] = "(%d, %d, %d)" % foreground_color
+        section["BackgroundColor"] = "(%d, %d, %d)" % background_color
+        section["ForegroundColor"] = "(%d, %d, %d)" % foreground_color
         section["BlockList"] = self._frame.get_result()
 
         section = config["TIMELINE"]
@@ -115,13 +115,13 @@ class MainManager(BaseManager):
         if not selection:
             return
         name = listbox.get(selection[0])
-        if self._current_name:
-            section_block = self._section_list[self._current_name]
+        if self._current__name:
+            section_block = self._section_list[self._current__name]
             section_block.grid_forget()
         if not self._section_list:
             return
         section_block = self._section_list[name]
-        self._current_name = name
+        self._current__name = name
         section_block.grid(row=0, column=0, sticky=(N, S, E, W))
 
     def _create_section(self) -> None:
@@ -150,8 +150,8 @@ class MainManager(BaseManager):
         section_block.rename(newname)
         del self._section_list[name]
         self._section_list[newname] = section_block
-        if self._current_name == name:
-            self._current_name = newname
+        if self._current__name == name:
+            self._current__name = newname
         self._listbox.delete(selection)
         self._listbox.insert(selection, newname)
 
@@ -166,8 +166,8 @@ class MainManager(BaseManager):
         self._listbox.delete(selection)
         del self._section_list[name]
         section_block.destroy()
-        if self._current_name == name:
-            self._current_name = None
+        if self._current__name == name:
+            self._current__name = None
 
     def _get_tuple(self, value: str) -> Tuple[int, ...]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """

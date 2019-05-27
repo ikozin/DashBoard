@@ -20,20 +20,20 @@ class AlarmBase(metaclass=ABCMeta):
         """Destructor"""
 
     @abstractmethod
-    def init(self, configSection, modList):
+    def init(self, config_section, mod_list):
         """Initializes (initialize internal variables)"""
-        if not isinstance(configSection, configparser.SectionProxy):
+        if not isinstance(config_section, configparser.SectionProxy):
             raise TypeError("Передаваемый параметр должен быть наследником configparser.SectionProxy")
 
-    def updateState(self, currentTime):
+    def update_state(self, current_time):
         pass
 
-    def updateDisplay(self, screen, size, foreColor, backColor, blocks, current_time):
+    def update_display(self, screen, size, fore_color, back_color, blocks, current_time):
         pass
 
     @abstractmethod
     def execute(self):
         pass
 
-    def _getTuple(self, value):
-        return self._setting.getTuple(value)
+    def _get_tuple(self, value):
+        return self._setting.get_tuple(value)

@@ -43,9 +43,9 @@ if sys.platform == "linux":  # Only for Raspberry Pi
     GPIO.setup(PIR_PIN, GPIO.IN)
     GPIO.output(LED_PIN, 1)
 
-    def motionDetected(pin):
+    def motion_detected(pin):
         # logger.debug("Motion detected!")
-        app.displayOn()
+        app.display_on()
 ###########################################################################
 
 
@@ -131,17 +131,17 @@ class Mainboard:
         # pygame.mixer.quit()
         # pygame.display.quit()
 
-    def setDisplayTimerOn(self):
+    def set_display_timer_on(self):
         """Таймер для отключения дисплея"""
         (_, _, _, idleTime) = self._config.get_curret_setting()
         pygame.time.set_timer(IDLE_EVENT, 0)
         pygame.time.set_timer(IDLE_EVENT, idleTime * 60000)
 
-    def setDisplayTimerOff(self):
+    def set_display_timer_off(self):
         """Таймер для отключения дисплея"""
         pygame.time.set_timer(IDLE_EVENT, 0)
 
-    def displayOff(self):
+    def display_off(self):
         if not self._isDisplayOn:
             return
         self._isDisplayOn = False
@@ -154,10 +154,10 @@ class Mainboard:
         else:
             pass
         ###########################################################################
-        self.setDisplayTimerOff()
+        self.set_display_timer_off()
 
-    def displayOn(self):
-        self.setDisplayTimerOn()
+    def display_on(self):
+        self.set_display_timer_on()
         if self._isDisplayOn:
             return
         self._isDisplayOn = True
@@ -171,9 +171,9 @@ class Mainboard:
             pass
         ###########################################################################
         for module in self._modules:
-            module.updateInfo(self._isDisplayOn)
+            module.update_info(self._isDisplayOn)
 
-    def proccedEvent(self, events):
+    def procced_event(self, events):
         for event in events:
             if event.type == pygame.locals.QUIT:
                 return 0
@@ -196,31 +196,31 @@ class Mainboard:
                 ###########################################################################
                 return 0
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_o:
-                self.displayOff()
+                self.display_off()
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_p:
-                self.displayOn()
+                self.display_on()
             if event.type == IDLE_EVENT:
-                self.displayOff()
+                self.display_off()
 
             for module in self._modules:
-                module.proccedEvent(event, self._isDisplayOn)
+                module.procced_event(event, self._isDisplayOn)
         return 1
 
     def loop(self):
         clock = pygame.time.Clock()
-        while self.proccedEvent(pygame.event.get()):
+        while self.procced_event(pygame.event.get()):
 
             if self._isDisplayOn:
-                (_, backgroundColor, foregroundColor, _) = self._config.get_curret_setting()
-                self._screen.fill(backgroundColor)
+                (_, background_color, foreground_color, _) = self._config.get_curret_setting()
+                self._screen.fill(background_color)
                 time = datetime.datetime.now()
                 for module in self._modules:
-                    module.updateDisplay(
+                    module.update_display(
                         self._isDisplayOn,
                         self._screen,
                         self._size,
-                        foregroundColor,
-                        backgroundColor,
+                        foreground_color,
+                        background_color,
                         time)
             else:
                 self._screen.fill((0, 0, 0))
@@ -243,7 +243,7 @@ if __name__ == "__main__":
 
     ###########################################################################
     if sys.platform == "linux":  # Only for Raspberry Pi
-        GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=motionDetected)
+        GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=motion_detected)
     ###########################################################################
 
     app.loop()

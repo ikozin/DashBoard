@@ -14,7 +14,7 @@ class BlockSwap(BlockSecondBase):
         self._blocks = []
         self._index = 0
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["SwapBlock"]
@@ -26,31 +26,31 @@ class BlockSwap(BlockSecondBase):
         selection = section.get("BlockList", fallback="")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
         for name in selection:
-            if name in modList:
-                self.addBlock(modList[name])
+            if name in mod_list:
+                self.add_block(mod_list[name])
 
         if not self._blocks:
             raise Exception(EXCEPTION_TEXT)
         for block in self._blocks:
-            block.init(modList)
+            block.init(mod_list)
 
-        self.setTime(time)
-        # self.updateInfo(True)
+        self.set_time(time)
+        # self.update_info(True)
 
-    def proccedEvent(self, event, isOnline):
+    def procced_event(self, event, is_online):
         for block in self._blocks:
-            block.proccedEvent(event, isOnline)
-        super(BlockSwap, self).proccedEvent(event, isOnline)
+            block.procced_event(event, is_online)
+        super(BlockSwap, self).procced_event(event, is_online)
 
-    def updateInfo(self, isOnline):
+    def update_info(self, is_online):
         self.execute()
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
+    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         try:
-            if not isOnline:
+            if not is_online:
                 return
             block = self._blocks[self._index]
-            block.updateDisplay(isOnline, screen, size, foreColor, backColor, current_time)
+            block.update_display(is_online, screen, size, fore_color, back_color, current_time)
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -59,16 +59,16 @@ class BlockSwap(BlockSecondBase):
         self._index += value
         self._index %= len(self._blocks)
 
-    def getText(self):
+    def get_text(self):
         block = self._blocks[self._index]
-        self._text = block.getText()
+        self._text = block.get_text()
         return self._text
 
     def done(self):
         for block in self._blocks:
             block.done()
 
-    def addBlock(self, block):
+    def add_block(self, block):
         if not isinstance(block, BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)

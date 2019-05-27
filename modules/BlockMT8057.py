@@ -1,12 +1,11 @@
-import pygame
-import pygame.locals
 import sys
 import time
 import threading
+from exceptions import ExceptionFormat, ExceptionNotFound
 import usb.core
 import usb.util
-
-from exceptions import ExceptionFormat, ExceptionNotFound
+import pygame
+import pygame.locals
 from modules.BlockSecondBase import BlockSecondBase
 
 
@@ -15,124 +14,124 @@ class BlockMT8057(BlockSecondBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockMT8057, self).__init__(logger, setting)
-        self._warnZone = None
-        self._critZone = None
-        self._warnColor = (255, 127, 0)
-        self._critColor = (255, 63, 63)
-        self._co2Font = None
-        self._tempFont = None
-        self._co2Pos = None
-        self._tempPos = None
-        self._valueCO2 = 0
-        self._valueTemp = 0.0
-        self._textCO2 = ""
-        self._textTemp = ""
+        self._warn_zone = None
+        self._crit_zone = None
+        self._warn_color = (255, 127, 0)
+        self._crit_color = (255, 63, 63)
+        self._co2_font = None
+        self._temp_font = None
+        self._co2_pos = None
+        self._temp_pos = None
+        self._value_co2 = 0
+        self._value_temp = 0.0
+        self._text_co2 = ""
+        self._text_temp = ""
 
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = None
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["MT8057Block"]
 
-        self._warnZone = section.getint("Warn")
-        self._critZone = section.getint("Crit")
-        self._warnColor = self._getTuple(section.get("WarnColor"))
-        self._critColor = self._getTuple(section.get("CritColor"))
+        self._warn_zone = section.getint("Warn")
+        self._crit_zone = section.getint("Crit")
+        self._warn_color = self._get_tuple(section.get("WarnColor"))
+        self._crit_color = self._get_tuple(section.get("CritColor"))
 
-        co2FontSize = section.getint("CO2FontSize")
-        co2FontName = section.get("CO2FontName")
-        co2IsBold = section.getboolean("CO2FontBold")
-        co2IsItalic = section.getboolean("CO2FontItalic")
+        co2_font_size = section.getint("CO2FontSize")
+        co2_font_name = section.get("CO2FontName")
+        co2_is_bold = section.getboolean("CO2FontBold")
+        co2_is_italic = section.getboolean("CO2FontItalic")
 
-        tempFontSize = section.getint("TempFontSize")
-        tempFontName = section.get("TempFontName")
-        tempIsBold = section.getboolean("TempFontBold")
-        tempIsItalic = section.getboolean("TempFontItalic")
+        temp_font_size = section.getint("TempFontSize")
+        temp_font_name = section.get("TempFontName")
+        temp_is_bold = section.getboolean("TempFontBold")
+        temp_is_italic = section.getboolean("TempFontItalic")
 
-        self._co2Pos = self._getTuple(section.get("CO2Pos"))
-        self._tempPos = self._getTuple(section.get("TempPos"))
+        self._co2_pos = self._get_tuple(section.get("CO2Pos"))
+        self._temp_pos = self._get_tuple(section.get("TempPos"))
 
-        if self._warnZone is None:
+        if self._warn_zone is None:
             raise ExceptionNotFound(section.name, "Warn")
-        if self._critZone is None:
+        if self._crit_zone is None:
             raise ExceptionNotFound(section.name, "Crit")
-        if self._warnColor is None:
+        if self._warn_color is None:
             raise ExceptionNotFound(section.name, "WarnColor")
-        if self._critColor is None:
+        if self._crit_color is None:
             raise ExceptionNotFound(section.name, "CritColor")
-        if co2FontSize is None:
+        if co2_font_size is None:
             raise ExceptionNotFound(section.name, "CO2FontSize")
-        if co2FontName is None:
+        if co2_font_name is None:
             raise ExceptionNotFound(section.name, "CO2FontName")
-        if co2IsBold is None:
+        if co2_is_bold is None:
             raise ExceptionNotFound(section.name, "CO2FontBold")
-        if co2IsItalic is None:
+        if co2_is_italic is None:
             raise ExceptionNotFound(section.name, "CO2FontItalic")
-        if tempFontSize is None:
+        if temp_font_size is None:
             raise ExceptionNotFound(section.name, "TempFontSize")
-        if tempFontName is None:
+        if temp_font_name is None:
             raise ExceptionNotFound(section.name, "TempFontName")
-        if tempIsBold is None:
+        if temp_is_bold is None:
             raise ExceptionNotFound(section.name, "TempFontBold")
-        if tempIsItalic is None:
+        if temp_is_italic is None:
             raise ExceptionNotFound(section.name, "TempFontItalic")
-        if self._co2Pos is None:
+        if self._co2_pos is None:
             raise ExceptionNotFound(section.name, "CO2Pos")
-        if self._tempPos is None:
+        if self._temp_pos is None:
             raise ExceptionNotFound(section.name, "TempPos")
 
-        if len(self._warnColor) != 3:
+        if len(self._warn_color) != 3:
             raise ExceptionFormat(section.name, "WarnColor")
-        if len(self._critColor) != 3:
+        if len(self._crit_color) != 3:
             raise ExceptionFormat(section.name, "CritColor")
-        if len(self._co2Pos) != 2:
+        if len(self._co2_pos) != 2:
             raise ExceptionFormat(section.name, "CO2Pos")
-        if len(self._tempPos) != 2:
+        if len(self._temp_pos) != 2:
             raise ExceptionFormat(section.name, "TempPos")
 
-        self._co2Font = pygame.font.SysFont(co2FontName, co2FontSize, co2IsBold, co2IsItalic)
-        self._tempFont = pygame.font.SysFont(tempFontName, tempFontSize, tempIsBold, tempIsItalic)
+        self._co2_font = pygame.font.SysFont(co2_font_name, co2_font_size, co2_is_bold, co2_is_italic)
+        self._temp_font = pygame.font.SysFont(temp_font_name, temp_font_size, temp_is_bold, temp_is_italic)
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = mt8057(self._logger)
             self._t_mt8057.start()
 
-        self.updateInfo(True)
-        self.setTime(2)
+        self.update_info(True)
+        self.set_time(2)
 
-    def updateInfo(self, isOnline):
+    def update_info(self, is_online):
         if sys.platform == "linux":  # Only for Raspberry Pi
-            (self._valueCO2, self._valueTemp) = self._t_mt8057.get_data()
+            (self._value_co2, self._value_temp) = self._t_mt8057.get_data()
         else:
-            self._valueCO2 += 10
-            self._valueTemp += 0.1
-        self._textCO2 = "Концентрация CO2: {0}".format(self._valueCO2)
-        self._textTemp = "Температура: {0:+.1f}°".format(self._valueTemp)
-        self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._valueCO2, self._valueTemp)
+            self._value_co2 += 10
+            self._value_temp += 0.1
+        self._text_co2 = "Концентрация CO2: {0}".format(self._value_co2)
+        self._text_temp = "Температура: {0:+.1f}°".format(self._value_temp)
+        self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._value_co2, self._value_temp)
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
+    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         try:
-            if not isOnline:
+            if not is_online:
                 return
 
-            color = foreColor
-            if self._valueCO2 >= self._warnZone:
-                color = self._warnColor
-            if self._valueCO2 >= self._critZone:
-                color = self._critColor
+            color = fore_color
+            if self._value_co2 >= self._warn_zone:
+                color = self._warn_color
+            if self._value_co2 >= self._crit_zone:
+                color = self._crit_color
 
-            sz = self._co2Font.size(self._textCO2)
+            sz = self._co2_font.size(self._text_co2)
             x = (size[0] - sz[0]) >> 1
-            y = self._co2Pos[1]
-            surf = self._co2Font.render(self._textCO2, True, color, backColor)
+            y = self._co2_pos[1]
+            surf = self._co2_font.render(self._text_co2, True, color, back_color)
             screen.blit(surf, (x, y))
             # print(x)
 
-            sz = self._co2Font.size(self._textTemp)
+            sz = self._co2_font.size(self._text_temp)
             x = (size[0] - sz[0]) >> 1
-            y = self._tempPos[1]
-            surf = self._tempFont.render(self._textTemp, True, foreColor, backColor)
+            y = self._temp_pos[1]
+            surf = self._temp_font.render(self._text_temp, True, fore_color, back_color)
             screen.blit(surf, (x, y))
             # print(x)
         except Exception as ex:

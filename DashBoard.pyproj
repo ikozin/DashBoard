@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>tool.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -53,13 +53,13 @@
     <Compile Include="ext\yandex_weather_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\alarm\AlarmTimeFileBase.py">
+    <Compile Include="modules\alarm\alarm_time_file_base.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\alarm\BlockAlarmBlink.py" />
-    <Compile Include="modules\alarm\BlockAlarmExecute.py" />
-    <Compile Include="modules\alarm\BlockAlarmRise.py" />
-    <Compile Include="modules\alarm\BlockAlarmSimple.py" />
+    <Compile Include="modules\alarm\block_alarm_blink.py" />
+    <Compile Include="modules\alarm\block_alarm_execute.py" />
+    <Compile Include="modules\alarm\block_alarm_rise.py" />
+    <Compile Include="modules\alarm\block_alarm_simple.py" />
     <Compile Include="modules\BlockBase.py">
       <SubType>Code</SubType>
     </Compile>
@@ -96,8 +96,8 @@
     <Compile Include="ext\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\alarm\AlarmTimeBase.py" />
-    <Compile Include="modules\alarm\AlarmBase.py">
+    <Compile Include="modules\alarm\alarm_time_base.py" />
+    <Compile Include="modules\alarm\alarm_base.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\alarm\__init__.py">
@@ -153,18 +153,18 @@
     <Compile Include="test.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="test\test_BlockAlarm.py" />
-    <Compile Include="test\test_BlockCalendar.py" />
-    <Compile Include="test\test_BlockIR.py" />
-    <Compile Include="test\test_BlockMT8057.py" />
-    <Compile Include="test\test_BlockOpenWeatherMap.py" />
-    <Compile Include="test\test_BlockSwap.py" />
-    <Compile Include="test\test_BlockTime.py" />
-    <Compile Include="test\test_BlockVoice.py" />
-    <Compile Include="test\test_BlockWatcher.py" />
-    <Compile Include="test\test_BlockWunderGround.py" />
-    <Compile Include="test\test_BlockYandexNews.py" />
-    <Compile Include="test\test_BlockYandexWeather.py" />
+    <Compile Include="test\test_block_alarm.py" />
+    <Compile Include="test\test_block_calendar.py" />
+    <Compile Include="test\test_block_ir.py" />
+    <Compile Include="test\test_block_mt8057.py" />
+    <Compile Include="test\test_block_openweathermap.py" />
+    <Compile Include="test\test_block_swap.py" />
+    <Compile Include="test\test_block_time.py" />
+    <Compile Include="test\test_block_voice.py" />
+    <Compile Include="test\test_block_watcher.py" />
+    <Compile Include="test\test_block_wunderground.py" />
+    <Compile Include="test\test_block_yandex_news.py" />
+    <Compile Include="test\test_block_yandex_weather.py" />
     <Compile Include="tool.py">
       <SubType>Code</SubType>
     </Compile>

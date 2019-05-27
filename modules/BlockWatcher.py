@@ -12,28 +12,28 @@ class BlockWatcher(BlockSecondBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockWatcher, self).__init__(logger, setting)
-        self._startTime = None
-        self._stopTime = None
+        self._start_time = None
+        self._stop_time = None
         self._weekDay = None
         self._path = None
         self._isWatching = False
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["WatcherBlock"]
 
-        self._weekDay = self._getTuple(section.get("WeekDay"))
-        self._startTime = section.get("StartTime")
-        self._stopTime = section.get("FinishTime")
+        self._weekDay = self._get_tuple(section.get("WeekDay"))
+        self._start_time = section.get("StartTime")
+        self._stop_time = section.get("FinishTime")
         self._path = section.get("Path")
         time = section.getint("UpdateTime")
 
         if self._weekDay is None:
             raise ExceptionNotFound(section.name, "WeekDay")
-        if self._startTime is None:
+        if self._start_time is None:
             raise ExceptionNotFound(section.name, "StartTime")
-        if self._stopTime is None:
+        if self._stop_time is None:
             raise ExceptionNotFound(section.name, "FinishTime")
         if self._path is None:
             raise ExceptionNotFound(section.name, "Path")
@@ -45,22 +45,22 @@ class BlockWatcher(BlockSecondBase):
         if not all(day >= 0 and day < 7 for day in self._weekDay):
             raise ExceptionFormat(section.name, "WeekDay")
 
-        self._startTime = datetime.datetime.strptime(self._startTime, "%H:%M:%S")
-        self._stopTime = datetime.datetime.strptime(self._stopTime, "%H:%M:%S")
+        self._start_time = datetime.datetime.strptime(self._start_time, "%H:%M:%S")
+        self._stop_time = datetime.datetime.strptime(self._stop_time, "%H:%M:%S")
 
-        self.updateInfo(True)
-        self.setTime(time)
+        self.update_info(True)
+        self.set_time(time)
 
-    def updateInfo(self, isOnline):
+    def update_info(self, is_online):
         try:
-            if not isOnline:
+            if not is_online:
                 return
             if not self._path:
                 return
-            currentTime = datetime.datetime.now()
+            current_time = datetime.datetime.now()
             if not self._isWatching:
-                if any(currentTime.weekday() == day for day in self._weekDay):
-                    if currentTime.time() >= self._startTime.time():
+                if any(current_time.weekday() == day for day in self._weekDay):
+                    if current_time.time() >= self._start_time.time():
                         # self._isWatching = True
                         self.execute()
             if self._isWatching:
@@ -77,7 +77,7 @@ class BlockWatcher(BlockSecondBase):
                     subprocess.Popen("calc.exe", shell=True)
                 ###########################################################################
             if self._isWatching:
-                if currentTime.time() > self._stopTime.time():
+                if current_time.time() > self._stop_time.time():
                     self._isWatching = False
         except Exception as ex:
             self._logger.exception(ex)

@@ -1,10 +1,9 @@
 import urllib.request as request
 import urllib.parse as parse
 import xml.etree.ElementTree as ET
+from exceptions import ExceptionNotFound
 import pygame
 import pygame.locals
-
-from exceptions import ExceptionNotFound
 from modules.BlockMinuteBase import BlockMinuteBase
 
 BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В секции [YandexNewsBlock] пропущен параметр {0}"
@@ -23,7 +22,7 @@ class BlockYandexNews(BlockMinuteBase):
         self._font = None
         self._news = []
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["YandexNewsBlock"]
@@ -34,10 +33,10 @@ class BlockYandexNews(BlockMinuteBase):
         self._length = section.getint("Rows")
         time = section.getint("UpdateTime")
 
-        fontName = section.get("FontName")
-        fontSize = section.getint("FontSize")
-        isBold = section.getboolean("FontBold")
-        isItalic = section.getboolean("FontItalic")
+        font_name = section.get("FontName")
+        font_size = section.getint("FontSize")
+        is_bold = section.getboolean("FontBold")
+        is_italic = section.getboolean("FontItalic")
 
         if self._url is None:
             raise ExceptionNotFound(section.name, "Url")
@@ -50,31 +49,31 @@ class BlockYandexNews(BlockMinuteBase):
         if time is None:
             raise ExceptionNotFound(section.name, "UpdateTime")
 
-        if fontName is None:
+        if font_name is None:
             raise ExceptionNotFound(section.name, "FontName")
-        if fontSize is None:
+        if font_size is None:
             raise ExceptionNotFound(section.name, "FontSize")
-        if isBold is None:
+        if is_bold is None:
             raise ExceptionNotFound(section.name, "FontBold")
-        if isItalic is None:
+        if is_italic is None:
             raise ExceptionNotFound(section.name, "FontItalic")
 
-        self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
+        self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
 
-        self.updateInfo(True)
-        self.setTime(time)
+        self.update_info(True)
+        self.set_time(time)
 
-    def updateInfo(self, isOnline):
+    def update_info(self, is_online):
         try:
-            if not isOnline:
+            if not is_online:
                 return
             self.execute()
         except Exception as ex:
             self._logger.exception(ex)
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
+    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         try:
-            if not isOnline:
+            if not is_online:
                 return
             if not self._news:
                 return
@@ -83,7 +82,7 @@ class BlockYandexNews(BlockMinuteBase):
             for text in self._news:
                 sz = self._font.size(text)
                 x = (size[0] - min(size[0], sz[0])) >> 1
-                surf = self._font.render(text, True, foreColor, backColor)
+                surf = self._font.render(text, True, fore_color, back_color)
                 screen.blit(surf, (x, y))
                 y += sz[1] + self._indent
         except Exception as ex:

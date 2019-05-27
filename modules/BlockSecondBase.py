@@ -9,15 +9,15 @@ class BlockSecondBase(BlockBase):
         """Initializes (declare internal variables)"""
         super(BlockSecondBase, self).__init__(logger, setting)
         self._time = None
-        self._timeValue = None
+        self._time_value = None
 
-    def setTime(self, value):
+    def set_time(self, value):
         self._time = value
-        self._timeValue = value
+        self._time_value = value
 
-    def proccedEvent(self, event, isOnline):
+    def procced_event(self, event, is_online):
         if event.type == BLOCK_SECOND_UPDATE_EVENT:
-            self._timeValue -= 1
-            if not self._timeValue:
-                self._timeValue = self._time
-                self.updateInfo(isOnline)
+            self._time_value -= 1
+            if not self._time_value:
+                self._time_value = self._time
+                self.update_info(is_online)

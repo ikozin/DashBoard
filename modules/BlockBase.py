@@ -21,34 +21,34 @@ class BlockBase(metaclass=ABCMeta):
         """Destructor"""
 
     @abstractmethod
-    def init(self, modList):
+    def init(self, mod_list):
         """Вызывается после создания для начальной инициализации плагина.
            Читаем настройки из конфиг файла.
            Устанавливаем таймер срабатывания для наследников BlockSecondBase и BlockMinuteBase.
-           В конце, при необходимости, для обновления информации вызываем updateInfo(True)"""
+           В конце, при необходимости, для обновления информации вызываем update_info(True)"""
 
-    def proccedEvent(self, event, isOnline):
+    def procced_event(self, event, is_online):
         pass
 
-    def updateInfo(self, isOnline):
-        if not isOnline:
+    def update_info(self, is_online):
+        if not is_online:
             return
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
+    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         pass
 
-    def addBlock(self, block):
+    def add_block(self, block):
         pass
 
     def execute(self, *args):
         pass
 
-    def getText(self):
+    def get_text(self):
         return self._text
 
     def done(self):
         """Вызывается перед завершением.
            Освобождаем ресурсы, завершаем потоки и т.п."""
 
-    def _getTuple(self, value):
-        return self._setting.getTuple(value)
+    def _get_tuple(self, value):
+        return self._setting.get_tuple(value)

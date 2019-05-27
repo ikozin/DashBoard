@@ -1,9 +1,8 @@
 import urllib.request as request
 import urllib.parse as parse
+from exceptions import ExceptionNotFound
 import pygame
 import pygame.locals
-
-from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 
 # "Использует сервис "Yandex SpeechKit Cloud" https://tech.yandex.ru/speechkit/cloud/
@@ -20,7 +19,7 @@ class BlockVoice(BlockBase):
         self._speed = 1
         self._key = None
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["VoiceBlock"]
@@ -30,8 +29,8 @@ class BlockVoice(BlockBase):
         selection = section.get("BlockList", fallback="")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
         for name in selection:
-            if name in modList:
-                self.addBlock(modList[name])
+            if name in mod_list:
+                self.add_block(mod_list[name])
 
         if self._speaker is None:
             raise ExceptionNotFound(section.name, "Speaker")
@@ -40,23 +39,23 @@ class BlockVoice(BlockBase):
         if not self._blocks:
             raise ExceptionNotFound(section.name, "BlockList")
 
-        self.updateInfo(True)
+        self.update_info(True)
 
-    def proccedEvent(self, event, isOnline):
+    def procced_event(self, event, is_online):
         try:
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE):
                 self.execute()
         except Exception as ex:
             self._logger.exception(ex)
 
-    def addBlock(self, block):
+    def add_block(self, block):
         if not isinstance(block, BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
 
     def execute(self, *args):
         if self._blocks:
-            text = ". ".join(map(lambda block: block.getText(), self._blocks))
+            text = ". ".join(map(lambda block: block.get_text(), self._blocks))
             if not text:
                 return
             soundFile = self.__getvoicetext(text)
@@ -65,7 +64,7 @@ class BlockVoice(BlockBase):
             pygame.mixer.music.play()
 
     def __getvoicetext(self, text):
-        fileName = "text.wav"
+        filename = "text.wav"
         url = "https://tts.voicetech.yandex.net/generate?" \
             "format=wav&lang=ru-RU&speaker={0}&emotion=good&speed={1}&key={2}&text='{3}'" \
             .format(
@@ -73,7 +72,7 @@ class BlockVoice(BlockBase):
                 self._speed,
                 self._key,
                 parse.quote(text))
-        out = open(fileName, "wb")
+        out = open(filename, "wb")
         out.write(request.urlopen(url).read())
         out.close()
-        return fileName
+        return filename

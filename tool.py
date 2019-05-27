@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 
 from configparser import ConfigParser
-from tkinter import ttk, filedialog
-from tkinter import Tk, Listbox, StringVar, N, S, E, W
+from tkinter import ttk, filedialog, Tk, Listbox, StringVar, N, S, E, W
 from ext.modal_dialog import VerticalScrolledFrame
 from ext.main_manager import MainManager
 from ext.time_manager import TimeManager
@@ -39,7 +38,7 @@ class App:
             "IR": IRManager,
         }
         self._list = dict()
-        self._current_name = None
+        self._current__name = None
         self._root = Tk()
         self._root.title('DashBoard Tool')
         self._root.columnconfigure(1, weight=1)
@@ -117,13 +116,13 @@ class App:
         if not selection:
             return
         name = self._listbox.get(selection[0])
-        if self._current_name:
-            manager = self._list[self._current_name]
+        if self._current__name:
+            manager = self._list[self._current__name]
             manager.grid_forget()
         if not self._list:
             return
         manager = self._list[name]
-        self._current_name = name
+        self._current__name = name
         manager.grid(row=0, column=0, sticky=(N, S, E, W))
 
 

@@ -69,16 +69,16 @@ class MainSetting(BaseSetting):
         if section is None:
             raise Exception("Section {0} not found".format(section_name))
 
-        date = datetime.strptime(section.get("starttime", fallback="0:00:00"), "%H:%M:%S")
-        idle = section.getint("idletime", fallback=1)
+        date = datetime.strptime(section.get("StartTime", fallback="0:00:00"), "%H:%M:%S")
+        idle = section.getint("IdleTime", fallback=1)
 
         self._hour_variable.set(date.hour)
         self._minute_variable.set(date.minute)
         self._second_variable.set(date.second)
         self._idle_variable.set(idle)
 
-        back_color = self._get_tuple(section.get("backgroundcolor", fallback="(0, 0, 0)"))
-        fore_color = self._get_tuple(section.get("foregroundcolor", fallback="(255, 255, 255)"))
+        back_color = self._get_tuple(section.get("BackgroundColor", fallback="(0, 0, 0)"))
+        fore_color = self._get_tuple(section.get("ForegroundColor", fallback="(255, 255, 255)"))
         self._color_frame.load(back_color, fore_color)
 
     def pre_save(self) -> None:
@@ -104,10 +104,10 @@ class MainSetting(BaseSetting):
         config.add_section(section_name)
         section = config[section_name]
         (background_color, foreground_color) = self._color_frame.get_result()
-        section["starttime"] = self._time
-        section["idletime"] = str(self._idle_variable.get())
-        section["backgroundcolor"] = "(%d, %d, %d)" % background_color
-        section["foregroundcolor"] = "(%d, %d, %d)" % foreground_color
+        section["StartTime"] = self._time
+        section["IdleTime"] = str(self._idle_variable.get())
+        section["BackgroundColor"] = "(%d, %d, %d)" % background_color
+        section["ForegroundColor"] = "(%d, %d, %d)" % foreground_color
 
     def rename(self, section_name: str) -> None:
         """ Переименование секции """

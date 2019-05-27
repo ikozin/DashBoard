@@ -1,8 +1,7 @@
-import pygame
-import pygame.locals
-
 from datetime import datetime
 from exceptions import ExceptionNotFound
+import pygame
+import pygame.locals
 from modules.BlockBase import BlockBase
 
 
@@ -58,51 +57,51 @@ class BlockCalendar(BlockBase):
             "октября",
             "ноября",
             "декабря"]
-        self._weekDayShot = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
-        self._weekDayLong = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
+        self._weekday_shot = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]
+        self._weekday_long = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
         self._font = None
         self._pos = None
         self._time = None
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["CalendarBlock"]
 
-        fontName = section.get("FontName")
-        fontSize = section.getint("FontSize")
-        isBold = section.getboolean("FontBold")
-        isItalic = section.getboolean("FontItalic")
+        font_name = section.get("FontName")
+        font_size = section.getint("FontSize")
+        is_bold = section.getboolean("FontBold")
+        is_italic = section.getboolean("FontItalic")
         self._pos = section.getint("Position")
 
-        if fontName is None:
+        if font_name is None:
             raise ExceptionNotFound(section.name, "FontName")
-        if fontSize is None:
+        if font_size is None:
             raise ExceptionNotFound(section.name, "FontSize")
-        if isBold is None:
+        if is_bold is None:
             raise ExceptionNotFound(section.name, "FontBold")
-        if isItalic is None:
+        if is_italic is None:
             raise ExceptionNotFound(section.name, "FontItalic")
         if self._pos is None:
             raise ExceptionNotFound(section.name, "Position")
 
-        self._font = pygame.font.SysFont(fontName, fontSize, isBold, isItalic)
-        self.updateInfo(True)
+        self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
+        self.update_info(True)
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
+    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         try:
             self._time = current_time
-            if not isOnline:
+            if not is_online:
                 return
             text = "{0} {1} {2} {3}".format(
-                self._weekDayShot[self._time.weekday()],
+                self._weekday_shot[self._time.weekday()],
                 self._time.day,
                 self._months[self._time.month-1],
                 self._time.year)
             sz = self._font.size(text)
             x = (size[0] - sz[0]) >> 1
             y = self._pos
-            surf = self._font.render(text, True, foreColor, backColor)
+            surf = self._font.render(text, True, fore_color, back_color)
             screen.blit(surf, (x, y))
         except Exception as ex:
             self._logger.exception(ex)
@@ -111,12 +110,12 @@ class BlockCalendar(BlockBase):
         if self._time is None:
             self._time = datetime.now()
         self._text = "{0}, {1} {2} {3} год".format(
-            self._weekDayLong[self._time.weekday()],
+            self._weekday_long[self._time.weekday()],
             self._daysLong[self._time.day-1],
             self._months[self._time.month-1],
             self._time.year)
         self._time = None
 
-    def getText(self):
+    def get_text(self):
         self.execute()
         return self._text

@@ -26,7 +26,7 @@ class AlarmManager(BaseManager):
             4: AlarmSettingExecute
         }
         self._alarm_list: Dict[str, AlarmSetting] = dict()
-        self._current_name = None
+        self._current__name = None
         self._listbox = Listbox(self, width=25)
         self._listbox.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, W))
         self._listbox.bind('<<ListboxSelect>>', self._select_alarm)
@@ -49,7 +49,7 @@ class AlarmManager(BaseManager):
         if not config.has_section("AlarmBlock"):
             config.add_section("AlarmBlock")
         self._mod_list = module_list
-        self._current_name = None
+        self._current__name = None
         for schema_name in self._alarm_list:
             block = self._alarm_list[schema_name]
             block.destroy()
@@ -98,13 +98,13 @@ class AlarmManager(BaseManager):
             return
         name = listbox.get(selection[0])
 
-        if self._current_name:
-            alarm_block = self._alarm_list[self._current_name]
+        if self._current__name:
+            alarm_block = self._alarm_list[self._current__name]
             alarm_block.grid_forget()
         if not self._alarm_list:
             return
         alarm_block = self._alarm_list[name]
-        self._current_name = name
+        self._current__name = name
         alarm_block.grid(row=0, column=0, sticky=(N, S, E, W))
 
     def _create_alarm(self) -> None:
@@ -134,8 +134,8 @@ class AlarmManager(BaseManager):
         alarm_block.rename(newname)
         del self._alarm_list[name]
         self._alarm_list[newname] = alarm_block
-        if self._current_name == name:
-            self._current_name = newname
+        if self._current__name == name:
+            self._current__name = newname
         self._listbox.delete(selection)
         self._listbox.insert(selection, newname)
 
@@ -150,8 +150,8 @@ class AlarmManager(BaseManager):
         self._listbox.delete(selection)
         del self._alarm_list[name]
         alarm_block.destroy()
-        if self._current_name == name:
-            self._current_name = None
+        if self._current__name == name:
+            self._current__name = None
 
     def _create_alarm_by_type(self, section_type: int, item: str, mod_list: List[str]) -> Optional[AlarmSetting]:
         func = self._functions.get(section_type, None)

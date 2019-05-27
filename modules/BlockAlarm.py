@@ -1,13 +1,12 @@
 import datetime
+from exceptions import ExceptionFormat, ExceptionNotFound
 import pygame
 import pygame.locals
-
-from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
-from modules.alarm.BlockAlarmSimple import BlockAlarmSimple
-from modules.alarm.BlockAlarmBlink import BlockAlarmBlink
-from modules.alarm.BlockAlarmRise import BlockAlarmRise
-from modules.alarm.BlockAlarmExecute import BlockAlarmExecute
+from modules.alarm.block_alarm_simple import BlockAlarmSimple
+from modules.alarm.block_alarm_blink import BlockAlarmBlink
+from modules.alarm.block_alarm_rise import BlockAlarmRise
+from modules.alarm.block_alarm_execute import BlockAlarmExecute
 
 BLOCK_ALARM_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 
@@ -22,7 +21,7 @@ class BlockAlarm(BlockBase):
         self._alarmBlock = []
         self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise, 4: BlockAlarmExecute}
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["AlarmBlock"]
@@ -30,57 +29,57 @@ class BlockAlarm(BlockBase):
         selection = section.get("BlockList", "")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
         for name in selection:
-            if name in modList:
-                self.addBlock(modList[name])
+            if name in mod_list:
+                self.add_block(mod_list[name])
 
-        csvValue = section.get("List")
-        if csvValue is None:
+        csv_value = section.get("List")
+        if csv_value is None:
             return
 
-        alarmSchemas = [item.strip(" '") for item in csvValue.split(",") if item.strip()]
-        for schema in alarmSchemas:
+        alarm_schemas = [item.strip(" '") for item in csv_value.split(",") if item.strip()]
+        for schema in alarm_schemas:
             if not self._setting.Configuration.has_section(schema):
                 raise Exception("Ошибка конфигурации! Нет секции [{0}]".format(schema))
 
             section = self._setting.Configuration[schema]
-            type = section.getint("Type")
-            if type is None:
+            alarm_type = section.getint("Type")
+            if alarm_type is None:
                 raise ExceptionNotFound(schema, "Type")
 
-            func = self._functions.get(type, None)
+            func = self._functions.get(alarm_type, None)
             if func is None:
                 raise ExceptionFormat(schema, "Type")
             alarm = func(self._logger, self._setting)
-            alarm.init(section, modList)
+            alarm.init(section, mod_list)
             self._alarmBlock.append(alarm)
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
-        self.updateInfo(True)
+        self.update_info(True)
 
-    def proccedEvent(self, event, isOnline):
+    def procced_event(self, event, is_online):
         if event.type == BLOCK_ALARM_UPDATE_EVENT:
-            self.updateInfo(isOnline)
+            self.update_info(is_online)
 
-    def updateInfo(self, isOnline):
+    def update_info(self, is_online):
         try:
             if not self._alarmBlock:
                 return
             value = datetime.datetime.now()
             for item in self._alarmBlock:
-                item.updateState(value)
+                item.update_state(value)
         except Exception as ex:
             self._logger.exception(ex)
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
+    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         try:
             if not self._alarmBlock:
                 return
             for item in self._alarmBlock:
-                item.updateDisplay(screen, size, foreColor, backColor, self._blocks, current_time)
+                item.update_display(screen, size, fore_color, back_color, self._blocks, current_time)
         except Exception as ex:
             self._logger.exception(ex)
 
-    def addBlock(self, block):
+    def add_block(self, block):
         if not isinstance(block, BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)

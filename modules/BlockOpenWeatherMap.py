@@ -1,10 +1,9 @@
 ﻿import os
 import urllib.request as request
 import xml.etree.ElementTree as ET
-import pygame
 from datetime import datetime, timedelta
-
 from exceptions import ExceptionFormat, ExceptionNotFound
+import pygame
 from modules.BlockMinuteBase import BlockMinuteBase
 
 ##############################################################
@@ -24,7 +23,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockOpenWeatherMap, self).__init__(logger, setting)
-        self._lastUpdate = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
+        self._last_update = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
 
         self._key = None
         self._folder = None
@@ -37,21 +36,21 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         self._wind_direction = None
         self._weather_image = None
 
-        self._iconScale = None
-        self._iconPos = None
-        self._weatherTypePos = None
-        self._temperaturePos = None
-        self._humidityPos = None
-        self._pressurePos = None
-        self._windPos = None
+        self._icon_scale = None
+        self._icon_pos = None
+        self._weather_type_pos = None
+        self._temperature_pos = None
+        self._humidity_pos = None
+        self._pressure_pos = None
+        self._wind_pos = None
 
-        self._weatherTypeFont = None
-        self._temperatureFont = None
-        self._humidityFont = None
-        self._pressureFont = None
-        self._windFont = None
+        self._weather_type_font = None
+        self._temperature_font = None
+        self._humidity_font = None
+        self._pressure_font = None
+        self._wind_font = None
 
-    def init(self, modList):
+    def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.Configuration["OpenWeatherMapBlock"]
@@ -60,13 +59,13 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         self._folder = section.get("Folder")
         time = section.getint("UpdateTime")
 
-        self._iconScale = self._getTuple(section.get("IconScale"))
-        self._iconPos = self._getTuple(section.get("IconPos"))
-        self._weatherTypePos = self._getTuple(section.get("WeatherTypePos"))
-        self._temperaturePos = self._getTuple(section.get("TemperaturePos"))
-        self._humidityPos = self._getTuple(section.get("HumidityPos"))
-        self._pressurePos = self._getTuple(section.get("PressurePos"))
-        self._windPos = self._getTuple(section.get("WindPos"))
+        self._icon_scale = self._get_tuple(section.get("IconScale"))
+        self._icon_pos = self._get_tuple(section.get("IconPos"))
+        self._weather_type_pos = self._get_tuple(section.get("WeatherTypePos"))
+        self._temperature_pos = self._get_tuple(section.get("TemperaturePos"))
+        self._humidity_pos = self._get_tuple(section.get("HumidityPos"))
+        self._pressure_pos = self._get_tuple(section.get("PressurePos"))
+        self._wind_pos = self._get_tuple(section.get("WindPos"))
 
         wtName = section.get("WeatherTypeFontName")
         tName = section.get("TemperatureFontName")
@@ -99,20 +98,20 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         if time is None:
             raise ExceptionNotFound(section.name, "UpdateTime")
 
-        if self._iconScale is None:
+        if self._icon_scale is None:
             raise ExceptionNotFound(section.name, "IconScale")
-        if self._iconPos is None:
+        if self._icon_pos is None:
             raise ExceptionNotFound(section.name, "IconPos")
 
-        if self._weatherTypePos is None:
+        if self._weather_type_pos is None:
             raise ExceptionNotFound(section.name, "WeatherTypePos")
-        if self._temperaturePos is None:
+        if self._temperature_pos is None:
             raise ExceptionNotFound(section.name, "TemperaturePos")
-        if self._humidityPos is None:
+        if self._humidity_pos is None:
             raise ExceptionNotFound(section.name, "HumidityPos")
-        if self._pressurePos is None:
+        if self._pressure_pos is None:
             raise ExceptionNotFound(section.name, "PressurePos")
-        if self._windPos is None:
+        if self._wind_pos is None:
             raise ExceptionNotFound(section.name, "WindPos")
 
         if wtName is None:
@@ -159,77 +158,77 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         if wItalic is None:
             raise ExceptionNotFound(section.name, "WindFontItalic")
 
-        if len(self._iconScale) != 2:
+        if len(self._icon_scale) != 2:
             raise ExceptionFormat(section.name, "IconScale")
-        if len(self._iconPos) != 2:
+        if len(self._icon_pos) != 2:
             raise ExceptionFormat(section.name, "IconPos")
-        if len(self._weatherTypePos) != 2:
+        if len(self._weather_type_pos) != 2:
             raise ExceptionFormat(section.name, "WeatherTypePos")
-        if len(self._temperaturePos) != 2:
+        if len(self._temperature_pos) != 2:
             raise ExceptionFormat(section.name, "TemperaturePos")
-        if len(self._humidityPos) != 2:
+        if len(self._humidity_pos) != 2:
             raise ExceptionFormat(section.name, "HumidityPos")
-        if len(self._pressurePos) != 2:
+        if len(self._pressure_pos) != 2:
             raise ExceptionFormat(section.name, "PressurePos")
-        if len(self._windPos) != 2:
+        if len(self._wind_pos) != 2:
             raise ExceptionFormat(section.name, "WindPos")
 
-        self._weatherTypeFont = pygame.font.SysFont(wtName, wtSize, wtBold, wtItalic)
-        self._temperatureFont = pygame.font.SysFont(tName, tSize, tBold, tItalic)
-        self._humidityFont = pygame.font.SysFont(hName, hSize, hBold, hItalic)
-        self._pressureFont = pygame.font.SysFont(pName, pSize, pBold, pItalic)
-        self._windFont = pygame.font.SysFont(wName, wSize, wBold, wItalic)
+        self._weather_type_font = pygame.font.SysFont(wtName, wtSize, wtBold, wtItalic)
+        self._temperature_font = pygame.font.SysFont(tName, tSize, tBold, tItalic)
+        self._humidity_font = pygame.font.SysFont(hName, hSize, hBold, hItalic)
+        self._pressure_font = pygame.font.SysFont(pName, pSize, pBold, pItalic)
+        self._wind_font = pygame.font.SysFont(wName, wSize, wBold, wItalic)
 
         if not os.path.exists(self._folder):
             os.mkdir(self._folder)
-        for imageName in ["01d.png", "01n.png", "02d.png", "02n.png", "03d.png", "03n.png",
-                          "04d.png", "04n.png", "09d.png", "09n.png", "10d.png", "10n.png",
-                          "11d.png", "11n.png", "13d.png", "13n.png", "50d.png", "50n.png"]:
-            self._load(imageName, self._folder)
+        for image_name in ["01d.png", "01n.png", "02d.png", "02n.png", "03d.png", "03n.png",
+                           "04d.png", "04n.png", "09d.png", "09n.png", "10d.png", "10n.png",
+                           "11d.png", "11n.png", "13d.png", "13n.png", "50d.png", "50n.png"]:
+            self._load(image_name, self._folder)
 
-        self.updateInfo(True)
-        self.setTime(time)
+        self.update_info(True)
+        self.set_time(time)
 
-    def updateInfo(self, isOnline):
+    def update_info(self, is_online):
         try:
-            if not isOnline:
+            if not is_online:
                 return
             self.execute()
         except Exception as ex:
             self._logger.exception(ex)
 
-    def updateDisplay(self, isOnline, screen, size, foreColor, backColor, current_time):
+    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         try:
-            if not isOnline:
+            if not is_online:
                 return
 
             if self._weather_image is not None:
-                screen.blit(self._weather_image, self._iconPos)
+                screen.blit(self._weather_image, self._icon_pos)
             if self._weather_type is not None:
                 text = "{0}".format(self._weather_type)
-                surf = self._weatherTypeFont.render(text, True, foreColor, backColor)
-                screen.blit(surf, self._weatherTypePos)
+                surf = self._weather_type_font.render(text, True, fore_color, back_color)
+                screen.blit(surf, self._weather_type_pos)
             if self._temperature is not None:
                 text = "{0:+.0f}°".format(self._temperature)
-                surf = self._temperatureFont.render(text, True, foreColor, backColor)
-                screen.blit(surf, self._temperaturePos)
+                surf = self._temperature_font.render(text, True, fore_color, back_color)
+                screen.blit(surf, self._temperature_pos)
             if self._humidity is not None:
                 text = "Влажность {0}%".format(self._humidity)
-                surf = self._humidityFont.render(text, True, foreColor, backColor)
-                screen.blit(surf, self._humidityPos)
+                surf = self._humidity_font.render(text, True, fore_color, back_color)
+                screen.blit(surf, self._humidity_pos)
             if self._pressure is not None:
                 text = "Давление {0} мм".format(self._pressure)
-                surf = self._pressureFont.render(text, True, foreColor, backColor)
-                screen.blit(surf, self._pressurePos)
+                surf = self._pressure_font.render(text, True, fore_color, back_color)
+                screen.blit(surf, self._pressure_pos)
             if self._wind_speed is not None:
                 text = "Ветер {0} м/с {1}".format(self._wind_speed, self._wind_direction)
-                surf = self._windFont.render(text, True, foreColor, backColor)
-                screen.blit(surf, self._windPos)
+                surf = self._wind_font.render(text, True, fore_color, back_color)
+                screen.blit(surf, self._wind_pos)
         except Exception as ex:
             self._logger.exception(ex)
 
     def execute(self, *args):
-        data = self._getData()
+        data = self._get_data()
         if data is None:
             return
 
@@ -241,10 +240,10 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         self._wind_speed = str(root.find("wind/speed").attrib["value"])
         self._wind_direction = str(root.find("wind/direction").attrib["code"])
 
-        imageName = str(root.find("weather").attrib["icon"]) + ".png"
-        self._load(imageName, self._folder)
-        imageName = os.path.join(self._folder, imageName)
-        self._weather_image = pygame.transform.smoothscale(pygame.image.load(imageName), self._iconScale)
+        image_name = str(root.find("weather").attrib["icon"]) + ".png"
+        self._load(image_name, self._folder)
+        image_name = os.path.join(self._folder, image_name)
+        self._weather_image = pygame.transform.smoothscale(pygame.image.load(image_name), self._icon_scale)
 
         self._text = WEATHER_TEXT_FORMAT.format(
             self._weather_type,
@@ -253,27 +252,26 @@ class BlockOpenWeatherMap(BlockMinuteBase):
             self._humidity,
             self._pressure)
 
-    def _load(self, imageName, path):
-        filePath = os.path.join(path, imageName)
-        if not os.path.exists(filePath):
-            url = "http://openweathermap.org/img/w/{0}".format(imageName)
-            with open(filePath, "wb") as file:
+    def _load(self, image_name, path):
+        file_path = os.path.join(path, image_name)
+        if not os.path.exists(file_path):
+            url = "http://openweathermap.org/img/w/{0}".format(image_name)
+            with open(file_path, "wb") as file:
                 file.write(request.urlopen(url).read())
 
-    def _getData(self):
-        dif = datetime.now() - self._lastUpdate
+    def _get_data(self):
+        dif = datetime.now() - self._last_update
         ##############################################################
         # http://openweathermap.org/appid#work - 1 time per 10 minutes
         ##############################################################
         if dif.seconds >= MIN_UPDATE_TIME:
             with request.urlopen(
-                "http://api.openweathermap.org/data/2.5/weather?id={0}&mode=xml&units=metric&lang=ru&APPID={1}".format(
-                    CITY_ID, self._key)) as f:
+                                "http://api.openweathermap.org/data/2.5/weather?id={0}&mode=xml&units=metric&lang=ru&APPID={1}".format(
+                                    CITY_ID, self._key)) as f:
                 data = f.read()
             with open(os.path.join(self._folder, WEATHER_FILE), "wb") as file:
                 file.write(data)
-            self._lastUpdate = datetime.now()
+            self._last_update = datetime.now()
             return data
-        else:
-            with open(os.path.join(self._folder, WEATHER_FILE), "rb") as file:
-                return file.read()
+        with open(os.path.join(self._folder, WEATHER_FILE), "rb") as file:
+            return file.read()
