@@ -61,26 +61,24 @@ class BlockWatcher(BlockSecondBase):
             if not self._isWatching:
                 if any(current_time.weekday() == day for day in self._weekDay):
                     if current_time.time() >= self._start_time.time():
-                        # self._isWatching = True
-                        self.execute()
+                        self._isWatching = True
             if self._isWatching:
-                ###########################################################################
-                if sys.platform == "linux":  # Only for Raspberry Pi
-                    subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
-                    # subprocess.Popen(
-                    #    self._path,
-                    #    shell=True,
-                    #    stdin=subprocess.PIPE,
-                    #    stdout=subprocess.PIPE,
-                    #    stderr=subprocess.STDOUT).wait()
-                else:
-                    subprocess.Popen("calc.exe", shell=True)
-                ###########################################################################
-            if self._isWatching:
+                self.execute()
                 if current_time.time() > self._stop_time.time():
                     self._isWatching = False
         except Exception as ex:
             self._logger.exception(ex)
 
     def execute(self, *args):
-        self._isWatching = True
+        ###########################################################################
+        if sys.platform == "linux":  # Only for Raspberry Pi
+            subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
+            # subprocess.Popen(
+            #    self._path,
+            #    shell=True,
+            #    stdin=subprocess.PIPE,
+            #    stdout=subprocess.PIPE,
+            #    stderr=subprocess.STDOUT).wait()
+        else:
+            subprocess.Popen("calc.exe", shell=True)
+        ###########################################################################
