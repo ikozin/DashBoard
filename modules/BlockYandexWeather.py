@@ -244,9 +244,9 @@ class BlockYandexWeather(BlockMinuteBase):
         self._wind_speed = str(root.find("weather/day/day_part/wind_speed").text)
         self._wind_direction = str(root.find("weather/day/day_part/wind_direction").text)
 
-        loadPath = root.find("weather/day/day_part/image-v3").text
-        image_name = os.path.basename(loadPath)
-        self._load(image_name, self._folder, loadPath)
+        load_path = root.find("weather/day/day_part/image-v3").text
+        image_name = os.path.basename(load_path)
+        self._load(image_name, self._folder, load_path)
         image_name = os.path.join(self._folder, image_name)
         self._weather_image = pygame.transform.smoothscale(pygame.image.load(image_name), self._icon_scale)
 
@@ -268,8 +268,8 @@ class BlockYandexWeather(BlockMinuteBase):
         if dif.seconds >= MIN_UPDATE_TIME:
             urlPath = "https://export.yandex.ru/bar/reginfo.xml?regionid={0}&lat={1}&lon={2}".format(
                 self._region_id, self._lat, self._lon)
-            with request.urlopen(urlPath) as f:
-                data = f.read()
+            with request.urlopen(urlPath) as file:
+                data = file.read()
             with open(os.path.join(self._folder, WEATHER_FILE), "wb") as file:
                 file.write(data)
             self._last_update = datetime.now()

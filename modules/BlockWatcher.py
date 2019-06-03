@@ -14,7 +14,7 @@ class BlockWatcher(BlockSecondBase):
         super(BlockWatcher, self).__init__(logger, setting)
         self._start_time = None
         self._stop_time = None
-        self._weekDay = None
+        self._weekday = None
         self._path = None
         self._isWatching = False
 
@@ -23,13 +23,13 @@ class BlockWatcher(BlockSecondBase):
         # Загружаем настройки
         section = self._setting.Configuration["WatcherBlock"]
 
-        self._weekDay = self._get_tuple(section.get("WeekDay"))
+        self._weekday = self._get_tuple(section.get("WeekDay"))
         self._start_time = section.get("StartTime")
         self._stop_time = section.get("FinishTime")
         self._path = section.get("Path")
         time = section.getint("UpdateTime")
 
-        if self._weekDay is None:
+        if self._weekday is None:
             raise ExceptionNotFound(section.name, "WeekDay")
         if self._start_time is None:
             raise ExceptionNotFound(section.name, "StartTime")
@@ -40,9 +40,9 @@ class BlockWatcher(BlockSecondBase):
         if time is None:
             raise ExceptionNotFound(section.name, "UpdateTime")
 
-        if len(self._weekDay) > 7:
+        if len(self._weekday) > 7:
             raise ExceptionFormat(section.name, "WeekDay")
-        if not all(day >= 0 and day < 7 for day in self._weekDay):
+        if not all(day >= 0 and day < 7 for day in self._weekday):
             raise ExceptionFormat(section.name, "WeekDay")
 
         self._start_time = datetime.datetime.strptime(self._start_time, "%H:%M:%S")
@@ -59,7 +59,7 @@ class BlockWatcher(BlockSecondBase):
                 return
             current_time = datetime.datetime.now()
             if not self._isWatching:
-                if any(current_time.weekday() == day for day in self._weekDay):
+                if any(current_time.weekday() == day for day in self._weekday):
                     if current_time.time() >= self._start_time.time():
                         self._isWatching = True
             if self._isWatching:

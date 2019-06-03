@@ -288,8 +288,8 @@ class BlockWunderGround(BlockMinuteBase):
         ##############################################################
         if dif.seconds >= MIN_UPDATE_TIME:
             with request.urlopen("http://api.wunderground.com/api/{0}/conditions/lang:RU/q/{1}.xml"
-                                 .format(self._key, CITY_URL)) as f:
-                data = f.read()
+                                 .format(self._key, CITY_URL)) as file:
+                data = file.read()
             with open(os.path.join(self._folder, WEATHER_FILE), "wb") as file:
                 file.write(data)
             self._last_update = datetime.now()

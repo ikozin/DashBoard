@@ -11,7 +11,7 @@ class BlockCalendar(BlockBase):
     def __init__(self, logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockCalendar, self).__init__(logger, setting)
-        self._daysLong = [
+        self._days_long = [
             "первое",
             "второе",
             "третье",
@@ -98,11 +98,11 @@ class BlockCalendar(BlockBase):
                 self._time.day,
                 self._months[self._time.month-1],
                 self._time.year)
-            sz = self._font.size(text)
-            x = (size[0] - sz[0]) >> 1
-            y = self._pos
+            text_size = self._font.size(text)
+            text_x = (size[0] - text_size[0]) >> 1
+            text_y = self._pos
             surf = self._font.render(text, True, fore_color, back_color)
-            screen.blit(surf, (x, y))
+            screen.blit(surf, (text_x, text_y))
         except Exception as ex:
             self._logger.exception(ex)
 
@@ -111,7 +111,7 @@ class BlockCalendar(BlockBase):
             self._time = datetime.now()
         self._text = "{0}, {1} {2} {3} год".format(
             self._weekday_long[self._time.weekday()],
-            self._daysLong[self._time.day-1],
+            self._days_long[self._time.day-1],
             self._months[self._time.month-1],
             self._time.year)
         self._time = None

@@ -42,8 +42,8 @@ class Test_Block_Voice(unittest.TestCase):
         self.assertTrue(block is not None, "BlockVoice")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "Speaker", "Speaker")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "Speaker", "Speaker")
 
     def test_init_key(self):
         config = self._get_setting("Speaker")
@@ -51,8 +51,8 @@ class Test_Block_Voice(unittest.TestCase):
         self.assertTrue(block is not None, "BlockVoice")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "Key", "Key")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "Key", "Key")
 
     def test_init_blocks(self):
         config = self._get_setting("Key")
@@ -60,8 +60,8 @@ class Test_Block_Voice(unittest.TestCase):
         self.assertTrue(block is not None, "BlockVoice")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "BlockList", "BlockList")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "BlockList", "BlockList")
 
     def test_init(self):
         config = self._get_setting(None)

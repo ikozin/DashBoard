@@ -78,13 +78,13 @@ class BlockYandexNews(BlockMinuteBase):
             if not self._news:
                 return
 
-            y = self._pos
+            text_y = self._pos
             for text in self._news:
-                sz = self._font.size(text)
-                x = (size[0] - min(size[0], sz[0])) >> 1
+                text_size = self._font.size(text)
+                text_x = (size[0] - min(size[0], text_size[0])) >> 1
                 surf = self._font.render(text, True, fore_color, back_color)
-                screen.blit(surf, (x, y))
-                y += sz[1] + self._indent
+                screen.blit(surf, (text_x, text_y))
+                text_y += text_size[1] + self._indent
         except Exception as ex:
             self._logger.exception(ex)
 

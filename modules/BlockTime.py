@@ -44,11 +44,11 @@ class BlockTime(BlockBase):
             if not is_online:
                 return
             text = BLOCK_TIME_DISPLAY_FORMAT.format(current_time)
-            sz = self._font.size(text)
-            x = (size[0] - sz[0]) >> 1
-            y = (size[1] - sz[1]) >> 1
+            text_size = self._font.size(text)
+            text_x = (size[0] - text_size[0]) >> 1
+            text_y = (size[1] - text_size[1]) >> 1
             surf = self._font.render(text, True, fore_color, back_color)
-            screen.blit(surf, (x, y))
+            screen.blit(surf, (text_x, text_y))
             self._time = current_time
         except Exception as ex:
             self._logger.exception(ex)

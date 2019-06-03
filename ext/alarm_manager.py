@@ -81,7 +81,7 @@ class AlarmManager(BaseManager):
             config.add_section("AlarmBlock")
         section = config["AlarmBlock"]
 
-        modules = [x for x in iter(self._alarm_list)]
+        modules = [name for name in iter(self._alarm_list)]
         for schema_name in modules:
             self._alarm_list[schema_name].pre_save()
         list.sort(modules, key=lambda entry: self._alarm_list[entry]._time)

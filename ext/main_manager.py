@@ -100,7 +100,7 @@ class MainManager(BaseManager):
 
         section = config["TIMELINE"]
 
-        parts = [x for x in iter(self._section_list)]
+        parts = [name for name in iter(self._section_list)]
         for schema_name in parts:
             self._section_list[schema_name].pre_save()
         list.sort(parts, key=lambda entry: self._section_list[entry]._time)

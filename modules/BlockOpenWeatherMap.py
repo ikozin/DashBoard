@@ -267,8 +267,8 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         if dif.seconds >= MIN_UPDATE_TIME:
             with request.urlopen(
                                 "http://api.openweathermap.org/data/2.5/weather?id={0}&mode=xml&units=metric&lang=ru&APPID={1}".format(
-                                    CITY_ID, self._key)) as f:
-                data = f.read()
+                                    CITY_ID, self._key)) as file:
+                data = file.read()
             with open(os.path.join(self._folder, WEATHER_FILE), "wb") as file:
                 file.write(data)
             self._last_update = datetime.now()

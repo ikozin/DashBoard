@@ -121,19 +121,19 @@ class BlockMT8057(BlockSecondBase):
             if self._value_co2 >= self._crit_zone:
                 color = self._crit_color
 
-            sz = self._co2_font.size(self._text_co2)
-            x = (size[0] - sz[0]) >> 1
-            y = self._co2_pos[1]
+            text_size = self._co2_font.size(self._text_co2)
+            text_x = (size[0] - text_size[0]) >> 1
+            text_y = self._co2_pos[1]
             surf = self._co2_font.render(self._text_co2, True, color, back_color)
-            screen.blit(surf, (x, y))
-            # print(x)
+            screen.blit(surf, (text_x, text_y))
+            # print(text_x)
 
-            sz = self._co2_font.size(self._text_temp)
-            x = (size[0] - sz[0]) >> 1
-            y = self._temp_pos[1]
+            text_size = self._co2_font.size(self._text_temp)
+            text_x = (size[0] - text_size[0]) >> 1
+            text_y = self._temp_pos[1]
             surf = self._temp_font.render(self._text_temp, True, fore_color, back_color)
-            screen.blit(surf, (x, y))
-            # print(x)
+            screen.blit(surf, (text_x, text_y))
+            # print(text_x)
         except Exception as ex:
             self._logger.exception(ex)
 

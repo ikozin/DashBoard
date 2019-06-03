@@ -41,26 +41,26 @@ class Test_Block_Calendar(unittest.TestCase):
         self.assertTrue(block is not None, "BlockCalendar")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "font_name", "font_name")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "FontName", "FontName")
 
     def test_init_font_size(self):
-        config = self._get_setting("font_name")
+        config = self._get_setting("FontName")
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "font_size", "font_size")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "FontSize", "FontSize")
 
     def test_init_font_bold(self):
-        config = self._get_setting("font_size")
+        config = self._get_setting("FontSize")
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "FontBold", "FontBold")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "FontBold", "FontBold")
 
     def test_init_font_italic(self):
         config = self._get_setting("FontBold")
@@ -68,8 +68,8 @@ class Test_Block_Calendar(unittest.TestCase):
         self.assertTrue(block is not None, "BlockCalendar")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "FontItalic", "FontItalic")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "FontItalic", "FontItalic")
 
     def test_init_position(self):
         config = self._get_setting("FontItalic")
@@ -77,15 +77,15 @@ class Test_Block_Calendar(unittest.TestCase):
         self.assertTrue(block is not None, "BlockCalendar")
         with self.assertRaises(ExceptionNotFound) as err_not_found:
             block.init({})
-        self.assertEqual(err_not_found.exception.configName, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.paramName, "Position", "Position")
+        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
+        self.assertEqual(err_not_found.exception.param_name, "Position", "Position")
 
     def test_init(self):
         config = self._get_setting(None)
         block = BlockCalendar(self.logger, config)
         self.assertTrue(block is not None, "BlockCalendar")
         block.init({})
-        self.assertIsNotNone(block._daysLong, "_daysLong")
+        self.assertIsNotNone(block._days_long, "_days_long")
         self.assertIsNotNone(block._months, "_months")
         self.assertIsNotNone(block._weekday_shot, "_weekday_shot")
         self.assertEqual(len(block._weekday_shot), 7, "_weekday_shot")
@@ -116,8 +116,8 @@ class Test_Block_Calendar(unittest.TestCase):
 
     def _get_setting(self, name):
         params = {
-            "font_name": "Helvetica",
-            "font_size": 170,
+            "FontName": "Helvetica",
+            "FontSize": 170,
             "FontBold": True,
             "FontItalic": False,
             "Position": 80

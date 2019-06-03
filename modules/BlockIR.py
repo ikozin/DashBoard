@@ -3,7 +3,7 @@ import sys
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 
-CONFIG_FILE_NMAE = "IR.ini"
+CONFIG_FILE_NAME = "IR.ini"
 PROG_NAME = "dashboard"
 
 
@@ -27,7 +27,7 @@ class BlockIR(BlockBase):
             moduleName = self._list[key_code.upper()].split(",")[0]
             if moduleName not in self._module_list:
                 raise ExceptionNotFound(section.name, key_code.upper())
-        with open(CONFIG_FILE_NMAE, "w", encoding="utf-8") as file:
+        with open(CONFIG_FILE_NAME, "w", encoding="utf-8") as file:
             for key_code in self._list:
                 file.write("begin\n\tprog={1}\n\tbutton={0}\n\t"
                            "config={0}\n\trepeat=0\nend\n".format(key_code, PROG_NAME))
@@ -64,7 +64,7 @@ class BlockIR(BlockBase):
         import lirc
 
         def module_init(self):
-            lirc.init(PROG_NAME, CONFIG_FILE_NMAE, blocking=False)
+            lirc.init(PROG_NAME, CONFIG_FILE_NAME, blocking=False)
 
         def module_done(self):
             lirc.deinit()
