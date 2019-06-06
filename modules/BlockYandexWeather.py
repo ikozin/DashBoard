@@ -51,7 +51,7 @@ class BlockYandexWeather(BlockMinuteBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["YandexWeatherBlock"]
+        section = self._setting.configuration["YandexWeatherBlock"]
 
         self._folder = section.get("Folder")
         time = section.getint("UpdateTime")

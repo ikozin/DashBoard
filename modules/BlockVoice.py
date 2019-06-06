@@ -22,7 +22,7 @@ class BlockVoice(BlockBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["VoiceBlock"]
+        section = self._setting.configuration["VoiceBlock"]
 
         self._speaker = section.get("Speaker")
         self._key = section.get("Key")

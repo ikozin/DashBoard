@@ -53,7 +53,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["OpenWeatherMapBlock"]
+        section = self._setting.configuration["OpenWeatherMapBlock"]
 
         self._key = section.get("Key")
         self._folder = section.get("Folder")

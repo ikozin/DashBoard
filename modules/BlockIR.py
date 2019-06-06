@@ -19,7 +19,7 @@ class BlockIR(BlockBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["IRBlock"]
+        section = self._setting.configuration["IRBlock"]
         self._list = dict()
         self._module_list = mod_list
         for key_code in section:
@@ -40,7 +40,7 @@ class BlockIR(BlockBase):
     def execute(self, *args):
         try:
             code = args[0] if len(args) == 1 else self.module_getcode()
-            if len(code) == 0:
+            if not code:
                 return
             key_code = code[0]
             if key_code not in self._list:

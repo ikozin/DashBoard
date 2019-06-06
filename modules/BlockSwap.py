@@ -17,7 +17,7 @@ class BlockSwap(BlockSecondBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["SwapBlock"]
+        section = self._setting.configuration["SwapBlock"]
 
         time = section.getint("UpdateTime")
         if time is None:

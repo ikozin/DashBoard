@@ -25,7 +25,7 @@ class BlockYandexNews(BlockMinuteBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["YandexNewsBlock"]
+        section = self._setting.configuration["YandexNewsBlock"]
 
         self._url = section.get("Url")
         self._indent = section.getint("Indent")

@@ -41,7 +41,7 @@ class Test_Block_Alarm(unittest.TestCase):
         self.assertTrue(block is not None, "BlockAlarm")
         block.init({})
         self.assertIsNotNone(block._blocks, "_blocks")
-        self.assertIsNotNone(block._alarmBlock, "_alarmBlock")
+        self.assertIsNotNone(block._alarm_block, "_alarm_block")
         self.assertIsNotNone(block._functions, "_functions")
 
     def _get_setting(self, name):
@@ -50,10 +50,10 @@ class Test_Block_Alarm(unittest.TestCase):
             "List": "",
         }
         config = Setting()
-        config.Configuration.add_section(SECTION_NAME)
+        config.configuration.add_section(SECTION_NAME)
         if name == "":
             return config
-        section = config.Configuration[SECTION_NAME]
+        section = config.configuration[SECTION_NAME]
         for key, value in params.items():
             section[key] = value.__str__()
             if key == name:

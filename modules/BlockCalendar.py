@@ -66,7 +66,7 @@ class BlockCalendar(BlockBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["CalendarBlock"]
+        section = self._setting.configuration["CalendarBlock"]
 
         font_name = section.get("FontName")
         font_size = section.getint("FontSize")

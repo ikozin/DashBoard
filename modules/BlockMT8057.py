@@ -33,7 +33,7 @@ class BlockMT8057(BlockSecondBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["MT8057Block"]
+        section = self._setting.configuration["MT8057Block"]
 
         self._warn_zone = section.getint("Warn")
         self._crit_zone = section.getint("Crit")

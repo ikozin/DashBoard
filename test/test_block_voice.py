@@ -82,10 +82,10 @@ class Test_Block_Voice(unittest.TestCase):
             "BlockList": "Voice",
         }
         config = Setting()
-        config.Configuration.add_section(SECTION_NAME)
+        config.configuration.add_section(SECTION_NAME)
         if name == "":
             return config
-        section = config.Configuration[SECTION_NAME]
+        section = config.configuration[SECTION_NAME]
         for key, value in params.items():
             section[key] = value.__str__()
             if key == name:

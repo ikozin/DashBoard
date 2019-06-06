@@ -20,7 +20,7 @@ class BlockTime(BlockBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["TimeBlock"]
+        section = self._setting.configuration["TimeBlock"]
 
         font_name = section.get("FontName")
         font_size = section.getint("FontSize")

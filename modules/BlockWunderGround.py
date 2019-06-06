@@ -53,7 +53,7 @@ class BlockWunderGround(BlockMinuteBase):
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["WunderGroundBlock"]
+        section = self._setting.configuration["WunderGroundBlock"]
 
         self._key = section.get("Key")
         self._folder = section.get("Folder")

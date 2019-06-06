@@ -56,12 +56,12 @@ class Mainboard:
         self._modules = []
         self._size = None
         self._screen = None
-        self._isDisplayOn = True
+        self._is_display_on = True
         # Загружаем настройки из конфиг файла
         self._config = Setting()
         self._config.load(FILE_SETTING)
 
-        self._managerList = {
+        self._manager_list = {
             "Time": BlockTime(logger, self._config),
             "Alarm": BlockAlarm(logger, self._config),
             "Voice": BlockVoice(logger, self._config),
@@ -76,9 +76,9 @@ class Mainboard:
             "IR": BlockIR(logger, self._config),
         }
 
-        for name in self._config._blockList:
-            if name in self._managerList:
-                self._modules.append(self._managerList[name])
+        for name in self._config._block_list:
+            if name in self._manager_list:
+                self._modules.append(self._manager_list[name])
                 print(name)
 
         # Based on "Python GUI in Linux frame buffer"
@@ -121,7 +121,7 @@ class Mainboard:
         pygame.mouse.set_visible(False)
 
         for module in self._modules:
-            module.init(self._managerList)
+            module.init(self._manager_list)
 
         pygame.time.set_timer(BLOCK_SECOND_UPDATE_EVENT, 1000)
         pygame.time.set_timer(BLOCK_MINUTE_UPDATE_EVENT, 60000)
@@ -142,9 +142,9 @@ class Mainboard:
         pygame.time.set_timer(IDLE_EVENT, 0)
 
     def display_off(self):
-        if not self._isDisplayOn:
+        if not self._is_display_on:
             return
-        self._isDisplayOn = False
+        self._is_display_on = False
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
             # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5,
@@ -158,9 +158,9 @@ class Mainboard:
 
     def display_on(self):
         self.set_display_timer_on()
-        if self._isDisplayOn:
+        if self._is_display_on:
             return
-        self._isDisplayOn = True
+        self._is_display_on = True
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
             # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5,
@@ -171,7 +171,7 @@ class Mainboard:
             pass
         ###########################################################################
         for module in self._modules:
-            module.update_info(self._isDisplayOn)
+            module.update_info(self._is_display_on)
 
     def procced_event(self, events):
         for event in events:
@@ -203,20 +203,20 @@ class Mainboard:
                 self.display_off()
 
             for module in self._modules:
-                module.procced_event(event, self._isDisplayOn)
+                module.procced_event(event, self._is_display_on)
         return 1
 
     def loop(self):
         clock = pygame.time.Clock()
         while self.procced_event(pygame.event.get()):
 
-            if self._isDisplayOn:
+            if self._is_display_on:
                 (_, background_color, foreground_color, _) = self._config.get_curret_setting()
                 self._screen.fill(background_color)
                 time = datetime.datetime.now()
                 for module in self._modules:
                     module.update_display(
-                        self._isDisplayOn,
+                        self._is_display_on,
                         self._screen,
                         self._size,
                         foreground_color,

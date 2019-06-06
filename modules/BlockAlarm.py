@@ -18,13 +18,13 @@ class BlockAlarm(BlockBase):
         """Initializes (declare internal variables)"""
         super(BlockAlarm, self).__init__(logger, setting)
         self._blocks = []
-        self._alarmBlock = []
+        self._alarm_block = []
         self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise, 4: BlockAlarmExecute}
 
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["AlarmBlock"]
+        section = self._setting.configuration["AlarmBlock"]
 
         selection = section.get("BlockList", "")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
@@ -38,10 +38,10 @@ class BlockAlarm(BlockBase):
 
         alarm_schemas = [item.strip(" '") for item in csv_value.split(",") if item.strip()]
         for schema in alarm_schemas:
-            if not self._setting.Configuration.has_section(schema):
+            if not self._setting.configuration.has_section(schema):
                 raise Exception("Ошибка конфигурации! Нет секции [{0}]".format(schema))
 
-            section = self._setting.Configuration[schema]
+            section = self._setting.configuration[schema]
             alarm_type = section.getint("Type")
             if alarm_type is None:
                 raise ExceptionNotFound(schema, "Type")
@@ -51,7 +51,7 @@ class BlockAlarm(BlockBase):
                 raise ExceptionFormat(schema, "Type")
             alarm = func(self._logger, self._setting)
             alarm.init(section, mod_list)
-            self._alarmBlock.append(alarm)
+            self._alarm_block.append(alarm)
 
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
         self.update_info(True)
@@ -62,19 +62,19 @@ class BlockAlarm(BlockBase):
 
     def update_info(self, is_online):
         try:
-            if not self._alarmBlock:
+            if not self._alarm_block:
                 return
             value = datetime.datetime.now()
-            for item in self._alarmBlock:
+            for item in self._alarm_block:
                 item.update_state(value)
         except Exception as ex:
             self._logger.exception(ex)
 
     def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
         try:
-            if not self._alarmBlock:
+            if not self._alarm_block:
                 return
-            for item in self._alarmBlock:
+            for item in self._alarm_block:
                 item.update_display(screen, size, fore_color, back_color, self._blocks, current_time)
         except Exception as ex:
             self._logger.exception(ex)

@@ -16,12 +16,12 @@ class BlockWatcher(BlockSecondBase):
         self._stop_time = None
         self._weekday = None
         self._path = None
-        self._isWatching = False
+        self._is_watching = False
 
     def init(self, mod_list):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
-        section = self._setting.Configuration["WatcherBlock"]
+        section = self._setting.configuration["WatcherBlock"]
 
         self._weekday = self._get_tuple(section.get("WeekDay"))
         self._start_time = section.get("StartTime")
@@ -42,7 +42,7 @@ class BlockWatcher(BlockSecondBase):
 
         if len(self._weekday) > 7:
             raise ExceptionFormat(section.name, "WeekDay")
-        if not all(day >= 0 and day < 7 for day in self._weekday):
+        if not all(0 <= day < 7 for day in self._weekday):
             raise ExceptionFormat(section.name, "WeekDay")
 
         self._start_time = datetime.datetime.strptime(self._start_time, "%H:%M:%S")
@@ -58,14 +58,14 @@ class BlockWatcher(BlockSecondBase):
             if not self._path:
                 return
             current_time = datetime.datetime.now()
-            if not self._isWatching:
+            if not self._is_watching:
                 if any(current_time.weekday() == day for day in self._weekday):
                     if current_time.time() >= self._start_time.time():
-                        self._isWatching = True
-            if self._isWatching:
+                        self._is_watching = True
+            if self._is_watching:
                 self.execute()
                 if current_time.time() > self._stop_time.time():
-                    self._isWatching = False
+                    self._is_watching = False
         except Exception as ex:
             self._logger.exception(ex)
 
