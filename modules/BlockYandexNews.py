@@ -1,5 +1,6 @@
 import urllib.request as request
 import urllib.parse as parse
+from urllib.error import URLError
 import xml.etree.ElementTree as ET
 from exceptions import ExceptionNotFound
 import pygame
@@ -68,6 +69,8 @@ class BlockYandexNews(BlockMinuteBase):
             if not is_online:
                 return
             self.execute()
+        except URLError as ex:
+            self._logger.exception(ex)
         except Exception as ex:
             self._logger.exception(ex)
 
