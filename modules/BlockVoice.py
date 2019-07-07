@@ -58,8 +58,8 @@ class BlockVoice(BlockBase):
             text = ". ".join(map(lambda block: block.get_text(), self._blocks))
             if not text:
                 return
-            soundFile = self.__getvoicetext(text)
-            pygame.mixer.music.load(soundFile)
+            sound_file = self.__getvoicetext(text)
+            pygame.mixer.music.load(sound_file)
             pygame.mixer.music.set_volume(1.0)
             pygame.mixer.music.play()
 

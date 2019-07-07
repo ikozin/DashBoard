@@ -21,7 +21,7 @@ from modules.BlockWunderGround import BlockWunderGround
 from modules.BlockWatcher import BlockWatcher
 from modules.BlockMT8057 import BlockMT8057
 from modules.BlockYandexWeather import BlockYandexWeather
-from modules.BlockIR import BlockIR
+# from modules.BlockIR import BlockIR
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -73,7 +73,7 @@ class Mainboard:
             "Watcher": BlockWatcher(logger, self._config),
             "MT8057": BlockMT8057(logger, self._config),
             "YandexWeather": BlockYandexWeather(logger, self._config),
-            "IR": BlockIR(logger, self._config),
+            # "IR": BlockIR(logger, self._config),
         }
 
         for name in self._config._block_list:
@@ -133,9 +133,9 @@ class Mainboard:
 
     def set_display_timer_on(self):
         """Таймер для отключения дисплея"""
-        (_, _, _, idleTime) = self._config.get_curret_setting()
+        (_, _, _, idle_time) = self._config.get_curret_setting()
         pygame.time.set_timer(IDLE_EVENT, 0)
-        pygame.time.set_timer(IDLE_EVENT, idleTime * 60000)
+        pygame.time.set_timer(IDLE_EVENT, idle_time * 60000)
 
     def set_display_timer_off(self):
         """Таймер для отключения дисплея"""

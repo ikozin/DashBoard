@@ -25,9 +25,12 @@ class Test_Block_Yandex_News(unittest.TestCase):
 
     def test_block_yandex_news(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockYandexNews(None, None)
-        with self.assertRaises(TypeError): BlockYandexNews(None, config)
-        with self.assertRaises(TypeError): BlockYandexNews(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockYandexNews(None, None)
+        with self.assertRaises(TypeError):
+            BlockYandexNews(None, config)
+        with self.assertRaises(TypeError):
+            BlockYandexNews(self.logger, None)
         block = BlockYandexNews(self.logger, config)
         self.assertIsNotNone(block, "BlockYandexNews")
         self.assertIsInstance(block, BlockBase, "BlockBase")

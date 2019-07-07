@@ -26,9 +26,12 @@ class Test_Block_Calendar(unittest.TestCase):
 
     def test_block_calendar(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockCalendar(None, None)
-        with self.assertRaises(TypeError): BlockCalendar(None, config)
-        with self.assertRaises(TypeError): BlockCalendar(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockCalendar(None, None)
+        with self.assertRaises(TypeError):
+            BlockCalendar(None, config)
+        with self.assertRaises(TypeError):
+            BlockCalendar(self.logger, None)
         block = BlockCalendar(self.logger, config)
         self.assertIsNotNone(block, "BlockCalendar")
         self.assertIsInstance(block, BlockBase, "BlockBase")

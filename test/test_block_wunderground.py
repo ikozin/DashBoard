@@ -25,9 +25,12 @@ class Test_Block_Wunderground(unittest.TestCase):
 
     def test_block_wunderground(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockWunderGround(None, None)
-        with self.assertRaises(TypeError): BlockWunderGround(None, config)
-        with self.assertRaises(TypeError): BlockWunderGround(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockWunderGround(None, None)
+        with self.assertRaises(TypeError):
+            BlockWunderGround(None, config)
+        with self.assertRaises(TypeError):
+            BlockWunderGround(self.logger, None)
         block = BlockWunderGround(self.logger, config)
         self.assertIsNotNone(block, "BlockWunderGround")
         self.assertIsInstance(block, BlockBase, "BlockBase")

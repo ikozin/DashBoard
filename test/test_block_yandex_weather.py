@@ -25,9 +25,12 @@ class Test_Block_Yandex_Weather(unittest.TestCase):
 
     def test_block_yandex_weather(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockYandexWeather(None, None)
-        with self.assertRaises(TypeError): BlockYandexWeather(None, config)
-        with self.assertRaises(TypeError): BlockYandexWeather(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockYandexWeather(None, None)
+        with self.assertRaises(TypeError):
+            BlockYandexWeather(None, config)
+        with self.assertRaises(TypeError):
+            BlockYandexWeather(self.logger, None)
         block = BlockYandexWeather(self.logger, config)
         self.assertIsNotNone(block, "BlockYandexWeather")
         self.assertIsInstance(block, BlockBase, "BlockBase")

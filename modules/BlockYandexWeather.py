@@ -67,29 +67,29 @@ class BlockYandexWeather(BlockMinuteBase):
         self._pressure_pos = self._get_tuple(section.get("PressurePos"))
         self._wind_pos = self._get_tuple(section.get("WindPos"))
 
-        wtName = section.get("WeatherTypeFontName")
-        tName = section.get("TemperatureFontName")
-        hName = section.get("HumidityFontName")
-        pName = section.get("PressureFontName")
-        wName = section.get("WindFontName")
+        wt_name = section.get("WeatherTypeFontName")
+        t_name = section.get("TemperatureFontName")
+        h_name = section.get("HumidityFontName")
+        p_name = section.get("PressureFontName")
+        w_name = section.get("WindFontName")
 
-        wtSize = section.getint("WeatherTypeFontSize")
-        tSize = section.getint("TemperatureFontSize")
-        hSize = section.getint("HumidityFontSize")
-        pSize = section.getint("PressureFontSize")
-        wSize = section.getint("WindFontSize")
+        wt_size = section.getint("WeatherTypeFontSize")
+        t_size = section.getint("TemperatureFontSize")
+        h_size = section.getint("HumidityFontSize")
+        p_size = section.getint("PressureFontSize")
+        w_size = section.getint("WindFontSize")
 
-        wtBold = section.getboolean("WeatherTypeFontBold")
-        tBold = section.getboolean("TemperatureFontBold")
-        hBold = section.getboolean("HumidityFontBold")
-        pBold = section.getboolean("PressureFontBold")
-        wBold = section.getboolean("WindFontBold")
+        wt_bold = section.getboolean("WeatherTypeFontBold")
+        t_bold = section.getboolean("TemperatureFontBold")
+        h_bold = section.getboolean("HumidityFontBold")
+        p_bold = section.getboolean("PressureFontBold")
+        w_bold = section.getboolean("WindFontBold")
 
-        wtItalic = section.getboolean("WeatherTypeFontItalic")
-        tItalic = section.getboolean("TemperatureFontItalic")
-        hItalic = section.getboolean("HumidityFontItalic")
-        pItalic = section.getboolean("PressureFontItalic")
-        wItalic = section.getboolean("WindFontItalic")
+        wt_italic = section.getboolean("WeatherTypeFontItalic")
+        t_italic = section.getboolean("TemperatureFontItalic")
+        h_italic = section.getboolean("HumidityFontItalic")
+        p_italic = section.getboolean("PressureFontItalic")
+        w_italic = section.getboolean("WindFontItalic")
 
         if self._folder is None:
             raise ExceptionNotFound(section.name, "Folder")
@@ -118,48 +118,48 @@ class BlockYandexWeather(BlockMinuteBase):
         if self._wind_pos is None:
             raise ExceptionNotFound(section.name, "WindPos")
 
-        if wtName is None:
+        if wt_name is None:
             raise ExceptionNotFound(section.name, "WeatherTypeFontName")
-        if tName is None:
+        if t_name is None:
             raise ExceptionNotFound(section.name, "TemperatureFontName")
-        if hName is None:
+        if h_name is None:
             raise ExceptionNotFound(section.name, "HumidityFontName")
-        if pName is None:
+        if p_name is None:
             raise ExceptionNotFound(section.name, "PressureFontName")
-        if wName is None:
+        if w_name is None:
             raise ExceptionNotFound(section.name, "WindFontName")
 
-        if wtSize is None:
+        if wt_size is None:
             raise ExceptionNotFound(section.name, "WeatherTypeFontSize")
-        if tSize is None:
+        if t_size is None:
             raise ExceptionNotFound(section.name, "TemperatureFontSize")
-        if hSize is None:
+        if h_size is None:
             raise ExceptionNotFound(section.name, "HumidityFontSize")
-        if pSize is None:
+        if p_size is None:
             raise ExceptionNotFound(section.name, "PressureFontSize")
-        if wSize is None:
+        if w_size is None:
             raise ExceptionNotFound(section.name, "WindFontSize")
 
-        if wtBold is None:
+        if wt_bold is None:
             raise ExceptionNotFound(section.name, "WeatherTypeFontBold")
-        if tBold is None:
+        if t_bold is None:
             raise ExceptionNotFound(section.name, "TemperatureFontBold")
-        if hBold is None:
+        if h_bold is None:
             raise ExceptionNotFound(section.name, "HumidityFontBold")
-        if pBold is None:
+        if p_bold is None:
             raise ExceptionNotFound(section.name, "PressureFontBold")
-        if wBold is None:
+        if w_bold is None:
             raise ExceptionNotFound(section.name, "WindFontBold")
 
-        if wtItalic is None:
+        if wt_italic is None:
             raise ExceptionNotFound(section.name, "WeatherTypeFontItalic")
-        if tItalic is None:
+        if t_italic is None:
             raise ExceptionNotFound(section.name, "TemperatureFontItalic")
-        if hItalic is None:
+        if h_italic is None:
             raise ExceptionNotFound(section.name, "HumidityFontItalic")
-        if pItalic is None:
+        if p_italic is None:
             raise ExceptionNotFound(section.name, "PressureFontItalic")
-        if wItalic is None:
+        if w_italic is None:
             raise ExceptionNotFound(section.name, "WindFontItalic")
 
         if len(self._icon_scale) != 2:
@@ -177,11 +177,11 @@ class BlockYandexWeather(BlockMinuteBase):
         if len(self._wind_pos) != 2:
             raise ExceptionFormat(section.name, "WindPos")
 
-        self._weather_type_font = pygame.font.SysFont(wtName, wtSize, wtBold, wtItalic)
-        self._temperature_font = pygame.font.SysFont(tName, tSize, tBold, tItalic)
-        self._humidity_font = pygame.font.SysFont(hName, hSize, hBold, hItalic)
-        self._pressure_font = pygame.font.SysFont(pName, pSize, pBold, pItalic)
-        self._wind_font = pygame.font.SysFont(wName, wSize, wBold, wItalic)
+        self._weather_type_font = pygame.font.SysFont(wt_name, wt_size, wt_bold, wt_italic)
+        self._temperature_font = pygame.font.SysFont(t_name, t_size, t_bold, t_italic)
+        self._humidity_font = pygame.font.SysFont(h_name, h_size, h_bold, h_italic)
+        self._pressure_font = pygame.font.SysFont(p_name, p_size, p_bold, p_italic)
+        self._wind_font = pygame.font.SysFont(w_name, w_size, w_bold, w_italic)
 
         if not os.path.exists(self._folder):
             os.mkdir(self._folder)
@@ -266,9 +266,9 @@ class BlockYandexWeather(BlockMinuteBase):
     def _get_data(self):
         dif = datetime.now() - self._last_update
         if dif.seconds >= MIN_UPDATE_TIME:
-            urlPath = "https://export.yandex.ru/bar/reginfo.xml?regionid={0}&lat={1}&lon={2}".format(
+            url_path = "https://export.yandex.ru/bar/reginfo.xml?regionid={0}&lat={1}&lon={2}".format(
                 self._region_id, self._lat, self._lon)
-            with request.urlopen(urlPath) as file:
+            with request.urlopen(url_path) as file:
                 data = file.read()
             with open(os.path.join(self._folder, WEATHER_FILE), "wb") as file:
                 file.write(data)

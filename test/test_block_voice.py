@@ -27,9 +27,12 @@ class Test_Block_Voice(unittest.TestCase):
 
     def test_block_voice(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockVoice(None, None)
-        with self.assertRaises(TypeError): BlockVoice(None, config)
-        with self.assertRaises(TypeError): BlockVoice(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockVoice(None, None)
+        with self.assertRaises(TypeError):
+            BlockVoice(None, config)
+        with self.assertRaises(TypeError):
+            BlockVoice(self.logger, None)
         block = BlockVoice(self.logger, config)
         self.assertIsNotNone(block, "BlockVoice")
         self.assertIsInstance(block, BlockBase, "BlockBase")

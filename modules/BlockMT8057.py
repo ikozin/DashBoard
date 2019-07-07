@@ -164,38 +164,26 @@ class mt8057(threading.Thread):
         self._lock = threading.Lock()
         self._temperature = 0.0
         self._concentration = 0
+        self._is_init = False
         self._had_driver = False
-        self._dev = usb.core.find(idVendor=self.VID, idProduct=self.PID)
-
-        if self._dev is None:
-            raise ValueError("Device not found")
-
-        if self._dev.is_kernel_driver_active(0):
-            self._dev.detach_kernel_driver(0)
-            self._had_driver = True
-
-        self._dev.set_configuration()
-        # print(self._dev)
-        self._ep = self._dev[0][(0, 0)][0]
+        self._dev = None
+        self._ep = None
 
     def stop(self):
         self._event_stop.set()
 
     def run(self):
-        self._dev.ctrl_transfer(
-            self.REQUEST_TYPE_SEND,
-            self.REQ_HID_SET_REPORT,
-            self.HID_REPORT_TYPE_FEATURE,
-            0x00, self.magic_buf,
-            self.RW_TIMEOUT)
         self._event_stop.clear()
         while not self._event_stop.is_set():
             try:
-                data = self._read()
-                self._parse(data)
-                # time.sleep(0.1)
+                if self._check_init():
+                    data = self._dev.read(self._ep, 8, self.RW_TIMEOUT)
+                    self._parse(data)
+                else:
+                    time.sleep(100)
             except Exception as ex:
                 self._logger.exception(ex)
+                self._release()
                 time.sleep(100)
         self._release()
 
@@ -204,9 +192,6 @@ class mt8057(threading.Thread):
         value = (self._concentration, self._temperature)
         self._lock.release()
         return value
-
-    def _read(self):
-        return self._dev.read(self._ep, 8, self.RW_TIMEOUT)
 
     def _decode(self, data):
         shuffle = [2, 4, 0, 7, 1, 6, 5, 3]
@@ -245,7 +230,39 @@ class mt8057(threading.Thread):
             else:
                 pass
 
+    def _check_init(self):
+        if self._is_init:
+            return True
+
+        self._dev = usb.core.find(idVendor=self.VID, idProduct=self.PID)
+        if self._dev is None:
+            self._logger.exception("Device not found")
+            return False
+
+        self._had_driver = False
+        if self._dev.is_kernel_driver_active(0):
+            self._dev.detach_kernel_driver(0)
+            self._had_driver = True
+
+        self._dev.set_configuration()
+        # print(self._dev)
+        self._ep = self._dev[0][(0, 0)][0]
+
+        self._dev.ctrl_transfer(
+            self.REQUEST_TYPE_SEND,
+            self.REQ_HID_SET_REPORT,
+            self.HID_REPORT_TYPE_FEATURE,
+            0x00, self.magic_buf,
+            self.RW_TIMEOUT)
+        self._is_init = True
+        return True
+
     def _release(self):
+        if not self._is_init:
+            return
+
         usb.util.release_interface(self._dev, 0)
         if self._had_driver:
             self._dev.attach_kernel_driver(0)
+        self._dev = None
+        self._is_init = False

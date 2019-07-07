@@ -26,9 +26,12 @@ class Test_Block_Time(unittest.TestCase):
 
     def test_block_time(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockTime(None, None)
-        with self.assertRaises(TypeError): BlockTime(None, config)
-        with self.assertRaises(TypeError): BlockTime(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockTime(None, None)
+        with self.assertRaises(TypeError):
+            BlockTime(None, config)
+        with self.assertRaises(TypeError):
+            BlockTime(self.logger, None)
         block = BlockTime(self.logger, config)
         self.assertIsNotNone(block, "BlockTime")
         self.assertIsInstance(block, BlockBase, "BlockBase")

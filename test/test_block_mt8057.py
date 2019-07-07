@@ -25,9 +25,12 @@ class Test_Block_MT8057(unittest.TestCase):
 
     def test_block_mt8057(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockMT8057(None, None)
-        with self.assertRaises(TypeError): BlockMT8057(None, config)
-        with self.assertRaises(TypeError): BlockMT8057(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockMT8057(None, None)
+        with self.assertRaises(TypeError):
+            BlockMT8057(None, config)
+        with self.assertRaises(TypeError):
+            BlockMT8057(self.logger, None)
         block = BlockMT8057(self.logger, config)
         self.assertIsNotNone(block, "BlockMT8057")
         self.assertIsInstance(block, BlockBase, "BlockBase")

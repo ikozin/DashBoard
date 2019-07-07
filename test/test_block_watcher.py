@@ -25,9 +25,12 @@ class Test_Block_Watcher(unittest.TestCase):
 
     def test_block_watcher(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockWatcher(None, None)
-        with self.assertRaises(TypeError): BlockWatcher(None, config)
-        with self.assertRaises(TypeError): BlockWatcher(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockWatcher(None, None)
+        with self.assertRaises(TypeError):
+            BlockWatcher(None, config)
+        with self.assertRaises(TypeError):
+            BlockWatcher(self.logger, None)
         block = BlockWatcher(self.logger, config)
         self.assertIsNotNone(block, "BlockWatcher")
         self.assertIsInstance(block, BlockBase, "BlockBase")

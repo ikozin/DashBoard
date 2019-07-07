@@ -58,7 +58,7 @@ class Setting:
                 start = datetime.datetime.strptime(start, "%H:%M:%S")
                 background_color = self.get_tuple(section.get("BackgroundColor"))
                 foreground_color = self.get_tuple(section.get("ForegroundColor"))
-                idleTime = section.getint('IdleTime', fallback=self._idle_time)
+                idle_time = section.getint('IdleTime', fallback=self._idle_time)
 
                 if not background_color:
                     background_color = self._background_color
@@ -69,7 +69,7 @@ class Setting:
                 if len(foreground_color) != 3:
                     raise ExceptionFormat(section.name, "ForegroundColor")
 
-                entry = (start, background_color, foreground_color, idleTime)
+                entry = (start, background_color, foreground_color, idle_time)
                 self._time_line.append(entry)
         if not self._time_line:
             entry = (

@@ -25,9 +25,12 @@ class Test_Block_Openweathermap(unittest.TestCase):
 
     def test_block_openweathermap(self):
         config = Setting()
-        with self.assertRaises(TypeError): BlockOpenWeatherMap(None, None)
-        with self.assertRaises(TypeError): BlockOpenWeatherMap(None, config)
-        with self.assertRaises(TypeError): BlockOpenWeatherMap(self.logger, None)
+        with self.assertRaises(TypeError):
+            BlockOpenWeatherMap(None, None)
+        with self.assertRaises(TypeError):
+            BlockOpenWeatherMap(None, config)
+        with self.assertRaises(TypeError):
+            BlockOpenWeatherMap(self.logger, None)
         block = BlockOpenWeatherMap(self.logger, config)
         self.assertIsNotNone(block, "BlockOpenWeatherMap")
         self.assertIsInstance(block, BlockBase, "BlockBase")

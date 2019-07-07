@@ -24,8 +24,8 @@ class BlockIR(BlockBase):
         self._module_list = mod_list
         for key_code in section:
             self._list[key_code.upper()] = section.get(key_code)
-            moduleName = self._list[key_code.upper()].split(",")[0]
-            if moduleName not in self._module_list:
+            module_name = self._list[key_code.upper()].split(",")[0]
+            if module_name not in self._module_list:
                 raise ExceptionNotFound(section.name, key_code.upper())
         with open(CONFIG_FILE_NAME, "w", encoding="utf-8") as file:
             for key_code in self._list:
