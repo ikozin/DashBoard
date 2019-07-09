@@ -260,9 +260,13 @@ class mt8057(threading.Thread):
     def _release(self):
         if not self._is_init:
             return
-
-        usb.util.release_interface(self._dev, 0)
-        if self._had_driver:
-            self._dev.attach_kernel_driver(0)
+        try:
+            usb.util.release_interface(self._dev, 0)
+            if self._had_driver:
+                self._dev.attach_kernel_driver(0)
+        except Exception as ex:
+            self._logger.exception(ex)
+            time.sleep(100)
         self._dev = None
+        self._had_driver = False
         self._is_init = False
