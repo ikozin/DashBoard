@@ -80,6 +80,6 @@ class BlockIR(BlockBase):
         def module_done(self):
             pass
 
-        def module_getcode(self, code=[]):
+        def module_getcode(self, code=None):
             return code
 ###########################################################################

@@ -195,7 +195,7 @@ class SelectFrame(LabelFrame):
         self.rowconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
 
-    def load(self, selection=[], mod_list=[]):
+    def load(self, selection, mod_list):
         self._sel_list = selection
         self._src_list = mod_list
         for item in self._sel_list:
