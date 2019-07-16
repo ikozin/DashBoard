@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockWunderGround import BlockWunderGround
+from modules.block_wunderground import BlockWunderGround
 
 SECTION_NAME = "WunderGroundBlock"
 
-class Test_Block_Wunderground(unittest.TestCase):
+class TestBlockWunderGround(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

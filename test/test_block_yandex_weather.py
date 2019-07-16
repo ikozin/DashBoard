@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockYandexWeather import BlockYandexWeather
+from modules.block_yandex_weather import BlockYandexWeather
 
 SECTION_NAME = "YandexWeatherBlock"
 
-class Test_Block_Yandex_Weather(unittest.TestCase):
+class TestBlockYandexWeather(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

@@ -4,11 +4,11 @@ from exceptions import ExceptionNotFound
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockCalendar import BlockCalendar
+from modules.block_calendar import BlockCalendar
 
 SECTION_NAME = "CalendarBlock"
 
-class Test_Block_Calendar(unittest.TestCase):
+class TestBlockCalendar(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

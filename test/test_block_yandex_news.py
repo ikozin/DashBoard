@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockYandexNews import BlockYandexNews
+from modules.block_yandex_news import BlockYandexNews
 
 SECTION_NAME = "YandexNewsBlock"
 
-class Test_Block_Yandex_News(unittest.TestCase):
+class TestBlockYandexNews(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

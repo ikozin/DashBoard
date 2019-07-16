@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockSwap import BlockSwap
+from modules.block_swap import BlockSwap
 
 SECTION_NAME = "SwapBlock"
 
-class Test_Block_Swap(unittest.TestCase):
+class TestBlockSwap(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

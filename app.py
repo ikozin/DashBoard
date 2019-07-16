@@ -10,18 +10,18 @@ import pygame
 from setting import Setting
 from setting import BLOCK_SECOND_UPDATE_EVENT
 from setting import BLOCK_MINUTE_UPDATE_EVENT
-from modules.BlockTime import BlockTime
-from modules.BlockCalendar import BlockCalendar
-from modules.BlockYandexNews import BlockYandexNews
-from modules.BlockOpenWeatherMap import BlockOpenWeatherMap
-from modules.BlockVoice import BlockVoice
-from modules.BlockAlarm import BlockAlarm
-from modules.BlockSwap import BlockSwap
-from modules.BlockWunderGround import BlockWunderGround
-from modules.BlockWatcher import BlockWatcher
-from modules.BlockMT8057 import BlockMT8057
-from modules.BlockYandexWeather import BlockYandexWeather
-# from modules.BlockIR import BlockIR
+from modules.block_time import BlockTime
+from modules.block_calendar import BlockCalendar
+from modules.block_yandex_news import BlockYandexNews
+from modules.block_open_weathermap import BlockOpenWeatherMap
+from modules.block_voice import BlockVoice
+from modules.block_alarm import BlockAlarm
+from modules.block_swap import BlockSwap
+from modules.block_wunderground import BlockWunderGround
+from modules.block_watcher import BlockWatcher
+from modules.block_mt8057 import BlockMT8057
+from modules.block_yandex_weather import BlockYandexWeather
+# from modules.block_ir import BlockIR
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")

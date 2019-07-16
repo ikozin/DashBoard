@@ -4,11 +4,11 @@ from exceptions import ExceptionNotFound
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockVoice import BlockVoice
+from modules.block_voice import BlockVoice
 
 SECTION_NAME = "VoiceBlock"
 
-class Test_Block_Voice(unittest.TestCase):
+class TestBlockVoice(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

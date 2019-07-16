@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockIR import BlockIR
+from modules.block_ir import BlockIR
 
 SECTION_NAME = "IRBlock"
 
-class Test_Block_IR(unittest.TestCase):
+class TestBlockIR(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

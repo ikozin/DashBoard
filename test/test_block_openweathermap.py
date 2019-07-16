@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockOpenWeatherMap import BlockOpenWeatherMap
+from modules.block_open_weathermap import BlockOpenWeatherMap
 
 SECTION_NAME = "OpenWeatherMapBlock"
 
-class Test_Block_Openweathermap(unittest.TestCase):
+class TestBlockOpenWeatherMap(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

@@ -103,49 +103,49 @@
     <Compile Include="modules\alarm\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockIR.py">
+    <Compile Include="modules\block_ir.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockAlarm.py">
+    <Compile Include="modules\block_alarm.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockCalendar.py">
+    <Compile Include="modules\block_calendar.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\BlockMinuteBase.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockOpenWeatherMap.py">
+    <Compile Include="modules\block_open_weathermap.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\BlockSecondBase.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockSwap.py">
+    <Compile Include="modules\block_swap.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockTime.py">
+    <Compile Include="modules\block_time.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockVoice.py">
+    <Compile Include="modules\block_voice.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockWatcher.py">
+    <Compile Include="modules\block_watcher.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockWunderGround.py">
+    <Compile Include="modules\block_wunderground.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockYandexNews.py">
+    <Compile Include="modules\block_yandex_news.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\wunder_ground_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockMT8057.py">
+    <Compile Include="modules\block_mt8057.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="modules\BlockYandexWeather.py" />
+    <Compile Include="modules\block_yandex_weather.py" />
     <Compile Include="modules\__init__.py">
       <SubType>Code</SubType>
     </Compile>

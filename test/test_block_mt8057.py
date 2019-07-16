@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockMT8057 import BlockMT8057
+from modules.block_mt8057 import BlockMT8057
 
 SECTION_NAME = "MT8057Block"
 
-class Test_Block_MT8057(unittest.TestCase):
+class TestBlockMT8057(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

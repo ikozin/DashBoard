@@ -4,11 +4,11 @@ from exceptions import ExceptionNotFound
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockTime import BlockTime
+from modules.block_time import BlockTime
 
 SECTION_NAME = "TimeBlock"
 
-class Test_Block_Time(unittest.TestCase):
+class TestBlockTime(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

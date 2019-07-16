@@ -28,7 +28,8 @@ class SwapManager(BaseManager):
             config.add_section("SwapBlock")
         section = config["SwapBlock"]
         self._update_value.set(section.getint("UpdateTime", fallback=10))
-        selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",") if item.strip() in module_list]
+        selection = [item.strip(" '") for item in
+                     section.get("BlockList", fallback="").split(",") if item.strip() in module_list]
         self._frame.load(selection, module_list)
 
     def save(self, config: ConfigParser) -> None:

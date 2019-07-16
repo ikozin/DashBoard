@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockAlarm import BlockAlarm
+from modules.block_alarm import BlockAlarm
 
 SECTION_NAME = "AlarmBlock"
 
-class Test_Block_Alarm(unittest.TestCase):
+class TestBlockAlarm(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):

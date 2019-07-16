@@ -94,7 +94,7 @@ class BlockMT8057(BlockSecondBase):
         self._co2_font = pygame.font.SysFont(co2_font_name, co2_font_size, co2_is_bold, co2_is_italic)
         self._temp_font = pygame.font.SysFont(temp_font_name, temp_font_size, temp_is_bold, temp_is_italic)
         if sys.platform == "linux":  # Only for Raspberry Pi
-            self._t_mt8057 = mt8057(self._logger)
+            self._t_mt8057 = MT8057(self._logger)
             self._t_mt8057.start()
 
         self.update_info(True)
@@ -143,7 +143,7 @@ class BlockMT8057(BlockSecondBase):
             self._t_mt8057.join()
 
 
-class mt8057(threading.Thread):
+class MT8057(threading.Thread):
     VID = 0x04d9
     PID = 0xa052
     RW_TIMEOUT = 0

@@ -3,11 +3,11 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.BlockWatcher import BlockWatcher
+from modules.block_watcher import BlockWatcher
 
 SECTION_NAME = "WatcherBlock"
 
-class Test_Block_Watcher(unittest.TestCase):
+class TestBlockWatcher(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
