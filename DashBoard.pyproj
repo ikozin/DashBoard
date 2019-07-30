@@ -60,6 +60,9 @@
     <Compile Include="modules\alarm\block_alarm_execute.py" />
     <Compile Include="modules\alarm\block_alarm_rise.py" />
     <Compile Include="modules\alarm\block_alarm_simple.py" />
+    <Compile Include="modules\alarm\block_alarm_text.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\BlockBase.py">
       <SubType>Code</SubType>
     </Compile>
