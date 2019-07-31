@@ -8,6 +8,7 @@ from ext.alarm.ui.alarm_setting_ui_file_simple import AlarmSettingUISimple
 from ext.alarm.ui.alarm_setting_ui_file_blink import AlarmSettingUIBlink
 from ext.alarm.ui.alarm_setting_ui_file_rise import AlarmSettingUIRise
 from ext.alarm.alarm_setting_execute import AlarmSettingExecute
+from ext.alarm.alarm_setting_text import AlarmSettingText
 from ext.alarm.alarm_setting import AlarmSetting
 
 
@@ -23,7 +24,8 @@ class AlarmManager(BaseManager):
             1: AlarmSettingUISimple,
             2: AlarmSettingUIBlink,
             3: AlarmSettingUIRise,
-            4: AlarmSettingExecute
+            4: AlarmSettingExecute,
+            5: AlarmSettingText,
         }
         self._alarm_list: Dict[str, AlarmSetting] = dict()
         self._current__name = None

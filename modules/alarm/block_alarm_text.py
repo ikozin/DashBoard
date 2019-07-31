@@ -9,14 +9,26 @@ class BlockAlarmText(AlarmTimeBase):
         """Initializes (declare internal variables)"""
         super(BlockAlarmText, self).__init__(logger, setting)
         self._is_alarm = False
+        self._fore_color = None
+        self._back_color = None
+        self._module = None
 
     def init(self, config_section, mod_list):
         """Initializes (initialize internal variables)"""
         super(BlockAlarmExecute, self).init(config_section, mod_list)
-        #self._mod_list = mod_list
-        #self._module = config_section.get("Module")
-        #if self._module not in self._mod_list:
-        #    raise ExceptionNotFound(config_section.name, "Module")
+        if "Voice" not in self.mod_list:
+            raise ExceptionNotFound(config_section.name, "Voice")
+        self._module = mod_list["Voice"]
+        self._fore_color = self._get_tuple(config_section.get("ForegroundColor"))
+        self._back_color = self._get_tuple(config_section.get("BackgroundColor"))
+        if self._fore_color is None:
+            raise ExceptionNotFound(config_section.name, "ForegroundColor")
+        if self._back_color is None:
+            raise ExceptionNotFound(config_section.name, "BackgroundColor")
+        if len(self._fore_color) != 3:
+            raise ExceptionFormat(config_section.name, "ForegroundColor")
+        if len(self._back_color) != 3:
+            raise ExceptionFormat(config_section.name, "BackgroundColor")
 
     def update_display(self, screen, size, fore_color, back_color, blocks, current_time):
         try:
@@ -38,5 +50,5 @@ class BlockAlarmText(AlarmTimeBase):
         if self._is_alarm:
             return
         self._is_alarm = True
-        #self._mod_list[self._module].execute()
+        self._module.execute()
         self._is_alarm = False
