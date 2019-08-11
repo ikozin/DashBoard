@@ -54,14 +54,16 @@ class BlockVoice(BlockBase):
         self._blocks.append(block)
 
     def execute(self, *args):
-        if self._blocks:
+        if len(args) == 1:
+            text = args[0]
+        elif self._blocks:
             text = ". ".join(map(lambda block: block.get_text(), self._blocks))
-            if not text:
-                return
-            sound_file = self.__getvoicetext(text)
-            pygame.mixer.music.load(sound_file)
-            pygame.mixer.music.set_volume(1.0)
-            pygame.mixer.music.play()
+        if not text:
+            return
+        sound_file = self.__getvoicetext(text)
+        pygame.mixer.music.load(sound_file)
+        pygame.mixer.music.set_volume(1.0)
+        pygame.mixer.music.play()
 
     def __getvoicetext(self, text):
         filename = "text.wav"
@@ -72,7 +74,6 @@ class BlockVoice(BlockBase):
                 self._speed,
                 self._key,
                 parse.quote(text))
-        out = open(filename, "wb")
-        out.write(request.urlopen(url).read())
-        out.close()
+        with open(filename, "wb") as file:
+            file.write(request.urlopen(url).read())
         return filename

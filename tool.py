@@ -86,7 +86,7 @@ class App:
         if not filename:
             return
         config = ConfigParser()
-        config.read(filename, encoding="utf-8")
+        config.read(filename, encoding='utf-8')
         for name in self._list:
             manager = self._list[name]
             manager.destroy()
@@ -108,7 +108,7 @@ class App:
         for name in list_name:
             manager = self._list[name]
             manager.save(config)
-        with open(filename, 'w') as file:
+        with open(filename, 'w', encoding='utf-8') as file:
             config.write(file)
 
     def _select_manager(self):

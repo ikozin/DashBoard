@@ -18,7 +18,6 @@ class AlarmTimeFileBase(AlarmTimeBase):
         super(AlarmTimeFileBase, self).__init__(logger, setting)
         self._file_name = None
         self._stop_time = None
-        self._duration = None
         self._fore_color = None
         self._back_color = None
         self._volume = ALARM_VOLUME_MIN
@@ -28,15 +27,12 @@ class AlarmTimeFileBase(AlarmTimeBase):
         """Initializes (initialize internal variables)"""
         super(AlarmTimeFileBase, self).init(config_section, mod_list)
 
-        self._duration = config_section.getint("Duration")
         self._fore_color = self._get_tuple(config_section.get("ForegroundColor"))
         self._back_color = self._get_tuple(config_section.get("BackgroundColor"))
         self._file_name = config_section.get("File")
         if self._file_name and not os.path.exists(self._file_name):
             self._file_name = None
 
-        if self._duration is None:
-            raise ExceptionNotFound(config_section.name, "Duration")
         if self._fore_color is None:
             raise ExceptionNotFound(config_section.name, "ForegroundColor")
         if self._back_color is None:
@@ -45,10 +41,6 @@ class AlarmTimeFileBase(AlarmTimeBase):
             raise ExceptionFormat(config_section.name, "ForegroundColor")
         if len(self._back_color) != 3:
             raise ExceptionFormat(config_section.name, "BackgroundColor")
-        if len(self._weekday) > 7:
-            raise ExceptionFormat(config_section.name, "WeekDay")
-        if not all(0 <= day < 7 for day in self._weekday):
-            raise ExceptionFormat(config_section.name, "WeekDay")
 
         self._stop_time = self._start_time + datetime.timedelta(seconds=self._duration)
 

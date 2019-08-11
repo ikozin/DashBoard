@@ -26,6 +26,7 @@ class AlarmSetting(BaseSetting):
         self._hour_variable = IntVar(value=0)
         self._minute_variable = IntVar(value=0)
         self._second_variable = IntVar(value=0)
+        self._duration_variable = IntVar(value=0)
         weekday_frame = LabelFrame(self, text="Дни недели")
         weekday_frame.grid(row=0, column=0, columnspan=2, sticky=(N, S, E, W))
         chk = Checkbutton(weekday_frame, text="ПН", takefocus=True, variable=self._weekday0)
@@ -59,6 +60,12 @@ class AlarmSetting(BaseSetting):
         lbl.grid(row=0, column=4, pady=2)
         spin = Spinbox(time_frame, from_=0, to=59, increment=1, width=3, textvariable=self._second_variable)
         spin.grid(row=0, column=5, padx=2, pady=2)
+        duration_frame = LabelFrame(self, text="Длительность")
+        duration_frame.grid(row=1, column=1, sticky=(N, S, E, W))
+        spin = Spinbox(duration_frame, from_=5, to=60, increment=1, width=3, textvariable=self._duration_variable)
+        spin.grid(row=0, column=0, padx=2, pady=2)
+        lbl = Label(duration_frame, text="секунд")
+        lbl.grid(row=0, column=1, pady=2)
 
     def load(self, config: ConfigParser, section_name: str) -> None:
         if not isinstance(config, ConfigParser):
@@ -74,7 +81,6 @@ class AlarmSetting(BaseSetting):
         # self._type = section.getint("Type", fallback=self._type)
         date = datetime.strptime(section.get("Time", fallback="0:00:00"), "%H:%M:%S")
         weekday = self._get_tuple(section.get("weekday", fallback="(0, 1, 2, 3, 4)"))
-        # duration = section.getint("Duration", fallback=5)
         if any(day == 0 for day in weekday):
             self._weekday0.set(1)
         if any(day == 1 for day in weekday):
@@ -92,6 +98,8 @@ class AlarmSetting(BaseSetting):
         self._hour_variable.set(date.hour)
         self._minute_variable.set(date.minute)
         self._second_variable.set(date.second)
+        duration = section.getint("Duration", fallback=5)
+        self._duration_variable.set(duration)
 
     def pre_save(self) -> None:
         date = datetime(
@@ -127,6 +135,7 @@ class AlarmSetting(BaseSetting):
         section["Type"] = str(self._type)
         section["Time"] = self._time
         section["weekday"] = ", ".join(weekday)
+        section["Duration"] = str(self._duration_variable.get())
 
     def rename(self, section_name: str) -> None:
         if not isinstance(section_name, str):
