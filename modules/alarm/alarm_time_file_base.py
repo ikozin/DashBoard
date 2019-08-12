@@ -17,7 +17,6 @@ class AlarmTimeFileBase(AlarmTimeBase):
         """Initializes (declare internal variables)"""
         super(AlarmTimeFileBase, self).__init__(logger, setting)
         self._file_name = None
-        self._stop_time = None
         self._fore_color = None
         self._back_color = None
         self._volume = ALARM_VOLUME_MIN
@@ -41,8 +40,6 @@ class AlarmTimeFileBase(AlarmTimeBase):
             raise ExceptionFormat(config_section.name, "ForegroundColor")
         if len(self._back_color) != 3:
             raise ExceptionFormat(config_section.name, "BackgroundColor")
-
-        self._stop_time = self._start_time + datetime.timedelta(seconds=self._duration)
 
     def update_state(self, current_time):
         super(AlarmTimeFileBase, self).update_state(current_time)

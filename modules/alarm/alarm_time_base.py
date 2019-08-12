@@ -10,6 +10,7 @@ class AlarmTimeBase(AlarmBase):
         """Initializes (declare internal variables)"""
         super(AlarmTimeBase, self).__init__(logger, setting)
         self._start_time = None
+        self._stop_time = None
         self._weekday = None
         self._duration = None
 
@@ -31,6 +32,7 @@ class AlarmTimeBase(AlarmBase):
         if self._duration is None:
             raise ExceptionNotFound(config_section.name, "Duration")
         self._start_time = datetime.datetime.strptime(self._start_time, "%H:%M:%S")
+        self._stop_time = self._start_time + datetime.timedelta(seconds=self._duration)
 
     def update_state(self, current_time):
         # if not isinstance(current_time, datetime.datetime):
