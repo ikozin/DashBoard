@@ -65,6 +65,7 @@ class BlockWatcher(BlockSecondBase):
             if self._is_watching:
                 if current_time.time() > self._stop_time.time():
                     self._is_watching = False
+            if self._is_watching:
                 self.execute()
         except Exception as ex:
             self._logger.exception(ex)
