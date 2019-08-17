@@ -35,6 +35,12 @@ class BlockAlarmText(AlarmTimeBase):
         if self._text is None:
             raise ExceptionNotFound(config_section.name, "Text")
 
+    def update_state(self, current_time):
+        super(BlockAlarmText, self).update_state(current_time)
+        if self._is_alarm:
+            if (current_time - self._stop_time).seconds <= 3:
+                self._is_alarm = False
+
     def update_display(self, screen, size, fore_color, back_color, blocks, current_time):
         try:
             if not self._is_alarm:
@@ -54,6 +60,7 @@ class BlockAlarmText(AlarmTimeBase):
     def execute(self):
         if self._is_alarm:
             return
+        self._stop_time = datetime.datetime.now() + datetime.timedelta(seconds=self._duration)
         self._is_alarm = True
         self._module.execute(self._text)
         self._is_alarm = False
