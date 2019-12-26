@@ -23,30 +23,16 @@ from modules.block_mt8057 import BlockMT8057
 from modules.block_yandex_weather import BlockYandexWeather
 # from modules.block_ir import BlockIR
 
+from halgpio import HalGpio
+from halgpio_windows import HalGpio_Windows 
+
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
 
 FPS = 60
 # WAIT_TIME = 40
 FILE_SETTING = "setting.ini"
-PIR_PIN = 22  # GPIO22
-LED_PIN = 23  # GPIO23
 IDLE_EVENT = (pygame.locals.USEREVENT + 1)
-
-
-###########################################################################
-if sys.platform == "linux":  # Only for Raspberry Pi
-    import RPi.GPIO as GPIO
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(LED_PIN, GPIO.OUT)
-    GPIO.setup(PIR_PIN, GPIO.IN)
-    GPIO.output(LED_PIN, 1)
-
-    def motion_detected(pin):
-        # logger.debug("Motion detected!")
-        app.display_on()
-###########################################################################
 
 
 class Mainboard:
@@ -60,7 +46,7 @@ class Mainboard:
         # Загружаем настройки из конфиг файла
         self._config = Setting()
         self._config.load(FILE_SETTING)
-
+        self._hal = HalGpio_Windows()
         self._manager_list = {
             "Time": BlockTime(logger, self._config),
             "Alarm": BlockAlarm(logger, self._config),
@@ -130,6 +116,7 @@ class Mainboard:
         """Destructor to make sure pygame shuts down, etc."""
         # pygame.mixer.quit()
         # pygame.display.quit()
+        pass
 
     def set_display_timer_on(self):
         """Таймер для отключения дисплея"""
@@ -145,15 +132,8 @@ class Mainboard:
         if not self._is_display_on:
             return
         self._is_display_on = False
-        ###########################################################################
-        if sys.platform == "linux":  # Only for Raspberry Pi
-            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5,
-            # https://elinux.org/RPI_vcgencmd_usage
-            subprocess.Popen("vcgencmd display_power 0 > /dev/null 2>&1", shell=True).wait()
-            GPIO.output(LED_PIN, 0)
-        else:
-            pass
-        ###########################################################################
+        self._hal.display_off()
+        self._hal.ledOff()
         self.set_display_timer_off()
 
     def display_on(self):
@@ -161,15 +141,8 @@ class Mainboard:
         if self._is_display_on:
             return
         self._is_display_on = True
-        ###########################################################################
-        if sys.platform == "linux":  # Only for Raspberry Pi
-            # https://news.screenly.io/how-to-automatically-turn-off-and-on-your-monitor-from-your-raspberry-pi-5f259f40cae5,
-            # https://elinux.org/RPI_vcgencmd_usage
-            subprocess.Popen("vcgencmd display_power 1 > /dev/null 2>&1", shell=True).wait()
-            GPIO.output(LED_PIN, 1)
-        else:
-            pass
-        ###########################################################################
+        self._hal.display_on()
+        self._hal.ledOn()
         for module in self._modules:
             module.update_info(self._is_display_on)
 
@@ -180,20 +153,10 @@ class Mainboard:
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_ESCAPE:
                 return 0
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_r:
-                ###########################################################################
-                if sys.platform == "linux":  # Only for Raspberry Pi
-                    subprocess.Popen("sudo reboot", shell=True)
-                else:
-                    pass
-                ###########################################################################
+                self._hal.reboot();
                 return 0
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_h:
-                ###########################################################################
-                if sys.platform == "linux":  # Only for Raspberry Pi
-                    subprocess.Popen("sudo shutdown -h now", shell=True)
-                else:
-                    pass
-                ###########################################################################
+                self._hal.shutdown();
                 return 0
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_o:
                 self.display_off()
@@ -207,8 +170,11 @@ class Mainboard:
         return 1
 
     def loop(self):
+        self._hal.init()
         clock = pygame.time.Clock()
         while self.procced_event(pygame.event.get()):
+
+            self._hal.update()
 
             if self._is_display_on:
                 (_, background_color, foreground_color, _) = self._config.get_curret_setting()
@@ -233,22 +199,11 @@ class Mainboard:
             module.done()
 
         pygame.quit()
+        self._hal.done()
 
 
 if __name__ == "__main__":
 
     print(pygame.version.ver)
-    # Create an instance of the Mainboard class
     app = Mainboard()
-
-    ###########################################################################
-    if sys.platform == "linux":  # Only for Raspberry Pi
-        GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=motion_detected)
-    ###########################################################################
-
     app.loop()
-
-    ###########################################################################
-    if sys.platform == "linux":  # Only for Raspberry Pi
-        GPIO.cleanup()
-    ###########################################################################
