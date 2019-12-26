@@ -56,6 +56,10 @@
     <Compile Include="ext\yandex_weather_manager.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="halgpio.py" />
+    <Compile Include="halgpio_opiwin.py" />
+    <Compile Include="halgpio_rasppi.py" />
+    <Compile Include="halgpio_windows.py" />
     <Compile Include="modules\alarm\alarm_time_file_base.py">
       <SubType>Code</SubType>
     </Compile>
