@@ -14,13 +14,13 @@ class TestBlockOpenWeatherMap(unittest.TestCase):
         pygame.font.init()
         cls.logger = Logger("Log")
 
-    #def setUp(self):
+    # def setUp(self):
     #    super().setUp()
 
-    #def tearDown(self):
+    # def tearDown(self):
     #    super().tearDown()
 
-    #def tearDownClass(cls):
+    # def tearDownClass(cls):
     #    super().tearDownClass()
 
     def test_block_openweathermap(self):
@@ -36,6 +36,7 @@ class TestBlockOpenWeatherMap(unittest.TestCase):
         self.assertIsInstance(block, BlockBase, "BlockBase")
         with self.assertRaises(KeyError):
             block.init({})
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,6 +1,6 @@
 from typing import List
 from configparser import ConfigParser
-from tkinter import IntVar, LabelFrame, Label, Spinbox, N, S, E, W
+from tkinter import IntVar, LabelFrame, N, S, E, W
 from ext.modal_dialog import ColorsChooserFrame
 from ext.alarm.alarm_setting import AlarmSetting
 

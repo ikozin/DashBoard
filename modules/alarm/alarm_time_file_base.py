@@ -1,5 +1,4 @@
 import os
-import datetime
 from exceptions import ExceptionFormat, ExceptionNotFound
 import pygame
 import pygame.locals

@@ -14,13 +14,13 @@ class TestBlockAlarm(unittest.TestCase):
         pygame.font.init()
         cls.logger = Logger("Log")
 
-    #def setUp(self):
+    # def setUp(self):
     #    super().setUp()
 
-    #def tearDown(self):
+    # def tearDown(self):
     #    super().tearDown()
 
-    #def tearDownClass(cls):
+    # def tearDownClass(cls):
     #    super().tearDownClass()
 
     def test_block_alarm(self):
@@ -62,6 +62,7 @@ class TestBlockAlarm(unittest.TestCase):
             if key == name:
                 break
         return config
+
 
 if __name__ == '__main__':
     unittest.main()

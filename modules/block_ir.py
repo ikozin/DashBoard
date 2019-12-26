@@ -61,19 +61,19 @@ class BlockIR(BlockBase):
 
 ###########################################################################
     if sys.platform == "linux":  # Only for Raspberry Pi
-        #import lirc
+        # import lirc
 
         def module_init(self):
-            #lirc.init(PROG_NAME, CONFIG_FILE_NAME, blocking=False)
+            # lirc.init(PROG_NAME, CONFIG_FILE_NAME, blocking=False)
             pass
 
         def module_done(self):
-            #lirc.deinit()
+            # lirc.deinit()
             pass
 
         def module_getcode(self, code=None):
-            #code = lirc.nextcode()
-            #return code
+            # code = lirc.nextcode()
+            # return code
             return  None
 
     else:
