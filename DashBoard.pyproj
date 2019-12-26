@@ -178,6 +178,7 @@
     <Compile Include="tool.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".pylintrc" />
