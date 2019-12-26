@@ -58,7 +58,8 @@ class AlarmManager(BaseManager):
         self._alarm_list.clear()
         self._listbox.delete(0, "end")
         section = config["AlarmBlock"]
-        selection = [item.strip(" '") for item in section.get("blocklist", fallback="").split(",") if item.strip() in module_list]
+        selection = [item.strip(" '") for item in section.get("blocklist", fallback="").split(",")
+                    if item.strip() in module_list]
         self._frame.load(selection, module_list)
         csv_value = section.get("List", fallback="")
         if csv_value:
