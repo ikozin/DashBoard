@@ -1,7 +1,7 @@
 import unittest
 from logging import Logger
 import pygame
-from setting import Setting
+from .setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_alarm import BlockAlarm
 
