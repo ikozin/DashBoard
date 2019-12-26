@@ -11,6 +11,7 @@ def motion_detected(pin):
     # app.display_on()
     pass
 
+
 class HalGpio_RaspPi(HalGpio):
     """description of class"""
 
@@ -49,4 +50,3 @@ class HalGpio_RaspPi(HalGpio):
 
     def ledOff(self):
         GPIO.output(LED_PIN, 0)
-

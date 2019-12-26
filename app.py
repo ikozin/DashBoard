@@ -1,7 +1,6 @@
 import datetime
 import os
 import sys
-import subprocess
 import logging
 import logging.config
 import logging.handlers

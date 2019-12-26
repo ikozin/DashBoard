@@ -74,7 +74,7 @@ class BlockIR(BlockBase):
         def module_getcode(self, code=None):
             # code = lirc.nextcode()
             # return code
-            return  None
+            return None
 
     else:
         def module_init(self):
