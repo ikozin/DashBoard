@@ -70,7 +70,8 @@ class MainManager(BaseManager):
         back_color = self._get_tuple(section.get("BackgroundColor", fallback="(0, 0, 0)"))
         fore_color = self._get_tuple(section.get("ForegroundColor", fallback="(255, 255, 255)"))
         self._color_frame.load(back_color, fore_color)
-        selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",") if item.strip() in module_list]
+        selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",")
+                    if item.strip() in module_list]
         self._frame.load(selection, module_list)
         section = config["TIMELINE"]
         csv_value = section.get("sections")

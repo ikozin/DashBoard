@@ -1,7 +1,8 @@
 from typing import Dict, Tuple
 from configparser import ConfigParser
 from datetime import datetime
-from tkinter import filedialog, IntVar, StringVar, LabelFrame, Label, Entry, Spinbox, Checkbutton, Button, N, S, E, W, RIGHT, LEFT
+from tkinter import IntVar, StringVar, LabelFrame, Label, Entry, Spinbox, Checkbutton, Button
+from tkinter import filedialog, N, S, E, W, RIGHT, LEFT
 from tkinter.ttk import Frame
 from ext.base_manager import BaseManager
 

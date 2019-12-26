@@ -1,5 +1,7 @@
 from typing import Tuple
-from tkinter import font, colorchooser, BooleanVar, IntVar, StringVar, Toplevel, LabelFrame, Label, Entry, Checkbutton, Spinbox, Listbox, Button, Scrollbar, Canvas, N, S, E, W, RIGHT, VERTICAL, FALSE, TRUE, LEFT, BOTH, Y, NW
+from tkinter import BooleanVar, IntVar, StringVar, Toplevel, LabelFrame, Label, Entry
+from tkinter import Checkbutton, Spinbox, Listbox, Button, Scrollbar, Canvas
+from tkinter import font, colorchooser, N, S, E, W, RIGHT, VERTICAL, FALSE, TRUE, LEFT, BOTH, Y, NW
 from tkinter.ttk import Frame, Combobox
 
 
