@@ -8,6 +8,7 @@ from modules.block_time import BlockTime
 
 SECTION_NAME = "TimeBlock"
 
+
 class TestBlockTime(unittest.TestCase):
 
     @classmethod

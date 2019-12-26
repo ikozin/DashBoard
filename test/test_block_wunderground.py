@@ -7,6 +7,7 @@ from modules.block_wunderground import BlockWunderGround
 
 SECTION_NAME = "WunderGroundBlock"
 
+
 class TestBlockWunderGround(unittest.TestCase):
 
     @classmethod

@@ -7,6 +7,7 @@ from modules.block_alarm import BlockAlarm
 
 SECTION_NAME = "AlarmBlock"
 
+
 class TestBlockAlarm(unittest.TestCase):
 
     @classmethod

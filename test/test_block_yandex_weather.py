@@ -7,6 +7,7 @@ from modules.block_yandex_weather import BlockYandexWeather
 
 SECTION_NAME = "YandexWeatherBlock"
 
+
 class TestBlockYandexWeather(unittest.TestCase):
 
     @classmethod

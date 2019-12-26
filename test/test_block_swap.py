@@ -7,6 +7,7 @@ from modules.block_swap import BlockSwap
 
 SECTION_NAME = "SwapBlock"
 
+
 class TestBlockSwap(unittest.TestCase):
 
     @classmethod
@@ -22,7 +23,6 @@ class TestBlockSwap(unittest.TestCase):
 
     # def tearDownClass(cls):
     #    super().tearDownClass()
-
 
     def test_block_swap(self):
         config = Setting()

@@ -7,6 +7,7 @@ from modules.block_watcher import BlockWatcher
 
 SECTION_NAME = "WatcherBlock"
 
+
 class TestBlockWatcher(unittest.TestCase):
 
     @classmethod

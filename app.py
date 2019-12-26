@@ -24,7 +24,7 @@ from modules.block_yandex_weather import BlockYandexWeather
 # from modules.block_ir import BlockIR
 
 from halgpio import HalGpio
-from halgpio_windows import HalGpio_Windows 
+from halgpio_windows import HalGpio_Windows
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -153,10 +153,10 @@ class Mainboard:
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_ESCAPE:
                 return 0
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_r:
-                self._hal.reboot();
+                self._hal.reboot()
                 return 0
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_h:
-                self._hal.shutdown();
+                self._hal.shutdown()
                 return 0
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_o:
                 self.display_off()

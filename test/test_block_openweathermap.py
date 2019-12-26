@@ -7,6 +7,7 @@ from modules.block_open_weathermap import BlockOpenWeatherMap
 
 SECTION_NAME = "OpenWeatherMapBlock"
 
+
 class TestBlockOpenWeatherMap(unittest.TestCase):
 
     @classmethod

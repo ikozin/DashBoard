@@ -7,6 +7,7 @@ from modules.block_mt8057 import BlockMT8057
 
 SECTION_NAME = "MT8057Block"
 
+
 class TestBlockMT8057(unittest.TestCase):
 
     @classmethod

@@ -8,6 +8,7 @@ from .modules.block_calendar import BlockCalendar
 
 SECTION_NAME = "CalendarBlock"
 
+
 class TestBlockCalendar(unittest.TestCase):
 
     @classmethod

@@ -1,7 +1,6 @@
 from typing import List
 from configparser import ConfigParser
 from tkinter import StringVar, Entry, LabelFrame, Label, N, S, E, W
-from tkinter.ttk import Combobox
 from ext.modal_dialog import ColorsChooserFrame
 from ext.alarm.alarm_setting import AlarmSetting
 
@@ -36,4 +35,3 @@ class AlarmSettingText(AlarmSetting):
         section["BackgroundColor"] = "(%d, %d, %d)" % background_color
         section["ForegroundColor"] = "(%d, %d, %d)" % foreground_color
         section["Text"] = self._text_value.get()
-

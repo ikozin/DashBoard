@@ -7,6 +7,7 @@ from modules.block_yandex_news import BlockYandexNews
 
 SECTION_NAME = "YandexNewsBlock"
 
+
 class TestBlockYandexNews(unittest.TestCase):
 
     @classmethod

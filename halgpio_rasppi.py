@@ -5,9 +5,10 @@ import RPi.GPIO as GPIO
 PIR_PIN = 22  # GPIO22
 LED_PIN = 23  # GPIO23
 
+
 def motion_detected(pin):
     # logger.debug("Motion detected!")
-    #app.display_on()
+    # app.display_on()
     pass
 
 class HalGpio_RaspPi(HalGpio):
@@ -48,5 +49,4 @@ class HalGpio_RaspPi(HalGpio):
 
     def ledOff(self):
         GPIO.output(LED_PIN, 0)
-
 

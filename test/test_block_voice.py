@@ -8,6 +8,7 @@ from modules.block_voice import BlockVoice
 
 SECTION_NAME = "VoiceBlock"
 
+
 class TestBlockVoice(unittest.TestCase):
 
     @classmethod
@@ -23,7 +24,6 @@ class TestBlockVoice(unittest.TestCase):
 
     # def tearDownClass(cls):
     #    super().tearDownClass()
-
 
     def test_block_voice(self):
         config = Setting()

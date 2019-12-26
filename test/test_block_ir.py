@@ -7,6 +7,7 @@ from modules.block_ir import BlockIR
 
 SECTION_NAME = "IRBlock"
 
+
 class TestBlockIR(unittest.TestCase):
 
     @classmethod
