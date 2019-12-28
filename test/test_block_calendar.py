@@ -14,9 +14,11 @@ def procced():
     pygame.font.init()
     yield
 
+
 @pytest.fixture(scope='module')
 def logger():
-    return Logger("Log");
+    return Logger("Log")
+
 
 def test_block_calendar(logger):
     config = Setting()
