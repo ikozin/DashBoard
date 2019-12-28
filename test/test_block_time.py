@@ -1,7 +1,5 @@
 import pytest
-from logging import Logger
 from exceptions import ExceptionNotFound
-import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_time import BlockTime

@@ -1,6 +1,4 @@
 import pytest
-from logging import Logger
-import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_ir import BlockIR
