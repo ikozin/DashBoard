@@ -42,6 +42,7 @@ def test_init(logger):
     assert block._alarm_block is not None
     assert block._functions is not None
 
+
 def _get_setting(name):
     params = {
         "BlockList": "Time",

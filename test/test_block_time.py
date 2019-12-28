@@ -34,6 +34,7 @@ def test_block_time(logger):
     with pytest.raises(KeyError):
         block.init({})
 
+
 def test_init_font_name(logger):
     config = _get_setting("")
     block = BlockTime(logger, config)
@@ -42,6 +43,7 @@ def test_init_font_name(logger):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontName"
+
 
 def test_init_font_size(logger):
     config = _get_setting("FontName")
@@ -52,6 +54,7 @@ def test_init_font_size(logger):
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontSize"
 
+
 def test_init_font_bold(logger):
     config = _get_setting("FontSize")
     block = BlockTime(logger, config)
@@ -60,6 +63,7 @@ def test_init_font_bold(logger):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontBold"
+
 
 def test_init_font_italic(logger):
     config = _get_setting("FontBold")
@@ -70,6 +74,7 @@ def test_init_font_italic(logger):
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontItalic"
 
+
 def test_init(logger):
     config = _get_setting(None)
     block = BlockTime(logger, config)
@@ -77,6 +82,7 @@ def test_init(logger):
     block.init({})
     assert block._font is not None
     assert block._time is None
+
 
 def test_execute(logger):
     config = _get_setting(None)
@@ -87,6 +93,7 @@ def test_execute(logger):
     assert block._text is not None
     assert block._time is None
 
+
 def test_get_text(logger):
     config = _get_setting(None)
     block = BlockTime(logger, config)
@@ -96,6 +103,7 @@ def test_get_text(logger):
     assert text is not None
     assert block._text is not None
     assert block._time is None
+
 
 def _get_setting(name):
     params = {

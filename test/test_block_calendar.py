@@ -34,6 +34,7 @@ def test_block_calendar(logger):
     with pytest.raises(KeyError):
         block.init({})
 
+
 def test_init_font_name(logger):
     config = _get_setting("")
     block = BlockCalendar(logger, config)
@@ -42,6 +43,7 @@ def test_init_font_name(logger):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontName"
+
 
 def test_init_font_size(logger):
     config = _get_setting("FontName")
@@ -52,6 +54,7 @@ def test_init_font_size(logger):
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontSize"
 
+
 def test_init_font_bold(logger):
     config = _get_setting("FontSize")
     block = BlockCalendar(logger, config)
@@ -60,6 +63,7 @@ def test_init_font_bold(logger):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontBold"
+
 
 def test_init_font_italic(logger):
     config = _get_setting("FontBold")
@@ -70,6 +74,7 @@ def test_init_font_italic(logger):
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "FontItalic"
 
+
 def test_init_position(logger):
     config = _get_setting("FontItalic")
     block = BlockCalendar(logger, config)
@@ -78,6 +83,7 @@ def test_init_position(logger):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "Position"
+
 
 def test_init(logger):
     config = _get_setting(None)
@@ -95,6 +101,7 @@ def test_init(logger):
     assert block._pos is not None
     assert block._time is None
 
+
 def test_execute(logger):
     config = _get_setting(None)
     block = BlockCalendar(logger, config)
@@ -103,6 +110,7 @@ def test_execute(logger):
     block.execute()
     assert block._text != None
     assert block._time == None
+
 
 def test_get_text(logger):
     config = _get_setting(None)
@@ -113,6 +121,7 @@ def test_get_text(logger):
     assert text != None
     assert block._text != None
     assert block._time == None
+
 
 def _get_setting(name):
     params = {

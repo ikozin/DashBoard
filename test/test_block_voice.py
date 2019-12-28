@@ -34,6 +34,7 @@ def test_block_voice(logger):
     with pytest.raises(KeyError):
         block.init({})
 
+
 def test_init_speaker(logger):
     config = _get_setting("")
     block = BlockVoice(logger, config)
@@ -42,6 +43,7 @@ def test_init_speaker(logger):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "Speaker"
+
 
 def test_init_key(logger):
     config = _get_setting("Speaker")
@@ -52,6 +54,7 @@ def test_init_key(logger):
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "Key"
 
+
 def test_init_blocks(logger):
     config = _get_setting("Key")
     block = BlockVoice(logger, config)
@@ -60,6 +63,7 @@ def test_init_blocks(logger):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == "BlockList"
+
 
 def test_init(logger):
     config = _get_setting(None)
@@ -72,6 +76,7 @@ def test_init(logger):
     assert block._blocks is not None
     assert block in block._blocks
     assert len(block._blocks) == 1
+
 
 def _get_setting(name):
     params = {

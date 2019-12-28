@@ -172,9 +172,6 @@
     <Compile Include="test\test_block_wunderground.py" />
     <Compile Include="test\test_block_yandex_news.py" />
     <Compile Include="test\test_block_yandex_weather.py" />
-    <Compile Include="test\test_module.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="test\__init__.py" />
     <Compile Include="tool.py">
       <SubType>Code</SubType>
