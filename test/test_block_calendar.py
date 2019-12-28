@@ -1,10 +1,10 @@
 import unittest
 from logging import Logger
-from .exceptions import ExceptionNotFound
+from exceptions import ExceptionNotFound
 import pygame
-from .setting import Setting
-from .modules.BlockBase import BlockBase
-from .modules.block_calendar import BlockCalendar
+from setting import Setting
+from modules.BlockBase import BlockBase
+from modules.block_calendar import BlockCalendar
 
 SECTION_NAME = "CalendarBlock"
 

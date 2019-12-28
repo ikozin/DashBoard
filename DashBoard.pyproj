@@ -175,21 +175,18 @@
     <Compile Include="test\test_block_wunderground.py" />
     <Compile Include="test\test_block_yandex_news.py" />
     <Compile Include="test\test_block_yandex_weather.py" />
+    <Compile Include="test\__init__.py" />
     <Compile Include="tool.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="__init__.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include=".pylintrc" />
+    <Content Include="pytest.cmd" />
     <Content Include="excludelist.txt" />
     <Content Include="IR.ini" />
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
     <Content Include="deploy_rasppi.cmd" />
-    <Content Include="mypy.ini" />
-    <Content Include="pylint.cmd" />
-    <Content Include="pycodestyle.cmd" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="weather\01d.png" />
