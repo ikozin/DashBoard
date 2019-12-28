@@ -105,7 +105,7 @@ def test_init(logger):
 def test_execute(logger):
     config = _get_setting(None)
     block = BlockCalendar(logger, config)
-    assert block != None
+    assert block is not None
     block.init({})
     block.execute()
     assert block._text is not None
@@ -115,7 +115,7 @@ def test_execute(logger):
 def test_get_text(logger):
     config = _get_setting(None)
     block = BlockCalendar(logger, config)
-    assert block != None
+    assert block is not None
     block.init({})
     text = block.get_text()
     assert text is not None
