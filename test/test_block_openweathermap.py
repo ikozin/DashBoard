@@ -1,43 +1,32 @@
-import unittest
+import pytest
 from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_open_weathermap import BlockOpenWeatherMap
 
-SECTION_NAME = "OpenWeatherMapBlock"
+# SECTION_NAME = "OpenWeatherMapBlock"
 
 
-class TestBlockOpenWeatherMap(unittest.TestCase):
+@pytest.fixture(scope='module', autouse=True)
+def procced():
+    pygame.font.init()
+    yield
 
-    @classmethod
-    def setUpClass(cls):
-        pygame.font.init()
-        cls.logger = Logger("Log")
+@pytest.fixture(scope='module')
+def logger():
+    return Logger("Log");
 
-    # def setUp(self):
-    #    super().setUp()
-
-    # def tearDown(self):
-    #    super().tearDown()
-
-    # def tearDownClass(cls):
-    #    super().tearDownClass()
-
-    def test_block_openweathermap(self):
-        config = Setting()
-        with self.assertRaises(TypeError):
-            BlockOpenWeatherMap(None, None)
-        with self.assertRaises(TypeError):
-            BlockOpenWeatherMap(None, config)
-        with self.assertRaises(TypeError):
-            BlockOpenWeatherMap(self.logger, None)
-        block = BlockOpenWeatherMap(self.logger, config)
-        self.assertIsNotNone(block, "BlockOpenWeatherMap")
-        self.assertIsInstance(block, BlockBase, "BlockBase")
-        with self.assertRaises(KeyError):
-            block.init({})
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_block_openweathermap(logger):
+    config = Setting()
+    with pytest.raises(TypeError):
+        BlockOpenWeatherMap(None, None)
+    with pytest.raises(TypeError):
+        BlockOpenWeatherMap(None, config)
+    with pytest.raises(TypeError):
+        BlockOpenWeatherMap(logger, None)
+    block = BlockOpenWeatherMap(logger, config)
+    assert block is not None
+    assert isinstance(block, BlockBase)
+    with pytest.raises(KeyError):
+        block.init({})

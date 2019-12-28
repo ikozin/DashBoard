@@ -1,4 +1,4 @@
-import unittest
+import pytest
 from logging import Logger
 import pygame
 from setting import Setting
@@ -8,36 +8,25 @@ from modules.block_wunderground import BlockWunderGround
 SECTION_NAME = "WunderGroundBlock"
 
 
-class TestBlockWunderGround(unittest.TestCase):
+@pytest.fixture(scope='module', autouse=True)
+def procced():
+    pygame.font.init()
+    yield
 
-    @classmethod
-    def setUpClass(cls):
-        pygame.font.init()
-        cls.logger = Logger("Log")
+@pytest.fixture(scope='module')
+def logger():
+    return Logger("Log");
 
-    # def setUp(self):
-    #    super().setUp()
-
-    # def tearDown(self):
-    #    super().tearDown()
-
-    # def tearDownClass(cls):
-    #    super().tearDownClass()
-
-    def test_block_wunderground(self):
-        config = Setting()
-        with self.assertRaises(TypeError):
-            BlockWunderGround(None, None)
-        with self.assertRaises(TypeError):
-            BlockWunderGround(None, config)
-        with self.assertRaises(TypeError):
-            BlockWunderGround(self.logger, None)
-        block = BlockWunderGround(self.logger, config)
-        self.assertIsNotNone(block, "BlockWunderGround")
-        self.assertIsInstance(block, BlockBase, "BlockBase")
-        with self.assertRaises(KeyError):
-            block.init({})
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_block_wunderground(logger):
+    config = Setting()
+    with pytest.raises(TypeError):
+        BlockWunderGround(None, None)
+    with pytest.raises(TypeError):
+        BlockWunderGround(None, config)
+    with pytest.raises(TypeError):
+        BlockWunderGround(logger, None)
+    block = BlockWunderGround(logger, config)
+    assert block is not None
+    assert isinstance(block, BlockBase)
+    with pytest.raises(KeyError):
+        block.init({})

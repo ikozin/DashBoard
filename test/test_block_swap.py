@@ -1,43 +1,32 @@
-import unittest
+import pytest
 from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_swap import BlockSwap
 
-SECTION_NAME = "SwapBlock"
+# SECTION_NAME = "SwapBlock"
 
 
-class TestBlockSwap(unittest.TestCase):
+@pytest.fixture(scope='module', autouse=True)
+def procced():
+    pygame.font.init()
+    yield
 
-    @classmethod
-    def setUpClass(cls):
-        pygame.font.init()
-        cls.logger = Logger("Log")
+@pytest.fixture(scope='module')
+def logger():
+    return Logger("Log");
 
-    # def setUp(self):
-    #    super().setUp()
-
-    # def tearDown(self):
-    #    super().tearDown()
-
-    # def tearDownClass(cls):
-    #    super().tearDownClass()
-
-    def test_block_swap(self):
-        config = Setting()
-        with self.assertRaises(TypeError):
-            BlockSwap(None, None)
-        with self.assertRaises(TypeError):
-            BlockSwap(None, config)
-        with self.assertRaises(TypeError):
-            BlockSwap(self.logger, None)
-        block = BlockSwap(self.logger, config)
-        self.assertIsNotNone(block, "BlockSwap")
-        self.assertIsInstance(block, BlockBase, "BlockBase")
-        with self.assertRaises(KeyError):
-            block.init({})
-
-
-if __name__ == '__main__':
-    unittest.main()
+def test_block_swap(logger):
+    config = Setting()
+    with pytest.raises(TypeError):
+        BlockSwap(None, None)
+    with pytest.raises(TypeError):
+        BlockSwap(None, config)
+    with pytest.raises(TypeError):
+        BlockSwap(logger, None)
+    block = BlockSwap(logger, config)
+    assert block is not None
+    assert isinstance(block, BlockBase)
+    with pytest.raises(KeyError):
+        block.init({})

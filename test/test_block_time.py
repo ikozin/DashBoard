@@ -1,4 +1,4 @@
-import unittest
+import pytest
 from logging import Logger
 from exceptions import ExceptionNotFound
 import pygame
@@ -9,117 +9,106 @@ from modules.block_time import BlockTime
 SECTION_NAME = "TimeBlock"
 
 
-class TestBlockTime(unittest.TestCase):
+@pytest.fixture(scope='module', autouse=True)
+def procced():
+    pygame.font.init()
+    yield
 
-    @classmethod
-    def setUpClass(cls):
-        pygame.font.init()
-        cls.logger = Logger("Log")
+@pytest.fixture(scope='module')
+def logger():
+    return Logger("Log");
 
-    # def setUp(self):
-    #    super().setUp()
-
-    # def tearDown(self):
-    #    super().tearDown()
-
-    # def tearDownClass(cls):
-    #    super().tearDownClass()
-
-    def test_block_time(self):
-        config = Setting()
-        with self.assertRaises(TypeError):
-            BlockTime(None, None)
-        with self.assertRaises(TypeError):
-            BlockTime(None, config)
-        with self.assertRaises(TypeError):
-            BlockTime(self.logger, None)
-        block = BlockTime(self.logger, config)
-        self.assertIsNotNone(block, "BlockTime")
-        self.assertIsInstance(block, BlockBase, "BlockBase")
-        with self.assertRaises(KeyError):
-            block.init({})
-
-    def test_init_font_name(self):
-        config = self._get_setting("")
-        block = BlockTime(self.logger, config)
-        self.assertTrue(block is not None, "BlockTime")
-        with self.assertRaises(ExceptionNotFound) as err_not_found:
-            block.init({})
-        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.param_name, "FontName", "FontName")
-
-    def test_init_font_size(self):
-        config = self._get_setting("FontName")
-        block = BlockTime(self.logger, config)
-        self.assertTrue(block is not None, "BlockTime")
-        with self.assertRaises(ExceptionNotFound) as err_not_found:
-            block.init({})
-        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.param_name, "FontSize", "FontSize")
-
-    def test_init_font_bold(self):
-        config = self._get_setting("FontSize")
-        block = BlockTime(self.logger, config)
-        self.assertTrue(block is not None, "BlockTime")
-        with self.assertRaises(ExceptionNotFound) as err_not_found:
-            block.init({})
-        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.param_name, "FontBold", "FontBold")
-
-    def test_init_font_italic(self):
-        config = self._get_setting("FontBold")
-        block = BlockTime(self.logger, config)
-        self.assertTrue(block is not None, "BlockTime")
-        with self.assertRaises(ExceptionNotFound) as err_not_found:
-            block.init({})
-        self.assertEqual(err_not_found.exception.config_name, SECTION_NAME, SECTION_NAME)
-        self.assertEqual(err_not_found.exception.param_name, "FontItalic", "FontItalic")
-
-    def test_init(self):
-        config = self._get_setting(None)
-        block = BlockTime(self.logger, config)
-        self.assertTrue(block is not None, "BlockTime")
+def test_block_time(logger):
+    config = Setting()
+    with pytest.raises(TypeError):
+        BlockTime(None, None)
+    with pytest.raises(TypeError):
+        BlockTime(None, config)
+    with pytest.raises(TypeError):
+        BlockTime(logger, None)
+    block = BlockTime(logger, config)
+    assert block is not None
+    assert isinstance(block, BlockBase)
+    with pytest.raises(KeyError):
         block.init({})
-        self.assertIsNotNone(block._font, "_font")
-        self.assertIsNone(block._time, "_time")
 
-    def test_execute(self):
-        config = self._get_setting(None)
-        block = BlockTime(self.logger, config)
-        self.assertTrue(block is not None, "BlockTime")
+def test_init_font_name(logger):
+    config = _get_setting("")
+    block = BlockTime(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
         block.init({})
-        block.execute()
-        self.assertIsNotNone(block._text, "_text")
-        self.assertIsNone(block._time, "_time")
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == "FontName"
 
-    def test_get_text(self):
-        config = self._get_setting(None)
-        block = BlockTime(self.logger, config)
-        self.assertTrue(block is not None, "BlockTime")
+def test_init_font_size(logger):
+    config = _get_setting("FontName")
+    block = BlockTime(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
         block.init({})
-        text = block.get_text()
-        self.assertIsNotNone(text, "text")
-        self.assertIsNotNone(block._text, "_text")
-        self.assertIsNone(block._time, "_time")
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == "FontSize"
 
-    def _get_setting(self, name):
-        params = {
-            "FontName": "Helvetica",
-            "FontSize": 384,
-            "FontBold": True,
-            "FontItalic": False,
-        }
-        config = Setting()
-        config.configuration.add_section(SECTION_NAME)
-        if name == "":
-            return config
-        section = config.configuration[SECTION_NAME]
-        for key, value in params.items():
-            section[key] = value.__str__()
-            if key == name:
-                break
+def test_init_font_bold(logger):
+    config = _get_setting("FontSize")
+    block = BlockTime(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
+        block.init({})
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == "FontBold"
+
+def test_init_font_italic(logger):
+    config = _get_setting("FontBold")
+    block = BlockTime(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
+        block.init({})
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == "FontItalic"
+
+def test_init(logger):
+    config = _get_setting(None)
+    block = BlockTime(logger, config)
+    assert block is not None
+    block.init({})
+    assert block._font is not None
+    assert block._time is None
+
+def test_execute(logger):
+    config = _get_setting(None)
+    block = BlockTime(logger, config)
+    assert block is not None
+    block.init({})
+    block.execute()
+    assert block._text is not None
+    assert block._time is None
+
+def test_get_text(logger):
+    config = _get_setting(None)
+    block = BlockTime(logger, config)
+    assert block is not None
+    block.init({})
+    text = block.get_text()
+    assert text is not None
+    assert block._text is not None
+    assert block._time is None
+
+def _get_setting(name):
+    params = {
+        "FontName": "Helvetica",
+        "FontSize": 384,
+        "FontBold": True,
+        "FontItalic": False,
+    }
+    config = Setting()
+    config.configuration.add_section(SECTION_NAME)
+    if name == "":
         return config
-
-
-if __name__ == '__main__':
-    unittest.main()
+    section = config.configuration[SECTION_NAME]
+    for key, value in params.items():
+        section[key] = value.__str__()
+        if key == name:
+            break
+    return config

@@ -1,4 +1,4 @@
-import unittest
+import pytest
 from logging import Logger
 import pygame
 from setting import Setting
@@ -8,62 +8,50 @@ from modules.block_alarm import BlockAlarm
 SECTION_NAME = "AlarmBlock"
 
 
-class TestBlockAlarm(unittest.TestCase):
+@pytest.fixture(scope='module', autouse=True)
+def procced():
+    pygame.font.init()
+    yield
 
-    @classmethod
-    def setUpClass(cls):
-        pygame.font.init()
-        cls.logger = Logger("Log")
+@pytest.fixture(scope='module')
+def logger():
+    return Logger("Log");
 
-    # def setUp(self):
-    #    super().setUp()
-
-    # def tearDown(self):
-    #    super().tearDown()
-
-    # def tearDownClass(cls):
-    #    super().tearDownClass()
-
-    def test_block_alarm(self):
-        config = Setting()
-        with self.assertRaises(TypeError):
-            BlockAlarm(None, None)
-        with self.assertRaises(TypeError):
-            BlockAlarm(None, config)
-        with self.assertRaises(TypeError):
-            BlockAlarm(self.logger, None)
-        block = BlockAlarm(self.logger, config)
-        self.assertIsNotNone(block, "BlockAlarm")
-        self.assertIsInstance(block, BlockBase, "BlockBase")
-
-        with self.assertRaises(KeyError):
-            block.init({})
-
-    def test_init(self):
-        config = self._get_setting(None)
-        block = BlockAlarm(self.logger, config)
-        self.assertTrue(block is not None, "BlockAlarm")
+def test_block_alarm(logger):
+    config = Setting()
+    with pytest.raises(TypeError):
+        BlockAlarm(None, None)
+    with pytest.raises(TypeError):
+        BlockAlarm(None, config)
+    with pytest.raises(TypeError):
+        BlockAlarm(logger, None)
+    block = BlockAlarm(logger, config)
+    assert block is not None
+    assert isinstance(block, BlockBase)
+    with pytest.raises(KeyError):
         block.init({})
-        self.assertIsNotNone(block._blocks, "_blocks")
-        self.assertIsNotNone(block._alarm_block, "_alarm_block")
-        self.assertIsNotNone(block._functions, "_functions")
 
-    def _get_setting(self, name):
-        params = {
-            "BlockList": "Time",
-            "List": "",
-        }
-        config = Setting()
-        config.configuration.add_section(SECTION_NAME)
-        if name == "":
-            return config
-        section = config.configuration[SECTION_NAME]
-        for key, value in params.items():
-            section[key] = value.__str__()
-            if key == name:
-                break
+def test_init(logger):
+    config = _get_setting(None)
+    block = BlockAlarm(logger, config)
+    assert block is not None
+    block.init({})
+    assert block._blocks is not None
+    assert block._alarm_block is not None
+    assert block._functions is not None
+
+def _get_setting(name):
+    params = {
+        "BlockList": "Time",
+        "List": "",
+    }
+    config = Setting()
+    config.configuration.add_section(SECTION_NAME)
+    if name == "":
         return config
-
-
-if __name__ == '__main__':
-    unittest.main()
+    section = config.configuration[SECTION_NAME]
+    for key, value in params.items():
+        section[key] = value.__str__()
+        if key == name:
+            break
+    return config

@@ -160,9 +160,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setting.py" />
-    <Compile Include="test.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="test\test_block_alarm.py" />
     <Compile Include="test\test_block_calendar.py" />
     <Compile Include="test\test_block_ir.py" />
@@ -175,6 +172,9 @@
     <Compile Include="test\test_block_wunderground.py" />
     <Compile Include="test\test_block_yandex_news.py" />
     <Compile Include="test\test_block_yandex_weather.py" />
+    <Compile Include="test\test_module.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test\__init__.py" />
     <Compile Include="tool.py">
       <SubType>Code</SubType>
@@ -189,6 +189,7 @@
     <Content Include="deploy_rasppi.cmd" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
+    <Content Include="pytest.ini" />
     <Content Include="weather\01d.png" />
     <Content Include="weather\01n.png" />
     <Content Include="weather\02d.png" />

@@ -3,9 +3,7 @@ from logging import Logger
 import pygame
 from setting import Setting
 from modules.BlockBase import BlockBase
-from modules.block_yandex_weather import BlockYandexWeather
-
-SECTION_NAME = "YandexWeatherBlock"
+from modules.block_alarm import BlockAlarm
 
 
 @pytest.fixture(scope='module', autouse=True)
@@ -17,16 +15,18 @@ def procced():
 def logger():
     return Logger("Log");
 
-def test_block_yandex_weather(logger):
+@pytest.mark.block_alarm
+def test_block_alarm(logger):
     config = Setting()
     with pytest.raises(TypeError):
-        BlockYandexWeather(None, None)
+        BlockAlarm(None, None)
     with pytest.raises(TypeError):
-        BlockYandexWeather(None, config)
+        BlockAlarm(None, config)
     with pytest.raises(TypeError):
-        BlockYandexWeather(logger, None)
-    block = BlockYandexWeather(logger, config)
-    assert block is not None
+        BlockAlarm(logger, None)
+    block = BlockAlarm(logger, config)
+    assert block != None
     assert isinstance(block, BlockBase)
+
     with pytest.raises(KeyError):
         block.init({})
