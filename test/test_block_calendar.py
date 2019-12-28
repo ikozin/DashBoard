@@ -7,6 +7,7 @@ from modules.block_calendar import BlockCalendar
 SECTION_NAME = "CalendarBlock"
 
 
+@pytest.mark.block_calendar
 def test_block_calendar(logger):
     config = Setting()
     with pytest.raises(TypeError):
@@ -22,56 +23,32 @@ def test_block_calendar(logger):
         block.init({})
 
 
+@pytest.mark.block_calendar
 def test_init_font_name(logger):
-    config = _get_setting("")
-    block = BlockCalendar(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "FontName"
+    check_property(logger, "", "FontName")
 
 
+@pytest.mark.block_calendar
 def test_init_font_size(logger):
-    config = _get_setting("FontName")
-    block = BlockCalendar(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "FontSize"
+    check_property(logger, "FontName", "FontSize")
 
 
+@pytest.mark.block_calendar
 def test_init_font_bold(logger):
-    config = _get_setting("FontSize")
-    block = BlockCalendar(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "FontBold"
+    check_property(logger, "FontSize", "FontBold")
 
 
+@pytest.mark.block_calendar
 def test_init_font_italic(logger):
-    config = _get_setting("FontBold")
-    block = BlockCalendar(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "FontItalic"
+    check_property(logger, "FontBold", "FontItalic")
 
 
+@pytest.mark.block_calendar
 def test_init_position(logger):
-    config = _get_setting("FontItalic")
-    block = BlockCalendar(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "Position"
+    check_property(logger, "FontItalic", "Position")
 
 
+@pytest.mark.block_calendar
 def test_init(logger):
     config = _get_setting(None)
     block = BlockCalendar(logger, config)
@@ -89,6 +66,7 @@ def test_init(logger):
     assert block._time is None
 
 
+@pytest.mark.block_calendar
 def test_execute(logger):
     config = _get_setting(None)
     block = BlockCalendar(logger, config)
@@ -128,3 +106,13 @@ def _get_setting(name):
         if key == name:
             break
     return config
+
+
+def check_property(logger, settingPropName, propName):
+    config = _get_setting(settingPropName)
+    block = BlockCalendar(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
+        block.init({})
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == propName

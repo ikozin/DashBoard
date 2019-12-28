@@ -6,6 +6,7 @@ from modules.block_wunderground import BlockWunderGround
 SECTION_NAME = "WunderGroundBlock"
 
 
+@pytest.mark.block_wunderground
 def test_block_wunderground(logger):
     config = Setting()
     with pytest.raises(TypeError):

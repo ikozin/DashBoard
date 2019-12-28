@@ -6,6 +6,7 @@ from modules.block_yandex_news import BlockYandexNews
 SECTION_NAME = "YandexNewsBlock"
 
 
+@pytest.mark.block_yandex_news
 def test_block_yandex_news(logger):
     config = Setting()
     with pytest.raises(TypeError):

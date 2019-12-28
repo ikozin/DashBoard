@@ -6,6 +6,7 @@ from modules.block_yandex_weather import BlockYandexWeather
 SECTION_NAME = "YandexWeatherBlock"
 
 
+@pytest.mark.block_yandex_weather
 def test_block_yandex_weather(logger):
     config = Setting()
     with pytest.raises(TypeError):

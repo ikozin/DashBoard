@@ -6,6 +6,7 @@ from modules.block_mt8057 import BlockMT8057
 # SECTION_NAME = "MT8057Block"
 
 
+@pytest.mark.block_mt8057
 def test_block_mt8057(logger):
     config = Setting()
     with pytest.raises(TypeError):

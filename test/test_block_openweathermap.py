@@ -6,6 +6,7 @@ from modules.block_open_weathermap import BlockOpenWeatherMap
 # SECTION_NAME = "OpenWeatherMapBlock"
 
 
+@pytest.mark.block_openweathermap
 def test_block_openweathermap(logger):
     config = Setting()
     with pytest.raises(TypeError):

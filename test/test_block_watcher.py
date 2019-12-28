@@ -6,6 +6,7 @@ from modules.block_watcher import BlockWatcher
 SECTION_NAME = "WatcherBlock"
 
 
+@pytest.mark.block_watcher
 def test_block_watcher(logger):
     config = Setting()
     with pytest.raises(TypeError):

@@ -6,6 +6,7 @@ from modules.block_alarm import BlockAlarm
 SECTION_NAME = "AlarmBlock"
 
 
+@pytest.mark.block_alarm
 def test_block_alarm(logger):
     config = Setting()
     with pytest.raises(TypeError):
@@ -20,6 +21,7 @@ def test_block_alarm(logger):
     with pytest.raises(KeyError):
         block.init({})
 
+@pytest.mark.block_alarm
 def test_init(logger):
     config = _get_setting(None)
     block = BlockAlarm(logger, config)

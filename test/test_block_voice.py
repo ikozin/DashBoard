@@ -7,6 +7,7 @@ from modules.block_voice import BlockVoice
 SECTION_NAME = "VoiceBlock"
 
 
+@pytest.mark.block_voice
 def test_block_voice(logger):
     config = Setting()
     with pytest.raises(TypeError):
@@ -22,6 +23,7 @@ def test_block_voice(logger):
         block.init({})
 
 
+@pytest.mark.block_voice
 def test_init_speaker(logger):
     config = _get_setting("")
     block = BlockVoice(logger, config)
@@ -32,6 +34,7 @@ def test_init_speaker(logger):
     assert err_not_found.value.param_name == "Speaker"
 
 
+@pytest.mark.block_voice
 def test_init_key(logger):
     config = _get_setting("Speaker")
     block = BlockVoice(logger, config)
@@ -42,6 +45,7 @@ def test_init_key(logger):
     assert err_not_found.value.param_name == "Key"
 
 
+@pytest.mark.block_voice
 def test_init_blocks(logger):
     config = _get_setting("Key")
     block = BlockVoice(logger, config)
@@ -52,6 +56,7 @@ def test_init_blocks(logger):
     assert err_not_found.value.param_name == "BlockList"
 
 
+@pytest.mark.block_voice
 def test_init(logger):
     config = _get_setting(None)
     block = BlockVoice(logger, config)

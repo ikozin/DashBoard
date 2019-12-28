@@ -6,6 +6,7 @@ from modules.block_ir import BlockIR
 # SECTION_NAME = "IRBlock"
 
 
+@pytest.mark.block_ir
 def test_block_ir(logger):
     config = Setting()
     with pytest.raises(TypeError):
