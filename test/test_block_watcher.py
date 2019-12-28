@@ -8,17 +8,6 @@ from modules.block_watcher import BlockWatcher
 SECTION_NAME = "WatcherBlock"
 
 
-@pytest.fixture(scope='module', autouse=True)
-def procced():
-    pygame.font.init()
-    yield
-
-
-@pytest.fixture(scope='module')
-def logger():
-    return Logger("Log")
-
-
 def test_block_watcher(logger):
     config = Setting()
     with pytest.raises(TypeError):

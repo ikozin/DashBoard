@@ -8,17 +8,6 @@ from modules.block_mt8057 import BlockMT8057
 # SECTION_NAME = "MT8057Block"
 
 
-@pytest.fixture(scope='module', autouse=True)
-def procced():
-    pygame.font.init()
-    yield
-
-
-@pytest.fixture(scope='module')
-def logger():
-    return Logger("Log")
-
-
 def test_block_mt8057(logger):
     config = Setting()
     with pytest.raises(TypeError):

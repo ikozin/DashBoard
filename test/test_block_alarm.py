@@ -8,17 +8,6 @@ from modules.block_alarm import BlockAlarm
 SECTION_NAME = "AlarmBlock"
 
 
-@pytest.fixture(scope='module', autouse=True)
-def procced():
-    pygame.font.init()
-    yield
-
-
-@pytest.fixture(scope='module')
-def logger():
-    return Logger("Log")
-
-
 def test_block_alarm(logger):
     config = Setting()
     with pytest.raises(TypeError):

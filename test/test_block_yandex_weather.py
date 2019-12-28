@@ -8,17 +8,6 @@ from modules.block_yandex_weather import BlockYandexWeather
 SECTION_NAME = "YandexWeatherBlock"
 
 
-@pytest.fixture(scope='module', autouse=True)
-def procced():
-    pygame.font.init()
-    yield
-
-
-@pytest.fixture(scope='module')
-def logger():
-    return Logger("Log")
-
-
 def test_block_yandex_weather(logger):
     config = Setting()
     with pytest.raises(TypeError):

@@ -9,17 +9,6 @@ from modules.block_calendar import BlockCalendar
 SECTION_NAME = "CalendarBlock"
 
 
-@pytest.fixture(scope='module', autouse=True)
-def procced():
-    pygame.font.init()
-    yield
-
-
-@pytest.fixture(scope='module')
-def logger():
-    return Logger("Log")
-
-
 def test_block_calendar(logger):
     config = Setting()
     with pytest.raises(TypeError):

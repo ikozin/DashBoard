@@ -8,17 +8,6 @@ from modules.block_wunderground import BlockWunderGround
 SECTION_NAME = "WunderGroundBlock"
 
 
-@pytest.fixture(scope='module', autouse=True)
-def procced():
-    pygame.font.init()
-    yield
-
-
-@pytest.fixture(scope='module')
-def logger():
-    return Logger("Log")
-
-
 def test_block_wunderground(logger):
     config = Setting()
     with pytest.raises(TypeError):

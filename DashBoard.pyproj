@@ -160,6 +160,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setting.py" />
+    <Compile Include="test\conftest.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test\test_block_alarm.py" />
     <Compile Include="test\test_block_calendar.py" />
     <Compile Include="test\test_block_ir.py" />
