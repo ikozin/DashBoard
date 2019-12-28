@@ -108,8 +108,8 @@ def test_execute(logger):
     assert block != None
     block.init({})
     block.execute()
-    assert block._text != None
-    assert block._time == None
+    assert block._text is not None
+    assert block._time is None
 
 
 def test_get_text(logger):
@@ -118,9 +118,9 @@ def test_get_text(logger):
     assert block != None
     block.init({})
     text = block.get_text()
-    assert text != None
-    assert block._text != None
-    assert block._time == None
+    assert text is not None
+    assert block._text is not None
+    assert block._time is None
 
 
 def _get_setting(name):
