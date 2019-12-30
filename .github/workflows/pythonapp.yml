@@ -29,8 +29,12 @@ jobs:
         pip install pytest
         pytest -v
     - name: Deployment
+      env:
+        OPENWEATHER_KEY: ${{secrets.OPENWEATHER_KEY}}
+        WUNDERGROUND_KEY: ${{secrets.WUNDERGROUND_KEY}}
+        YANDEX_VOICE_KEY: ${{secrets.YANDEX_VOICE_KEY}}
       run: |
         echo Deployment
-        echo ${secrets.OPENWEATHER_KEY}
+        echo $OPENWEATHER_KEY
         echo $GITHUB_ACTOR
         echo $GITHUB_WORKSPACE        
