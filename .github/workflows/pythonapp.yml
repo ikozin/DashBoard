@@ -31,7 +31,6 @@ jobs:
     - name: Deployment
       run: |
         echo Deployment
-        echo $GITHUB_TOKEN
+        echo ${secrets.OPENWEATHER_KEY}
         echo $GITHUB_ACTOR
-        echo $BUILD_DIR
         echo $GITHUB_WORKSPACE        
