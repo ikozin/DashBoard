@@ -29,4 +29,9 @@ jobs:
         pip install pytest
         pytest -v
     - name: Deployment
-      run: echo Deployment
+      run: |
+        echo Deployment
+        echo $GITHUB_TOKEN
+        echo $GITHUB_ACTOR
+        echo $BUILD_DIR
+        echo $GITHUB_WORKSPACE        
