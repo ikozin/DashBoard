@@ -28,3 +28,5 @@ jobs:
       run: |
         pip install pytest
         pytest -v
+    - name: Deployment
+      run: echo Deployment
