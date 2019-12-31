@@ -35,6 +35,11 @@ jobs:
         YANDEX_VOICE_KEY: ${{secrets.YANDEX_VOICE_KEY}}
       run: |
         echo Deployment
+        # Ensure that the GITHUB_TOKEN secret is included
+        if [[ -z "$GITHUB_TOKEN" ]]; then
+          echo "Set the GITHUB_TOKEN env variable."
+          exit 1
+        fi
         echo $OPENWEATHER_KEY
         echo $WUNDERGROUND_KEY
         echo $YANDEX_VOICE_KEY
