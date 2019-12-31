@@ -62,10 +62,13 @@ jobs:
         mkdir distr
         cd distr
         echo test > test.txt
-        git init
-        git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-        git config --local user.name  "${GITHUB_ACTOR}"
-        git checkout -b "master"
+        # git init
+        # git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        # git config --local user.name  "${GITHUB_ACTOR}"
+        # git checkout -b "master"
+        echo git add .
         git add .
-        git commit -m distr
-        git push origin "master"
+        echo git commit -m "distr"
+        git commit -m "distr"
+        echo git push origin master
+        git push origin master
