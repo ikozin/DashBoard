@@ -63,7 +63,7 @@ jobs:
         echo test > distr/test.txt
         # git init
         git config --global user.email "ikozin@yandex.ru"
-        git config --global user.name "ikozin"
+        git config --global user.name "ikozin@yandex.ru"
         git add distr -f .gitignore
         git commit -m distr
         git push origin HEAD
