@@ -42,6 +42,7 @@ jobs:
           echo "Set the GITHUB_TOKEN env variable."
           exit 1
         fi
+        echo $GITHUB_TOKEN
         echo $OPENWEATHER_KEY
         echo $WUNDERGROUND_KEY
         echo $YANDEX_VOICE_KEY
