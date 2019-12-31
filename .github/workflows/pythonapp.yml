@@ -61,9 +61,9 @@ jobs:
         rm -rf distr
         mkdir distr
         echo test > distr/test.txt
-        git init
+        # git init
         git config --global user.email "ikozin@yandex.ru"
         git config --global user.name "ikozin"
         git add distr -f .gitignore
         git commit -m distr
-        git push origin master
+        git push
