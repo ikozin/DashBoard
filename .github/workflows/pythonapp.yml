@@ -57,4 +57,9 @@ jobs:
         echo $GITHUB_SHA
         echo $GITHUB_REF
         echo $GITHUB_HEAD_REF
-        echo $GITHUB_BASE_REF  
+        echo $GITHUB_BASE_REF
+        rm -rf distr
+        mkdir distr
+        git add distr -f .gitignore
+        git commit -m distr
+        git push
