@@ -37,7 +37,7 @@ jobs:
         echo Deployment
         echo $OPENWEATHER_KEY
         echo $WUNDERGROUND_KEY
-        ech0 $YANDEX_VOICE_KEY
+        echo $YANDEX_VOICE_KEY
         echo $HOME
         echo $GITHUB_WORKFLOW
         echo $GITHUB_ACTION
