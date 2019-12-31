@@ -66,4 +66,4 @@ jobs:
         git config --global user.name "ikozin"
         git add distr -f .gitignore
         git commit -m distr
-        git push
+        git push origin HEAD
