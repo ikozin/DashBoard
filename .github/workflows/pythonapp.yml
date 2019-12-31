@@ -58,20 +58,6 @@ jobs:
         echo $GITHUB_REF
         echo $GITHUB_HEAD_REF
         echo $GITHUB_BASE_REF
-        # git init
-        # git config --local user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-        # git config --local user.name  "${GITHUB_ACTOR}"
-        # git checkout -b "master"
-        # rm -rf distr
-        # mkdir distr
-        # cd distr
-        # echo test > test.txt
-        # echo git add .
-        # git add .
-        # echo git commit -m "distr"
-        # git commit -m "distr"
-        # echo git push origin master
-        $git push origin master
     - name: Build project # This would actually build your project, using zip for an example artifact
       run: |
         zip --junk-paths my-artifact README.md
