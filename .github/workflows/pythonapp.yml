@@ -33,7 +33,8 @@ jobs:
         OPENWEATHER_KEY: ${{secrets.OPENWEATHER_KEY}}
         WUNDERGROUND_KEY: ${{secrets.WUNDERGROUND_KEY}}
         YANDEX_VOICE_KEY: ${{secrets.YANDEX_VOICE_KEY}}
-        GITHUB_TOKEB: ${{secrets.TOKEN}}
+        GITHUB_TOKENS: ${{secrets.TOKEN}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
       run: |
         echo Deployment
         # Ensure that the GITHUB_TOKEN secret is included
