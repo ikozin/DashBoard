@@ -62,6 +62,6 @@ jobs:
         mkdir distr
         git config --global user.email "ikozin@yandex.ru"
         git config --global user.name "ikozin"
-        git add distr -f .gitignore
+        git add . -f .gitignore
         git commit -m distr
-        git push
+        git push origin master
