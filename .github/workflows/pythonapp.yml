@@ -65,7 +65,7 @@ jobs:
         YANDEX_VOICE_KEY: ${{secrets.YANDEX_VOICE_KEY}}
       run: |
         # zip --junk-paths my-artifact README.md
-        sed -i -e 's/<OPENWEATHERMAP_KEY>/xxx/g' setting.ini
+        echo "${OPENWEATHER_KEY}" | sed -i -e 's/<OPENWEATHERMAP_KEY>/${1}/g' setting.ini
         # sed -i -e 's/<YANDEXVOICE_KEY/$YANDEX_VOICE_KEY/g' setting.ini
         # sed -i -e 's/<WUNDERGROUND_KEY/$WUNDERGROUND_KEY/f' setting.ini
         zip build -R ext modules music weather "*.py" "*.ini" "*.sh" "*.mp3" "*.png" ".gif"
