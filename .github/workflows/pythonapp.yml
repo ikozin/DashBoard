@@ -59,8 +59,15 @@ jobs:
         echo $GITHUB_HEAD_REF
         echo $GITHUB_BASE_REF
     - name: Build project # This would actually build your project, using zip for an example artifact
+      env:
+        OPENWEATHER_KEY: ${{secrets.OPENWEATHER_KEY}}
+        WUNDERGROUND_KEY: ${{secrets.WUNDERGROUND_KEY}}
+        YANDEX_VOICE_KEY: ${{secrets.YANDEX_VOICE_KEY}}
       run: |
         # zip --junk-paths my-artifact README.md
+        sed -i -e 's/<OPENWEATHERMAP_KEY>/$OPENWEATHER_KEY/g' setting.ini
+        sed -i -e 's/<YANDEXVOICE_KEY/$YANDEX_VOICE_KEY/g' setting.ini
+        sed -i -e 's/<WUNDERGROUND_KEY/$WUNDERGROUND_KEY/f' setting.ini
         zip build -R ext modules music weather "*.py" "*.ini" "*.sh" "*.mp3" "*.png" ".gif"
     - name: Create Release
       id: create_release
