@@ -68,7 +68,7 @@ jobs:
         sed -i -e 's/<OPENWEATHERMAP_KEY>/'${OPENWEATHER_KEY}'/g' setting.ini
         sed -i -e 's/<YANDEXVOICE_KEY>/'{$YANDEX_VOICE_KEY}'/g' setting.ini
         sed -i -e 's/<WUNDERGROUND_KEY>/'${WUNDERGROUND_KEY}'/g' setting.ini
-        zip build -r ext modules music weather "*.py" "*.ini" "*.sh" "*.mp3" "*.png" ".gif" -x test/*
+        zip build -R ext modules music weather "*.py" "*.ini" "*.sh" "*.mp3" "*.png" ".gif" -x test/*
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.0.0
