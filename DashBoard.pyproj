@@ -13,6 +13,7 @@
     <Name>DashBoard</Name>
     <RootNamespace>DashBoard</RootNamespace>
     <TestFramework>Pytest</TestFramework>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -191,6 +192,7 @@
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="pytest.ini" />
+    <Content Include="setting_opiwin.ini" />
     <Content Include="weather\01d.png" />
     <Content Include="weather\01n.png" />
     <Content Include="weather\02d.png" />
