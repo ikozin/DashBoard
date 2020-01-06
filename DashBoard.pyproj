@@ -183,6 +183,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="deploy.cmd" />
+    <Content Include="deploy_orapi.cmd" />
     <Content Include="pytest.cmd" />
     <Content Include="excludelist.txt" />
     <Content Include="IR.ini" />
