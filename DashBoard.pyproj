@@ -12,6 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>DashBoard</Name>
     <RootNamespace>DashBoard</RootNamespace>
+    <TestFramework>Pytest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

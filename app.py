@@ -45,7 +45,7 @@ class Mainboard:
         # Загружаем настройки из конфиг файла
         self._config = Setting()
         self._config.load(FILE_SETTING)
-        self._hal = HalGpio_Windows()
+        self._hal = HalGpio_Windows(logger, self.display_on)
         self._manager_list = {
             "Time": BlockTime(logger, self._config),
             "Alarm": BlockAlarm(logger, self._config),

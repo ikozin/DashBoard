@@ -1,48 +1,54 @@
+from typing import Callable
 from abc import ABCMeta, abstractmethod
+from logging import Logger
 
 
 class HalGpio(metaclass=ABCMeta):
     """description of class"""
-    def __init__(self):
+
+    def __init__(self, logger: Logger, func: Callable[[], None]):
         """Initializes (declare internal variables)"""
-        pass
+        if not isinstance(logger, Logger):
+            raise TypeError("Передаваемый параметр logger должен быть Logger")
+        self._logger = logger
+        self._func = func
 
     def __del__(self):
         """Destructor"""
         pass
 
     @abstractmethod
-    def init(self):
+    def init(self) -> None:
         pass
 
     @abstractmethod
-    def done(self):
+    def done(self) -> None:
         pass
 
     @abstractmethod
-    def update(self):
+    def update(self) -> None:
         pass
 
     @abstractmethod
-    def display_off(self):
+    def display_off(self) -> None:
         pass
 
     @abstractmethod
-    def display_on(self):
+    def display_on(self) -> None:
         pass
 
     @abstractmethod
-    def reboot(self):
+    def reboot(self) -> None:
         pass
 
     @abstractmethod
-    def shutdown(self):
+    def shutdown(self) -> None:
         pass
 
     @abstractmethod
-    def ledOn(self):
+    def ledOn(self) -> None:
         pass
 
     @abstractmethod
-    def ledOff(self):
+    def ledOff(self) -> None:
         pass
