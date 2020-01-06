@@ -21,7 +21,7 @@ class HalGpio_RaspPi(HalGpio):
         GPIO.setup(LED_PIN, GPIO.OUT)
         GPIO.setup(PIR_PIN, GPIO.IN)
         self.ledOn()
-        GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=motion_detected)
+        GPIO.add_event_detect(PIR_PIN, GPIO.RISING, callback=self.motion_detected)
 
     def done(self) -> None:
         GPIO.cleanup()
