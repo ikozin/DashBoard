@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
 from configparser import ConfigParser
-from tkinter import messagebox, StringVar, LabelFrame, Label, Spinbox, Listbox, Button, N, S, E, W
+from tkinter import messagebox, BooleanVar, StringVar, LabelFrame, Label, Checkbutton, Spinbox, Listbox, Button, N, S, E, W
 from tkinter.ttk import Frame
 from ext.base_manager import BaseManager
 from ext.modal_dialog import ColorsChooserFrame, EntryModalDialog, SelectFrame
@@ -17,12 +17,17 @@ class MainManager(BaseManager):
         self._section_list: Dict[str, MainSetting] = dict()
         self._current__name = None
         self._idle_variable = StringVar()
+        self._full_screen = BooleanVar()
+
+        chk = Checkbutton(self, text="Полный экран", variable=self._full_screen)
+        chk.grid(row=0, column=0, columnspan=4, sticky=(W))
+
         self._listbox = Listbox(self)
-        self._listbox.grid(row=0, column=0, rowspan=3, padx=2, pady=2)
+        self._listbox.grid(row=1, column=0, rowspan=3, padx=2, pady=2)
         self._listbox.bind('<<ListboxSelect>>', self._select_section)
 
         command_frame = Frame(self, padding=(2, 2, 2, 2))
-        command_frame.grid(row=0, column=1, rowspan=3, sticky=(N, S, E, W))
+        command_frame.grid(row=1, column=1, rowspan=3, sticky=(N, S, E, W))
 
         btn = Button(command_frame, text="Создать", command=self._create_section)
         btn.grid(row=0, column=0, sticky=(N, S, E, W))
@@ -34,7 +39,7 @@ class MainManager(BaseManager):
         btn.grid(row=2, column=0, sticky=(N, S, E, W))
 
         idle_frame = LabelFrame(self, text="Время простоя")
-        idle_frame.grid(row=0, column=2, sticky=(N, E, W))
+        idle_frame.grid(row=1, column=2, sticky=(N, E, W))
 
         spin = Spinbox(idle_frame, from_=5, to=60, increment=1, width=3, textvariable=self._idle_variable)
         spin.grid(row=0, column=0, padx=2, pady=2)
@@ -43,13 +48,13 @@ class MainManager(BaseManager):
         lbl.grid(row=0, column=2, pady=2)
 
         self._color_frame = ColorsChooserFrame(self, "Цвет")
-        self._color_frame.grid(row=0, column=3, sticky=(N, E, W))
+        self._color_frame.grid(row=1, column=3, sticky=(N, E, W))
 
         self._section_frame = LabelFrame(self)
-        self._section_frame.grid(row=1, column=2, rowspan=2, columnspan=3, sticky=(N, S, E, W))
+        self._section_frame.grid(row=2, column=2, rowspan=2, columnspan=3, sticky=(N, S, E, W))
 
         self._frame = SelectFrame(self, "Выбор модулей для загрузки")
-        self._frame.grid(row=3, column=0, columnspan=3, sticky=(N, S, E, W), padx=2, pady=2)
+        self._frame.grid(row=4, column=0, columnspan=3, sticky=(N, S, E, W), padx=2, pady=2)
 
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not isinstance(config, ConfigParser):
@@ -65,6 +70,7 @@ class MainManager(BaseManager):
         self._section_list.clear()
         self._listbox.delete(0, "end")
         section = config["MAIN"]
+        self._full_screen.set(section.getboolean("FullScreen", fallback=False))
         idle = section.getint("idletime", fallback=1)
         self._idle_variable.set(idle)
         back_color = self._get_tuple(section.get("BackgroundColor", fallback="(0, 0, 0)"))
@@ -93,6 +99,7 @@ class MainManager(BaseManager):
         if not config.has_section("TIMELINE"):
             config.add_section("TIMELINE")
         section = config["MAIN"]
+        section["FullScreen"] = str(self._full_screen.get())
         (background_color, foreground_color) = self._color_frame.get_result()
         section["idletime"] = str(self._idle_variable.get())
         section["BackgroundColor"] = "(%d, %d, %d)" % background_color

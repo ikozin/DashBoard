@@ -85,12 +85,9 @@ class Mainboard:
         if not found:
             raise Exception("No suitable video driver found!")
 
-        if sys.platform == "linux":
-            self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
-            self._screen = pygame.display.set_mode(self._size, pygame.FULLSCREEN | pygame.HWSURFACE)
-        else:
-            self._size = (1824, 984)
-            self._screen = pygame.display.set_mode(self._size)
+        flags = pygame.FULLSCREEN | pygame.HWSURFACE if self._config.FullScreen else 0
+        self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
+        self._screen = pygame.display.set_mode(self._size, flags)
 
         print("Framebuffer size: {0}".format(self._size))
 

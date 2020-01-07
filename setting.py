@@ -81,6 +81,10 @@ class Setting:
         list.sort(self._time_line, key=lambda entry: entry[0])
 
     @property
+    def FullScreen(self) -> bool:
+        return self._config["MAIN"].getboolean("FullScreen", fallback=False)
+
+    @property
     def configuration(self):
         return self._config
 
