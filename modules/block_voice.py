@@ -25,6 +25,7 @@ class BlockVoice(BlockBase):
         section = self._setting.configuration["VoiceBlock"]
 
         self._speaker = section.get("Speaker")
+        self._speed = section.getfloat("Speed")
         self._key = section.get("Key")
         selection = section.get("BlockList", fallback="")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
@@ -34,6 +35,8 @@ class BlockVoice(BlockBase):
 
         if self._speaker is None:
             raise ExceptionNotFound(section.name, "Speaker")
+        if self._speed is None:
+            raise ExceptionNotFound(section.name, "Speed")
         if self._key is None:
             raise ExceptionNotFound(section.name, "Key")
         if not self._blocks:

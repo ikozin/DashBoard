@@ -35,8 +35,19 @@ def test_init_speaker(logger):
 
 
 @pytest.mark.block_voice
-def test_init_key(logger):
+def test_init_speed(logger):
     config = _get_setting("Speaker")
+    block = BlockVoice(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
+        block.init({})
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == "Speed"
+
+
+@pytest.mark.block_voice
+def test_init_key(logger):
+    config = _get_setting("Speed")
     block = BlockVoice(logger, config)
     assert block is not None
     with pytest.raises(ExceptionNotFound) as err_not_found:
@@ -73,6 +84,7 @@ def test_init(logger):
 def _get_setting(name):
     params = {
         "Speaker": "omazh",
+        "Speed": "1.0",
         "Key": "b55d97e9-6c66-4e1b-966f-c2a6aa9d939d",
         "BlockList": "Voice",
     }
