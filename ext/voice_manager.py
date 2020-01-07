@@ -26,10 +26,9 @@ class VoiceManager(BaseManager):
 
         lbl = Label(self, text="Скорость (0-30)")
         lbl.grid(row=0, column=2, padx=2, pady=2)
-        
+
         spin = Spinbox(self, from_=0, to=30, increment=1, width=3, textvariable=self._speed_value)
         spin.grid(row=0, column=3, padx=2, pady=2)
-
 
         lbl = Label(self, text="Яндекс ключ")
         lbl.grid(row=1, column=0, padx=2, pady=2)
