@@ -21,7 +21,7 @@ from modules.block_mt8057 import BlockMT8057
 from modules.block_yandex_weather import BlockYandexWeather
 # from modules.block_ir import BlockIR
 
-from halgpio import HalGpio
+from modules.hal.halgpio import HalGpio
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")

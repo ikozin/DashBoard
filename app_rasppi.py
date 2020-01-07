@@ -1,5 +1,5 @@
 from app import Mainboard
-from halgpio_rasppi import HalGpio_RaspPi
+from modules.hal.halgpio_rasppi import HalGpio_RaspPi
 
 FILE_SETTING = "setting_rasppi.ini"
 

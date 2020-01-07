@@ -1,5 +1,5 @@
 from app import Mainboard
-from halgpio_opiwin import HalGpio_OraPiWin
+from modules.hal.halgpio_opiwin import HalGpio_OraPiWin
 
 FILE_SETTING = "setting_opiwin.ini"
 

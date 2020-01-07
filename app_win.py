@@ -1,5 +1,5 @@
 from app import Mainboard
-from halgpio_windows import HalGpio_Windows
+from modules.hal.halgpio_windows import HalGpio_Windows
 
 FILE_SETTING = "setting_win.ini"
 

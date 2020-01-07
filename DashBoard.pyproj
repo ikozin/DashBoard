@@ -61,10 +61,6 @@
     <Compile Include="ext\yandex_weather_manager.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="halgpio.py" />
-    <Compile Include="halgpio_opiwin.py" />
-    <Compile Include="halgpio_rasppi.py" />
-    <Compile Include="halgpio_windows.py" />
     <Compile Include="modules\alarm\alarm_time_file_base.py">
       <SubType>Code</SubType>
     </Compile>
@@ -161,6 +157,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\block_yandex_weather.py" />
+    <Compile Include="modules\hal\halgpio.py" />
+    <Compile Include="modules\hal\halgpio_opiwin.py" />
+    <Compile Include="modules\hal\halgpio_rasppi.py" />
+    <Compile Include="modules\hal\halgpio_windows.py" />
+    <Compile Include="modules\hal\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -284,6 +287,7 @@
   <ItemGroup>
     <Folder Include="ext\alarm\" />
     <Folder Include="ext\alarm\ui\" />
+    <Folder Include="modules\hal\" />
     <Folder Include="music\" />
     <Folder Include="test\" />
     <Folder Include="weather\" />
