@@ -1,6 +1,5 @@
 import datetime
 import os
-import sys
 import logging
 import logging.config
 import logging.handlers
