@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>app_win.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app_win.py" />
+    <Compile Include="app_rasppi.py" />
+    <Compile Include="app_opiwin.py" />
     <Compile Include="app.py" />
     <Compile Include="ext\alarm\alarm_setting_text.py">
       <SubType>Code</SubType>
@@ -194,6 +197,8 @@
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="pytest.ini" />
+    <Content Include="setting_win.ini" />
+    <Content Include="setting_rasppi.ini" />
     <Content Include="setting_opiwin.ini" />
     <Content Include="weather\01d.png" />
     <Content Include="weather\01n.png" />

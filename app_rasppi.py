@@ -23,18 +23,20 @@ from modules.block_yandex_weather import BlockYandexWeather
 # from modules.block_ir import BlockIR
 
 from halgpio import HalGpio
+from halgpio_rasppi import HalGpio_RaspPi
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
 
 FPS = 60
 # WAIT_TIME = 40
+FILE_SETTING = "setting_rasppi.ini"
 IDLE_EVENT = (pygame.locals.USEREVENT + 1)
 
 
 class Mainboard:
 
-    def __init__(self, hal: HalGpio, setting_file: str):
+    def __init__(self):
         """ """
         self._modules = []
         self._size = None
@@ -42,8 +44,8 @@ class Mainboard:
         self._is_display_on = True
         # Загружаем настройки из конфиг файла
         self._config = Setting()
-        self._config.load(setting_file)
-        self._hal = hal(logger, self.display_on)
+        self._config.load(FILE_SETTING)
+        self._hal = HalGpio_RaspPi(logger, self.display_on)
         self._manager_list = {
             "Time": BlockTime(logger, self._config),
             "Alarm": BlockAlarm(logger, self._config),
@@ -84,14 +86,14 @@ class Mainboard:
 
         if not found:
             raise Exception("No suitable video driver found!")
-
-        if sys.platform == "linux":
+        ###########################################################################
+        if sys.platform == "linux":  # Only for Raspberry Pi
             self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
             self._screen = pygame.display.set_mode(self._size, pygame.FULLSCREEN | pygame.HWSURFACE)
         else:
             self._size = (1824, 984)
             self._screen = pygame.display.set_mode(self._size)
-
+        ###########################################################################
         print("Framebuffer size: {0}".format(self._size))
 
         # Инициализируем шрифты
@@ -115,17 +117,17 @@ class Mainboard:
         # pygame.display.quit()
         pass
 
-    def set_display_timer_on(self) -> None:
+    def set_display_timer_on(self):
         """Таймер для отключения дисплея"""
         (_, _, _, idle_time) = self._config.get_curret_setting()
         pygame.time.set_timer(IDLE_EVENT, 0)
         pygame.time.set_timer(IDLE_EVENT, idle_time * 60000)
 
-    def set_display_timer_off(self) -> None:
+    def set_display_timer_off(self):
         """Таймер для отключения дисплея"""
         pygame.time.set_timer(IDLE_EVENT, 0)
 
-    def display_off(self) -> None:
+    def display_off(self):
         if not self._is_display_on:
             return
         self._is_display_on = False
@@ -133,7 +135,7 @@ class Mainboard:
         self._hal.ledOff()
         self.set_display_timer_off()
 
-    def display_on(self) -> None:
+    def display_on(self):
         self.set_display_timer_on()
         if self._is_display_on:
             return
@@ -143,7 +145,7 @@ class Mainboard:
         for module in self._modules:
             module.update_info(self._is_display_on)
 
-    def procced_event(self, events)-> int:
+    def procced_event(self, events):
         for event in events:
             if event.type == pygame.locals.QUIT:
                 return 0
@@ -166,8 +168,7 @@ class Mainboard:
                 module.procced_event(event, self._is_display_on)
         return 1
 
-    def loop(self) -> None:
-        print(pygame.version.ver)
+    def loop(self):
         self._hal.init()
         clock = pygame.time.Clock()
         while self.procced_event(pygame.event.get()):
@@ -198,3 +199,10 @@ class Mainboard:
 
         pygame.quit()
         self._hal.done()
+
+
+if __name__ == "__main__":
+
+    print(pygame.version.ver)
+    app = Mainboard()
+    app.loop()
