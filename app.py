@@ -143,7 +143,7 @@ class Mainboard:
         for module in self._modules:
             module.update_info(self._is_display_on)
 
-    def procced_event(self, events)-> int:
+    def procced_event(self, events) -> int:
         for event in events:
             if event.type == pygame.locals.QUIT:
                 return 0

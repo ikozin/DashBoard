@@ -35,8 +35,8 @@ Orange Pi Win Plus
 add_event_detect - ругается, нет прав
 """
 
-PIR_PIN = 'PD5' # 37
-LED_PIN = 'PB7' # 35
+PIR_PIN = 'PD5'  # 37
+LED_PIN = 'PB7'  # 35
 
 
 class HalGpio_OraPiWin(HalGpio):
@@ -66,7 +66,7 @@ class HalGpio_OraPiWin(HalGpio):
         subprocess.Popen("xset dpms force off > /dev/null 2>&1", shell=True).wait()
 
     def display_on(self) -> None:
-        subprocess.Popen("xset dpms force on > /dev/null 2>&1", shell=True).wait()            
+        subprocess.Popen("xset dpms force on > /dev/null 2>&1", shell=True).wait()
 
     def reboot(self) -> None:
         subprocess.Popen("sudo reboot", shell=True)
