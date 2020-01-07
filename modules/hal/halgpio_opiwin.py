@@ -1,5 +1,5 @@
 from typing import Callable
-from halgpio import HalGpio
+from .halgpio import HalGpio
 from logging import Logger
 from time import time
 import subprocess

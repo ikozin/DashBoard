@@ -1,5 +1,5 @@
 from typing import Callable
-from halgpio import HalGpio
+from .halgpio import HalGpio
 from logging import Logger
 import subprocess
 import RPi.GPIO as GPIO
