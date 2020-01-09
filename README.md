@@ -14,4 +14,3 @@
 9. Погода от Weather UnderGround (BlockWunderGround)
 10. Новости от Яндекса (BlockYandexNews)
 11. Погода от Яндекса YandexWeather (BlockYandexWeather)
-
