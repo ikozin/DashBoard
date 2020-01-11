@@ -1,4 +1,7 @@
-__pycache__
 .git
+.github
+.mypy_cache
+.pytest_cache
 .vs
+__pycache__
 test
