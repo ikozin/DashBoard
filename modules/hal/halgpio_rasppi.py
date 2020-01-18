@@ -83,5 +83,5 @@ class HalGpio_RaspPi(HalGpio):
         GPIO.output(LED_PIN, 0)
 
     def motion_detected(self, pin):
-        self._logger.debug("Motion detected!")
+        # self._logger.debug("Motion detected!")
         self._func()
