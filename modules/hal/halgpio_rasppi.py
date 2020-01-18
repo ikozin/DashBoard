@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 
 """
 # https://opi-gpio.readthedocs.io/en/latest/api-documentation.html
-Raspberry Pi 2B
+Raspberry Pi Model B Rev 2
             ----------- ---------- ---- ---- ---------- -----------
 PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
            |  I2C1_SDA |  [GPIO2] |  3 | 4  |          | 5V        |
@@ -23,13 +23,6 @@ PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
            | SPI0_MISO |  [GPIO9] | 21 | 22 | [GPIO25] |           |
            | SPI0_SCLK | [GPIO11] | 23 | 24 | [GPIO8]  | SPI0_CS0  |
            |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
-           |    EEPROM |  [ID_SD] | 27 | 28 | [ID_SC]  | EEPROM    |
-           |           |  [GPIO5] | 29 | 30 |          | GND       |
-           |           |  [GPIO6] | 31 | 32 | [GPIO12] |           |
-           |           | [GPIO13] | 33 | 34 |          | GND       |
-           |           | [GPIO19] | 35 | 36 | [GPIO16] |           |
-           |           | [GPIO26] | 37 | 38 | [GPIO20] |           |
-PIR GND -> |       GND |          | 39 | 40 | [GPIO21] |           |
             ----------- ---------- ---- ---- ---------- -----------
  
 
