@@ -35,8 +35,8 @@ PIR GND -> |       GND |          | 39 | 40 | [GPIO21] |           |
 
 """
 
-PIR_PIN = 23  # GPIO23 - 16
-LED_PIN = 24  # GPIO24 - 18
+PIR_PIN = 24  # GPIO23 - 18
+LED_PIN = 23  # GPIO24 - 16
 
 
 class HalGpio_RaspPi(HalGpio):
