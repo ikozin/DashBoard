@@ -4,6 +4,37 @@ from logging import Logger
 import subprocess
 import RPi.GPIO as GPIO
 
+
+
+"""
+# https://opi-gpio.readthedocs.io/en/latest/api-documentation.html
+Raspberry Pi 2B
+            ----------- ---------- ---- ---- ---------- -----------
+PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
+           |  I2C1_SDA |  [GPIO2] |  3 | 4  |          | 5V        |
+           |  I2C1_SCL |  [GPIO3] |  5 | 6  |          | GND       |
+           |           |  [GPIO4] |  7 | 8  | [GPIO14] | UART0_TX  |
+           |       GND |          |  9 | 10 | [GPIO15] | UART0_RX  |
+           |           | [GPIO17] | 11 | 12 | [GPIO18] | PCM_CLK   |
+           |           | [GPIO27] | 13 | 14 |          | GND       |
+           |           | [GPIO22] | 15 | 16 | [GPIO23] |           |
+           |       3V3 |          | 17 | 18 | [GPIO24] |           |
+           | SPI0_MOSI | [GPIO10] | 19 | 20 |          | GND       |
+           | SPI0_MISO |  [GPIO9] | 21 | 22 | [GPIO25] |           |
+           | SPI0_SCLK | [GPIO11] | 23 | 24 | [GPIO8]  | SPI0_CS0  |
+           |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
+           |    EEPROM |  [ID_SD] | 27 | 28 | [ID_SC]  | EEPROM    |
+           |           |  [GPIO5] | 29 | 30 |          | GND       |
+           |           |  [GPIO6] | 31 | 32 | [GPIO12] |           |
+           |           | [GPIO13] | 33 | 34 |          | GND       |
+           |           | [GPIO19] | 35 | 36 | [GPIO16] |           |
+           |           | [GPIO26] | 37 | 38 | [GPIO20] |           |
+PIR GND -> |       GND |          | 39 | 40 | [GPIO21] |           |
+            ----------- ---------- ---- ---- ---------- -----------
+ 
+
+"""
+
 PIR_PIN = 22  # GPIO22
 LED_PIN = 23  # GPIO23
 
