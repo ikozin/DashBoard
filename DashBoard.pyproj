@@ -114,6 +114,9 @@
     <Compile Include="modules\alarm\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\block_bme280.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\block_ir.py">
       <SubType>Code</SubType>
     </Compile>
