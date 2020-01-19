@@ -1,3 +1,4 @@
+from typing import Dict
 from abc import ABCMeta, abstractmethod
 from logging import Logger
 from setting import Setting
@@ -20,7 +21,7 @@ class BlockBase(metaclass=ABCMeta):
         """Destructor"""
 
     @abstractmethod
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, 'BlockBase']) -> None:
         """Вызывается после создания для начальной инициализации плагина.
            Читаем настройки из конфиг файла.
            Устанавливаем таймер срабатывания для наследников BlockSecondBase и BlockMinuteBase.

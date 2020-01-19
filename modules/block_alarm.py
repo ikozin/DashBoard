@@ -2,6 +2,7 @@ import datetime
 import pygame
 import pygame.locals
 
+from typing import Dict
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.alarm.block_alarm_simple import BlockAlarmSimple
@@ -25,7 +26,7 @@ class BlockAlarm(BlockBase):
         self._alarm_block = []
         self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise, 4: BlockAlarmExecute, 5: BlockAlarmText}
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["AlarmBlock"]

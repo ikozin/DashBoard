@@ -1,6 +1,7 @@
 import pygame
 import pygame.locals
 
+from typing import Dict
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.hal.bme280_base import Bme280_Base
@@ -17,7 +18,7 @@ class BlockBme280(BlockBase):
         self._font = None
         self._pos = None
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["BME280Block"]

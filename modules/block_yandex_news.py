@@ -4,8 +4,10 @@ import xml.etree.ElementTree as ET
 import pygame
 import pygame.locals
 
+from typing import Dict
 from urllib.error import URLError
 from exceptions import ExceptionNotFound
+from modules.BlockBase import BlockBase
 from modules.BlockMinuteBase import BlockMinuteBase
 from logging import Logger
 from setting import Setting
@@ -26,7 +28,7 @@ class BlockYandexNews(BlockMinuteBase):
         self._font = None
         self._news = []
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["YandexNewsBlock"]

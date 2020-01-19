@@ -1,5 +1,6 @@
 import sys
 
+from typing import Dict
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
@@ -18,7 +19,7 @@ class BlockIR(BlockBase):
         self._module_list = None
         self._list = None
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["IRBlock"]

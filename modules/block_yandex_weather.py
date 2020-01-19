@@ -3,8 +3,10 @@ import urllib.request as request
 import xml.etree.ElementTree as ET
 import pygame
 
+from typing import Dict
 from datetime import datetime, timedelta
 from exceptions import ExceptionFormat, ExceptionNotFound
+from modules.BlockBase import BlockBase
 from modules.BlockMinuteBase import BlockMinuteBase
 from logging import Logger
 from setting import Setting
@@ -51,7 +53,7 @@ class BlockYandexWeather(BlockMinuteBase):
         self._pressure_font = None
         self._wind_font = None
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["YandexWeatherBlock"]

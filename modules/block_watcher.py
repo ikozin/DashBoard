@@ -2,7 +2,9 @@ import datetime
 import subprocess
 import sys
 
+from typing import Dict
 from exceptions import ExceptionFormat, ExceptionNotFound
+from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
 from logging import Logger
 from setting import Setting
@@ -20,7 +22,7 @@ class BlockWatcher(BlockSecondBase):
         self._path = None
         self._is_watching = False
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["WatcherBlock"]

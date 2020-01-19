@@ -1,3 +1,4 @@
+from typing import Dict
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
@@ -16,7 +17,7 @@ class BlockSwap(BlockSecondBase):
         self._blocks = []
         self._index = 0
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["SwapBlock"]

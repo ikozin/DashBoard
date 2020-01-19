@@ -3,6 +3,7 @@ import urllib.parse as parse
 import pygame
 import pygame.locals
 
+from typing import Dict
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
@@ -22,7 +23,7 @@ class BlockVoice(BlockBase):
         self._speed = 1
         self._key = None
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["VoiceBlock"]

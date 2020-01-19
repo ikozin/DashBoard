@@ -1,6 +1,7 @@
 import pygame
 import pygame.locals
 
+from typing import Dict
 from datetime import datetime
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
@@ -66,7 +67,7 @@ class BlockCalendar(BlockBase):
         self._pos = None
         self._time = None
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["CalendarBlock"]

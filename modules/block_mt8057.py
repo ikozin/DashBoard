@@ -6,7 +6,9 @@ import usb.util
 import pygame
 import pygame.locals
 
+from typing import Dict
 from exceptions import ExceptionFormat, ExceptionNotFound
+from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
 from logging import Logger
 from setting import Setting
@@ -33,7 +35,7 @@ class BlockMT8057(BlockSecondBase):
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = None
 
-    def init(self, mod_list) -> None:
+    def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["MT8057Block"]
