@@ -47,7 +47,7 @@ class BlockVoice(BlockBase):
 
         self.update_info(True)
 
-    def procced_event(self, event, is_online):
+    def procced_event(self, event, is_online: bool) -> None:
         try:
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_SPACE):
                 self.execute()

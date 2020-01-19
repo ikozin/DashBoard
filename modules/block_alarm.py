@@ -60,7 +60,7 @@ class BlockAlarm(BlockBase):
         pygame.time.set_timer(BLOCK_ALARM_UPDATE_EVENT, 500)
         self.update_info(True)
 
-    def procced_event(self, event, is_online):
+    def procced_event(self, event, is_online: bool) -> None:
         if event.type == BLOCK_ALARM_UPDATE_EVENT:
             self.update_info(is_online)
 

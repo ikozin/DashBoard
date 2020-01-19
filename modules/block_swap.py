@@ -39,7 +39,7 @@ class BlockSwap(BlockSecondBase):
         self.set_time(time)
         # self.update_info(True)
 
-    def procced_event(self, event, is_online):
+    def procced_event(self, event, is_online: bool) -> None:
         for block in self._blocks:
             block.procced_event(event, is_online)
         super(BlockSwap, self).procced_event(event, is_online)

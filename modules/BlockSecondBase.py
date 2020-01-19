@@ -13,11 +13,11 @@ class BlockSecondBase(BlockBase):
         self._time = None
         self._time_value = None
 
-    def set_time(self, value):
+    def set_time(self, value: int) -> None:
         self._time = value
         self._time_value = value
 
-    def procced_event(self, event, is_online):
+    def procced_event(self, event, is_online: bool) -> None:
         if event.type == BLOCK_SECOND_UPDATE_EVENT:
             self._time_value -= 1
             if not self._time_value:

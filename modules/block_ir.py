@@ -36,7 +36,7 @@ class BlockIR(BlockBase):
         self.module_init()
         # self.update_info(True)
 
-    def procced_event(self, event, is_online):
+    def procced_event(self, event, is_online: bool) -> None:
         self.execute()
 
     def execute(self, *args) -> None:
