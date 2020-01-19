@@ -5,7 +5,7 @@ from modules.alarm.alarm_time_file_base import AlarmTimeFileBase
 class BlockAlarmBlink(AlarmTimeFileBase):
     """description of class"""
 
-    def update_display(self, screen, size, fore_color, back_color, blocks, current_time):
+    def update_display(self, screen, size, fore_color, back_color, blocks, current_time) -> None:
         try:
             if not self._is_alarm:
                 return

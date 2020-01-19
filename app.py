@@ -19,6 +19,7 @@ from modules.block_wunderground import BlockWunderGround
 from modules.block_watcher import BlockWatcher
 from modules.block_mt8057 import BlockMT8057
 from modules.block_yandex_weather import BlockYandexWeather
+from modules.block_bme280 import BlockBme280
 # from modules.block_ir import BlockIR
 
 from modules.hal.halgpio import HalGpio

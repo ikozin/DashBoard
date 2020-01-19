@@ -1,17 +1,19 @@
 import sys
 import time
 import threading
-from exceptions import ExceptionFormat, ExceptionNotFound
 import usb.core
 import usb.util
 import pygame
 import pygame.locals
+
+from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockSecondBase import BlockSecondBase
+from logging import Logger
 
 
 class BlockMT8057(BlockSecondBase):
     """description of class"""
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockMT8057, self).__init__(logger, setting)
         self._warn_zone = None
@@ -30,7 +32,7 @@ class BlockMT8057(BlockSecondBase):
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = None
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["MT8057Block"]
@@ -110,7 +112,7 @@ class BlockMT8057(BlockSecondBase):
         self._text_temp = "Температура: {0:+.1f}°".format(self._value_temp)
         self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._value_co2, self._value_temp)
 
-    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
             if not is_online:
                 return
@@ -137,7 +139,7 @@ class BlockMT8057(BlockSecondBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def done(self):
+    def done(self) -> None:
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057.stop()
             self._t_mt8057.join()
@@ -157,7 +159,7 @@ class MT8057(threading.Thread):
     magic_buf = [0xc4, 0xc6, 0xc0, 0x92, 0x40, 0x23, 0xdc, 0x96]
     ctmp = [0x84, 0x47, 0x56, 0xd6, 0x07, 0x93, 0x93, 0x56]
 
-    def __init__(self, logger):
+    def __init__(self, logger: Logger):
         threading.Thread.__init__(self, name="mt")
         self._logger = logger
         self._event_stop = threading.Event()

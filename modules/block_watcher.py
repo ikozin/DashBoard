@@ -4,12 +4,13 @@ import sys
 
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockSecondBase import BlockSecondBase
+from logging import Logger
 
 
 class BlockWatcher(BlockSecondBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockWatcher, self).__init__(logger, setting)
         self._start_time = None
@@ -18,7 +19,7 @@ class BlockWatcher(BlockSecondBase):
         self._path = None
         self._is_watching = False
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["WatcherBlock"]
@@ -70,7 +71,7 @@ class BlockWatcher(BlockSecondBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args):
+    def execute(self, *args) -> None:
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
             subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)

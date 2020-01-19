@@ -1,9 +1,10 @@
-from typing import Callable
-from .halgpio import HalGpio
-from logging import Logger
-from time import time
 import subprocess
 import OPi.GPIO as GPIO
+
+from .halgpio import HalGpio
+from typing import Callable
+from logging import Logger
+from time import time
 
 
 """

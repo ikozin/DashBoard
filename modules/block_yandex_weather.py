@@ -1,10 +1,12 @@
 import os
 import urllib.request as request
 import xml.etree.ElementTree as ET
+import pygame
+
 from datetime import datetime, timedelta
 from exceptions import ExceptionFormat, ExceptionNotFound
-import pygame
 from modules.BlockMinuteBase import BlockMinuteBase
+from logging import Logger
 
 MIN_UPDATE_TIME = 600
 WEATHER_FILE = "yandexweather_data.xml"
@@ -16,7 +18,7 @@ DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДав
 class BlockYandexWeather(BlockMinuteBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockYandexWeather, self).__init__(logger, setting)
         self._last_update = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
@@ -48,7 +50,7 @@ class BlockYandexWeather(BlockMinuteBase):
         self._pressure_font = None
         self._wind_font = None
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["YandexWeatherBlock"]
@@ -201,7 +203,7 @@ class BlockYandexWeather(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
             if not is_online:
                 return
@@ -231,7 +233,7 @@ class BlockYandexWeather(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args):
+    def execute(self, *args) -> None:
         data = self._get_data()
         if data is None:
             return

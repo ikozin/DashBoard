@@ -1,19 +1,21 @@
-from exceptions import ExceptionNotFound
 import pygame
 import pygame.locals
-from modules.BlockBase import BlockBase
 
+from exceptions import ExceptionNotFound
+from modules.BlockBase import BlockBase
+from modules.hal.bme280_base import Bme280_Base
+from logging import Logger
 
 class BlockBme280(BlockBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockBme280, self).__init__(logger, setting)
         self._font = None
         self._pos = None
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["BME280Block"]
@@ -38,17 +40,17 @@ class BlockBme280(BlockBase):
         self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
         self.update_info(True)
 
-    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
             if not is_online:
                 return
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args):
+    def execute(self, *args) -> None:
         self._text = ""
 
-    def get_text(self):
+    def get_text(self) -> str:
         self.execute()
         return self._text
 

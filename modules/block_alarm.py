@@ -1,13 +1,15 @@
 import datetime
-from exceptions import ExceptionFormat, ExceptionNotFound
 import pygame
 import pygame.locals
+
+from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.alarm.block_alarm_simple import BlockAlarmSimple
 from modules.alarm.block_alarm_blink import BlockAlarmBlink
 from modules.alarm.block_alarm_rise import BlockAlarmRise
 from modules.alarm.block_alarm_execute import BlockAlarmExecute
 from modules.alarm.block_alarm_text import BlockAlarmText
+from logging import Logger
 
 BLOCK_ALARM_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 
@@ -15,14 +17,14 @@ BLOCK_ALARM_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 class BlockAlarm(BlockBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockAlarm, self).__init__(logger, setting)
         self._blocks = []
         self._alarm_block = []
         self._functions = {1: BlockAlarmSimple, 2: BlockAlarmBlink, 3: BlockAlarmRise, 4: BlockAlarmExecute, 5: BlockAlarmText}
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["AlarmBlock"]
@@ -71,7 +73,7 @@ class BlockAlarm(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
             if not self._alarm_block:
                 return
@@ -80,7 +82,7 @@ class BlockAlarm(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def add_block(self, block):
+    def add_block(self, block: BlockBase) -> None:
         if not isinstance(block, BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)

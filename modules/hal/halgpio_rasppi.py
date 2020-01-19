@@ -1,8 +1,9 @@
-from typing import Callable
-from .halgpio import HalGpio
-from logging import Logger
 import subprocess
 import RPi.GPIO as GPIO
+
+from .halgpio import HalGpio
+from typing import Callable
+from logging import Logger
 
 
 

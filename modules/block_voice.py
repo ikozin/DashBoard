@@ -1,9 +1,11 @@
 import urllib.request as request
 import urllib.parse as parse
-from exceptions import ExceptionNotFound
 import pygame
 import pygame.locals
+
+from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
+from logging import Logger
 
 # "Использует сервис "Yandex SpeechKit Cloud" https://tech.yandex.ru/speechkit/cloud/
 
@@ -11,7 +13,7 @@ from modules.BlockBase import BlockBase
 class BlockVoice(BlockBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockVoice, self).__init__(logger, setting)
         self._blocks = []
@@ -19,7 +21,7 @@ class BlockVoice(BlockBase):
         self._speed = 1
         self._key = None
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["VoiceBlock"]
@@ -51,12 +53,12 @@ class BlockVoice(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def add_block(self, block):
+    def add_block(self, block: BlockBase) -> None:
         if not isinstance(block, BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
 
-    def execute(self, *args):
+    def execute(self, *args) -> None:
         if len(args) == 1:
             text = args[0]
         elif self._blocks:

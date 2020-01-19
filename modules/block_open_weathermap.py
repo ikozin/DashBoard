@@ -1,10 +1,12 @@
 ﻿import os
 import urllib.request as request
 import xml.etree.ElementTree as ET
+import pygame
+
 from datetime import datetime, timedelta
 from exceptions import ExceptionFormat, ExceptionNotFound
-import pygame
 from modules.BlockMinuteBase import BlockMinuteBase
+from logging import Logger
 
 ##############################################################
 # http://openweathermap.org/appid#work - 1 time per 10 minutes
@@ -20,7 +22,7 @@ DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДав
 class BlockOpenWeatherMap(BlockMinuteBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockOpenWeatherMap, self).__init__(logger, setting)
         self._last_update = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)
@@ -50,7 +52,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         self._pressure_font = None
         self._wind_font = None
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["OpenWeatherMapBlock"]
@@ -197,7 +199,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
             if not is_online:
                 return
@@ -227,7 +229,7 @@ class BlockOpenWeatherMap(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args):
+    def execute(self, *args) -> None:
         data = self._get_data()
         if data is None:
             return

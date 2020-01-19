@@ -1,7 +1,6 @@
 from abc import ABCMeta, abstractmethod
-
-from logging import Logger
 from setting import Setting
+from logging import Logger
 
 
 class BlockBase(metaclass=ABCMeta):
@@ -34,10 +33,10 @@ class BlockBase(metaclass=ABCMeta):
         if not is_online:
             return
 
-    def update_display(self, is_online, screen, size, fore_color, back_color, current_time) -> None:
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         pass
 
-    def add_block(self, block) -> None:
+    def add_block(self, block: BlockBase) -> None:
         pass
 
     def execute(self, *args) -> None:
@@ -50,5 +49,5 @@ class BlockBase(metaclass=ABCMeta):
         """Вызывается перед завершением.
            Освобождаем ресурсы, завершаем потоки и т.п."""
 
-    def _get_tuple(self, value):
+    def _get_tuple(self, value: str):
         return self._setting.get_tuple(value)

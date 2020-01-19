@@ -1,12 +1,14 @@
 import datetime
+
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.alarm_time_base import AlarmTimeBase
+from logging import Logger
 
 
 class BlockAlarmText(AlarmTimeBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockAlarmText, self).__init__(logger, setting)
         self._is_alarm = False
@@ -15,7 +17,7 @@ class BlockAlarmText(AlarmTimeBase):
         self._module = None
         self._text = None
 
-    def init(self, config_section, mod_list):
+    def init(self, config_section, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         super(BlockAlarmText, self).init(config_section, mod_list)
         if "Voice" not in mod_list:
@@ -35,13 +37,13 @@ class BlockAlarmText(AlarmTimeBase):
         if self._text is None:
             raise ExceptionNotFound(config_section.name, "Text")
 
-    def update_state(self, current_time):
+    def update_state(self, current_time) -> None:
         super(BlockAlarmText, self).update_state(current_time)
         if self._is_alarm:
             if (current_time - self._stop_time).seconds <= 3:
                 self._is_alarm = False
 
-    def update_display(self, screen, size, fore_color, back_color, blocks, current_time):
+    def update_display(self, screen, size, fore_color, back_color, blocks, current_time) -> None:
         try:
             if not self._is_alarm:
                 return
@@ -57,7 +59,7 @@ class BlockAlarmText(AlarmTimeBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self):
+    def execute(self) -> None:
         if self._is_alarm:
             return
         self._stop_time = datetime.datetime.now() + datetime.timedelta(seconds=self._duration)

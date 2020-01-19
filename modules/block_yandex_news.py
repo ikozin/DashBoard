@@ -1,11 +1,13 @@
 import urllib.request as request
 import urllib.parse as parse
-from urllib.error import URLError
 import xml.etree.ElementTree as ET
-from exceptions import ExceptionNotFound
 import pygame
 import pygame.locals
+
+from urllib.error import URLError
+from exceptions import ExceptionNotFound
 from modules.BlockMinuteBase import BlockMinuteBase
+from logging import Logger
 
 BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В секции [YandexNewsBlock] пропущен параметр {0}"
 
@@ -13,7 +15,7 @@ BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В 
 class BlockYandexNews(BlockMinuteBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockYandexNews, self).__init__(logger, setting)
         self._url = None
@@ -23,7 +25,7 @@ class BlockYandexNews(BlockMinuteBase):
         self._font = None
         self._news = []
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["YandexNewsBlock"]
@@ -74,7 +76,7 @@ class BlockYandexNews(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def update_display(self, is_online, screen, size, fore_color, back_color, current_time):
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
             if not is_online:
                 return
@@ -91,7 +93,7 @@ class BlockYandexNews(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args):
+    def execute(self, *args) -> None:
         self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
         self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
 

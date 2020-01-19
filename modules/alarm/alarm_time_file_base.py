@@ -1,8 +1,10 @@
 import os
-from exceptions import ExceptionFormat, ExceptionNotFound
 import pygame
 import pygame.locals
+
+from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.alarm_time_base import AlarmTimeBase
+from logging import Logger
 
 ALARM_VOLUME_MIN = 0.2
 ALARM_VOLUME_MAX = 1.0
@@ -12,7 +14,7 @@ ALARM_VOLUME_STEP = 0.1
 class AlarmTimeFileBase(AlarmTimeBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(AlarmTimeFileBase, self).__init__(logger, setting)
         self._file_name = None
@@ -21,7 +23,7 @@ class AlarmTimeFileBase(AlarmTimeBase):
         self._volume = ALARM_VOLUME_MIN
         self._is_alarm = False
 
-    def init(self, config_section, mod_list):
+    def init(self, config_section, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         super(AlarmTimeFileBase, self).init(config_section, mod_list)
 
@@ -40,7 +42,7 @@ class AlarmTimeFileBase(AlarmTimeBase):
         if len(self._back_color) != 3:
             raise ExceptionFormat(config_section.name, "BackgroundColor")
 
-    def update_state(self, current_time):
+    def update_state(self, current_time) -> None:
         super(AlarmTimeFileBase, self).update_state(current_time)
         if self._is_alarm:
             if (current_time - self._stop_time).seconds <= 3:
@@ -51,7 +53,7 @@ class AlarmTimeFileBase(AlarmTimeBase):
                 self._volume += ALARM_VOLUME_STEP
                 pygame.mixer.music.set_volume(self._volume)
 
-    def execute(self):
+    def execute(self) -> None:
         if self._is_alarm:
             return
         self._volume = ALARM_VOLUME_MIN

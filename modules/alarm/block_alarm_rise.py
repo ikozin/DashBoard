@@ -1,10 +1,11 @@
 from modules.alarm.alarm_time_file_base import AlarmTimeFileBase
+from logging import Logger
 
 
 class BlockAlarmRise(AlarmTimeFileBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockAlarmRise, self).__init__(logger, setting)
         self._start_r = None
@@ -20,7 +21,7 @@ class BlockAlarmRise(AlarmTimeFileBase):
         self._current_g = None
         self._current_b = None
 
-    def update_display(self, screen, size, fore_color, back_color, blocks, current_time):
+    def update_display(self, screen, size, fore_color, back_color, blocks, current_time) -> None:
         try:
             if not self._is_alarm:
                 return

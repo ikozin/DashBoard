@@ -1,12 +1,14 @@
 ﻿import datetime
+
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.alarm_base import AlarmBase
+from logging import Logger
 
 
 class AlarmTimeBase(AlarmBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(AlarmTimeBase, self).__init__(logger, setting)
         self._start_time = None
@@ -14,7 +16,7 @@ class AlarmTimeBase(AlarmBase):
         self._weekday = None
         self._duration = None
 
-    def init(self, config_section, mod_list):
+    def init(self, config_section, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         super(AlarmTimeBase, self).init(config_section, mod_list)
 
@@ -34,7 +36,7 @@ class AlarmTimeBase(AlarmBase):
         self._start_time = datetime.datetime.strptime(self._start_time, "%H:%M:%S")
         self._stop_time = self._start_time + datetime.timedelta(seconds=self._duration)
 
-    def update_state(self, current_time):
+    def update_state(self, current_time) -> None:
         # if not isinstance(current_time, datetime.datetime):
         #    raise TypeError("Передаваемый параметр должен быть наследником datetime")
         if any(current_time.weekday() == day for day in self._weekday):
@@ -42,6 +44,6 @@ class AlarmTimeBase(AlarmBase):
                 self.execute()
                 return
 
-    def execute(self):
+    def execute(self) -> None:
         #  необходима самомтоятельная проверка на повторнй запуск, из-за поправки на задержку в 3 сек.
         pass

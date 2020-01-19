@@ -2,6 +2,7 @@ import sys
 
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
+from logging import Logger
 
 CONFIG_FILE_NAME = "IR.ini"
 PROG_NAME = "dashboard"
@@ -10,13 +11,13 @@ PROG_NAME = "dashboard"
 class BlockIR(BlockBase):
     """description of class"""
 
-    def __init__(self, logger, setting):
+    def __init__(self, logger: Logger, setting):
         """Initializes (declare internal variables)"""
         super(BlockIR, self).__init__(logger, setting)
         self._module_list = None
         self._list = None
 
-    def init(self, mod_list):
+    def init(self, mod_list) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["IRBlock"]
@@ -37,7 +38,7 @@ class BlockIR(BlockBase):
     def procced_event(self, event, is_online):
         self.execute()
 
-    def execute(self, *args):
+    def execute(self, *args) -> None:
         try:
             code = args[0] if len(args) == 1 else self.module_getcode()
             if not code:
@@ -55,7 +56,7 @@ class BlockIR(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def done(self):
+    def done(self) -> None:
         self.module_done()
 
 
