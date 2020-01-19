@@ -1,11 +1,12 @@
 from modules.alarm.alarm_time_file_base import AlarmTimeFileBase
 from logging import Logger
+from setting import Setting
 
 
 class BlockAlarmRise(AlarmTimeFileBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockAlarmRise, self).__init__(logger, setting)
         self._start_r = None

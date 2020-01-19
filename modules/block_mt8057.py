@@ -9,11 +9,12 @@ import pygame.locals
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockSecondBase import BlockSecondBase
 from logging import Logger
+from setting import Setting
 
 
 class BlockMT8057(BlockSecondBase):
     """description of class"""
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockMT8057, self).__init__(logger, setting)
         self._warn_zone = None

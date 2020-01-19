@@ -10,6 +10,7 @@ from modules.alarm.block_alarm_rise import BlockAlarmRise
 from modules.alarm.block_alarm_execute import BlockAlarmExecute
 from modules.alarm.block_alarm_text import BlockAlarmText
 from logging import Logger
+from setting import Setting
 
 BLOCK_ALARM_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 
@@ -17,7 +18,7 @@ BLOCK_ALARM_UPDATE_EVENT = (pygame.locals.USEREVENT + 4)
 class BlockAlarm(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockAlarm, self).__init__(logger, setting)
         self._blocks = []

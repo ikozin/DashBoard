@@ -5,12 +5,13 @@ from datetime import datetime
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
+from setting import Setting
 
 
 class BlockCalendar(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockCalendar, self).__init__(logger, setting)
         self._days_long = [

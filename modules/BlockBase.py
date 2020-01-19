@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
-from setting import Setting
 from logging import Logger
+from setting import Setting
 
 
 class BlockBase(metaclass=ABCMeta):

@@ -2,6 +2,7 @@ from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
 from logging import Logger
+from setting import Setting
 
 EXCEPTION_TEXT = "Не заданы блоки для отображения"
 
@@ -9,7 +10,7 @@ EXCEPTION_TEXT = "Не заданы блоки для отображения"
 class BlockSwap(BlockSecondBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockSwap, self).__init__(logger, setting)
         self._blocks = []

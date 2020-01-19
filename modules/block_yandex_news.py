@@ -8,6 +8,7 @@ from urllib.error import URLError
 from exceptions import ExceptionNotFound
 from modules.BlockMinuteBase import BlockMinuteBase
 from logging import Logger
+from setting import Setting
 
 BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В секции [YandexNewsBlock] пропущен параметр {0}"
 
@@ -15,7 +16,7 @@ BLOCK_YANDEX_NEWS_CONFIG_EXCEPTION = "Ошибка конфигурации! В 
 class BlockYandexNews(BlockMinuteBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockYandexNews, self).__init__(logger, setting)
         self._url = None

@@ -3,6 +3,7 @@ import sys
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
+from setting import Setting
 
 CONFIG_FILE_NAME = "IR.ini"
 PROG_NAME = "dashboard"
@@ -11,7 +12,7 @@ PROG_NAME = "dashboard"
 class BlockIR(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockIR, self).__init__(logger, setting)
         self._module_list = None

@@ -5,12 +5,13 @@ import sys
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockSecondBase import BlockSecondBase
 from logging import Logger
+from setting import Setting
 
 
 class BlockWatcher(BlockSecondBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockWatcher, self).__init__(logger, setting)
         self._start_time = None

@@ -6,6 +6,7 @@ import pygame.locals
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
+from setting import Setting
 
 # "Использует сервис "Yandex SpeechKit Cloud" https://tech.yandex.ru/speechkit/cloud/
 
@@ -13,7 +14,7 @@ from logging import Logger
 class BlockVoice(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockVoice, self).__init__(logger, setting)
         self._blocks = []

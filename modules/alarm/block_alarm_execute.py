@@ -1,12 +1,13 @@
 from exceptions import ExceptionNotFound
 from modules.alarm.alarm_time_base import AlarmTimeBase
 from logging import Logger
+from setting import Setting
 
 
 class BlockAlarmExecute(AlarmTimeBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockAlarmExecute, self).__init__(logger, setting)
         self._is_alarm = False

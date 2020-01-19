@@ -8,7 +8,7 @@ from setting import Setting
 class AlarmBase(metaclass=ABCMeta):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         if not isinstance(logger, Logger):
             raise TypeError("Передаваемый параметр logger должен быть классом Logger")

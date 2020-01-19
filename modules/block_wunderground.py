@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockMinuteBase import BlockMinuteBase
 from logging import Logger
+from setting import Setting
 
 ##############################################################
 # Calls Per Day = 500
@@ -22,7 +23,7 @@ WEATHER_TEXT_FORMAT = "{0}, Температура {1:+.0f}°, Скорость 
 class BlockWunderGround(BlockMinuteBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockWunderGround, self).__init__(logger, setting)
         self._last_update = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)

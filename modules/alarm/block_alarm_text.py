@@ -3,12 +3,13 @@ import datetime
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.alarm_time_base import AlarmTimeBase
 from logging import Logger
+from setting import Setting
 
 
 class BlockAlarmText(AlarmTimeBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockAlarmText, self).__init__(logger, setting)
         self._is_alarm = False

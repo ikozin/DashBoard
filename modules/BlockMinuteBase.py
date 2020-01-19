@@ -1,12 +1,13 @@
 from setting import BLOCK_MINUTE_UPDATE_EVENT
 from modules.BlockBase import BlockBase
 from logging import Logger
+from setting import Setting
 
 
 class BlockMinuteBase(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockMinuteBase, self).__init__(logger, setting)
         self._time = None

@@ -5,6 +5,7 @@ from datetime import datetime
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
+from setting import Setting
 
 BLOCK_TIME_DISPLAY_FORMAT = "{:%H:%M}"
 BLOCK_TIME_TIME_TEXT = "Московское время {:%H:%M}"
@@ -13,7 +14,7 @@ BLOCK_TIME_TIME_TEXT = "Московское время {:%H:%M}"
 class BlockTime(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockTime, self).__init__(logger, setting)
         self._font = None

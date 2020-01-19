@@ -6,7 +6,6 @@ from typing import Callable
 from logging import Logger
 
 
-
 """
 # https://opi-gpio.readthedocs.io/en/latest/api-documentation.html
 Raspberry Pi Model B Rev 2

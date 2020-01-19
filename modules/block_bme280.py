@@ -5,12 +5,13 @@ from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.hal.bme280_base import Bme280_Base
 from logging import Logger
+from setting import Setting
 
 
 class BlockBme280(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockBme280, self).__init__(logger, setting)
         self._font = None

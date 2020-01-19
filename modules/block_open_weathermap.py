@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockMinuteBase import BlockMinuteBase
 from logging import Logger
+from setting import Setting
 
 ##############################################################
 # http://openweathermap.org/appid#work - 1 time per 10 minutes
@@ -22,7 +23,7 @@ DETAILS_TEXT_FORMAT = "Ветер {0} м/с {1}\nВлажность {2}%\nДав
 class BlockOpenWeatherMap(BlockMinuteBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockOpenWeatherMap, self).__init__(logger, setting)
         self._last_update = datetime.now() - timedelta(seconds=MIN_UPDATE_TIME + 1)

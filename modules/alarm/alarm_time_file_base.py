@@ -5,6 +5,7 @@ import pygame.locals
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.alarm_time_base import AlarmTimeBase
 from logging import Logger
+from setting import Setting
 
 ALARM_VOLUME_MIN = 0.2
 ALARM_VOLUME_MAX = 1.0
@@ -14,7 +15,7 @@ ALARM_VOLUME_STEP = 0.1
 class AlarmTimeFileBase(AlarmTimeBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting):
+    def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(AlarmTimeFileBase, self).__init__(logger, setting)
         self._file_name = None
