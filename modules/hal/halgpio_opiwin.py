@@ -36,8 +36,8 @@ PIR GND -> |       GND |          | 39 | 40 | [PB1]    | UART2_RX  |
 add_event_detect - ругается, нет прав
 """
 
-PIR_PIN = 'PC4' # PC4 - 18
-LED_PIN = 'PL9' # PL9 - 16
+PIR_PIN = 'PC4'  # PC4 - 18
+LED_PIN = 'PL9'  # PL9 - 16
 
 
 class HalGpio_OraPiWin(HalGpio):

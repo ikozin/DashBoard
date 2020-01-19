@@ -17,4 +17,3 @@ class Bme280_Base(metaclass=ABCMeta):
     @abstractmethod
     def read(self) -> (float, float, float):
         pass
-

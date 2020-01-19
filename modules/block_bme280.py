@@ -6,6 +6,7 @@ from modules.BlockBase import BlockBase
 from modules.hal.bme280_base import Bme280_Base
 from logging import Logger
 
+
 class BlockBme280(BlockBase):
     """description of class"""
 
@@ -53,4 +54,3 @@ class BlockBme280(BlockBase):
     def get_text(self) -> str:
         self.execute()
         return self._text
-

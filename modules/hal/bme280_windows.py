@@ -10,4 +10,3 @@ class Bme280_Windows(Bme280_Base):
 
     def read(self) -> (float, float, float):
         return (0, 0, 0)
-
