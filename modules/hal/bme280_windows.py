@@ -1,4 +1,5 @@
 from .bme280_base import Bme280_Base
+from logging import Logger
 
 class Bme280_Windows(Bme280_Base):
     """description of class"""

@@ -36,7 +36,7 @@ class BlockBase(metaclass=ABCMeta):
     def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         pass
 
-    def add_block(self, block: BlockBase) -> None:
+    def add_block(self, block: 'BlockBase') -> None:
         pass
 
     def execute(self, *args) -> None:

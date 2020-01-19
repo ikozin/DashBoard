@@ -4,6 +4,7 @@ import smbus2
 import bme280
 
 from .bme280_base import Bme280_Base
+from logging import Logger
 
 
 class Bme280_RaspPi(Bme280_Base):
