@@ -49,7 +49,7 @@ class VoiceManager(BaseManager):
         self._speed_value.set(int(section.getfloat("Speed", fallback=1.0) * 10))
         self._key_value.set(section.get("Key", fallback=""))
         selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",")
-                    if item.strip() in module_list]
+                     if item.strip() in module_list]
         self._frame.load(selection, module_list)
 
     def save(self, config: ConfigParser) -> None:
