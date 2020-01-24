@@ -2,7 +2,7 @@ import pygame
 import pygame.locals
 
 from typing import Dict
-from exceptions import ExceptionNotFound
+from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.hal.bme280_base import Bme280_Base
 from modules.hal.bme280_windows import Bme280_Windows
