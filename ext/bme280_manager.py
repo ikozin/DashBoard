@@ -1,7 +1,6 @@
 from typing import Dict, Tuple
 from configparser import ConfigParser
 from tkinter import IntVar, StringVar, Entry, LabelFrame, Label, Spinbox, N, S, E, W, RIGHT
-from tkinter.ttk import Frame
 from ext.base_manager import BaseManager
 from ext.modal_dialog import FontChooserFrame, XYFrame
 

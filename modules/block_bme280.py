@@ -5,7 +5,6 @@ from typing import Dict
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.hal.bme280_base import Bme280_Base
-from modules.hal.bme280_windows import Bme280_Windows
 
 from logging import Logger
 from setting import Setting
@@ -14,9 +13,11 @@ from setting import Setting
 class BlockBme280(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting: Setting):
+    def __init__(self, logger: Logger, setting: Setting, hal: Bme280_Base):
         """Initializes (declare internal variables)"""
         super(BlockBme280, self).__init__(logger, setting)
+       
+        self._hal = hal
         self._address = 0
         self._temperature = None
         self._pressure = None
@@ -82,7 +83,7 @@ class BlockBme280(BlockBase):
 
         self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
 
-        self._device = Bme280_Windows(self._logger, self._address)
+        self._device = self._hal(self._logger, self._address)
         self.update_info(True)
 
     def update_info(self, is_online: bool) -> None:

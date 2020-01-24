@@ -23,6 +23,7 @@ from modules.block_bme280 import BlockBme280
 # from modules.block_ir import BlockIR
 
 from modules.hal.halgpio import HalGpio
+from modules.hal.bme280_base import Bme280_Base
 
 logging.config.fileConfig("logger.ini")
 logger = logging.getLogger("root")
@@ -34,7 +35,7 @@ IDLE_EVENT = (pygame.locals.USEREVENT + 1)
 
 class Mainboard:
 
-    def __init__(self, hal: HalGpio, setting_file: str):
+    def __init__(self, hal: HalGpio, hal_bme280: Bme280_Base, setting_file: str):
         """ """
         self._modules = []
         self._size = None
@@ -57,7 +58,7 @@ class Mainboard:
             "MT8057": BlockMT8057(logger, self._config),
             "YandexWeather": BlockYandexWeather(logger, self._config),
             # "IR": BlockIR(logger, self._config),
-            "BME280" :BlockBme280(logger, self._config),
+            "BME280": BlockBme280(logger, self._config, hal_bme280),
         }
 
         for name in self._config._block_list:
