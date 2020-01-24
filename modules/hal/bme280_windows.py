@@ -10,4 +10,4 @@ class Bme280_Windows(Bme280_Base):
         super(Bme280_Windows, self).__init__(logger)
 
     def read(self) -> (float, float, float):
-        return (0, 0, 0)
+        return (21.0, 1000.0, 40.0)

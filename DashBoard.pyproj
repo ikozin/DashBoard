@@ -46,6 +46,9 @@
     <Compile Include="ext\base_setting.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ext\bme280_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ext\ir_manager.py">
       <SubType>Code</SubType>
     </Compile>

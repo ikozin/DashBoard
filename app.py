@@ -57,6 +57,7 @@ class Mainboard:
             "MT8057": BlockMT8057(logger, self._config),
             "YandexWeather": BlockYandexWeather(logger, self._config),
             # "IR": BlockIR(logger, self._config),
+            "BME280" :BlockBme280(logger, self._config),
         }
 
         for name in self._config._block_list:
