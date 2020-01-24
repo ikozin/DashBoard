@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from logging import Logger
 
+
 class Bme280_Base(metaclass=ABCMeta):
     """description of class"""
 

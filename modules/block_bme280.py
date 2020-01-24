@@ -16,7 +16,7 @@ class BlockBme280(BlockBase):
     def __init__(self, logger: Logger, setting: Setting, hal: Bme280_Base):
         """Initializes (declare internal variables)"""
         super(BlockBme280, self).__init__(logger, setting)
-       
+
         self._hal = hal
         self._address = 0
         self._temperature = None
