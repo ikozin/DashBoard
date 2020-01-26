@@ -18,8 +18,8 @@ PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
            |       GND |          |  9 | 10 | [PL3]    | S_UART_RX |
            |  UART3_RX |    [PH5] | 11 | 12 | [PD4]    |           |
            |  UART3_TX |    [PH4] | 13 | 14 |          | GND       |
-           | UART3_CTS |    [PH7] | 15 | 16 | [PL9]    |           |
-           |       3V3 |          | 17 | 18 | [PC4]    |           |
+           | UART3_CTS |    [PH7] | 15 | 16 | [PL9]    |           | <- LED
+           |       3V3 |          | 17 | 18 | [PC4]    |           | <- PIR DATA
            | SPI1_MOSI |    [PD2] | 19 | 20 |          | GND       |
            | SPI1_MISO |    [PD3] | 21 | 22 | [PH6]    | UART3_RTS |
            |  SPI1_CLK |    [PD1] | 23 | 24 | [PD0]    | SPI1_CS0  |
@@ -29,7 +29,7 @@ PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
            |           |    [PB5] | 31 | 32 | [PB2]    | UART2_RTS |
            |           |    [PB6] | 33 | 34 |          | GND       |
            |           |    [PB7] | 35 | 36 | [PB3]    | UART2_CTS |
-PIR DATA-> |           |    [PD5] | 37 | 38 | [PB0]    | UART2_TX  |
+           |           |    [PD5] | 37 | 38 | [PB0]    | UART2_TX  |
 PIR GND -> |       GND |          | 39 | 40 | [PB1]    | UART2_RX  |
             ----------- ---------- ---- ---- ---------- -----------
 

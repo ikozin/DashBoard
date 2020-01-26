@@ -17,12 +17,12 @@ PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
            |       GND |          |  9 | 10 | [GPIO15] | UART0_RX  |
            |           | [GPIO17] | 11 | 12 | [GPIO18] | PCM_CLK   |
            |           | [GPIO27] | 13 | 14 |          | GND       |
-           |           | [GPIO22] | 15 | 16 | [GPIO23] |           |
-           |       3V3 |          | 17 | 18 | [GPIO24] |           |
+           |           | [GPIO22] | 15 | 16 | [GPIO23] |           | <- LED
+           |       3V3 |          | 17 | 18 | [GPIO24] |           | <- PIR DATA
            | SPI0_MOSI | [GPIO10] | 19 | 20 |          | GND       |
            | SPI0_MISO |  [GPIO9] | 21 | 22 | [GPIO25] |           |
            | SPI0_SCLK | [GPIO11] | 23 | 24 | [GPIO8]  | SPI0_CS0  |
-           |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
+PIR GND -> |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
             ----------- ---------- ---- ---- ---------- -----------
 
 
