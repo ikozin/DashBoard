@@ -128,13 +128,16 @@ class BlockMT8057(BlockSecondBase):
 
             text_size = self._co2_font.size(self._text_co2)
             text_x = (size[0] - text_size[0]) >> 1
+            print(text_x)
+            text_x = self._co2_pos[0]
             text_y = self._co2_pos[1]
             surf = self._co2_font.render(self._text_co2, True, color, back_color)
             screen.blit(surf, (text_x, text_y))
-            # print(text_x)
 
             text_size = self._co2_font.size(self._text_temp)
             text_x = (size[0] - text_size[0]) >> 1
+            print(text_x)
+            text_x = self._temp_pos[0]
             text_y = self._temp_pos[1]
             surf = self._temp_font.render(self._text_temp, True, fore_color, back_color)
             screen.blit(surf, (text_x, text_y))
