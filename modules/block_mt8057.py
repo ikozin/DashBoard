@@ -31,6 +31,9 @@ class BlockMT8057(BlockSecondBase):
         self._value_temp = 0.0
         self._text_co2 = ""
         self._text_temp = ""
+        self._format_co2 = ""
+        self._format_temperature = ""
+        self._format = ""
 
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = None
@@ -57,6 +60,10 @@ class BlockMT8057(BlockSecondBase):
 
         self._co2_pos = self._get_tuple(section.get("CO2Pos"))
         self._temp_pos = self._get_tuple(section.get("TempPos"))
+
+        self._format_co2 = section.get("CO2Text")
+        self._format_temperature = section.get("TemperatureText")
+        self._format = section.get("FormatText")
 
         if self._warn_zone is None:
             raise ExceptionNotFound(section.name, "Warn")
@@ -86,6 +93,12 @@ class BlockMT8057(BlockSecondBase):
             raise ExceptionNotFound(section.name, "CO2Pos")
         if self._temp_pos is None:
             raise ExceptionNotFound(section.name, "TempPos")
+        if self._format_co2 is None:
+            raise ExceptionNotFound(section.name, "CO2Text")
+        if self._format_temperature is None:
+            raise ExceptionNotFound(section.name, "TemperatureText")
+        if self._format is None:
+            raise ExceptionNotFound(section.name, "FormatText")
 
         if len(self._warn_color) != 3:
             raise ExceptionFormat(section.name, "WarnColor")
@@ -111,9 +124,9 @@ class BlockMT8057(BlockSecondBase):
         else:
             self._value_co2 += 10
             self._value_temp += 0.1
-        self._text_co2 = "Концентрация CO2: {0}".format(self._value_co2)
-        self._text_temp = "Температура: {0:+.1f}°".format(self._value_temp)
-        self._text = "Концентрация CO2: {0}.Температура: {1:+.1f}.".format(self._value_co2, self._value_temp)
+        self._text_co2 = self._format_co2.format(self._value_co2, self._value_temp)
+        self._text_temp = self._format_temperature.format(self._value_co2, self._value_temp)
+        self._text = self._format.format(self._value_co2, self._value_temp)
 
     def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
