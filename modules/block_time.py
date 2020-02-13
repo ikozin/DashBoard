@@ -8,9 +8,6 @@ from modules.BlockBase import BlockBase
 from logging import Logger
 from setting import Setting
 
-BLOCK_TIME_DISPLAY_FORMAT = "{:%H:%M}"
-BLOCK_TIME_TIME_TEXT = "Московское время {:%H:%M}"
-
 
 class BlockTime(BlockBase):
     """description of class"""
@@ -20,6 +17,8 @@ class BlockTime(BlockBase):
         super(BlockTime, self).__init__(logger, setting)
         self._font = None
         self._time = None
+        self._format_time = ""
+        self._format = ""
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
@@ -30,6 +29,8 @@ class BlockTime(BlockBase):
         font_size = section.getint("FontSize")
         is_bold = section.getboolean("FontBold")
         is_italic = section.getboolean("FontItalic")
+        self._format_time = section.get("Format")
+        self._format = section.get("FormatText")
 
         if font_name is None:
             raise ExceptionNotFound(section.name, "FontName")
@@ -39,6 +40,10 @@ class BlockTime(BlockBase):
             raise ExceptionNotFound(section.name, "FontBold")
         if is_italic is None:
             raise ExceptionNotFound(section.name, "FontItalic")
+        if self._format_time is None:
+            raise ExceptionNotFound(section.name, "Format")
+        if self._format is None:
+            raise ExceptionNotFound(section.name, "FormatText")
 
         self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
         self.update_info(True)
@@ -47,7 +52,7 @@ class BlockTime(BlockBase):
         try:
             if not is_online:
                 return
-            text = BLOCK_TIME_DISPLAY_FORMAT.format(current_time)
+            text = self._format_time.format(current_time)
             text_size = self._font.size(text)
             text_x = (size[0] - text_size[0]) >> 1
             text_y = (size[1] - text_size[1]) >> 1
@@ -60,7 +65,7 @@ class BlockTime(BlockBase):
     def execute(self, *args) -> None:
         if self._time is None:
             self._time = datetime.now()
-        self._text = BLOCK_TIME_TIME_TEXT.format(self._time)
+        self._text = self._format.format(self._time)
         self._time = None
 
     def get_text(self) -> str:
