@@ -12,7 +12,7 @@ class Setting:
 
     def __init__(self):
         """Ininitializes a new instanse"""
-        self._config = configparser.ConfigParser(interpolation = None)
+        self._config = configparser.ConfigParser(interpolation=None)
         self._background_color = None
         self._foreground_color = None
         self._block_list = []

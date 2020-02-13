@@ -87,7 +87,7 @@ class App:
         filename = self._filename.get()
         if not filename:
             return
-        config = ConfigParser(interpolation = None)
+        config = ConfigParser(interpolation=None)
         config.read(filename, encoding='utf-8')
         for name in self._list:
             manager = self._list[name]
@@ -104,7 +104,7 @@ class App:
         filename = self._filename.get()
         if not filename:
             return
-        config = ConfigParser(interpolation = None)
+        config = ConfigParser(interpolation=None)
         list_name = [name for name, block in self._list.items()]
         list.sort(list_name)
         for name in list_name:

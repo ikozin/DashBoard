@@ -107,7 +107,6 @@ class MT8057Manager(BaseManager):
 
         self._format_text_value.set(section.get("FormatText", fallback=""))
 
-
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
