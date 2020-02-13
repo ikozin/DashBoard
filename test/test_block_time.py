@@ -106,6 +106,8 @@ def _get_setting(name):
         "FontSize": 384,
         "FontBold": True,
         "FontItalic": False,
+        "Format": "{:%H:%M}",
+        "FormatText": "{:%H:%M}"
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)
