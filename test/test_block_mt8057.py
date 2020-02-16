@@ -1,4 +1,5 @@
 import pytest
+from exceptions import ExceptionNotFound
 from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_mt8057 import BlockMT8057
@@ -56,7 +57,7 @@ def _get_setting(name):
 
 def check_property(logger, settingPropName, propName):
     config = _get_setting(settingPropName)
-    block = BlockCalendar(logger, config)
+    block = BlockMT8057(logger, config)
     assert block is not None
     with pytest.raises(ExceptionNotFound) as err_not_found:
         block.init({})

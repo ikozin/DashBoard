@@ -78,7 +78,7 @@ def _get_setting(name):
 
 def check_property(logger, settingPropName, propName):
     config = _get_setting(settingPropName)
-    block = BlockTime(logger, config)
+    block = BlockVoice(logger, config)
     assert block is not None
     with pytest.raises(ExceptionNotFound) as err_not_found:
         block.init({})
