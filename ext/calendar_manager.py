@@ -12,7 +12,7 @@ class CalendarManager(BaseManager):
     def __init__(self, root: LabelFrame):
         """ """
         super(CalendarManager, self).__init__(root, text="Настройки календаря, Параметры: "
-                                                       "День={0}, Месяц={1}, Год={2}, Нед. кор.={3}, Нед. полная={4}")
+                                                         "День={0}, Месяц={1}, Год={2}, Нед. кор.={3}, Нед. полная={4}")
         self._pos_value = IntVar()
         self._format_date_value = StringVar()
         self._format_text_value = StringVar()
