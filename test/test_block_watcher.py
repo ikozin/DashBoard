@@ -23,9 +23,9 @@ def test_block_watcher(logger):
         block.init({})
 
 
-# @pytest.mark.block_watcher
-# def test_init_weekday(logger):
-#     check_property(logger, "", "WeekDay")
+@pytest.mark.block_watcher
+def test_init_weekday(logger):
+    check_property(logger, "", "WeekDay")
 
 
 @pytest.mark.block_watcher

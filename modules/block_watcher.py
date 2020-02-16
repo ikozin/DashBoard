@@ -26,7 +26,7 @@ class BlockWatcher(BlockSecondBase):
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["WatcherBlock"]
-
+        print(section.get("WeekDay"))
         self._weekday = self._get_tuple(section.get("WeekDay"))
         self._start_time = section.get("StartTime")
         self._stop_time = section.get("FinishTime")
