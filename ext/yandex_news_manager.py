@@ -1,6 +1,6 @@
 from typing import Dict
 from configparser import ConfigParser
-from tkinter import IntVar, StringVar, LabelFrame, Label, Entry, Spinbox, N, S, E, W
+from tkinter import IntVar, StringVar, LabelFrame, Label, Entry, Spinbox, N, S, E, W, RIGHT
 from tkinter.ttk import Frame
 from ext.base_manager import BaseManager
 from ext.modal_dialog import FontChooserFrame
@@ -18,9 +18,10 @@ class YandexNewsManager(BaseManager):
         self._pos_value = IntVar()
         self._indent_value = IntVar()
         self._rows_value = IntVar()
+        self._format_text_value = StringVar()
 
         content1 = Frame(self)
-        content1.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E, W))
+        content1.grid(row=0, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
         lbl = Label(content1, text="Адрес")
         lbl.grid(row=0, column=0, padx=2, pady=2)
@@ -38,7 +39,7 @@ class YandexNewsManager(BaseManager):
         lbl.grid(row=0, column=4, padx=2, pady=2)
 
         content2 = Frame(self)
-        content2.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E, W))
+        content2.grid(row=1, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
         lbl = Label(content2, text="Распложение (Y)")
         lbl.grid(row=0, column=0, padx=2, pady=2)
@@ -59,7 +60,14 @@ class YandexNewsManager(BaseManager):
         spin.grid(row=0, column=5, padx=2, pady=2)
 
         self._font = FontChooserFrame(self, "Параметры шрифта")
-        self._font.grid(row=2, column=0, padx=2, pady=2, sticky=(N, S, E, W))
+        self._font.grid(row=2, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
+
+        lbl = Label(self, justify=RIGHT, text="Формат текста")
+        lbl.grid(row=3, column=0, padx=2, pady=2, sticky=(N, S, E))
+
+        entr = Entry(self, width=60, textvariable=self._format_text_value)
+        entr.grid(row=3, column=1, padx=2, pady=2, sticky=(N, S, E, W))
+
 
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not isinstance(config, ConfigParser):
@@ -77,6 +85,7 @@ class YandexNewsManager(BaseManager):
         self._pos_value.set(section.getint("Position", fallback=720))
         self._indent_value.set(section.getint("Indent", fallback=16))
         self._rows_value.set(section.getint("Rows", fallback=5))
+        self._format_text_value.set(section.get("FormatText", fallback=""))
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
@@ -94,3 +103,4 @@ class YandexNewsManager(BaseManager):
         section["Position"] = str(self._pos_value.get())
         section["Indent"] = str(self._indent_value.get())
         section["Rows"] = str(self._rows_value.get())
+        section["FormatText"] = self._format_text_value.get()

@@ -27,6 +27,7 @@ class BlockYandexNews(BlockMinuteBase):
         self._length = None
         self._font = None
         self._news = []
+        self._format = ""
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
@@ -43,6 +44,7 @@ class BlockYandexNews(BlockMinuteBase):
         font_size = section.getint("FontSize")
         is_bold = section.getboolean("FontBold")
         is_italic = section.getboolean("FontItalic")
+        self._format = section.get("FormatText")
 
         if self._url is None:
             raise ExceptionNotFound(section.name, "Url")
@@ -54,7 +56,6 @@ class BlockYandexNews(BlockMinuteBase):
             raise ExceptionNotFound(section.name, "Rows")
         if time is None:
             raise ExceptionNotFound(section.name, "UpdateTime")
-
         if font_name is None:
             raise ExceptionNotFound(section.name, "FontName")
         if font_size is None:
@@ -63,6 +64,8 @@ class BlockYandexNews(BlockMinuteBase):
             raise ExceptionNotFound(section.name, "FontBold")
         if is_italic is None:
             raise ExceptionNotFound(section.name, "FontItalic")
+        if self._format is None:
+            raise ExceptionNotFound(section.name, "FormatText")
 
         self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
 
@@ -98,7 +101,7 @@ class BlockYandexNews(BlockMinuteBase):
 
     def execute(self, *args) -> None:
         self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
-        self._text = "Новости от Яндекса. %s" % '.'.join(self._news) if self._news else None
+        self._text = self._format % '.'.join(self._news) if self._news else None
 
     def __get_newsblock(self, url):
         news = []

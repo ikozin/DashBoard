@@ -23,13 +23,13 @@ class BlockBme280(BlockBase):
         self._pressure = None
         self._humidity = None
         self._font = None
-        self._temperature_text = None
-        self._humidity_text = None
-        self._pressure_text = None
+        self._temperature_text = ""
+        self._humidity_text = ""
+        self._pressure_text = ""
         self._temperature_pos = None
         self._humidity_pos = None
         self._pressure_pos = None
-        self._format = None
+        self._format = ""
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
