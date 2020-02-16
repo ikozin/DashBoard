@@ -3,7 +3,7 @@ from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_ir import BlockIR
 
-# SECTION_NAME = "IRBlock"
+SECTION_NAME = "IRBlock"
 
 
 @pytest.mark.block_ir

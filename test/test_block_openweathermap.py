@@ -3,7 +3,7 @@ from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_open_weathermap import BlockOpenWeatherMap
 
-# SECTION_NAME = "OpenWeatherMapBlock"
+SECTION_NAME = "OpenWeatherMapBlock"
 
 
 @pytest.mark.block_openweathermap

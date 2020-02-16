@@ -4,7 +4,7 @@ from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_mt8057 import BlockMT8057
 
-# SECTION_NAME = "MT8057Block"
+SECTION_NAME = "MT8057Block"
 
 
 @pytest.mark.block_mt8057

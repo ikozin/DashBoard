@@ -4,7 +4,7 @@ from setting import Setting
 from modules.BlockBase import BlockBase
 from modules.block_swap import BlockSwap
 
-# SECTION_NAME = "SwapBlock"
+SECTION_NAME = "SwapBlock"
 
 
 @pytest.mark.block_swap
