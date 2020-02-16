@@ -66,6 +66,8 @@ class BlockCalendar(BlockBase):
         self._font = None
         self._pos = None
         self._time = None
+        self._format_date = ""
+        self._format = ""
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
@@ -77,6 +79,8 @@ class BlockCalendar(BlockBase):
         is_bold = section.getboolean("FontBold")
         is_italic = section.getboolean("FontItalic")
         self._pos = section.getint("Position")
+        self._format_date = section.get("Format")
+        self._format = section.get("FormatText")
 
         if font_name is None:
             raise ExceptionNotFound(section.name, "FontName")
@@ -88,6 +92,10 @@ class BlockCalendar(BlockBase):
             raise ExceptionNotFound(section.name, "FontItalic")
         if self._pos is None:
             raise ExceptionNotFound(section.name, "Position")
+        if self._format_date is None:
+            raise ExceptionNotFound(section.name, "Format")
+        if self._format is None:
+            raise ExceptionNotFound(section.name, "FormatText")
 
         self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
         self.update_info(True)
@@ -97,11 +105,12 @@ class BlockCalendar(BlockBase):
             self._time = current_time
             if not is_online:
                 return
-            text = "{0} {1} {2} {3}".format(
-                self._weekday_shot[self._time.weekday()],
+            text = self._format_date.format(
                 self._time.day,
                 self._months[self._time.month-1],
-                self._time.year)
+                self._time.year,
+                self._weekday_shot[self._time.weekday()],
+                self._weekday_long[self._time.weekday()])
             text_size = self._font.size(text)
             text_x = (size[0] - text_size[0]) >> 1
             text_y = self._pos
@@ -113,11 +122,12 @@ class BlockCalendar(BlockBase):
     def execute(self, *args) -> None:
         if self._time is None:
             self._time = datetime.now()
-        self._text = "{0}, {1} {2} {3} год".format(
-            self._weekday_long[self._time.weekday()],
+        self._text = self._format.format(
             self._days_long[self._time.day-1],
             self._months[self._time.month-1],
-            self._time.year)
+            self._time.year,
+            self._weekday_shot[self._time.weekday()],
+            self._weekday_long[self._time.weekday()])
         self._time = None
 
     def get_text(self) -> str:

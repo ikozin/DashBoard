@@ -49,6 +49,16 @@ def test_init_position(logger):
 
 
 @pytest.mark.block_calendar
+def test_init_format(logger):
+    check_property(logger, "Position", "Format")
+
+
+@pytest.mark.block_calendar
+def test_init_format_text(logger):
+    check_property(logger, "Format", "FormatText")
+
+
+@pytest.mark.block_calendar
 def test_init(logger):
     config = _get_setting(None)
     block = BlockCalendar(logger, config)
@@ -64,6 +74,8 @@ def test_init(logger):
     assert block._font is not None
     assert block._pos is not None
     assert block._time is None
+    assert block._format_date is None
+    assert block._format is None
 
 
 @pytest.mark.block_calendar
@@ -94,7 +106,9 @@ def _get_setting(name):
         "FontSize": 170,
         "FontBold": True,
         "FontItalic": False,
-        "Position": 80
+        "Position": 80,
+        "Format": "{3} {0} {1} {2}",
+        "FormatText": "{4}, {0} {1} {2} год"
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)
