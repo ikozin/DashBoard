@@ -25,12 +25,12 @@ def test_block_watcher(logger):
 
 @pytest.mark.block_watcher
 def test_init_weekday(logger):
-    check_property(logger, "", "Weekday")
+    check_property(logger, "", "WeekDay")
 
 
 @pytest.mark.block_watcher
 def test_init_start_time(logger):
-    check_property(logger, "Weekday", "StartTime")
+    check_property(logger, "WeekDay", "StartTime")
 
 
 @pytest.mark.block_watcher
@@ -40,17 +40,17 @@ def test_init_finish_time(logger):
 
 @pytest.mark.block_watcher
 def test_init_update_time(logger):
-    check_property(logger, "FinishTime", "UpdateTime")
+    check_property(logger, "FinishTime", "Path")
 
 
 @pytest.mark.block_watcher
 def test_init_path(logger):
-    check_property(logger, "UpdateTime", "Path")
+    check_property(logger, "Path", "UpdateTime")
 
 
 def _get_setting(name):
     params = {
-        "Weekday": "0, 1, 2, 3, 4",
+        "WeekDay": "0, 1, 2, 3, 4",
         "StartTime": "09:00:00",
         "FinishTime": "19:00:00",
         "UpdateTime": 60,
