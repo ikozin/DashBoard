@@ -68,7 +68,6 @@ class YandexNewsManager(BaseManager):
         entr = Entry(self, width=60, textvariable=self._format_text_value)
         entr.grid(row=3, column=1, padx=2, pady=2, sticky=(N, S, E, W))
 
-
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not isinstance(config, ConfigParser):
             raise TypeError("config")

@@ -10,7 +10,7 @@ class Bme280Manager(BaseManager):
 
     def __init__(self, root: LabelFrame):
         """ """
-        super(Bme280Manager, self).__init__(root, text="Настройки BME280, Параметры: "\
+        super(Bme280Manager, self).__init__(root, text="Настройки BME280, Параметры: "
                                                        "Температура={0}, Влажность={1}, Давление={2}")
         self._address_value = IntVar()
         self._temperature_text_value = StringVar()
