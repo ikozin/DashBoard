@@ -53,8 +53,8 @@ def _get_setting(name):
         "WeekDay": "0, 1, 2, 3, 4",
         "StartTime": "09:00:00",
         "FinishTime": "19:00:00",
-        "UpdateTime": 60,
-        "Path": "bash /home/pi/DashBoard/webcam.sh"
+        "Path": "bash /home/pi/DashBoard/webcam.sh",
+        "UpdateTime": 60
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)
