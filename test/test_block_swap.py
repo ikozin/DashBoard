@@ -20,3 +20,40 @@ def test_block_swap(logger):
     assert isinstance(block, BlockBase)
     with pytest.raises(KeyError):
         block.init({})
+
+
+@pytest.mark.block_swap
+def test_init_update_time(logger):
+    check_property(logger, "", "UpdateTime")
+
+
+@pytest.mark.block_swap
+def test_init_block_list(logger):
+    check_property(logger, "UpdateTime", "BlockList")
+
+
+def _get_setting(name):
+    params = {
+        "UpdateTime": 5,
+        "BlockList": "Calendar, BME280, OpenWeatherMap, YandexWeather"
+    }
+    config = Setting()
+    config.configuration.add_section(SECTION_NAME)
+    if name == "":
+        return config
+    section = config.configuration[SECTION_NAME]
+    for key, value in params.items():
+        section[key] = value.__str__()
+        if key == name:
+            break
+    return config
+
+
+def check_property(logger, settingPropName, propName):
+    config = _get_setting(settingPropName)
+    block = BlockCalendar(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
+        block.init({})
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == propName

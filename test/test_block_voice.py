@@ -25,46 +25,22 @@ def test_block_voice(logger):
 
 @pytest.mark.block_voice
 def test_init_speaker(logger):
-    config = _get_setting("")
-    block = BlockVoice(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "Speaker"
+    check_property(logger, "", "Speaker")
 
 
 @pytest.mark.block_voice
 def test_init_speed(logger):
-    config = _get_setting("Speaker")
-    block = BlockVoice(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "Speed"
+    check_property(logger, "Speaker", "Speed")
 
 
 @pytest.mark.block_voice
 def test_init_key(logger):
-    config = _get_setting("Speed")
-    block = BlockVoice(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "Key"
+    check_property(logger, "Speed", "Key")
 
 
 @pytest.mark.block_voice
 def test_init_blocks(logger):
-    config = _get_setting("Key")
-    block = BlockVoice(logger, config)
-    assert block is not None
-    with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
-    assert err_not_found.value.config_name == SECTION_NAME
-    assert err_not_found.value.param_name == "BlockList"
+    check_property(logger, "Key", "BlockList")
 
 
 @pytest.mark.block_voice
@@ -98,3 +74,13 @@ def _get_setting(name):
         if key == name:
             break
     return config
+
+
+def check_property(logger, settingPropName, propName):
+    config = _get_setting(settingPropName)
+    block = BlockTime(logger, config)
+    assert block is not None
+    with pytest.raises(ExceptionNotFound) as err_not_found:
+        block.init({})
+    assert err_not_found.value.config_name == SECTION_NAME
+    assert err_not_found.value.param_name == propName
