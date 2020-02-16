@@ -36,7 +36,7 @@ def test_init_block_list(logger):
 def _get_setting(name):
     params = {
         "UpdateTime": 5,
-        "BlockList": "Calendar, BME280, OpenWeatherMap, YandexWeather"
+        "BlockList": "Swap"
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)
@@ -55,6 +55,6 @@ def check_property(logger, settingPropName, propName):
     block = BlockSwap(logger, config)
     assert block is not None
     with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
+        block.init({"Swap": block})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == propName
