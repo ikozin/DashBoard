@@ -74,8 +74,8 @@ def test_init(logger):
     assert block._font is not None
     assert block._pos is not None
     assert block._time is None
-    assert block._format_date is None
-    assert block._format is None
+    assert block._format_date is not None
+    assert block._format is not None
 
 
 @pytest.mark.block_calendar
