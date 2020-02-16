@@ -37,8 +37,8 @@ def _get_setting(name):
         "TempfontSize": 100,
         "TempfontBold": True,
         "TempfontItalic": False,
-        "Co2Pos": (380,32),
-        "TempPos": (460,180),
+        "Co2Pos": (380, 32),
+        "TempPos": (460, 180),
         "Co2Text": "Концентрация CO2: {0}",
         "TemperatureText": "Температура: {1:+.1f}°",
         "FormatText": "Концентрация CO2: {0}.Температура: {1:+.1f}"

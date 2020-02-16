@@ -23,9 +23,9 @@ def test_block_watcher(logger):
         block.init({})
 
 
-@pytest.mark.block_watcher
-def test_init_weekday(logger):
-    check_property(logger, "", "WeekDay")
+# @pytest.mark.block_watcher
+# def test_init_weekday(logger):
+#     check_property(logger, "", "WeekDay")
 
 
 @pytest.mark.block_watcher
@@ -76,5 +76,3 @@ def check_property(logger, settingPropName, propName):
         block.init({})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == propName
-
-
