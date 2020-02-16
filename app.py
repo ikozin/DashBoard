@@ -15,7 +15,7 @@ from modules.block_open_weathermap import BlockOpenWeatherMap
 from modules.block_voice import BlockVoice
 from modules.block_alarm import BlockAlarm
 from modules.block_swap import BlockSwap
-from modules.block_wunderground import BlockWunderGround
+# from modules.block_wunderground import BlockWunderGround
 from modules.block_watcher import BlockWatcher
 from modules.block_mt8057 import BlockMT8057
 from modules.block_yandex_weather import BlockYandexWeather
@@ -51,7 +51,7 @@ class Mainboard:
             "Voice": BlockVoice(logger, self._config),
             "YandexNews": BlockYandexNews(logger, self._config),
             "OpenWeatherMap": BlockOpenWeatherMap(logger, self._config),
-            "WunderGround": BlockWunderGround(logger, self._config),
+            # "WunderGround": BlockWunderGround(logger, self._config),
             "Calendar": BlockCalendar(logger, self._config),
             "Swap": BlockSwap(logger, self._config),
             "Watcher": BlockWatcher(logger, self._config),

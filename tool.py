@@ -10,7 +10,7 @@ from ext.voice_manager import VoiceManager
 from ext.yandex_news_manager import YandexNewsManager
 from ext.calendar_manager import CalendarManager
 from ext.open_weather_map_manager import OpenWeatherMapManager
-from ext.wunder_ground_manager import WunderGroundManager
+# from ext.wunder_ground_manager import WunderGroundManager
 from ext.swap_manager import SwapManager
 from ext.watcher_manager import WatcherManager
 from ext.mt8057_manager import MT8057Manager
@@ -30,7 +30,7 @@ class App:
             "Voice": VoiceManager,
             "YandexNews": YandexNewsManager,
             "OpenWeatherMap": OpenWeatherMapManager,
-            "WunderGround": WunderGroundManager,
+            # "WunderGround": WunderGroundManager,
             "Calendar": CalendarManager,
             "Swap": SwapManager,
             "Watcher": WatcherManager,
