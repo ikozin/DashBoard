@@ -23,17 +23,25 @@ class BlockMT8057(BlockSecondBase):
         self._crit_zone = None
         self._warn_color = (255, 127, 0)
         self._crit_color = (255, 63, 63)
+        self._format = ""
+
+        self._co2_format = ""
         self._co2_font = None
-        self._temp_font = None
         self._co2_pos = None
+        self._co2_align_x = ""
+        self._co2_align_y = ""
+
+        self._temp_format = ""
+        self._temp_font = None
         self._temp_pos = None
+        self._temp_align_x = ""
+        self._temp_align_y = ""
+
         self._value_co2 = 0
         self._value_temp = 0.0
+
         self._text_co2 = ""
         self._text_temp = ""
-        self._format_co2 = ""
-        self._format_temperature = ""
-        self._format = ""
 
         if sys.platform == "linux":  # Only for Raspberry Pi
             self._t_mt8057 = None
@@ -47,23 +55,25 @@ class BlockMT8057(BlockSecondBase):
         self._crit_zone = section.getint("Crit")
         self._warn_color = self._get_tuple(section.get("WarnColor"))
         self._crit_color = self._get_tuple(section.get("CritColor"))
+        self._format = section.get("FormatText")
 
-        co2_font_size = section.getint("CO2FontSize")
+        self._co2_format = section.get("CO2Text")
         co2_font_name = section.get("CO2FontName")
+        co2_font_size = section.getint("CO2FontSize")
         co2_is_bold = section.getboolean("CO2FontBold")
         co2_is_italic = section.getboolean("CO2FontItalic")
+        self._co2_pos = self._get_tuple(section.get("CO2Pos"))
+        self._co2_align_x = section.get("CO2AlignX")
+        self._co2_align_y = section.get("CO2AlignY")
 
-        temp_font_size = section.getint("TempFontSize")
+        self._temp_format = section.get("TempText")
         temp_font_name = section.get("TempFontName")
+        temp_font_size = section.getint("TempFontSize")
         temp_is_bold = section.getboolean("TempFontBold")
         temp_is_italic = section.getboolean("TempFontItalic")
-
-        self._co2_pos = self._get_tuple(section.get("CO2Pos"))
         self._temp_pos = self._get_tuple(section.get("TempPos"))
-
-        self._format_co2 = section.get("CO2Text")
-        self._format_temperature = section.get("TemperatureText")
-        self._format = section.get("FormatText")
+        self._temp_align_x = section.get("TempAlignX")
+        self._temp_align_y = section.get("TempAlignY")
 
         if self._warn_zone is None:
             raise ExceptionNotFound(section.name, "Warn")
@@ -73,30 +83,41 @@ class BlockMT8057(BlockSecondBase):
             raise ExceptionNotFound(section.name, "WarnColor")
         if self._crit_color is None:
             raise ExceptionNotFound(section.name, "CritColor")
-        if co2_font_size is None:
-            raise ExceptionNotFound(section.name, "CO2FontSize")
+
+        if self._co2_format is None:
+            raise ExceptionNotFound(section.name, "CO2Text")
         if co2_font_name is None:
             raise ExceptionNotFound(section.name, "CO2FontName")
+        if co2_font_size is None:
+            raise ExceptionNotFound(section.name, "CO2FontSize")
         if co2_is_bold is None:
             raise ExceptionNotFound(section.name, "CO2FontBold")
         if co2_is_italic is None:
             raise ExceptionNotFound(section.name, "CO2FontItalic")
-        if temp_font_size is None:
-            raise ExceptionNotFound(section.name, "TempFontSize")
+        if self._co2_pos is None:
+            raise ExceptionNotFound(section.name, "CO2Pos")
+        if self._co2_align_x is None:
+            raise ExceptionNotFound(section.name, "CO2AlignX")
+        if self._co2_align_y is None:
+            raise ExceptionNotFound(section.name, "CO2AlignY")
+
+        if self._temp_format is None:
+            raise ExceptionNotFound(section.name, "TempText")
         if temp_font_name is None:
             raise ExceptionNotFound(section.name, "TempFontName")
+        if temp_font_size is None:
+            raise ExceptionNotFound(section.name, "TempFontSize")
         if temp_is_bold is None:
             raise ExceptionNotFound(section.name, "TempFontBold")
         if temp_is_italic is None:
             raise ExceptionNotFound(section.name, "TempFontItalic")
-        if self._co2_pos is None:
-            raise ExceptionNotFound(section.name, "CO2Pos")
         if self._temp_pos is None:
             raise ExceptionNotFound(section.name, "TempPos")
-        if self._format_co2 is None:
-            raise ExceptionNotFound(section.name, "CO2Text")
-        if self._format_temperature is None:
-            raise ExceptionNotFound(section.name, "TemperatureText")
+        if self._temp_align_x is None:
+            raise ExceptionNotFound(section.name, "TempAlignX")
+        if self._temp_align_y is None:
+            raise ExceptionNotFound(section.name, "TempAlignY")
+
         if self._format is None:
             raise ExceptionNotFound(section.name, "FormatText")
 
@@ -124,8 +145,8 @@ class BlockMT8057(BlockSecondBase):
         else:
             self._value_co2 += 10
             self._value_temp += 0.1
-        self._text_co2 = self._format_co2.format(self._value_co2, self._value_temp)
-        self._text_temp = self._format_temperature.format(self._value_co2, self._value_temp)
+        self._text_co2 = self._co2_format.format(self._value_co2, self._value_temp)
+        self._text_temp = self._temp_format.format(self._value_co2, self._value_temp)
         self._text = self._format.format(self._value_co2, self._value_temp)
 
     def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
@@ -139,16 +160,16 @@ class BlockMT8057(BlockSecondBase):
             if self._value_co2 >= self._crit_zone:
                 color = self._crit_color
 
-            text_x = self._co2_pos[0]
-            text_y = self._co2_pos[1]
-            surf = self._co2_font.render(self._text_co2, True, color, back_color)
-            screen.blit(surf, (text_x, text_y))
+            if self._text_co2 is not None:
+                text_size = self._co2_font.size(self._text_co2)
+                surf = self._co2_font.render(self._text_co2, True, color, back_color)
+                screen.blit(surf, self.calc_position(text_size, self._co2_pos, self._co2_align_x, self._co2_align_y))
 
-            text_x = self._temp_pos[0]
-            text_y = self._temp_pos[1]
-            surf = self._temp_font.render(self._text_temp, True, fore_color, back_color)
-            screen.blit(surf, (text_x, text_y))
-            # print(text_x)
+            if self._text_temp is not None:
+                text_size = self._temp_font.size(self._text_temp)
+                surf = self._temp_font.render(self._text_temp, True, fore_color, back_color)
+                screen.blit(surf, self.calc_position(text_size, self._temp_pos, self._temp_align_x, self._temp_align_y))
+
         except Exception as ex:
             self._logger.exception(ex)
 

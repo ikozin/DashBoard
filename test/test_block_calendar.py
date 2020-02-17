@@ -24,8 +24,18 @@ def test_block_calendar(logger):
 
 
 @pytest.mark.block_calendar
+def test_init_format_text(logger):
+    check_property(logger, "", "FormatText")
+
+
+@pytest.mark.block_calendar
+def test_init_text(logger):
+    check_property(logger, "FormatText", "Text")
+
+
+@pytest.mark.block_calendar
 def test_init_font_name(logger):
-    check_property(logger, "", "FontName")
+    check_property(logger, "Text", "FontName")
 
 
 @pytest.mark.block_calendar
@@ -45,17 +55,17 @@ def test_init_font_italic(logger):
 
 @pytest.mark.block_calendar
 def test_init_position(logger):
-    check_property(logger, "FontItalic", "Position")
+    check_property(logger, "FontItalic", "Pos")
 
 
 @pytest.mark.block_calendar
-def test_init_format(logger):
-    check_property(logger, "Position", "Format")
+def test_init_align_x(logger):
+    check_property(logger, "Pos", "AlignX")
 
 
 @pytest.mark.block_calendar
-def test_init_format_text(logger):
-    check_property(logger, "Format", "FormatText")
+def test_init_align_y(logger):
+    check_property(logger, "AlignX", "AlignY")
 
 
 @pytest.mark.block_calendar
@@ -102,13 +112,15 @@ def test_get_text(logger):
 
 def _get_setting(name):
     params = {
+        "FormatText": "{4}, {0} {1} {2} год",
+        "Text": "{3} {0} {1} {2}",
         "FontName": "Helvetica",
         "FontSize": 170,
         "FontBold": True,
         "FontItalic": False,
-        "Position": 80,
-        "Format": "{3} {0} {1} {2}",
-        "FormatText": "{4}, {0} {1} {2} год"
+        "Pos": "(960, 80)",
+        "AlignX": "Center",
+        "AlignY": "Top"
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)

@@ -50,5 +50,20 @@ class BlockBase(metaclass=ABCMeta):
         """Вызывается перед завершением.
            Освобождаем ресурсы, завершаем потоки и т.п."""
 
+    def calc_position(self, text_size, position, align_x, align_y):
+        text_x = position[0]  # Left
+        if align_x == "Center":
+            text_x = position[0] - (text_size[0] >> 1)
+        if align_x == "Right":
+            text_x = position[0] - text_size[0]
+
+        text_y = position[1] # Top
+        if align_y == "Center":
+            text_y = position[1] - (text_size[1] >> 1)
+        if align_y == "Bottom":
+            text_y = position[1] - text_size[1]
+
+        return (text_x, text_y)
+
     def _get_tuple(self, value: str):
         return self._setting.get_tuple(value)

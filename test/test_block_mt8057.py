@@ -29,19 +29,23 @@ def _get_setting(name):
         "Crit": 1200,
         "WarnColor": (255, 255, 0),
         "CritColor": (255, 63, 63),
+        "FormatText": "Концентрация CO2: {0}.Температура: {1:+.1f}",
+        "Co2Text": "Концентрация CO2: {0}",
         "Co2FontName": "Helvetica",
         "Co2FontSize": 100,
         "Co2FontBold": True,
         "Co2FontItalic": False,
-        "TempfontName": "Helvetica",
-        "TempfontSize": 100,
-        "TempfontBold": True,
-        "TempfontItalic": False,
         "Co2Pos": (380, 32),
+        "Co2AlignX": "Left",
+        "Co2AlignY": "Top",
+        "TempText": "Температура: {1:+.1f}°",
+        "TempFontName": "Helvetica",
+        "TempFontSize": 100,
+        "TempFontBold": True,
+        "TempFontItalic": False,
         "TempPos": (460, 180),
-        "Co2Text": "Концентрация CO2: {0}",
-        "TemperatureText": "Температура: {1:+.1f}°",
-        "FormatText": "Концентрация CO2: {0}.Температура: {1:+.1f}"
+        "TempAlignX": "Left",
+        "TempAlignY": "Top"
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)

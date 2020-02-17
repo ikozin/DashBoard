@@ -1,5 +1,6 @@
 from typing import Tuple
-from tkinter import BooleanVar, IntVar, StringVar, Toplevel, LabelFrame, Label, Entry
+from configparser import SectionProxy
+from tkinter import BooleanVar, IntVar, StringVar, Toplevel, Frame, LabelFrame, Label, Entry
 from tkinter import Checkbutton, Spinbox, Listbox, Button, Scrollbar, Canvas
 from tkinter import font, colorchooser, N, S, E, W, RIGHT, VERTICAL, FALSE, TRUE, LEFT, BOTH, Y, NW
 from tkinter.ttk import Frame, Combobox
@@ -300,3 +301,97 @@ class VerticalScrolledFrame(Frame):
                 # update the inner frame's width to fill the canvas
                 canvas.itemconfigure(interior_id, width=canvas.winfo_width())
         canvas.bind('<Configure>', _configure_canvas)
+
+
+class DisplayTextFrame(LabelFrame):
+
+    def __init__(self, root, text: str, field: str):
+        if not isinstance(text, str):
+            raise TypeError("text")
+        if not isinstance(field, str):
+            raise TypeError("field")
+        super(DisplayTextFrame, self).__init__(root, text=text)
+        self._root = root
+        self._field = field
+
+        frame = Frame(self)
+        frame.grid(row=0, column=0, sticky=(N, S, E, W))
+        self._text_value = StringVar()
+        lbl = Label(frame, text="Текст")
+        lbl.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E))
+        entr = Entry(frame, width=60, textvariable=self._text_value)
+        entr.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
+
+        frame = Frame(self)
+        frame.grid(row=1, column=0, sticky=(N, S, E, W))
+        self._font_name = StringVar()
+        self._font_size = IntVar()
+        self._is_bold = BooleanVar()
+        self._is_italic = BooleanVar()
+        fonts = list(font.families())
+        list.sort(fonts)
+        Label(frame, text="Шрифт").grid(row=0, column=0, padx=2, pady=2)
+        combo = Combobox(frame, values=fonts, textvariable=self._font_name)
+        combo.grid(row=0, column=1, padx=2, pady=2)
+        lbl = Label(frame, text="Размер")
+        lbl.grid(row=0, column=2, padx=2, pady=2)
+        spin = Spinbox(frame, from_=1, to=500, increment=1, width=4, textvariable=self._font_size)
+        spin.grid(row=0, column=3, padx=2, pady=2)
+        chk = Checkbutton(frame, text="Жирный", variable=self._is_bold)
+        chk.grid(row=0, column=4, padx=2, pady=2)
+        chk = Checkbutton(frame, text="Наклон", variable=self._is_italic)
+        chk.grid(row=0, column=5, padx=2, pady=2)
+
+        frame = Frame(self)
+        frame.grid(row=2, column=0, sticky=(N, S, E, W))
+        self._pos_x = IntVar()
+        self._pos_y = IntVar()
+        self._align_x = StringVar(value="Left")
+        self._align_y = StringVar(value="Top")
+        lbl = Label(frame, text="Расположение X")
+        lbl.grid(row=0, column=0, padx=2, pady=2)
+        spin = Spinbox(frame, from_=0, to=2000, increment=1, width=5, textvariable=self._pos_x)
+        spin.grid(row=0, column=1, padx=2, pady=2)
+        lbl = Label(frame, text="Выравнивание по X")
+        lbl.grid(row=0, column=2, padx=2, pady=2)
+        combo = Combobox(frame, state="readonly", values=["Left", "Center", "Right"], textvariable=self._align_x)
+        combo.grid(row=0, column=3, padx=2, pady=2)
+        lbl = Label(frame, text="Расположение Y")
+        lbl.grid(row=1, column=0, padx=2, pady=2)
+        spin = Spinbox(frame, from_=0, to=2000, increment=1, width=5, textvariable=self._pos_y)
+        spin.grid(row=1, column=1, padx=2, pady=2)
+        lbl = Label(frame, text="Выравнивание по Y")
+        lbl.grid(row=1, column=2, padx=2, pady=2)
+        combo = Combobox(frame, state="readonly", values=["Top", "Center", "Bottom"], textvariable=self._align_y)
+        combo.grid(row=1, column=3, padx=2, pady=2)
+
+    def load(self, section: SectionProxy) -> None:
+        if not isinstance(section, SectionProxy):
+            raise TypeError("config")
+        self._text_value.set(section.get(self._field + "Text", fallback=""))
+        self._font_name.set(section.get(self._field + "FontName", fallback="Helvetica"))
+        self._font_size.set(section.getint(self._field + "FontSize", fallback=100))
+        self._is_bold.set(section.getboolean(self._field + "FontBold", fallback=True))
+        self._is_italic.set(section.getboolean(self._field + "FontItalic", fallback=False))
+        (pos_x, pos_y) = self._get_tuple(section.get(self._field + "Pos", fallback="(0, 0)"))
+        self._pos_x.set(pos_x)
+        self._pos_y.set(pos_y)
+        self._align_x.set(section.get(self._field + "AlignX", fallback="Left"))
+        self._align_y.set(section.get(self._field + "AlignY", fallback="Top"))
+
+    def save(self, section: SectionProxy) -> None:
+        if not isinstance(section, SectionProxy):
+            raise TypeError("config")
+        section[self._field + "Text"] = self._text_value.get()
+        section[self._field + "FontName"] = self._font_name.get()
+        section[self._field + "FontSize"] = str(self._font_size.get())
+        section[self._field + "FontBold"] = str(self._is_bold.get())
+        section[self._field + "FontItalic"] = str(self._is_italic.get())
+        section[self._field + "Pos"] = str((self._pos_x.get(), self._pos_y.get()))
+        section[self._field + "AlignX"] = self._align_x.get()
+        section[self._field + "AlignY"] = self._align_y.get()
+
+    def _get_tuple(self, value: str):
+        """  Конвертирует строку '0, 0' в кортеж (0, 0)
+             Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
+        return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())
