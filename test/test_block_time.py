@@ -24,8 +24,18 @@ def test_block_time(logger):
 
 
 @pytest.mark.block_time
+def test_init_format_text(logger):
+    check_property(logger, "", "FormatText")
+
+
+@pytest.mark.block_time
+def test_init_text(logger):
+    check_property(logger, "FormatText", "Text")
+
+
+@pytest.mark.block_time
 def test_init_font_name(logger):
-    check_property(logger, "", "FontName")
+    check_property(logger, "Text", "FontName")
 
 
 @pytest.mark.block_time
@@ -44,13 +54,18 @@ def test_init_font_italic(logger):
 
 
 @pytest.mark.block_time
-def test_init_format(logger):
-    check_property(logger, "FontItalic", "Format")
+def test_init_pos(logger):
+    check_property(logger, "FontItalic", "Pos")
 
 
 @pytest.mark.block_time
-def test_init_format_text(logger):
-    check_property(logger, "Format", "FormatText")
+def test_init_align_x(logger):
+    check_property(logger, "Pos", "AlignX")
+
+
+@pytest.mark.block_time
+def test_init_align_y(logger):
+    check_property(logger, "AlignX", "AlignY")
 
 
 @pytest.mark.block_time
@@ -90,12 +105,15 @@ def test_get_text(logger):
 
 def _get_setting(name):
     params = {
+        "FormatText": "Московское время {:%H:%M}",
+        "Text": "{:%H:%M}",
         "FontName": "Helvetica",
-        "FontSize": 384,
-        "FontBold": True,
-        "FontItalic": False,
-        "Format": "{:%H:%M}",
-        "FormatText": "{:%H:%M}"
+        "FontSize": 400,
+        "FontBold": "True",
+        "FontItalic": "False",
+        "Pos": "(960, 540)",
+        "AlignX": "Center",
+        "AlignY": "Center",
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)

@@ -3,7 +3,7 @@ import pygame.locals
 
 from typing import Dict
 from datetime import datetime
-from exceptions import ExceptionNotFound
+from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
 from setting import Setting
@@ -15,23 +15,35 @@ class BlockTime(BlockBase):
     def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockTime, self).__init__(logger, setting)
-        self._font = None
-        self._time = None
-        self._format_time = ""
+
         self._format = ""
+        self._format_time = ""
+        self._font = None
+        self._pos = None
+        self._align_x = ""
+        self._align_y = ""
+        self._time = None
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
         # Загружаем настройки
         section = self._setting.configuration["TimeBlock"]
 
+        self._format = section.get("FormatText")
+
+        self._format_time = section.get("Text")
         font_name = section.get("FontName")
         font_size = section.getint("FontSize")
         is_bold = section.getboolean("FontBold")
         is_italic = section.getboolean("FontItalic")
-        self._format_time = section.get("Format")
-        self._format = section.get("FormatText")
+        self._pos = self._get_tuple(section.get("Pos"))
+        self._align_x = section.get("AlignX")
+        self._align_y = section.get("AlignY")
 
+        if self._format is None:
+            raise ExceptionNotFound(section.name, "FormatText")
+        if self._format_time is None:
+            raise ExceptionNotFound(section.name, "Text")
         if font_name is None:
             raise ExceptionNotFound(section.name, "FontName")
         if font_size is None:
@@ -40,10 +52,15 @@ class BlockTime(BlockBase):
             raise ExceptionNotFound(section.name, "FontBold")
         if is_italic is None:
             raise ExceptionNotFound(section.name, "FontItalic")
-        if self._format_time is None:
-            raise ExceptionNotFound(section.name, "Format")
-        if self._format is None:
-            raise ExceptionNotFound(section.name, "FormatText")
+        if self._pos is None:
+            raise ExceptionNotFound(section.name, "Pos")
+        if self._align_x is None:
+            raise ExceptionNotFound(section.name, "AlignX")
+        if self._align_y is None:
+            raise ExceptionNotFound(section.name, "AlignY")
+
+        if len(self._pos) != 2:
+            raise ExceptionFormat(section.name, "Pos")
 
         self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
         self.update_info(True)
@@ -54,10 +71,8 @@ class BlockTime(BlockBase):
                 return
             text = self._format_time.format(current_time)
             text_size = self._font.size(text)
-            text_x = (size[0] - text_size[0]) >> 1
-            text_y = (size[1] - text_size[1]) >> 1
             surf = self._font.render(text, True, fore_color, back_color)
-            screen.blit(surf, (text_x, text_y))
+            screen.blit(surf, self.calc_position(text_size, self._pos, self._align_x, self._align_y))
             self._time = current_time
         except Exception as ex:
             self._logger.exception(ex)
