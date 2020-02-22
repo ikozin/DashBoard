@@ -4,6 +4,7 @@ from tkinter import StringVar, Entry, LabelFrame, Label, N, S, E, W, RIGHT
 from ext.base_manager import BaseManager
 from ext.modal_dialog import DisplayTextFrame
 
+
 class CalendarManager(BaseManager):
     """description of class"""
 

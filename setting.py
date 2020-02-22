@@ -103,5 +103,6 @@ class Setting:
 
     def get_tuple(self, value):
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
-        if value is None: return None
+        if value is None:
+            return None
         return tuple(int(item.strip("([ '])")) for item in value.split(",") if item.strip())

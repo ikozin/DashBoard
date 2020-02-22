@@ -86,7 +86,6 @@ class BlockCalendar(BlockBase):
         self._align_x = section.get("AlignX")
         self._align_y = section.get("AlignY")
 
-
         if self._format is None:
             raise ExceptionNotFound(section.name, "FormatText")
         if self._format_date is None:

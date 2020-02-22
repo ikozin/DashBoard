@@ -57,7 +57,7 @@ class BlockBase(metaclass=ABCMeta):
         if align_x == "Right":
             text_x = position[0] - text_size[0]
 
-        text_y = position[1] # Top
+        text_y = position[1]  # Top
         if align_y == "Center":
             text_y = position[1] - (text_size[1] >> 1)
         if align_y == "Bottom":

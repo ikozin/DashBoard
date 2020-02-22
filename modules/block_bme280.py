@@ -74,7 +74,7 @@ class BlockBme280(BlockBase):
         self._pressure_pos = self._get_tuple(section.get("PressurePos"))
         self._pressure_align_x = section.get("PressureAlignX")
         self._pressure_align_y = section.get("PressureAlignY")
-        
+
         if self._address is None:
             raise ExceptionNotFound(section.name, "Address")
         if self._format is None:
