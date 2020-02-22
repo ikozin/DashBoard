@@ -1,6 +1,6 @@
 from typing import Tuple
 from configparser import SectionProxy
-from tkinter import BooleanVar, IntVar, StringVar, Toplevel, Frame, LabelFrame, Label, Entry
+from tkinter import BooleanVar, IntVar, StringVar, Toplevel, LabelFrame, Label, Entry
 from tkinter import Checkbutton, Spinbox, Listbox, Button, Scrollbar, Canvas
 from tkinter import font, colorchooser, N, S, E, W, RIGHT, VERTICAL, FALSE, TRUE, LEFT, BOTH, Y, NW
 from tkinter.ttk import Frame, Combobox
