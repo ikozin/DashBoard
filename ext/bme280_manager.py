@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
 from configparser import ConfigParser
-from tkinter import IntVar, StringVar, Entry, LabelFrame, Label, Spinbox, N, S, E, W, RIGHT
+from tkinter import IntVar, StringVar, Entry, LabelFrame, Label, Spinbox, N, S, E, W, RIGHT, LEFT
 from ext.base_manager import BaseManager
 from ext.modal_dialog import DisplayTextFrame
 
@@ -13,6 +13,7 @@ class Bme280Manager(BaseManager):
         super(Bme280Manager, self).__init__(root, text="Настройки BME280, Параметры: "
                                                        "Температура={0}, Влажность={1}, Давление={2}")
         self._address_value = IntVar()
+        self._address_hex = StringVar()
         self._format_text_value = StringVar()
 
         content = LabelFrame(self, text="Основные настрйки")
@@ -21,7 +22,12 @@ class Bme280Manager(BaseManager):
         lbl = Label(content, justify=RIGHT, text="Адрес модуля")
         lbl.grid(row=0, column=0, padx=2, pady=2, sticky=(N, S, E))
         spin = Spinbox(content, from_=1, to=255, increment=1, width=5, textvariable=self._address_value)
+        vcmd = (spin.register(self._address_to_hex), '%P')
+        spin.configure(validate="key", validatecommand=vcmd)
         spin.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, W))
+        lbl = Label(content, textvariable=self._address_hex)
+        lbl.grid(row=0, column=2, padx=2, pady=2, sticky=(N, S, W))
+
         lbl = Label(content, justify=RIGHT, text="Формат текста")
         lbl.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E))
         entr = Entry(content, width=60, textvariable=self._format_text_value)
@@ -59,6 +65,13 @@ class Bme280Manager(BaseManager):
         self._temperature.save(section)
         self._humidity.save(section)
         self._pressure.save(section)
+
+    def _address_to_hex(self, new: str) -> bool:
+        try:
+            self._address_hex.set("0x{:02X}".format(int(new))) 
+        except Exception as ex:
+            pass
+        return True
 
     def _get_tuple(self, value: str) -> Tuple[int, ...]:
         """  Конвертирует строку '0, 0, 0' в кортеж (0, 0, 0) """
