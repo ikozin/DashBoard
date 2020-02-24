@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
 from configparser import ConfigParser
-from tkinter import IntVar, StringVar, Entry, LabelFrame, Label, Spinbox, N, S, E, W, RIGHT, LEFT
+from tkinter import IntVar, StringVar, Entry, LabelFrame, Label, Spinbox, N, S, E, W, RIGHT
 from ext.base_manager import BaseManager
 from ext.modal_dialog import DisplayTextFrame
 
@@ -69,7 +69,7 @@ class Bme280Manager(BaseManager):
     def _address_to_hex(self, new: str) -> bool:
         try:
             self._address_hex.set("0x{:02X}".format(int(new))) 
-        except Exception as ex:
+        except Exception:
             pass
         return True
 
