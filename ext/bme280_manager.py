@@ -68,7 +68,7 @@ class Bme280Manager(BaseManager):
 
     def _address_to_hex(self, new: str) -> bool:
         try:
-            self._address_hex.set("0x{:02X}".format(int(new))) 
+            self._address_hex.set("0x{:02X}".format(int(new)))
         except Exception:
             pass
         return True
