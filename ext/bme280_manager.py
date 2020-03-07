@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
 from configparser import ConfigParser
-from tkinter import IntVar, StringVar, Entry, LabelFrame, Label, Spinbox, N, S, E, W, RIGHT
+from tkinter import IntVar, StringVar, Entry, LabelFrame, Label, Spinbox, N, S, E, W, RIGHT, LEFT
 from ext.base_manager import BaseManager
 from ext.modal_dialog import DisplayTextFrame
 
@@ -25,13 +25,13 @@ class Bme280Manager(BaseManager):
         vcmd = (spin.register(self._address_to_hex), '%P')
         spin.configure(validate="key", validatecommand=vcmd)
         spin.grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, W))
-        lbl = Label(content, textvariable=self._address_hex)
+        lbl = Label(content, justify=LEFT, textvariable=self._address_hex)
         lbl.grid(row=0, column=2, padx=2, pady=2, sticky=(N, S, W))
 
         lbl = Label(content, justify=RIGHT, text="Формат текста")
         lbl.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E))
         entr = Entry(content, width=60, textvariable=self._format_text_value)
-        entr.grid(row=1, column=1, padx=2, pady=2, sticky=(N, S, E, W))
+        entr.grid(row=1, column=1, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
         self._temperature = DisplayTextFrame(self, "Температура", "Temperature")
         self._temperature.grid(row=1, column=0, padx=2, pady=2, sticky=(N, S, E, W))
