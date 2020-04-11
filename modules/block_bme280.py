@@ -4,13 +4,14 @@ import pygame.locals
 from typing import Dict
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
+from modules.BlockSecondBase import BlockSecondBase
 from modules.hal.bme280_base import Bme280_Base
 
 from logging import Logger
 from setting import Setting
 
 
-class BlockBme280(BlockBase):
+class BlockBme280(BlockSecondBase):
     """description of class"""
 
     def __init__(self, logger: Logger, setting: Setting, hal: Bme280_Base):
@@ -131,12 +132,17 @@ class BlockBme280(BlockBase):
         self._pressure_font = pygame.font.SysFont(pressure_font_name, pressure_font_size, pressure_is_bold, pressure_is_italic)
 
         self._device = self._hal(self._logger, self._address)
+
         self.update_info(True)
+        self.set_time(3)
 
     def update_info(self, is_online: bool) -> None:
-        if not is_online:
-            return
-        self.execute()
+        try:
+            if not is_online:
+                return
+            self.execute()
+        except Exception as ex:
+            self._logger.exception(ex)
 
     def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
@@ -166,5 +172,5 @@ class BlockBme280(BlockBase):
         self._text = self._format.format(self._temperature, self._humidity, self._pressure)
 
     def get_text(self) -> str:
-        self.execute()
+        # self.execute()
         return self._text

@@ -10,8 +10,8 @@ class BlockMinuteBase(BlockBase):
     def __init__(self, logger: Logger, setting: Setting):
         """Initializes (declare internal variables)"""
         super(BlockMinuteBase, self).__init__(logger, setting)
-        self._time = None
-        self._time_value = None
+        self._time: int = 1
+        self._time_value: int = 1
 
     def set_time(self, value: int) -> None:
         self._time = value

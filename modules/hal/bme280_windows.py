@@ -8,6 +8,12 @@ class Bme280_Windows(Bme280_Base):
     def __init__(self, logger: Logger, address: int):
         """Initializes (declare internal variables)"""
         super(Bme280_Windows, self).__init__(logger)
+        self._temperature: float = 21.0
+        self._pressure: float = 1000.0
+        self._humidity: float = 40.0
 
     def read(self) -> (float, float, float):
-        return (21.0, 1000.0, 40.0)
+        self._temperature += 1.0
+        self._pressure += 1.0
+        self._humidity += 1.0
+        return (self._temperature, self._pressure, self._humidity)
