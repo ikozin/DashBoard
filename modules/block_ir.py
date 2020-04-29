@@ -3,6 +3,7 @@ import sys
 from typing import Dict
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
+from modules.hal.lirc_base import Lirc_Base
 from logging import Logger
 from setting import Setting
 
@@ -10,9 +11,10 @@ from setting import Setting
 class BlockIR(BlockBase):
     """description of class"""
 
-    def __init__(self, logger: Logger, setting: Setting):
+    def __init__(self, logger: Logger, setting: Setting, lirc_type: Lirc_Base):
         """Initializes (declare internal variables)"""
         super(BlockIR, self).__init__(logger, setting)
+        self._lirc_type = lirc_type
         self._module_list = None
         self._list = None
 
@@ -27,7 +29,7 @@ class BlockIR(BlockBase):
             module_name = self._list[key_code.upper()].split(",")[0]
             if module_name not in self._module_list:
                 raise ExceptionNotFound(section.name, key_code.upper())
-        self.module_init()
+        self._device = self._lirc_type(self._logger)
         # self.update_info(True)
 
     def procced_event(self, event, is_online: bool) -> None:
@@ -35,7 +37,7 @@ class BlockIR(BlockBase):
 
     def execute(self, *args) -> None:
         try:
-            code = args[0] if len(args) == 1 else self.module_getcode()
+            code = args[0] if len(args) == 1 else self._device.getCode()
             if not code:
                 return
             key_code = code[0]
@@ -52,41 +54,4 @@ class BlockIR(BlockBase):
             self._logger.exception(ex)
 
     def done(self) -> None:
-        self.module_done()
-
-
-###########################################################################
-    if sys.platform == "linux":  # Only for Raspberry Pi
-        from lirc import RawConnection
-
-        def module_init(self):
-            self._conn = RawConnection()
-            pass
-
-        def module_done(self):
-            pass
-
-        def module_getcode(self, code=None):
-            try:
-                # 000000000000000f 00 KEY_3 carmp3
-                keypress = self._conn.readline(.0001)
-            except:
-                keypress=""            
-            if (keypress != "" and keypress != None):
-                data = keypress.split()
-                sequence = data[1]
-                command = data[2]
-                if (sequence == "00"):
-                    return command
-            return None
-
-    else:
-        def module_init(self):
-            pass
-
-        def module_done(self):
-            pass
-
-        def module_getcode(self, code=None):
-            return code
-###########################################################################
+        pass
