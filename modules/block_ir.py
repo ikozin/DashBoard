@@ -6,9 +6,6 @@ from modules.BlockBase import BlockBase
 from logging import Logger
 from setting import Setting
 
-CONFIG_FILE_NAME = "IR.ini"
-PROG_NAME = "dashboard"
-
 
 class BlockIR(BlockBase):
     """description of class"""
@@ -30,10 +27,6 @@ class BlockIR(BlockBase):
             module_name = self._list[key_code.upper()].split(",")[0]
             if module_name not in self._module_list:
                 raise ExceptionNotFound(section.name, key_code.upper())
-        with open(CONFIG_FILE_NAME, "w", encoding="utf-8") as file:
-            for key_code in self._list:
-                file.write("begin\n\tprog={1}\n\tbutton={0}\n\t"
-                           "config={0}\n\trepeat=0\nend\n".format(key_code, PROG_NAME))
         self.module_init()
         # self.update_info(True)
 
@@ -64,19 +57,27 @@ class BlockIR(BlockBase):
 
 ###########################################################################
     if sys.platform == "linux":  # Only for Raspberry Pi
-        # import lirc
+        from lirc import RawConnection
 
         def module_init(self):
-            # lirc.init(PROG_NAME, CONFIG_FILE_NAME, blocking=False)
+            self._conn = RawConnection()
             pass
 
         def module_done(self):
-            # lirc.deinit()
             pass
 
         def module_getcode(self, code=None):
-            # code = lirc.nextcode()
-            # return code
+            try:
+                # 000000000000000f 00 KEY_3 carmp3
+                keypress = self._conn.readline(.0001)
+            except:
+                keypress=""            
+            if (keypress != "" and keypress != None):
+                data = keypress.split()
+                sequence = data[1]
+                command = data[2]
+                if (sequence == "00"):
+                    return command
             return None
 
     else:
