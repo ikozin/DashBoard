@@ -179,6 +179,18 @@
     <Compile Include="modules\hal\bme280_rasppi.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="modules\hal\lirc_base.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\hal\lirc_opiwin.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\hal\lirc_rasppi.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\hal\lirc_windows.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="modules\hal\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -211,7 +223,6 @@
     <Content Include="deploy_orapi.cmd" />
     <Content Include="pytest.cmd" />
     <Content Include="excludelist.txt" />
-    <Content Include="IR.ini" />
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
     <Content Include="deploy_rasppi.cmd" />
