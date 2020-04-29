@@ -10,12 +10,12 @@ SECTION_NAME = "IRBlock"
 def test_block_ir(logger):
     config = Setting()
     with pytest.raises(TypeError):
-        BlockIR(None, None)
+        BlockIR(None, None, None)
     with pytest.raises(TypeError):
-        BlockIR(None, config)
+        BlockIR(None, config, None)
     with pytest.raises(TypeError):
-        BlockIR(logger, None)
-    block = BlockIR(logger, config)
+        BlockIR(logger, None, None)
+    block = BlockIR(logger, config, None)
     assert block is not None
     assert isinstance(block, BlockBase)
     with pytest.raises(KeyError):
