@@ -1,7 +1,8 @@
 from .lirc_base import Lirc_Base
 from logging import Logger
 
-from lirc import RawConnection
+import socket
+
 
 class Lirc_RaspPi(Lirc_Base):
     """description of class"""
@@ -9,18 +10,21 @@ class Lirc_RaspPi(Lirc_Base):
     def __init__(self, logger: Logger):
         """Initializes (declare internal variables)"""
         super(Lirc_Base, self).__init__(logger)
-        self._conn = RawConnection()
+        self._sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self._sock.setblocking(0)
+        self._sock.connect("/var/run/lirc/lircd")
+
+    def __del__(self):
+        """Destructor"""
+        self._sock.close()
 
     def getCode(self, code: str=None) -> str:
         try:
-            # 000000000000000f 00 KEY_3 carmp3
-            keypress = self._conn.readline(.0001)
+            data = sock.recv(128)
+            data = data.strip()
+            if data:
+                words = data.split()
+                return words[2].decode("utf-8")
         except:
-            keypress=""            
-        if (keypress != "" and keypress != None):
-            data = keypress.split()
-            sequence = data[1]
-            command = data[2]
-            if (sequence == "00"):
-                return command
+            pass
         return None
