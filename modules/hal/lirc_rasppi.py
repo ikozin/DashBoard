@@ -20,7 +20,7 @@ class Lirc_RaspPi(Lirc_Base):
 
     def getCode(self, code: str=None) -> str:
         try:
-            data = sock.recv(128)
+            data = self._sock.recv(128)
             data = data.strip()
             if data:
                 words = data.split()
