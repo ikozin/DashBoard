@@ -35,54 +35,55 @@ def test_block_ir_execute(logger):
     block.init({"Swap": block_swap, "Voice": block_voice})
 
     block_voice.reset()
-    block.execute() # "key_0": "Voice",
+    block.execute()  # "key_0": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_1": "Voice",
+    block.execute()  # "key_1": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_2": "Voice",
+    block.execute()  # "key_2": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_3": "Voice",
+    block.execute()  # "key_3": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_4": "Voice",
+    block.execute()  # "key_4": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_5": "Voice",
+    block.execute()  # "key_5": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_6": "Voice",
+    block.execute()  # "key_6": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_7": "Voice",
+    block.execute()  # "key_7": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_8": "Voice",
+    block.execute()  # "key_8": "Voice",
     assert block_voice.passed
 
     block_voice.reset()
-    block.execute() # "key_9": "Voice",
+    block.execute()  # "key_9": "Voice",
     assert block_voice.passed
 
     block_swap.reset()
-    block.execute() # "key_channeldown": "Swap,-1",
+    block.execute()  # "key_channeldown": "Swap,-1",
     assert block_swap.passed
 
     block_swap.reset()
-    block.execute() # "key_channelup": "Swap,1"
+    block.execute()  # "key_channelup": "Swap,1"
     assert block_swap.passed
 
     block.execute("KEY")
+
 
 def _get_setting(name):
     params = {
@@ -125,6 +126,7 @@ class Lirc_Stub(Lirc_Base):
         self._index = self._index + 1
         self._index = self._index % len(self._key_list)
         return code
+
 
 class Block_Stub(BlockBase):
     """description of class"""

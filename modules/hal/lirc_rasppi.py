@@ -27,6 +27,6 @@ class Lirc_RaspPi(Lirc_Base):
                     data = data.strip()
                     words = data.split()
                     return words[2].decode("utf-8")
-        except:
+        except Exception:
             pass
         return None
