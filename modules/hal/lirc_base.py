@@ -16,5 +16,5 @@ class Lirc_Base(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def getCode(self, code: str=None) -> str:
+    def getCode(self, code: str = None) -> str:
         pass

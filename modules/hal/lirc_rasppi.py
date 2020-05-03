@@ -20,7 +20,7 @@ class Lirc_RaspPi(Lirc_Base):
 
     def getCode(self, code: str = None) -> str:
         try:
-            rlist, _ , _ = select.select([self._sock], [], [], 0)
+            rlist, _, _ = select.select([self._sock], [], [], 0)
             for sock in rlist:
                 data = sock.recv(128)
                 if data:
