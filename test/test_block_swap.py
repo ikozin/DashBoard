@@ -28,9 +28,9 @@ def test_init_update_time(logger):
     check_property(logger, "", "UpdateTime")
 
 
-# @pytest.mark.block_swap
-# def test_init_block_list(logger):
-#     check_property(logger, "UpdateTime", "BlockList")
+@pytest.mark.block_swap
+def test_init_block_list(logger):
+    check_property(logger, "UpdateTime", "BlockList")
 
 
 def _get_setting(name):

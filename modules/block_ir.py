@@ -38,7 +38,7 @@ class BlockIR(BlockBase):
             code = args[0] if len(args) == 1 else self._device.getCode()
             if not code:
                 return
-            key_code = code[0]
+            key_code = code
             if key_code not in self._list:
                 return
             values = self._list[key_code].split(",")
