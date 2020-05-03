@@ -9,5 +9,5 @@ class Lirc_Windows(Lirc_Base):
         """Initializes (declare internal variables)"""
         super(Lirc_Base, self).__init__(logger)
 
-    def getCode(self, code: str=None) -> str:
+    def getCode(self, code: str = None) -> str:
         return code

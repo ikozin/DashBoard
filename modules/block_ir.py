@@ -1,5 +1,3 @@
-import sys
-
 from typing import Dict
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase

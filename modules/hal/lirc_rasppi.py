@@ -2,7 +2,7 @@ from .lirc_base import Lirc_Base
 from logging import Logger
 
 import socket
-
+import select
 
 class Lirc_RaspPi(Lirc_Base):
     """description of class"""
@@ -18,13 +18,15 @@ class Lirc_RaspPi(Lirc_Base):
         """Destructor"""
         self._sock.close()
 
-    def getCode(self, code: str=None) -> str:
+    def getCode(self, code: str = None) -> str:
         try:
-            data = self._sock.recv(128)
-            data = data.strip()
-            if data:
-                words = data.split()
-                return words[2].decode("utf-8")
+            rlist, _ , _ = select.select([self._sock], [], [], 0)
+            for sock in rlist:
+                data = sock.recv(128)
+                if data:
+                    data = data.strip()
+                    words = data.split()
+                    return words[2].decode("utf-8")
         except:
             pass
         return None
