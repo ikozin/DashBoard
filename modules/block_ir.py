@@ -44,10 +44,10 @@ class BlockIR(BlockBase):
             values = self._list[key_code].split(",")
             if values[0] in self._module_list:
                 if len(values) == 2:
-                    self._module_list[values[0]].execute(values[1])
-                else:
-                    self._module_list[values[0]].execute()
-
+                    if values[1]:
+                        self._module_list[values[0]].execute(values[1])
+                    else:
+                        self._module_list[values[0]].execute()
         except Exception as ex:
             self._logger.exception(ex)
 
