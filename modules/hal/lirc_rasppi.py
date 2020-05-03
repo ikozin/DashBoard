@@ -9,9 +9,9 @@ class Lirc_RaspPi(Lirc_Base):
 
     def __init__(self, logger: Logger):
         """Initializes (declare internal variables)"""
-        super(Lirc_Base, self).__init__(logger)
+        super(Lirc_RaspPi, self).__init__(logger)
         self._sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        self._sock.setblocking(0)
+        # self._sock.setblocking(0)
         self._sock.connect("/var/run/lirc/lircd")
 
     def __del__(self):
