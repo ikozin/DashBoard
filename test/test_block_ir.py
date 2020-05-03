@@ -86,16 +86,16 @@ def test_block_ir_execute(logger):
 
 def _get_setting(name):
     params = {
-        "key_0": "Voice",
-        "key_1": "Voice",
-        "key_2": "Voice",
-        "key_3": "Voice",
-        "key_4": "Voice",
-        "key_5": "Voice",
-        "key_6": "Voice",
-        "key_7": "Voice",
-        "key_8": "Voice",
-        "key_9": "Voice",
+        "key_0": "Voice,",
+        "key_1": "Voice,",
+        "key_2": "Voice,",
+        "key_3": "Voice,",
+        "key_4": "Voice,",
+        "key_5": "Voice,",
+        "key_6": "Voice,",
+        "key_7": "Voice,",
+        "key_8": "Voice,",
+        "key_9": "Voice,",
         "key_channeldown": "Swap,-1",
         "key_channelup": "Swap,1"
     }
