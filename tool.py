@@ -17,6 +17,7 @@ from ext.mt8057_manager import MT8057Manager
 from ext.yandex_weather_manager import YandexWeatherManager
 from ext.ir_manager import IRManager
 from ext.bme280_manager import Bme280Manager
+from ext.volume_manager import VolumeManager
 
 
 class App:
@@ -38,6 +39,7 @@ class App:
             "YandexWeather": YandexWeatherManager,
             "IR": IRManager,
             "BME280": Bme280Manager,
+            "Volume": VolumeManager,
         }
         self._list = dict()
         self._current__name = None

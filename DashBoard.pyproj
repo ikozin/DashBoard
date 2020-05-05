@@ -55,7 +55,13 @@
     <Compile Include="ext\mt8057_manager.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ext\player_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ext\swap_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ext\volume_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ext\watcher_manager.py">
@@ -145,6 +151,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\block_voice.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\block_volume.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\block_watcher.py">
