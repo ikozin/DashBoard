@@ -4,6 +4,7 @@ from logging import Logger
 import socket
 import select
 
+
 class Lirc_RaspPi(Lirc_Base):
     """description of class"""
 

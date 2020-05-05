@@ -24,6 +24,7 @@ def test_block_ir(logger):
     with pytest.raises(KeyError):
         block.init({})
 
+
 @pytest.mark.block_ir
 def test_block_ir_execute(logger):
     config = _get_setting(None)
@@ -118,7 +119,19 @@ class Lirc_Stub(Lirc_Base):
     def __init__(self, logger: Logger):
         """Initializes (declare internal variables)"""
         super(Lirc_Stub, self).__init__(logger)
-        self._key_list = ["KEY_0", "KEY_1", "KEY_2", "KEY_3", "KEY_4", "KEY_5", "KEY_6", "KEY_7", "KEY_8", "KEY_9", "KEY_CHANNELDOWN", "KEY_CHANNELUP"]
+        self._key_list = [
+            "KEY_0",
+            "KEY_1",
+            "KEY_2",
+            "KEY_3",
+            "KEY_4",
+            "KEY_5",
+            "KEY_6",
+            "KEY_7",
+            "KEY_8",
+            "KEY_9",
+            "KEY_CHANNELDOWN",
+            "KEY_CHANNELUP"]
         self._index = 0
 
     def getCode(self, code: str = None) -> str:

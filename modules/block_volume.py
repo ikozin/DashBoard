@@ -67,5 +67,5 @@ class BlockVolume(BlockBase):
 
         if self._is_muted:
             pygame.mixer.music.set_volume(0)
-        else:   
+        else:
             pygame.mixer.music.set_volume(self._volume / 100)
