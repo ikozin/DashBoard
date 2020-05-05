@@ -36,9 +36,9 @@ class BlockVolume(BlockBase):
                 self.execute("+")
             if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_KP_MINUS):
                 self.execute("-")
-            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_KP_DIVIDE:
+            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_KP_DIVIDE):
                 self.execute("off")
-            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_KP_MULTIPLY:
+            if (event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_KP_MULTIPLY):
                 self.execute("on")
         except Exception as ex:
             self._logger.exception(ex)
@@ -67,5 +67,5 @@ class BlockVolume(BlockBase):
 
         if self._is_muted:
             pygame.mixer.music.set_volume(0)
-        else    
+        else:   
             pygame.mixer.music.set_volume(self._volume / 100)
