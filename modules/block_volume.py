@@ -7,6 +7,7 @@ from modules.BlockBase import BlockBase
 from logging import Logger
 from setting import Setting
 
+
 class BlockVolume(BlockBase):
     """description of class"""
 
