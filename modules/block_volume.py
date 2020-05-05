@@ -1,12 +1,11 @@
-
-import pygame
-import pygame.locals
-
 from typing import Dict
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
 from setting import Setting
+
+import pygame
+import pygame.locals
 
 
 class BlockVolume(BlockBase):
