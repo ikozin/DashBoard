@@ -125,3 +125,5 @@ visual_basic_preferred_modifier_order = Partial,Default,Private,Protected,Public
 [*.sh]
 indent_style = space
 end_of_line = lf
+[*.py]
+charset = utf-8

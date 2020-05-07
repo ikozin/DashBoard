@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9ff513b3-652c-4402-99a3-a42949deec36</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app_win.py</StartupFile>
+    <StartupFile>tool.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -142,6 +142,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\BlockSecondBase.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="modules\block_player.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="modules\block_swap.py">

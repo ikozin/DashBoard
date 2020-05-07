@@ -22,6 +22,7 @@ class BlockVoice(BlockBase):
         self._speaker = None
         self._speed = 1
         self._key = None
+        self._player = None
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
@@ -31,6 +32,7 @@ class BlockVoice(BlockBase):
         self._speaker = section.get("Speaker")
         self._speed = section.getfloat("Speed")
         self._key = section.get("Key")
+        player = section.get("Player")
         selection = section.get("BlockList", fallback="")
         selection = [item.strip(" '") for item in selection.split(",") if item.strip()]
         for name in selection:
@@ -45,6 +47,12 @@ class BlockVoice(BlockBase):
             raise ExceptionNotFound(section.name, "Key")
         if not self._blocks:
             raise ExceptionNotFound(section.name, "BlockList")
+        if not player:
+            raise ExceptionNotFound(section.name, "Player")
+
+        self._player = mod_list[player]
+        if not self._player:
+            raise ExceptionNotFound(section.name, player)
 
         self.update_info(True)
 
@@ -68,9 +76,7 @@ class BlockVoice(BlockBase):
         if not text:
             return
         sound_file = self.__getvoicetext(text)
-        pygame.mixer.music.load(sound_file)
-        pygame.mixer.music.set_volume(1.0)
-        pygame.mixer.music.play()
+        self._player.execute(sound_file)
 
     def __getvoicetext(self, text):
         filename = "text.wav"

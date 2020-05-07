@@ -12,6 +12,7 @@ from modules.block_time import BlockTime
 from modules.block_calendar import BlockCalendar
 from modules.block_yandex_news import BlockYandexNews
 from modules.block_open_weathermap import BlockOpenWeatherMap
+from modules.block_player import BlockPlayer
 from modules.block_voice import BlockVoice
 from modules.block_alarm import BlockAlarm
 from modules.block_swap import BlockSwap
@@ -50,6 +51,7 @@ class Mainboard:
         self._manager_list = {
             "Time": BlockTime(logger, self._config),
             "Alarm": BlockAlarm(logger, self._config),
+            "Player": BlockPlayer(logger, self._config),
             "Voice": BlockVoice(logger, self._config),
             "YandexNews": BlockYandexNews(logger, self._config),
             "OpenWeatherMap": BlockOpenWeatherMap(logger, self._config),

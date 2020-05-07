@@ -44,11 +44,16 @@ def test_init_blocks(logger):
 
 
 @pytest.mark.block_voice
+def test_init_blocks(logger):
+    check_property(logger, "BlockList", "Player")
+
+
+@pytest.mark.block_voice
 def test_init(logger):
     config = _get_setting(None)
     block = BlockVoice(logger, config)
     assert block is not None
-    block.init({"Voice": block})
+    block.init({"Voice": block, "Player": block})
     assert block._speaker is not None
     assert block._key is not None
     assert block._speed is not None
@@ -63,6 +68,7 @@ def _get_setting(name):
         "Speed": "1.0",
         "Key": "b55d97e9-6c66-4e1b-966f-c2a6aa9d939d",
         "BlockList": "Voice",
+        "Player": "Player",
     }
     config = Setting()
     config.configuration.add_section(SECTION_NAME)
@@ -81,6 +87,6 @@ def check_property(logger, settingPropName, propName):
     block = BlockVoice(logger, config)
     assert block is not None
     with pytest.raises(ExceptionNotFound) as err_not_found:
-        block.init({})
+        block.init({"Voice": block, "Player": block})
     assert err_not_found.value.config_name == SECTION_NAME
     assert err_not_found.value.param_name == propName

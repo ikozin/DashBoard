@@ -17,6 +17,7 @@ class VoiceManager(BaseManager):
         self._speaker_value = StringVar()
         self._key_value = StringVar()
         self._speed_value = IntVar()
+        self._player_value = StringVar()
 
         lbl = Label(self, text="Голос")
         lbl.grid(row=0, column=0, padx=2, pady=2)
@@ -39,6 +40,12 @@ class VoiceManager(BaseManager):
         self._frame = SelectFrame(self, "Выбор модулей")
         self._frame.grid(row=2, column=0, columnspan=4, sticky=(N, S, E, W), padx=2, pady=2)
 
+        lbl = Label(self, text="Проигрыватель")
+        lbl.grid(row=3, column=0, padx=2, pady=2)
+
+        self._combo = Combobox(self, state="readonly", textvariable=self._player_value)
+        self._combo.grid(row=3, column=1, padx=2, pady=2)
+
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not isinstance(config, ConfigParser):
             raise TypeError("config")
@@ -51,6 +58,8 @@ class VoiceManager(BaseManager):
         selection = [item.strip(" '") for item in section.get("BlockList", fallback="").split(",")
                      if item.strip() in module_list]
         self._frame.load(selection, module_list)
+        player = section.get("Player", fallback="Player")
+        self.load_combo(player, module_list)
 
     def save(self, config: ConfigParser) -> None:
         if not isinstance(config, ConfigParser):
@@ -62,3 +71,8 @@ class VoiceManager(BaseManager):
         section["Speed"] = str(self._speed_value.get() / 10)
         section["Key"] = self._key_value.get()
         section["BlockList"] = self._frame.get_result()
+        section["Player"] = self._player_value.get()
+
+    def load_combo(self, value: str, module_list: Dict[str, BaseManager]) -> None:
+        self._combo["values"] = module_list
+        self._player_value.set(value)
