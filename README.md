@@ -14,3 +14,7 @@
 9. Погода от Weather UnderGround (BlockWunderGround)
 10. Новости от Яндекса (BlockYandexNews)
 11. Погода от Яндекса YandexWeather (BlockYandexWeather)
+12. Датчик температуры/влажности/давления (BlockBme280)
+13. Управление IR пультом (BlockIR)
+14. Проигрыватель файлов (BlockPlayer)
+15. Управление громкостью (BlockVolume)
