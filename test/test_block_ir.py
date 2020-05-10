@@ -10,7 +10,7 @@ SECTION_NAME = "IRBlock"
 
 
 @pytest.mark.block_ir
-def test_block_ir(logger):
+def test_block_ir(logger, mocker):
     config = Setting()
     with pytest.raises(TypeError):
         BlockIR(None, None, None)
@@ -26,64 +26,56 @@ def test_block_ir(logger):
 
 
 @pytest.mark.block_ir
-def test_block_ir_execute(logger):
+def test_block_ir_execute(logger, mocker):
     config = _get_setting(None)
     block = BlockIR(logger, config, Lirc_Stub)
     assert block is not None
     assert isinstance(block, BlockBase)
-    block_voice = Block_Stub(logger, config, "Voice")
-    block_swap = Block_Stub(logger, config, "Swap")
-    block.init({"Swap": block_swap, "Voice": block_voice})
 
-    block_voice.reset()
+    mock_block = mocker.patch('modules.BlockBase.BlockBase', spec=True)
+    inst = mock_block.return_value
+    inst.execute.return_value = None
+    block.init({"Swap": inst, "Voice": inst})
+
+    inst.execute.reset_mock()
     block.execute()  # "key_0": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_1": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_2": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_3": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_4": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_5": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_6": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_7": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_8": "Voice",
-    assert block_voice.passed
-
-    block_voice.reset()
     block.execute()  # "key_9": "Voice",
-    assert block_voice.passed
+    assert inst.execute.call_count == 10
 
-    block_swap.reset()
+    inst.execute.reset_mock()
     block.execute()  # "key_channeldown": "Swap,-1",
-    assert block_swap.passed
-
-    block_swap.reset()
+    inst.execute.assert_called_once_with("-1")
+    
+    inst.execute.reset_mock()
     block.execute()  # "key_channelup": "Swap,1"
-    assert block_swap.passed
+    inst.execute.assert_called_once_with("1")
 
+    inst.execute.reset_mock()
     block.execute("KEY")
+    inst.execute.assert_not_called()
+
+
+@pytest.mark.block_ir
+def test_block_ir_exec(logger, mocker):
+    config = _get_setting(None)
+    block = BlockIR(logger, config, Lirc_Stub)
+    assert block is not None
+    assert isinstance(block, BlockBase)
+
+    mock_block = mocker.patch('modules.BlockBase.BlockBase', spec=True)
+    inst = mock_block.return_value
+    inst.execute.return_value = None
+    block.init({"Swap": inst, "Voice": inst})
+    block.execute()  # "key_0": "Voice",
+    inst.execute.assert_called_once()
 
 
 def _get_setting(name):
@@ -139,25 +131,3 @@ class Lirc_Stub(Lirc_Base):
         self._index = self._index + 1
         self._index = self._index % len(self._key_list)
         return code
-
-
-class Block_Stub(BlockBase):
-    """description of class"""
-
-    def __init__(self, logger: Logger, setting: Setting, name: str):
-        """Initializes (declare internal variables)"""
-        super(Block_Stub, self).__init__(logger, setting)
-        self._name = name
-        self.passed = False
-
-    def init(self, mod_list: Dict[str, BlockBase]) -> None:
-        """Initializes (initialize internal variables)"""
-
-    def execute(self, *args) -> None:
-        self.passed = True
-
-    def done(self) -> None:
-        pass
-
-    def reset(self) -> None:
-        self.passed = False
