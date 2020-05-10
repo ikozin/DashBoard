@@ -4,7 +4,6 @@ from modules.BlockBase import BlockBase
 from modules.block_ir import BlockIR
 from logging import Logger
 from modules.hal.lirc_base import Lirc_Base
-from typing import Dict
 
 SECTION_NAME = "IRBlock"
 
@@ -53,7 +52,7 @@ def test_block_ir_execute(logger, mocker):
     inst.execute.reset_mock()
     block.execute()  # "key_channeldown": "Swap,-1",
     inst.execute.assert_called_once_with("-1")
-    
+
     inst.execute.reset_mock()
     block.execute()  # "key_channelup": "Swap,1"
     inst.execute.assert_called_once_with("1")

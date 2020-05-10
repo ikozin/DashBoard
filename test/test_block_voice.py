@@ -44,7 +44,7 @@ def test_init_blocks(logger):
 
 
 @pytest.mark.block_voice
-def test_init_blocks(logger):
+def test_init_player(logger):
     check_property(logger, "BlockList", "Player")
 
 
