@@ -30,112 +30,112 @@ def test_init_format_warn(logger, mocker):
 
 
 @pytest.mark.block_mt8057
-def test_init_format_crit(logger):
+def test_init_format_crit(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "Warn", "Crit")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_warn_color(logger):
+def test_init_format_warn_color(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "Crit", "WarnColor")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_crit_color(logger):
+def test_init_format_crit_color(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "WarnColor", "CritColor")
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_text(logger):
+def test_init_format_co2_text(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CritColor", "CO2Text")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_font_name(logger):
+def test_init_format_co2_font_name(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CO2Text", "CO2FontName")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_font_size(logger):
+def test_init_format_co2_font_size(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CO2FontName", "CO2FontSize")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_font_bold(logger):
+def test_init_format_co2_font_bold(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CO2FontSize", "CO2FontBold")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_font_italic(logger):
+def test_init_format_co2_font_italic(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CO2FontBold", "CO2FontItalic")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_pos(logger):
+def test_init_format_co2_pos(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CO2FontItalic", "CO2Pos")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_align_x(logger):
+def test_init_format_co2_align_x(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CO2Pos", "CO2AlignX")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_co2_align_y(logger):
+def test_init_format_co2_align_y(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "CO2AlignX", "CO2AlignY")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_text(logger):
+def test_init_format_temp_text(logger, mocker):
     check_property(logger, "CO2AlignY", "TempText")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_font_name(logger):
+def test_init_format_temp_font_name(logger, mocker):
     check_property(logger, "TempText", "TempFontName")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_font_size(logger):
+def test_init_format_temp_font_size(logger, mocker):
     check_property(logger, "TempFontName", "TempFontSize")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_font_bold(logger):
+def test_init_format_temp_font_bold(logger, mocker):
     check_property(logger, "TempFontSize", "TempFontBold")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_font_italic(logger):
+def test_init_format_temp_font_italic(logger, mocker):
     check_property(logger, "TempFontBold", "TempFontItalic")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_pos(logger):
+def test_init_format_temp_pos(logger, mocker):
     check_property(logger, "TempFontItalic", "TempPos")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_align_x(logger):
+def test_init_format_temp_align_x(logger, mocker):
     check_property(logger, "TempPos", "TempAlignX")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_temp_align_y(logger):
+def test_init_format_temp_align_y(logger, mocker):
     check_property(logger, "TempAlignX", "TempAlignY")
 
 
 @pytest.mark.block_mt8057
-def test_init_format_format_text(logger):
+def test_init_format_format_text(logger, mocker):
     check_property(logger, "TempAlignY", "FormatText")
 
 
