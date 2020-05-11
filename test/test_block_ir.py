@@ -43,7 +43,7 @@ def test_block_ir_exec(logger, mocker):
 @pytest.mark.block_ir
 def test_block_ir_exec_KEY_0(logger, mocker, monkeypatch):
     config = _get_setting(None)
-    
+
     mocker.patch.object(Lirc_Stub, 'getCode', return_value="KEY_0")
     block = BlockIR(logger, config, Lirc_Stub)
     assert block is not None
@@ -60,7 +60,7 @@ def test_block_ir_exec_KEY_0(logger, mocker, monkeypatch):
 @pytest.mark.block_ir
 def test_block_ir_exec_KEY_1(logger, mocker, monkeypatch):
     config = _get_setting(None)
-    
+
     mocker.patch.object(Lirc_Stub, 'getCode', return_value="KEY_1")
     block = BlockIR(logger, config, Lirc_Stub)
     assert block is not None
@@ -77,7 +77,7 @@ def test_block_ir_exec_KEY_1(logger, mocker, monkeypatch):
 @pytest.mark.block_ir
 def test_block_ir_exec_KEY_CHANNELDOWN(logger, mocker, monkeypatch):
     config = _get_setting(None)
-    
+
     mocker.patch.object(Lirc_Stub, 'getCode', return_value="KEY_CHANNELDOWN")
     block = BlockIR(logger, config, Lirc_Stub)
     assert block is not None
@@ -94,7 +94,7 @@ def test_block_ir_exec_KEY_CHANNELDOWN(logger, mocker, monkeypatch):
 @pytest.mark.block_ir
 def test_block_ir_exec_KEY_CHANNELUP(logger, mocker, monkeypatch):
     config = _get_setting(None)
-    
+
     mocker.patch.object(Lirc_Stub, 'getCode', return_value="KEY_CHANNELUP")
     block = BlockIR(logger, config, Lirc_Stub)
     assert block is not None
