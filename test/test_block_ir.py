@@ -126,7 +126,6 @@ def _get_setting(name):
             break
     return config
 
-
 class Lirc_Stub(Lirc_Base):
     """description of class"""
 
