@@ -46,6 +46,7 @@ def test_init_format_crit_color(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
     check_property(logger, "WarnColor", "CritColor")
 
+
 @pytest.mark.block_mt8057
 def test_init_format_co2_text(logger, mocker):
     mocker.patch("modules.block_mt8057.MT8057", spec=True)
