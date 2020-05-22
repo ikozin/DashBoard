@@ -99,8 +99,7 @@ class BlockVolume(BlockBase):
             pygame.mixer.music.set_volume(0)
         else:
             pygame.mixer.music.set_volume(self._volume / 100)
-        return self._volume;
-
+        return self._volume
 
     def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
