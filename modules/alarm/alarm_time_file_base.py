@@ -1,15 +1,9 @@
 import os
-import pygame
-import pygame.locals
 
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.alarm_time_base import AlarmTimeBase
 from logging import Logger
 from setting import Setting
-
-ALARM_VOLUME_MIN = 0.2
-ALARM_VOLUME_MAX = 1.0
-ALARM_VOLUME_STEP = 0.1
 
 
 class AlarmTimeFileBase(AlarmTimeBase):
@@ -21,8 +15,11 @@ class AlarmTimeFileBase(AlarmTimeBase):
         self._file_name = None
         self._fore_color = None
         self._back_color = None
-        self._volume = ALARM_VOLUME_MIN
         self._is_alarm = False
+        self._volume_max = 0
+        self._volume_cur = 0
+        self._volume = None
+        self._player = None
 
     def init(self, config_section, mod_list) -> None:
         """Initializes (initialize internal variables)"""
@@ -43,35 +40,28 @@ class AlarmTimeFileBase(AlarmTimeBase):
         if len(self._back_color) != 3:
             raise ExceptionFormat(config_section.name, "BackgroundColor")
 
+        self._volume = mod_list["Volume"]
+        self._player = mod_list["Player"]
+        if self._volume is None:
+            raise ExceptionFormat(config_section.name, "Volume")
+        if self._player is None:
+            raise ExceptionFormat(config_section.name, "Player")
+
     def update_state(self, current_time) -> None:
         super(AlarmTimeFileBase, self).update_state(current_time)
         if self._is_alarm:
             if (current_time - self._stop_time).seconds <= 3:
-                self.done_draw()
+                self._volume_max = self._volume.execute(self._volume_max)
                 self._is_alarm = False
         if self._is_alarm:
-            if self._volume < ALARM_VOLUME_MAX:
-                self._volume += ALARM_VOLUME_STEP
-                pygame.mixer.music.set_volume(self._volume)
+            if self._volume_cur < self._volume_max:
+                self._volume_cur = self._volume.execute("+")
 
     def execute(self) -> None:
         if self._is_alarm:
             return
-        self._volume = ALARM_VOLUME_MIN
-        self.init_draw()
+        self._volume_max = self._volume.execute()
+        self._volume_cur = self._volume.execute(0)
+        if self._file_name:
+            self._player.execute(self._file_name)
         self._is_alarm = True
-
-    def init_draw(self):
-        if not self._file_name:
-            return
-        pygame.mixer.music.set_volume(self._volume)
-        pygame.mixer.music.load(self._file_name)
-        pygame.mixer.music.play()
-        # if not pygame.mixer.get_busy():
-        #    soundFile = getvoicetext(self._weather_text)
-        #    sound = pygame.mixer.Sound(soundFile)
-        #    sound.set_volume(1.0)   # Now plays at 100% of full volume.
-        #    sound.play()            # Sound plays at full volume by default
-
-    def done_draw(self):
-        pass

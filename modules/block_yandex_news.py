@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 import pygame
 import pygame.locals
 
-from typing import Dict
+from typing import Dict, Any
 from urllib.error import URLError
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
@@ -99,7 +99,7 @@ class BlockYandexNews(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         self._news = [line for (index, line) in enumerate(self.__get_newsblock(self._url)) if index < self._length]
         self._text = self._format % '.'.join(self._news) if self._news else None
 

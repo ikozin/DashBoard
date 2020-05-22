@@ -3,7 +3,7 @@ import urllib.parse as parse
 import pygame
 import pygame.locals
 
-from typing import Dict
+from typing import Dict, Any
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
@@ -68,7 +68,7 @@ class BlockVoice(BlockBase):
             raise TypeError("Передаваемый параметр должен быть наследником BlockBase")
         self._blocks.append(block)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         if len(args) == 1:
             text = args[0]
         elif self._blocks:

@@ -1,7 +1,7 @@
 import pygame
 import pygame.locals
 
-from typing import Dict
+from typing import Dict, Any
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
@@ -167,7 +167,7 @@ class BlockBme280(BlockSecondBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         (self._temperature, self._pressure, self._humidity) = self._device.read()
         self._text = self._format.format(self._temperature, self._humidity, self._pressure)
 

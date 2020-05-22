@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 from abc import ABCMeta, abstractmethod
 from logging import Logger
 from setting import Setting
@@ -40,7 +40,7 @@ class BlockBase(metaclass=ABCMeta):
     def add_block(self, block: 'BlockBase') -> None:
         pass
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         pass
 
     def get_text(self) -> str:

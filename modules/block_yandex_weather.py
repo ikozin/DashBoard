@@ -3,7 +3,7 @@ import urllib.request as request
 import xml.etree.ElementTree as ET
 import pygame
 
-from typing import Dict
+from typing import Dict, Any
 from datetime import datetime, timedelta
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
@@ -236,7 +236,7 @@ class BlockYandexWeather(BlockMinuteBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         data = self._get_data()
         if data is None:
             return

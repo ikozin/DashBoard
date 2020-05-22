@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
@@ -60,7 +60,7 @@ class BlockSwap(BlockSecondBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         value = int(args[0]) if len(args) == 1 else 1
         self._index += value
         self._index %= len(self._blocks)

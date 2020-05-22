@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 from modules.BlockBase import BlockBase
 from logging import Logger
 from setting import Setting
@@ -16,7 +16,7 @@ class BlockPlayer(BlockBase):
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         fileName = None
         if len(args) == 1:
             fileName = args[0]

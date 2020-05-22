@@ -1,7 +1,7 @@
-﻿import pygame
+import pygame
 import pygame.locals
 
-from typing import Dict
+from typing import Dict, Any
 from datetime import datetime
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
@@ -77,7 +77,7 @@ class BlockTime(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         if self._time is None:
             self._time = datetime.now()
         self._text = self._format.format(self._time)

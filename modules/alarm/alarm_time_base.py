@@ -1,4 +1,4 @@
-﻿import datetime
+import datetime
 
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.alarm.alarm_base import AlarmBase
@@ -15,7 +15,7 @@ class AlarmTimeBase(AlarmBase):
         self._start_time = None
         self._stop_time = None
         self._weekday = None
-        self._duration = None
+        self._duration = 0.0
 
     def init(self, config_section, mod_list) -> None:
         """Initializes (initialize internal variables)"""
@@ -23,7 +23,7 @@ class AlarmTimeBase(AlarmBase):
 
         self._start_time = config_section.get("Time")
         self._weekday = self._get_tuple(config_section.get("WeekDay"))
-        self._duration = config_section.getint("Duration")
+        self._duration = config_section.getfloat("Duration")
         if self._start_time is None:
             raise ExceptionNotFound(config_section.name, "Time")
         if self._weekday is None:

@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.hal.lirc_base import Lirc_Base
@@ -33,7 +33,7 @@ class BlockIR(BlockBase):
     def procced_event(self, event, is_online: bool) -> None:
         self.execute()
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         try:
             code = args[0] if len(args) == 1 else self._device.getCode()
             if not code:

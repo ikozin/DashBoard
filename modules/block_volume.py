@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Any
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
@@ -17,6 +17,10 @@ class BlockVolume(BlockBase):
         self._blocks = []
         self._volume = 0
         self._is_muted = False
+        self._font = None
+        self._pos = None
+        self._align_x = ""
+        self._align_y = ""
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
@@ -25,9 +29,32 @@ class BlockVolume(BlockBase):
 
         self._volume = section.getint("Volume")
 
+        font_name = section.get("FontName")
+        font_size = section.getint("FontSize")
+        is_bold = section.getboolean("FontBold")
+        is_italic = section.getboolean("FontItalic")
+        self._pos = self._get_tuple(section.get("Pos"))
+        self._align_x = section.get("AlignX")
+        self._align_y = section.get("AlignY")
+
         if self._volume is None:
             raise ExceptionNotFound(section.name, "Volume")
+        if font_name is None:
+            raise ExceptionNotFound(section.name, "FontName")
+        if font_size is None:
+            raise ExceptionNotFound(section.name, "FontSize")
+        if is_bold is None:
+            raise ExceptionNotFound(section.name, "FontBold")
+        if is_italic is None:
+            raise ExceptionNotFound(section.name, "FontItalic")
+        if self._pos is None:
+            raise ExceptionNotFound(section.name, "Pos")
+        if self._align_x is None:
+            raise ExceptionNotFound(section.name, "AlignX")
+        if self._align_y is None:
+            raise ExceptionNotFound(section.name, "AlignY")
 
+        self._font = pygame.font.SysFont(font_name, font_size, is_bold, is_italic)
         self.execute()
 
     def procced_event(self, event, is_online: bool) -> None:
@@ -43,11 +70,11 @@ class BlockVolume(BlockBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         case = ""
 
         if len(args) == 1:
-            case = args[0]
+            case = str(args[0])
 
         if case == "+":
             self._volume = self._volume + 5
@@ -65,7 +92,24 @@ class BlockVolume(BlockBase):
         elif case == "on":
             self._is_muted = False
 
+        elif len(case):
+            self._volume = int(case)
+
         if self._is_muted:
             pygame.mixer.music.set_volume(0)
         else:
             pygame.mixer.music.set_volume(self._volume / 100)
+        return self._volume;
+
+
+    def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
+        try:
+            if not is_online:
+                return
+            text = "{0}".format(self._volume)
+            text_size = self._font.size(text)
+            surf = self._font.render(text, True, (0, 255, 0), back_color)
+            screen.blit(surf, self.calc_position(text_size, self._pos, self._align_x, self._align_y))
+            self._time = current_time
+        except Exception as ex:
+            self._logger.exception(ex)

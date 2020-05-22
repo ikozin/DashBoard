@@ -2,7 +2,7 @@ import datetime
 import subprocess
 import sys
 
-from typing import Dict
+from typing import Dict, Any
 from exceptions import ExceptionFormat, ExceptionNotFound
 from modules.BlockBase import BlockBase
 from modules.BlockSecondBase import BlockSecondBase
@@ -73,7 +73,7 @@ class BlockWatcher(BlockSecondBase):
         except Exception as ex:
             self._logger.exception(ex)
 
-    def execute(self, *args) -> None:
+    def execute(self, *args) -> Any:
         ###########################################################################
         if sys.platform == "linux":  # Only for Raspberry Pi
             subprocess.Popen(self._path + " > /dev/null 2>&1", shell=True)
