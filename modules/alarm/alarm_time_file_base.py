@@ -60,8 +60,15 @@ class AlarmTimeFileBase(AlarmTimeBase):
     def execute(self) -> None:
         if self._is_alarm:
             return
+        self.init_draw()
         self._volume_max = self._volume.execute()
         self._volume_cur = self._volume.execute(0)
         if self._file_name:
             self._player.execute(self._file_name)
         self._is_alarm = True
+
+    def init_draw(self):
+        pass
+
+    def done_draw(self):
+        pass

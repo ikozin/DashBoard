@@ -1,4 +1,5 @@
 from typing import Dict, Any
+from datetime import datetime
 from exceptions import ExceptionNotFound
 from modules.BlockBase import BlockBase
 from logging import Logger
@@ -21,6 +22,7 @@ class BlockVolume(BlockBase):
         self._pos = None
         self._align_x = ""
         self._align_y = ""
+        self._start_time = None
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
@@ -99,12 +101,19 @@ class BlockVolume(BlockBase):
             pygame.mixer.music.set_volume(0)
         else:
             pygame.mixer.music.set_volume(self._volume / 100)
+
+        self._start_time = datetime.now()
         return self._volume
 
     def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
             if not is_online:
                 return
+            if not self._start_time:
+                return
+            delta = current_time - self._start_time
+            if delta.total_seconds() > 3:
+                self._start_time = None
             text = "{0}".format(self._volume)
             text_size = self._font.size(text)
             surf = self._font.render(text, True, (0, 255, 0), back_color)
