@@ -18,6 +18,7 @@ class BlockVolume(BlockBase):
         self._blocks = []
         self._volume = 0
         self._is_muted = False
+        self._format = ""
         self._font = None
         self._pos = None
         self._align_x = ""
@@ -31,6 +32,7 @@ class BlockVolume(BlockBase):
 
         self._volume = section.getint("Volume")
 
+        self._format = section.get("Text")
         font_name = section.get("FontName")
         font_size = section.getint("FontSize")
         is_bold = section.getboolean("FontBold")
@@ -41,6 +43,8 @@ class BlockVolume(BlockBase):
 
         if self._volume is None:
             raise ExceptionNotFound(section.name, "Volume")
+        if self._format is None:
+            raise ExceptionNotFound(section.name, "Text")
         if font_name is None:
             raise ExceptionNotFound(section.name, "FontName")
         if font_size is None:
@@ -114,7 +118,7 @@ class BlockVolume(BlockBase):
             delta = current_time - self._start_time
             if delta.total_seconds() > 3:
                 self._start_time = None
-            text = "{0}".format(self._volume)
+            text = self._format.format(self._volume)
             text_size = self._font.size(text)
             surf = self._font.render(text, True, (0, 255, 0), back_color)
             screen.blit(surf, self.calc_position(text_size, self._pos, self._align_x, self._align_y))
