@@ -38,7 +38,10 @@ class BlockSwap(BlockSecondBase):
         if not self._blocks:
             raise Exception(EXCEPTION_TEXT)
         for block in self._blocks:
-            block.init(mod_list)
+            try:
+                block.init(mod_list)
+            except Exception as ex:
+                self._logger.exception(ex)
 
         self.set_time(time)
         # self.update_info(True)
