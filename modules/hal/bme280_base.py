@@ -13,7 +13,6 @@ class Bme280_Base(metaclass=ABCMeta):
 
     def __del__(self):
         """Destructor"""
-        pass
 
     @abstractmethod
     def read(self) -> (float, float, float):

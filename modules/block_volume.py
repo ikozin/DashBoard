@@ -122,6 +122,5 @@ class BlockVolume(BlockBase):
             text_size = self._font.size(text)
             surf = self._font.render(text, True, (0, 255, 0), back_color)
             screen.blit(surf, self.calc_position(text_size, self._pos, self._align_x, self._align_y))
-            self._time = current_time
         except Exception as ex:
             self._logger.exception(ex)

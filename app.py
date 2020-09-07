@@ -44,6 +44,7 @@ class Mainboard:
         self._size = None
         self._screen = None
         self._is_display_on = True
+        self._logger = logger
         # Загружаем настройки из конфиг файла
         self._config = Setting()
         self._config.load(setting_file)
@@ -120,7 +121,6 @@ class Mainboard:
         """Destructor to make sure pygame shuts down, etc."""
         # pygame.mixer.quit()
         # pygame.display.quit()
-        pass
 
     def set_display_timer_on(self) -> None:
         """Таймер для отключения дисплея"""

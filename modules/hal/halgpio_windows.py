@@ -12,7 +12,6 @@ class HalGpio_Windows(HalGpio):
 
     def init(self) -> None:
         self._func()
-        pass
 
     def done(self) -> None:
         pass

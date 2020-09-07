@@ -13,7 +13,6 @@ class Lirc_Base(metaclass=ABCMeta):
 
     def __del__(self):
         """Destructor"""
-        pass
 
     @abstractmethod
     def getCode(self, code: str = None) -> str:

@@ -17,7 +17,7 @@ class BlockBme280(BlockSecondBase):
     def __init__(self, logger: Logger, setting: Setting, hal: Bme280_Base):
         """Initializes (declare internal variables)"""
         super(BlockBme280, self).__init__(logger, setting)
-
+        self._device = None
         self._hal = hal
         self._address = 0
         self._temperature = None
@@ -146,7 +146,6 @@ class BlockBme280(BlockSecondBase):
 
     def update_display(self, is_online: bool, screen, size, fore_color, back_color, current_time) -> None:
         try:
-            self._time = current_time
             if not is_online:
                 return
             if len(self._temperature_text) > 0:

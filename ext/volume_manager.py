@@ -29,7 +29,6 @@ class VolumeManager(BaseManager):
         self._text = DisplayTextFrame(self, "Громкость", "")
         self._text.grid(row=2, column=0, columnspan=2, padx=2, pady=2, sticky=(N, S, E, W))
 
-
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not isinstance(config, ConfigParser):
             raise TypeError("config")

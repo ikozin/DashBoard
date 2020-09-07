@@ -15,7 +15,6 @@ class HalGpio(metaclass=ABCMeta):
 
     def __del__(self):
         """Destructor"""
-        pass
 
     @abstractmethod
     def init(self) -> None:

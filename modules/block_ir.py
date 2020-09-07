@@ -15,6 +15,7 @@ class BlockIR(BlockBase):
         self._lirc_type = lirc_type
         self._module_list = None
         self._list = None
+        self._device = None
 
     def init(self, mod_list: Dict[str, BlockBase]) -> None:
         """Initializes (initialize internal variables)"""
