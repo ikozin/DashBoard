@@ -233,6 +233,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="docs\README.md" />
     <Content Include="scripts\deploy.cmd" />
     <Content Include="scripts\deploy_orapi.cmd" />
     <Content Include="pytest.cmd" />
@@ -333,6 +334,7 @@
     <Folder Include="ext\alarm\ui\" />
     <Folder Include="modules\hal\" />
     <Folder Include="music\" />
+    <Folder Include="docs\" />
     <Folder Include="scripts\" />
     <Folder Include="test\" />
     <Folder Include="weather\" />
