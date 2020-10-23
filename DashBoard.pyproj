@@ -323,7 +323,7 @@
     <Content Include="logger.ini" />
     <Content Include="setting.ini" />
     <Content Include="install.sh" />
-    <Content Include="scripts\zip.sh" />
+    <Content Include="scripts\build.sh" />
     <Content Include="webcam.sh" />
   </ItemGroup>
   <ItemGroup>

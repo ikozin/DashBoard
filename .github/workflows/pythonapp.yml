@@ -31,62 +31,12 @@ jobs:
       run: |
         pip install pytest pytest-mock
         pytest -v
-    - name: Deployment
-      env:
-        OPENWEATHER_KEY: ${{secrets.OPENWEATHER_KEY}}
-        WUNDERGROUND_KEY: ${{secrets.WUNDERGROUND_KEY}}
-        YANDEX_VOICE_KEY: ${{secrets.YANDEX_VOICE_KEY}}
-        GITHUB_TOKEN: ${{secrets.TOKEN}}  
-      run: |
-        echo Deployment
-        # Ensure that the GITHUB_TOKEN secret is included
-        # if [[ -z "$GITHUB_TOKEN" ]]; then
-        #   echo "Set the GITHUB_TOKEN env variable."
-        #   exit 1
-        # fi
-        # echo $GITHUB_TOKEN
-        # echo $OPENWEATHER_KEY
-        # echo $WUNDERGROUND_KEY
-        # echo $YANDEX_VOICE_KEY
-        # echo $HOME
-        # echo $GITHUB_WORKFLOW
-        # echo $GITHUB_ACTION
-        # echo $GITHUB_ACTIONS
-        # echo $GITHUB_ACTOR
-        # echo $GITHUB_REPOSITORY
-        # echo $GITHUB_EVENT_NAME
-        # echo $GITHUB_EVENT_PATH
-        # echo $GITHUB_WORKSPACE
-        # echo $GITHUB_SHA
-        # echo $GITHUB_REF
-        # echo $GITHUB_HEAD_REF
-        # echo $GITHUB_BASE_REF
     - name: Build project # This would actually build your project, using zip for an example artifact
       env:
         OPENWEATHER_KEY: ${{secrets.OPENWEATHER_KEY}}
         WUNDERGROUND_KEY: ${{secrets.WUNDERGROUND_KEY}}
         YANDEX_VOICE_KEY: ${{secrets.YANDEX_VOICE_KEY}}
-      run: |
-        # # zip --junk-paths my-artifact README.md
-        # # setting.ini
-        # sed -i -e 's/<OPENWEATHERMAP_KEY>/'${OPENWEATHER_KEY}'/g' setting.ini
-        # sed -i -e 's/<YANDEXVOICE_KEY>/'${YANDEX_VOICE_KEY}'/g' setting.ini
-        # sed -i -e 's/<WUNDERGROUND_KEY>/'${WUNDERGROUND_KEY}'/g' setting.ini
-        # # setting_opiwin.ini
-        # sed -i -e 's/<OPENWEATHERMAP_KEY>/'${OPENWEATHER_KEY}'/g' setting_opiwin.ini
-        # sed -i -e 's/<YANDEXVOICE_KEY>/'${YANDEX_VOICE_KEY}'/g' setting_opiwin.ini
-        # sed -i -e 's/<WUNDERGROUND_KEY>/'${WUNDERGROUND_KEY}'/g' setting_opiwin.ini
-        # # setting_rasppi.ini
-        # sed -i -e 's/<OPENWEATHERMAP_KEY>/'${OPENWEATHER_KEY}'/g' setting_rasppi.ini
-        # sed -i -e 's/<YANDEXVOICE_KEY>/'${YANDEX_VOICE_KEY}'/g' setting_rasppi.ini
-        # sed -i -e 's/<WUNDERGROUND_KEY>/'${WUNDERGROUND_KEY}'/g' setting_rasppi.ini
-        # # setting_win.ini
-        # sed -i -e 's/<OPENWEATHERMAP_KEY>/'${OPENWEATHER_KEY}'/g' setting_win.ini
-        # sed -i -e 's/<YANDEXVOICE_KEY>/'${YANDEX_VOICE_KEY}'/g' setting_win.ini
-        # sed -i -e 's/<WUNDERGROUND_KEY>/'${WUNDERGROUND_KEY}'/g' setting_win.ini
-        # # zip
-        # zip build -R ext modules music weather "*.py" "*.ini" "*.sh" "*.cmd" "*.txt" "*.mp3" "*.png" ".gif" -x test/*
-        sh ./scripts/zip.sh
+      run: sh ./scripts/build.sh
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1.1.4   # https://github.com/actions/create-release
