@@ -231,13 +231,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="deploy.cmd" />
-    <Content Include="deploy_orapi.cmd" />
+    <Content Include="scripts\deploy.cmd" />
+    <Content Include="scripts\deploy_orapi.cmd" />
     <Content Include="pytest.cmd" />
-    <Content Include="excludelist.txt" />
+    <Content Include="scripts\excludelist.txt" />
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
-    <Content Include="deploy_rasppi.cmd" />
+    <Content Include="scripts\deploy_rasppi.cmd" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="pytest.ini" />
