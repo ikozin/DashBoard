@@ -251,9 +251,13 @@ paket-files/
 .idea/
 *.sln.iml
 
+# My Custom
 __pycache__/
 /log.txt
 /log.txt.*
 /text.wav
 /weather/*.xml
-/.mypy_cache/
+*_cache*/
+
+# Python venv
+env/
