@@ -1,12 +1,13 @@
-name: Python application
+name: Python Application
 
-on: [push]
+on:
+  push:
+    paths-ignore::
+    - "docs/**"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.7
@@ -46,18 +47,18 @@ jobs:
         # echo $WUNDERGROUND_KEY
         # echo $YANDEX_VOICE_KEY
         # echo $HOME
-        echo $GITHUB_WORKFLOW
-        echo $GITHUB_ACTION
-        echo $GITHUB_ACTIONS
-        echo $GITHUB_ACTOR
-        echo $GITHUB_REPOSITORY
-        echo $GITHUB_EVENT_NAME
-        echo $GITHUB_EVENT_PATH
-        echo $GITHUB_WORKSPACE
-        echo $GITHUB_SHA
-        echo $GITHUB_REF
-        echo $GITHUB_HEAD_REF
-        echo $GITHUB_BASE_REF
+        # echo $GITHUB_WORKFLOW
+        # echo $GITHUB_ACTION
+        # echo $GITHUB_ACTIONS
+        # echo $GITHUB_ACTOR
+        # echo $GITHUB_REPOSITORY
+        # echo $GITHUB_EVENT_NAME
+        # echo $GITHUB_EVENT_PATH
+        # echo $GITHUB_WORKSPACE
+        # echo $GITHUB_SHA
+        # echo $GITHUB_REF
+        # echo $GITHUB_HEAD_REF
+        # echo $GITHUB_BASE_REF
     - name: Build project # This would actually build your project, using zip for an example artifact
       env:
         OPENWEATHER_KEY: ${{secrets.OPENWEATHER_KEY}}
