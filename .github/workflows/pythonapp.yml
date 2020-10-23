@@ -111,4 +111,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: Dashboard
-        path: build./build.zip
+        path: ./build.zip
