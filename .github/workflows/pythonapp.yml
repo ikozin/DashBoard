@@ -1,5 +1,7 @@
+# https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions
 name: Python Application
 
+# https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths-ignore::
@@ -9,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v1 # https://github.com/actions/checkout
     - name: Set up Python 3.7
       uses: actions/setup-python@v1
       with:
@@ -104,3 +106,9 @@ jobs:
         asset_path: ./build.zip
         asset_name: build.zip
         asset_content_type: application/zip
+    - name: Upload Artifact
+      id: upload-artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: Dashboard
+        path: build./build.zip
