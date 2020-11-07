@@ -72,6 +72,30 @@ class Mainboard:
                 self._modules.append(self._manager_list[name])
                 print(name)
 
+        # Инициализируем шрифты
+        pygame.font.init()
+
+        # Инициализируем музыкальный модуль
+        drivers = ["alsa", "pulseaudio", "arts", "esd", "dsp", "directsound", "winmm"]    # https://wiki.libsdl.org/FAQUsingSDL
+        found = False
+        for driver in drivers:
+            # Make sure that SDL_AUDIODRIVER is set
+            if not os.getenv("SDL_AUDIODRIVER"):
+                os.putenv("SDL_AUDIODRIVER", driver)
+            try:
+                pygame.mixer.init()
+                print("Driver: {0} initialized!".format(driver))
+            except Exception:
+                print("Driver: {0} failed.".format(driver))
+                continue
+            found = True
+            break
+
+        if not found:
+            raise Exception("No suitable sound driver found!")
+
+        pygame.mixer.music.set_volume(0.0)
+
         # Based on "Python GUI in Linux frame buffer"
         # http://www.karoltomala.com/blog/?p=679
         # Check which frame buffer drivers are available
@@ -100,30 +124,6 @@ class Mainboard:
 
         print("Framebuffer size: {0}".format(self._size))
 
-        # Инициализируем шрифты
-        pygame.font.init()
-
-        # Инициализируем музыкальный модуль
-        drivers = ["alsa", "directsound"]    # https://wiki.libsdl.org/FAQUsingSDL
-        found = False
-        for driver in drivers:
-            # Make sure that SDL_AUDIODRIVER is set
-            if not os.getenv("SDL_AUDIODRIVER"):
-                os.putenv("SDL_AUDIODRIVER", driver)
-            try:
-                pygame.mixer.init()
-                print("Driver: {0} initialized!".format(driver))
-            except Exception:
-                print("Driver: {0} failed.".format(driver))
-                continue
-            found = True
-            break
-
-        if not found:
-            raise Exception("No suitable sound driver found!")
-
-        pygame.mixer.music.set_volume(0.0)
-
         # Выключаем курсор
         pygame.mouse.set_visible(False)
 
@@ -138,8 +138,8 @@ class Mainboard:
 
     def __del__(self):
         """Destructor to make sure pygame shuts down, etc."""
-        # pygame.mixer.quit()
-        # pygame.display.quit()
+        pygame.display.quit()
+        pygame.mixer.quit()
 
     def set_display_timer_on(self) -> None:
         """Таймер для отключения дисплея"""
@@ -193,7 +193,6 @@ class Mainboard:
         return 1
 
     def loop(self) -> None:
-        print(pygame.version.ver)
         self._hal.init()
         clock = pygame.time.Clock()
         while self.procced_event(pygame.event.get()):
