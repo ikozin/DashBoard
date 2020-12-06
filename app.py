@@ -76,7 +76,11 @@ class Mainboard:
         pygame.font.init()
 
         # Инициализируем музыкальный модуль
-        drivers = ["alsa", "pulseaudio", "arts", "esd", "dsp", "directsound", "winmm"]    # https://wiki.libsdl.org/FAQUsingSDL
+        # #  v1.2   |               Linux                           |     windows      |
+        # drivers = ["dsp","dma","esd","artsc","pulse","alsa","arts","dsound","waveout"]
+        # #  v2.0   |                  Linux               |        windows      |
+        # drivers = ["dsp","esd","alsa","arts","pulseaudio","directsound","winmm"]
+        drivers = ["pulse", "pulseaudio", "alsa", "directsound", "winmm"]    # https://wiki.libsdl.org/FAQUsingSDL
         found = False
         for driver in drivers:
             # Make sure that SDL_AUDIODRIVER is set
@@ -100,7 +104,11 @@ class Mainboard:
         # http://www.karoltomala.com/blog/?p=679
         # Check which frame buffer drivers are available
         # Start with fbcon since directfb hangs with composite output
-        drivers = ["directfb", "x11", "windows"]    # https://wiki.libsdl.org/FAQUsingSDL
+        # #  v1.2   |               Linux                          |      windows      |
+        # drivers = ["x11","dga","fbcon","directfb","svgalib","ggi","directx", "windib"]
+        # #  v2.0   |    Linux       | windows |
+        # drivers = ["x11","directfb","windows"]
+        drivers = ["fbcon", "directfb", "x11", "directx", "windows"]    # https://wiki.libsdl.org/FAQUsingSDL
         found = False
         for driver in drivers:
             # Make sure that SDL_VIDEODRIVER is set
@@ -138,8 +146,8 @@ class Mainboard:
 
     def __del__(self):
         """Destructor to make sure pygame shuts down, etc."""
-        pygame.display.quit()
-        pygame.mixer.quit()
+        # pygame.display.quit()
+        # pygame.mixer.quit()
 
     def set_display_timer_on(self) -> None:
         """Таймер для отключения дисплея"""
@@ -194,29 +202,33 @@ class Mainboard:
 
     def loop(self) -> None:
         self._hal.init()
-        clock = pygame.time.Clock()
-        while self.procced_event(pygame.event.get()):
+        try:
+            clock = pygame.time.Clock()
+            while self.procced_event(pygame.event.get()):
 
-            self._hal.update()
+                self._hal.update()
 
-            if self._is_display_on:
-                (_, background_color, foreground_color, _) = self._config.get_curret_setting()
-                self._screen.fill(background_color)
-                time = datetime.datetime.now()
-                for module in self._modules:
-                    module.update_display(
-                        self._is_display_on,
-                        self._screen,
-                        self._size,
-                        foreground_color,
-                        background_color,
-                        time)
-            else:
-                self._screen.fill((0, 0, 0))
+                if self._is_display_on:
+                    (_, background_color, foreground_color, _) = self._config.get_curret_setting()
+                    self._screen.fill(background_color)
+                    time = datetime.datetime.now()
+                    for module in self._modules:
+                        module.update_display(
+                            self._is_display_on,
+                            self._screen,
+                            self._size,
+                            foreground_color,
+                            background_color,
+                            time)
+                else:
+                    self._screen.fill((0, 0, 0))
 
-            pygame.display.update()
-            # pygame.time.delay(WAIT_TIME)
-            clock.tick(FPS)
+                pygame.display.update()
+                # pygame.time.delay(WAIT_TIME)
+                clock.tick(FPS)
+
+        except KeyboardInterrupt:
+            pass
 
         for module in self._modules:
             module.done()
