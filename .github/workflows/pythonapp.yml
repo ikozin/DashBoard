@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1 # https://github.com/actions/checkout
     - name: Set up Python 3.7
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2 # https://github.com/actions/setup-python
       with:
         python-version: 3.7
     - name: Install dependencies
