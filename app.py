@@ -74,57 +74,12 @@ class Mainboard:
 
         # Инициализируем шрифты
         pygame.font.init()
-
-        # Инициализируем музыкальный модуль
-        # #  v1.2   |               Linux                           |     windows      |
-        # drivers = ["dsp","dma","esd","artsc","pulse","alsa","arts","dsound","waveout"]
-        # #  v2.0   |                  Linux               |        windows      |
-        # drivers = ["dsp","esd","alsa","arts","pulseaudio","directsound","winmm"]
-        drivers = ["pulse", "pulseaudio", "alsa", "directsound", "winmm"]    # https://wiki.libsdl.org/FAQUsingSDL
-        found = False
-        for driver in drivers:
-            # Make sure that SDL_AUDIODRIVER is set
-            if not os.getenv("SDL_AUDIODRIVER"):
-                os.putenv("SDL_AUDIODRIVER", driver)
-            try:
-                pygame.mixer.init()
-                print("Driver: {0} initialized!".format(driver))
-            except Exception:
-                print("Driver: {0} failed.".format(driver))
-                continue
-            found = True
-            break
-
-        if not found:
-            raise Exception("No suitable sound driver found!")
-
+        # Инициализируем музыкальный модуль https://wiki.libsdl.org/FAQUsingSDL
+        pygame.mixer.init()
         pygame.mixer.music.set_volume(0.0)
 
-        # Based on "Python GUI in Linux frame buffer"
-        # http://www.karoltomala.com/blog/?p=679
-        # Check which frame buffer drivers are available
-        # Start with fbcon since directfb hangs with composite output
-        # #  v1.2   |               Linux                          |      windows      |
-        # drivers = ["x11","dga","fbcon","directfb","svgalib","ggi","directx", "windib"]
-        # #  v2.0   |    Linux       | windows |
-        # drivers = ["x11","directfb","windows"]
-        drivers = ["fbcon", "directfb", "x11", "directx", "windows"]    # https://wiki.libsdl.org/FAQUsingSDL
-        found = False
-        for driver in drivers:
-            # Make sure that SDL_VIDEODRIVER is set
-            if not os.getenv("SDL_VIDEODRIVER"):
-                os.putenv("SDL_VIDEODRIVER", driver)
-            try:
-                pygame.display.init()
-                print("Driver: {0} initialized!".format(driver))
-            except Exception:
-                print("Driver: {0} failed.".format(driver))
-                continue
-            found = True
-            break
-
-        if not found:
-            raise Exception("No suitable video driver found!")
+        # Инициализируем драйвер дисплея https://wiki.libsdl.org/FAQUsingSDL
+        pygame.display.init()
 
         flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE if self._config.FullScreen else 0
         self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
