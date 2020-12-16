@@ -8,7 +8,7 @@
 	
 			<traffic/>
 			
-		<weather climate="1" region="192">
+		<weather  region="192">
 			<source>mb3d</source>
 			
 		<day>
@@ -16,60 +16,36 @@
 			<country>Россия</country>
 			<time_zone>Europe/Moscow</time_zone>
 			<summer-time>1</summer-time>
-			<sun_rise>08:50</sun_rise>
-			<sunset>15:46</sunset>
-			<daytime>n</daytime>
-			<date date="2019-12-26T00:00:00Z">
-				<day weekday="чт">26</day>
+			<sun_rise>08:45</sun_rise>
+			<sunset>15:42</sunset>
+			<daytime>d</daytime>
+			<date date="2020-12-16T00:00:00Z">
+				<day weekday="ср">16</day>
 				<month name="декабря">12</month>
-				<year>2019</year>
-				<daytime>n</daytime>
+				<year>2020</year>
+				<daytime>d</daytime>
 			</date>
 			
-		<day_part typeid="3" type="вечер">
+		<day_part typeid="2" type="день">
 			<weather_type>облачно</weather_type>
 			<weather_code>overcast</weather_code>
 			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-2.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-4.png</image-v2>
 			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
 			<image_number>5</image_number>
-			<wind_speed>0.9</wind_speed>
-			<wind_direction id="e">восток</wind_direction>
-			<dampness>86</dampness>
-			<hectopascal>996</hectopascal>
-			<torr>747</torr>
-			<pressure>747</pressure>
-			<temperature class_name="t-4" color="E5EAEE">-3</temperature>
+			<wind_speed>1.6</wind_speed>
+			<wind_direction id="sw">юго-запад</wind_direction>
+			<dampness>89</dampness>
+			<hectopascal>1009</hectopascal>
+			<torr>757</torr>
+			<pressure>757</pressure>
+			<temperature class_name="t-4" color="E5EAEE">-4</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>20:00</observation_time>
-			<observation>2019-12-26T20:00:00</observation>
+			<observation_time>11:00</observation_time>
+			<observation>2020-12-16T11:00:00</observation>
 		</day_part>
 	
 			
-		<day_part typeid="4" type="ночь">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-4.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
-			<temperature class_name="t-4" color="E5EAEE">-4</temperature>
-		</day_part>
-	
-
-		<day_part typeid="1" type="утро">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-4.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
-			<temperature class_name="t-4" color="E5EAEE">-4</temperature>
-		</day_part>
-	
-
-		<day_part typeid="2" type="день">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-2.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
-			
-			<temperature_from class_name="t-4" color="E5EAEE">-4</temperature_from>
-			<temperature_to class_name="t-4" color="E5EAEE">-3</temperature_to>
-		
-		</day_part>
-	
-
 		<day_part typeid="3" type="вечер">
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-4.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
@@ -79,13 +55,43 @@
 		
 		</day_part>
 	
+
+		<day_part typeid="4" type="ночь">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_sn_-2.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_sn.png</image-v3>
 			
-			<night_short><temperature class_name="t-2" color="EAEDEF">-2</temperature></night_short>,
-			<tomorrow><temperature class_name="t-4" color="E5EAEE">-3</temperature></tomorrow>
+			<temperature_from class_name="t-4" color="E5EAEE">-4</temperature_from>
+			<temperature_to class_name="t-4" color="E5EAEE">-3</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="1" type="утро">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_0.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
+			
+			<temperature_from class_name="t-2" color="EAEDEF">-2</temperature_from>
+			<temperature_to class_name="t-2" color="EAEDEF">-1</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="2" type="день">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_+2.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
+			
+			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
+			<temperature_to class_name="t2" color="F0F0EC">+2</temperature_to>
+		
+		</day_part>
+	
+			
+			<night_short><temperature class_name="t-6" color="E0E7EE">-6</temperature></night_short>,
+			<tomorrow><temperature class_name="t2" color="F0F0EC">+2</temperature></tomorrow>
 		
 		</day>
 	
-			<url slug="vladimir">http://pogoda.yandex.ru/vladimir/</url>
+			<url slug="192">http://pogoda.yandex.ru/192/</url>
 		</weather>
 	
 		</info>

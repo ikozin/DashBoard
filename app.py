@@ -81,7 +81,7 @@ class Mainboard:
         # Инициализируем драйвер дисплея https://wiki.libsdl.org/FAQUsingSDL
         pygame.display.init()
 
-        flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE if self._config.FullScreen else 0
+        flags = pygame.FULLSCREEN | pygame.DOUBLEBUF | pygame.HWSURFACE if self._config.FullScreen else pygame.DOUBLEBUF | pygame.HWSURFACE
         self._size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self._screen = pygame.display.set_mode(self._size, flags)
 
