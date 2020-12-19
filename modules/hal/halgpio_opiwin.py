@@ -9,7 +9,7 @@ from time import time
 
 """
 # https://opi-gpio.readthedocs.io/en/latest/api-documentation.html
-Orange Pi Win Plus
+Orange Pi Win Plus https://pascalroeleven.nl/wordpress/wp-content/uploads/2020/04/a64-40p.png
             ----------- ---------- ---- ---- ---------- -----------
 PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
            |  TWI1-SDA |    [PH3] |  3 | 4  |          | 5V        |
