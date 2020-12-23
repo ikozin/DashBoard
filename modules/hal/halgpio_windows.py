@@ -6,7 +6,7 @@ from logging import Logger
 class HalGpio_Windows(HalGpio):
     """description of class"""
 
-    def __init__(self, logger: Logger, func: Callable[[], None], pir: str, led: str):
+    def __init__(self, logger: Logger, func: Callable[[], None], pir: int, led: int):
         """Initializes (declare internal variables)"""
         super(HalGpio_Windows, self).__init__(logger, func, pir, led)
 

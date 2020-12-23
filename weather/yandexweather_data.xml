@@ -33,7 +33,7 @@
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-2.png</image-v2>
 			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
 			<image_number>5</image_number>
-			<wind_speed>3.4</wind_speed>
+			<wind_speed>2.9</wind_speed>
 			<wind_direction id="s">юг</wind_direction>
 			<dampness>85</dampness>
 			<hectopascal>1007</hectopascal>

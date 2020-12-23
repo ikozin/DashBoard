@@ -35,17 +35,17 @@ PIR GND -> |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
 class HalGpio_RaspPi(HalGpio):
     """description of class"""
 
-    def __init__(self, logger: Logger, func: Callable[[], None], pir: str, led: str):
+    def __init__(self, logger: Logger, func: Callable[[], None], pir: int, led: int):
         """Initializes (declare internal variables)"""
         super(HalGpio_RaspPi, self).__init__(logger, func, pir, led)
 
     def init(self) -> None:
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(int(self._pir), GPIO.IN)
-        GPIO.setup(int(self._led), GPIO.OUT)
+        GPIO.setup(self._pir, GPIO.IN)
+        GPIO.setup(self._led, GPIO.OUT)
         self.ledOn()
-        GPIO.add_event_detect(int(self._pir), GPIO.RISING, callback=self.motion_detected)
+        GPIO.add_event_detect(self._pir, GPIO.RISING, callback=self.motion_detected)
 
     def done(self) -> None:
         GPIO.cleanup()
@@ -70,10 +70,10 @@ class HalGpio_RaspPi(HalGpio):
         subprocess.Popen("sudo shutdown -h now", shell=True)
 
     def ledOn(self) -> None:
-        GPIO.output(int(self._led), 1)
+        GPIO.output(self._led, 1)
 
     def ledOff(self) -> None:
-        GPIO.output(int(self._led), 0)
+        GPIO.output(self._led, 0)
 
     def motion_detected(self, pin):
         # self._logger.debug("Motion detected!")

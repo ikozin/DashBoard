@@ -1,4 +1,5 @@
 import subprocess
+import orangepi.winplus
 import OPi.GPIO as GPIO
 
 from .halgpio import HalGpio
@@ -43,13 +44,13 @@ add_event_detect - ругается, нет прав
 class HalGpio_OraPiWin(HalGpio):
     """description of class"""
 
-    def __init__(self, logger: Logger, func: Callable[[], None], pir: str, led: str):
+    def __init__(self, logger: Logger, func: Callable[[], None], pir: int, led: int):
         """Initializes (declare internal variables)"""
         super(HalGpio_OraPiWin, self).__init__(logger, func, pir, led)
         self._time = time()
 
     def init(self) -> None:
-        GPIO.setmode(GPIO.SUNXI)
+        GPIO.setmode(orangepi.winplus.BOARD)
         GPIO.setup(self._pir, GPIO.IN)
         GPIO.setup(self._led, GPIO.OUT)
         self.ledOn()
