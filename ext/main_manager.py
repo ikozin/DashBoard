@@ -1,6 +1,6 @@
 from typing import Dict, Tuple
 from configparser import ConfigParser
-from tkinter import messagebox, BooleanVar, StringVar, LabelFrame, Label, Checkbutton, Spinbox, Listbox, Button, N, S, E, W
+from tkinter import messagebox, BooleanVar, StringVar, LabelFrame, Label, Checkbutton, Spinbox, Listbox, Button, Entry, N, S, E, W, RIGHT
 from tkinter.ttk import Frame
 from ext.base_manager import BaseManager
 from ext.modal_dialog import ColorsChooserFrame, EntryModalDialog, SelectFrame
@@ -18,9 +18,16 @@ class MainManager(BaseManager):
         self._current__name = None
         self._idle_variable = StringVar()
         self._full_screen = BooleanVar()
+        self._pir_value = StringVar()
+        self._led_value = StringVar()
 
-        chk = Checkbutton(self, text="Полный экран", variable=self._full_screen)
-        chk.grid(row=0, column=0, columnspan=4, sticky=(W))
+        var_frame = Frame(self, padding=(2, 2, 2, 2))
+        var_frame.grid(row=0, column=0, columnspan=3, sticky=(N, S, E, W))
+        Checkbutton(var_frame, text="Полный экран", variable=self._full_screen).grid(row=0, column=0, sticky=(W))
+        Label(var_frame, justify=RIGHT, text="PIR Pin").grid(row=0, column=1, padx=2, pady=2, sticky=(N, S, E, W))
+        Entry(var_frame, textvariable=self._pir_value, width=8).grid(row=0, column=2, padx=2, pady=2, sticky=(N, S, E, W))
+        Label(var_frame, justify=RIGHT, text="LED Pin").grid(row=0, column=3, padx=2, pady=2, sticky=(N, S, E, W))
+        Entry(var_frame, textvariable=self._led_value, width=8).grid(row=0, column=4, padx=2, pady=2, sticky=(N, S, E, W))
 
         self._listbox = Listbox(self)
         self._listbox.grid(row=1, column=0, rowspan=3, padx=2, pady=2)
@@ -54,7 +61,7 @@ class MainManager(BaseManager):
         self._section_frame.grid(row=2, column=2, rowspan=2, columnspan=3, sticky=(N, S, E, W))
 
         self._frame = SelectFrame(self, "Выбор модулей для загрузки")
-        self._frame.grid(row=4, column=0, columnspan=3, sticky=(N, S, E, W), padx=2, pady=2)
+        self._frame.grid(row=4, column=0, columnspan=4, sticky=(N, S, E, W), padx=2, pady=2)
 
     def load(self, config: ConfigParser, module_list: Dict[str, BaseManager]) -> None:
         if not isinstance(config, ConfigParser):
@@ -71,6 +78,8 @@ class MainManager(BaseManager):
         self._listbox.delete(0, "end")
         section = config["MAIN"]
         self._full_screen.set(section.getboolean("FullScreen", fallback=False))
+        self._pir_value.set(section.get("PIR", fallback=""))
+        self._led_value.set(section.get("LED", fallback=""))
         idle = section.getint("idletime", fallback=1)
         self._idle_variable.set(idle)
         back_color = self._get_tuple(section.get("BackgroundColor", fallback="(0, 0, 0)"))
@@ -100,6 +109,8 @@ class MainManager(BaseManager):
             config.add_section("TIMELINE")
         section = config["MAIN"]
         section["FullScreen"] = str(self._full_screen.get())
+        section["PIR"] = self._pir_value.get()
+        section["LED"] = self._led_value.get()
         (background_color, foreground_color) = self._color_frame.get_result()
         section["idletime"] = str(self._idle_variable.get())
         section["BackgroundColor"] = "(%d, %d, %d)" % background_color

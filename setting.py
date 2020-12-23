@@ -84,6 +84,12 @@ class Setting:
     def FullScreen(self) -> bool:
         return self._config["MAIN"].getboolean("FullScreen", fallback=False)
 
+    def PIR_Pin(self) -> str:
+        return self._config["MAIN"].get("PIR")
+
+    def LED_Pin(self) -> str:
+        return self._config["MAIN"].get("LED")
+
     @property
     def configuration(self):
         return self._config

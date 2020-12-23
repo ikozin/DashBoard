@@ -6,12 +6,14 @@ from logging import Logger
 class HalGpio(metaclass=ABCMeta):
     """description of class"""
 
-    def __init__(self, logger: Logger, func: Callable[[], None]):
+    def __init__(self, logger: Logger, func: Callable[[], None], pir: str, led: str):
         """Initializes (declare internal variables)"""
         if not isinstance(logger, Logger):
             raise TypeError("Передаваемый параметр logger должен быть Logger")
         self._logger = logger
         self._func = func
+        self._pir = pir
+        self._led = led
 
     def __del__(self):
         """Destructor"""

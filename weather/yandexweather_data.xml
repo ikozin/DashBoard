@@ -16,11 +16,11 @@
 			<country>Россия</country>
 			<time_zone>Europe/Moscow</time_zone>
 			<summer-time>1</summer-time>
-			<sun_rise>08:45</sun_rise>
-			<sunset>15:42</sunset>
+			<sun_rise>08:49</sun_rise>
+			<sunset>15:45</sunset>
 			<daytime>d</daytime>
-			<date date="2020-12-16T00:00:00Z">
-				<day weekday="ср">16</day>
+			<date date="2020-12-23T00:00:00Z">
+				<day weekday="ср">23</day>
 				<month name="декабря">12</month>
 				<year>2020</year>
 				<daytime>d</daytime>
@@ -30,19 +30,19 @@
 			<weather_type>облачно</weather_type>
 			<weather_code>overcast</weather_code>
 			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-4.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-2.png</image-v2>
 			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
 			<image_number>5</image_number>
-			<wind_speed>1.6</wind_speed>
-			<wind_direction id="sw">юго-запад</wind_direction>
-			<dampness>89</dampness>
-			<hectopascal>1009</hectopascal>
-			<torr>757</torr>
-			<pressure>757</pressure>
-			<temperature class_name="t-4" color="E5EAEE">-4</temperature>
+			<wind_speed>3.4</wind_speed>
+			<wind_direction id="s">юг</wind_direction>
+			<dampness>85</dampness>
+			<hectopascal>1007</hectopascal>
+			<torr>756</torr>
+			<pressure>756</pressure>
+			<temperature class_name="t-4" color="E5EAEE">-3</temperature>
 			<time_zone>Europe/Moscow</time_zone>
 			<observation_time>11:00</observation_time>
-			<observation>2020-12-16T11:00:00</observation>
+			<observation>2020-12-23T11:00:00</observation>
 		</day_part>
 	
 			
@@ -50,44 +50,41 @@
 			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-4.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
 			
-			<temperature_from class_name="t-6" color="E0E7EE">-5</temperature_from>
-			<temperature_to class_name="t-4" color="E5EAEE">-4</temperature_to>
+			<temperature_from class_name="t-10" color="D5E2EC">-9</temperature_from>
+			<temperature_to class_name="t-6" color="E0E7EE">-5</temperature_to>
 		
 		</day_part>
 	
 
 		<day_part typeid="4" type="ночь">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_sn_-2.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_sn.png</image-v3>
-			
-			<temperature_from class_name="t-4" color="E5EAEE">-4</temperature_from>
-			<temperature_to class_name="t-4" color="E5EAEE">-3</temperature_to>
-		
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-10.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+			<temperature class_name="t-10" color="D5E2EC">-10</temperature>
 		</day_part>
 	
 
 		<day_part typeid="1" type="утро">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_0.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-8.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
 			
-			<temperature_from class_name="t-2" color="EAEDEF">-2</temperature_from>
-			<temperature_to class_name="t-2" color="EAEDEF">-1</temperature_to>
+			<temperature_from class_name="t-10" color="D5E2EC">-10</temperature_from>
+			<temperature_to class_name="t-8" color="DAE5ED">-8</temperature_to>
 		
 		</day_part>
 	
 
 		<day_part typeid="2" type="день">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_+2.png</image-v2>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-6.png</image-v2>
 			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
 			
-			<temperature_from class_name="t0" color="F0EFF0">0</temperature_from>
-			<temperature_to class_name="t2" color="F0F0EC">+2</temperature_to>
+			<temperature_from class_name="t-8" color="DAE5ED">-8</temperature_from>
+			<temperature_to class_name="t-6" color="E0E7EE">-6</temperature_to>
 		
 		</day_part>
 	
 			
-			<night_short><temperature class_name="t-6" color="E0E7EE">-6</temperature></night_short>,
-			<tomorrow><temperature class_name="t2" color="F0F0EC">+2</temperature></tomorrow>
+			<night_short><temperature class_name="t-6" color="E0E7EE">-5</temperature></night_short>,
+			<tomorrow><temperature class_name="t-6" color="E0E7EE">-6</temperature></tomorrow>
 		
 		</day>
 	

@@ -36,22 +36,22 @@ PIR GND -> |       GND |          | 39 | 40 | [PB1]    | UART2_RX  |
 add_event_detect - ругается, нет прав
 """
 
-PIR_PIN = 'PC4'  # PC4 - 18
-LED_PIN = 'PL9'  # PL9 - 16
+# PIR_PIN = 'PC4'  # PC4 - 18
+# LED_PIN = 'PL9'  # PL9 - 16
 
 
 class HalGpio_OraPiWin(HalGpio):
     """description of class"""
 
-    def __init__(self, logger: Logger, func: Callable[[], None]):
+    def __init__(self, logger: Logger, func: Callable[[], None], pir: str, led: str):
         """Initializes (declare internal variables)"""
-        super(HalGpio_OraPiWin, self).__init__(logger, func)
+        super(HalGpio_OraPiWin, self).__init__(logger, func, pir, led)
         self._time = time()
 
     def init(self) -> None:
         GPIO.setmode(GPIO.SUNXI)
-        GPIO.setup(LED_PIN, GPIO.OUT)
-        GPIO.setup(PIR_PIN, GPIO.IN)
+        GPIO.setup(self._pir, GPIO.IN)
+        GPIO.setup(self._led, GPIO.OUT)
         self.ledOn()
 
     def done(self) -> None:
@@ -60,7 +60,7 @@ class HalGpio_OraPiWin(HalGpio):
     def update(self) -> None:
         if time() - self._time > 1:
             self._time = time()
-            if GPIO.input(PIR_PIN) == GPIO.HIGH:
+            if GPIO.input(self._pir) == GPIO.HIGH:
                 self._func()
 
     def display_off(self) -> None:
@@ -76,7 +76,7 @@ class HalGpio_OraPiWin(HalGpio):
         subprocess.Popen("sudo shutdown -h now", shell=True)
 
     def ledOn(self) -> None:
-        GPIO.output(LED_PIN, 1)
+        GPIO.output(self._led, 1)
 
     def ledOff(self) -> None:
-        GPIO.output(LED_PIN, 0)
+        GPIO.output(self._led, 0)

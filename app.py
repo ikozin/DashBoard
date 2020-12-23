@@ -48,7 +48,7 @@ class Mainboard:
         # Загружаем настройки из конфиг файла
         self._config = Setting()
         self._config.load(setting_file)
-        self._hal = hal(logger, self.display_on)
+        self._hal = hal(logger, self.display_on, self._config.PIR_Pin, self._config.LED_Pin)
         self._manager_list = {
             "Time": BlockTime(logger, self._config),
             "Alarm": BlockAlarm(logger, self._config),
