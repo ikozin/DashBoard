@@ -71,6 +71,8 @@ class Mainboard:
                 self._modules.append(self._manager_list[name])
                 print(name)
 
+        # Инициализируем PyGame
+        pygame.init()
         # Инициализируем шрифты
         pygame.font.init()
         # Инициализируем музыкальный модуль https://wiki.libsdl.org/FAQUsingSDL
