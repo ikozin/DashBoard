@@ -13,6 +13,7 @@ import pygame
 
 @pytest.fixture(scope='module', autouse=True)
 def procced():
+    pygame.init()
     pygame.font.init()
     yield
 
