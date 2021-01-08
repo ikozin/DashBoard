@@ -1,5 +1,5 @@
 import subprocess
-import RPi.GPIO as GPIO
+from gpiozero import *
 
 from .halgpio import HalGpio
 from typing import Callable
@@ -8,21 +8,28 @@ from logging import Logger
 
 """
 
-Raspberry Pi Model B Rev 2
+Raspberry Pi Model 4B Rev 1.2
             ----------- ---------- ---- ---- ---------- -----------
-PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |
+           |       3V3 |          |  1 | 2  |          | 5V        |
            |  I2C1_SDA |  [GPIO2] |  3 | 4  |          | 5V        |
            |  I2C1_SCL |  [GPIO3] |  5 | 6  |          | GND       |
            |           |  [GPIO4] |  7 | 8  | [GPIO14] | UART0_TX  |
            |       GND |          |  9 | 10 | [GPIO15] | UART0_RX  |
            |           | [GPIO17] | 11 | 12 | [GPIO18] | PCM_CLK   |
            |           | [GPIO27] | 13 | 14 |          | GND       |
-           |           | [GPIO22] | 15 | 16 | [GPIO23] |           | <- LED
-           |       3V3 |          | 17 | 18 | [GPIO24] |           | <- PIR DATA
+           |           | [GPIO22] | 15 | 16 | [GPIO23] |           |
+           |       3V3 |          | 17 | 18 | [GPIO24] |           |
            | SPI0_MOSI | [GPIO10] | 19 | 20 |          | GND       |
            | SPI0_MISO |  [GPIO9] | 21 | 22 | [GPIO25] |           |
            | SPI0_SCLK | [GPIO11] | 23 | 24 | [GPIO8]  | SPI0_CS0  |
-PIR GND -> |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
+           |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
+           |     ID_SD |  [GPIO0] | 27 | 28 | [GPIO1]  | ID_SC     |
+           |           |  [GPIO5] | 29 | 30 |          | GND       |
+           |           |  [GPIO6] | 31 | 32 | [GPIO12] |           |
+           |           | [GPIO13] | 33 | 34 |          | GND       |
+           |           | [GPIO19] | 35 | 36 | [GPIO16] |           |
+           |           | [GPIO26] | 37 | 38 | [GPIO20] |           |
+           |       GND |          | 39 | 40 | [GPIO21] |           |
             ----------- ---------- ---- ---- ---------- -----------
 
 
@@ -32,23 +39,21 @@ PIR GND -> |       GND |          | 25 | 26 | [GPIO7]  | SPI0_CS1  |
 # LED_PIN = 23  # GPIO24 - 16
 
 
-class HalGpio_RaspPi(HalGpio):
+class HalGpio_RaspPi4(HalGpio):
     """description of class"""
 
     def __init__(self, logger: Logger, func: Callable[[], None], pir: int, led: int):
         """Initializes (declare internal variables)"""
-        super(HalGpio_RaspPi, self).__init__(logger, func, pir, led)
+        super(HalGpio_RaspPi4, self).__init__(logger, func, pir, led)
 
     def init(self) -> None:
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self._pir, GPIO.IN)
-        GPIO.setup(self._led, GPIO.OUT)
-        self.ledOn()
-        GPIO.add_event_detect(self._pir, GPIO.RISING, callback=self.motion_detected)
+        self.pir = MotionSensor(self._pir)
+        self.pir.when_motion = motion_detected
+        self.led = LED(self._led) 
+        self.led.on()
 
     def done(self) -> None:
-        GPIO.cleanup()
+        pass
 
     def update(self) -> None:
         pass
@@ -70,11 +75,11 @@ class HalGpio_RaspPi(HalGpio):
         subprocess.Popen("sudo shutdown -h now", shell=True)
 
     def ledOn(self) -> None:
-        GPIO.output(self._led, 1)
+        self.led.on()
 
     def ledOff(self) -> None:
-        GPIO.output(self._led, 0)
+        self.led.off()
 
-    def motion_detected(self, pin):
+    def motion_detected(self):
         # self._logger.debug("Motion detected!")
         self._func()

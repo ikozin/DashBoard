@@ -26,6 +26,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app_rasppi4.py" />
     <Compile Include="app_win.py" />
     <Compile Include="app_rasppi.py" />
     <Compile Include="app_opiwin.py" />
@@ -188,6 +189,7 @@
     </Compile>
     <Compile Include="modules\hal\halgpio.py" />
     <Compile Include="modules\hal\halgpio_opiwin.py" />
+    <Compile Include="modules\hal\halgpio_rasppi4.py" />
     <Compile Include="modules\hal\halgpio_rasppi.py" />
     <Compile Include="modules\hal\halgpio_windows.py" />
     <Compile Include="modules\hal\bme280_rasppi.py">
@@ -237,6 +239,7 @@
     <Content Include="scripts\deploy.cmd" />
     <Content Include="scripts\deploy_orapi.cmd" />
     <Content Include="pytest.cmd" />
+    <Content Include="scripts\deploy_rasppi4.cmd" />
     <Content Include="scripts\excludelist.txt" />
     <Content Include="log.txt" />
     <Content Include="music\happy three frend.mp3" />
@@ -244,6 +247,7 @@
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="pytest.ini" />
+    <Content Include="setting_rasppi4.ini" />
     <Content Include="setting_win.ini" />
     <Content Include="setting_rasppi.ini" />
     <Content Include="setting_opiwin.ini" />
