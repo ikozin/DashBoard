@@ -48,7 +48,7 @@ class HalGpio_RaspPi4(HalGpio):
 
     def init(self) -> None:
         self.pir = MotionSensor(self._pir)
-        self.pir.when_motion = motion_detected
+        self.pir.when_motion = self.motion_detected
         self.led = LED(self._led)
         self.led.on()
 
