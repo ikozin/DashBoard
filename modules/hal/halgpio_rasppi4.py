@@ -1,5 +1,5 @@
 import subprocess
-from gpiozero import *
+from gpiozero import LED, MotionSensor
 
 from .halgpio import HalGpio
 from typing import Callable
@@ -49,7 +49,7 @@ class HalGpio_RaspPi4(HalGpio):
     def init(self) -> None:
         self.pir = MotionSensor(self._pir)
         self.pir.when_motion = motion_detected
-        self.led = LED(self._led) 
+        self.led = LED(self._led)
         self.led.on()
 
     def done(self) -> None:
