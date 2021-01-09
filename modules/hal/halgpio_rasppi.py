@@ -7,7 +7,7 @@ from logging import Logger
 
 
 """
-
+# https://www.raspberrypi.org/documentation/usage/gpio/
 Raspberry Pi Model B Rev 2
             ----------- ---------- ---- ---- ---------- -----------
 PIR VCC -> |       3V3 |          |  1 | 2  |          | 5V        |

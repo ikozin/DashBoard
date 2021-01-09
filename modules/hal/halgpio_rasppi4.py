@@ -7,7 +7,7 @@ from logging import Logger
 
 
 """
-
+# https://www.raspberrypi.org/documentation/usage/gpio/
 Raspberry Pi Model 4B Rev 1.2
             ----------- ---------- ---- ---- ---------- -----------
            |       3V3 |          |  1 | 2  |          | 5V        |
@@ -35,8 +35,8 @@ Raspberry Pi Model 4B Rev 1.2
 
 """
 
-# PIR_PIN = 24  # GPIO23 - 18
-# LED_PIN = 23  # GPIO24 - 16
+# PIR_PIN = 24
+# LED_PIN = 23
 
 
 class HalGpio_RaspPi4(HalGpio):
@@ -45,6 +45,8 @@ class HalGpio_RaspPi4(HalGpio):
     def __init__(self, logger: Logger, func: Callable[[], None], pir: int, led: int):
         """Initializes (declare internal variables)"""
         super(HalGpio_RaspPi4, self).__init__(logger, func, pir, led)
+        self.pir = None
+        self.led = None
 
     def init(self) -> None:
         self.pir = MotionSensor(self._pir)
