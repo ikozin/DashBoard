@@ -271,7 +271,7 @@ class BlockYandexWeather(BlockMinuteBase):
     def _get_data(self):
         dif = datetime.now() - self._last_update
         if dif.seconds >= MIN_UPDATE_TIME:
-            url_path = "https://export.yandex.ru/bar/reginfo.xml?regionid={0}&lat={1}&lon={2}".format(
+            url_path = "https://export.yandex.ru/bar/reginfo.xml?region={0}&lat={1}&lon={2}".format(
                 self._region_id, self._lat, self._lon)
             with request.urlopen(url_path) as file:
                 data = file.read()
