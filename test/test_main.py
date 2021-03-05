@@ -9,11 +9,11 @@ from time import time
 import pygame
 
 
-@pytest.mark.block_main
-def test_main(logger, mocker):
-    log("run")
-    app = StubMainboard(StubHalGpio, logger)
-    app.loop()
+#@pytest.mark.block_main
+#def test_main(logger, mocker):
+#    log("run")
+#    app = StubMainboard(StubHalGpio, logger)
+#    app.loop()
 
 class StubMainboard:
 
