@@ -1,4 +1,4 @@
-import pytest
+# import pytest
 from exceptions import ExceptionNotFound
 from setting import Setting
 from modules.BlockBase import BlockBase
@@ -9,11 +9,11 @@ from time import time
 import pygame
 
 
-#@pytest.mark.block_main
-#def test_main(logger, mocker):
-#    log("run")
-#    app = StubMainboard(StubHalGpio, logger)
-#    app.loop()
+# @pytest.mark.block_main
+# def test_main(logger, mocker):
+#     log("run")
+#     app = StubMainboard(StubHalGpio, logger)
+#     app.loop()
 
 class StubMainboard:
 
@@ -76,6 +76,7 @@ class StubMainboard:
         #pygame.quit()
         self._hal.done()
 
+
 class StubHalGpio(HalGpio):
 
     def __init__(self, logger: Logger, func: Callable[[], None]):
@@ -115,6 +116,7 @@ class StubHalGpio(HalGpio):
 
     def ledOff(self) -> None:
         pass
+
 
 def log(message) -> None:
     print(pygame.time.get_ticks(), message)
