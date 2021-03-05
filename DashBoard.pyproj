@@ -220,6 +220,7 @@
     <Compile Include="test\test_block_alarm.py" />
     <Compile Include="test\test_block_calendar.py" />
     <Compile Include="test\test_block_ir.py" />
+    <Compile Include="test\test_main.py" />
     <Compile Include="test\test_block_mt8057.py" />
     <Compile Include="test\test_block_openweathermap.py" />
     <Compile Include="test\test_block_swap.py" />

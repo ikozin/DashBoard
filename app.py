@@ -32,7 +32,6 @@ logger = logging.getLogger("root")
 
 FPS = 60
 # WAIT_TIME = 40
-IDLE_EVENT = (pygame.locals.USEREVENT + 1)
 
 
 class Mainboard:
@@ -97,6 +96,9 @@ class Mainboard:
             except Exception as ex:
                 self._logger.exception(ex)
 
+        self._idle_event = pygame.event.custom_type()
+        self.set_display_timer_on()
+
         pygame.time.set_timer(BLOCK_SECOND_UPDATE_EVENT, 1000)
         pygame.time.set_timer(BLOCK_MINUTE_UPDATE_EVENT, 60000)
 
@@ -108,12 +110,12 @@ class Mainboard:
     def set_display_timer_on(self) -> None:
         """Таймер для отключения дисплея"""
         (_, _, _, idle_time) = self._config.get_curret_setting()
-        pygame.time.set_timer(IDLE_EVENT, 0)
-        pygame.time.set_timer(IDLE_EVENT, idle_time * 60000)
+        pygame.time.set_timer(self._idle_event, 0)
+        pygame.time.set_timer(self._idle_event, idle_time * 60000)
 
     def set_display_timer_off(self) -> None:
         """Таймер для отключения дисплея"""
-        pygame.time.set_timer(IDLE_EVENT, 0)
+        pygame.time.set_timer(self._idle_event, 0)
 
     def display_off(self) -> None:
         if not self._is_display_on:
@@ -149,7 +151,7 @@ class Mainboard:
                 self.display_off()
             if event.type == pygame.locals.KEYDOWN and event.key == pygame.locals.K_p:
                 self.display_on()
-            if event.type == IDLE_EVENT:
+            if event.type == self._idle_event:
                 self.display_off()
 
             for module in self._modules:
