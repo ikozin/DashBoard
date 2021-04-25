@@ -2,93 +2,116 @@
 
 		<info lang="ru">
 			
-		<region id="192" zoom="13" lat="56.129057" lon="40.406635">
-			<title>Владимир</title>
+		<region id="213" zoom="10" lat="55.753215" lon="37.622504">
+			<title>Москва</title>
 		</region>
 	
-			<traffic/>
 			
-		<weather  region="192">
+		<traffic region="213" zoom="10" lat="55.753215" lon="37.622504">
+			<region id="213">
+  <url>https://yandex.ru/maps/213/moscow/probki</url>
+  <length>268863</length>
+  <level>1</level>
+  <icon>green</icon>
+  <timestamp>1619337030</timestamp>
+  <time>10:50</time>
+  <tend>0</tend>
+  <hint lang="ru">На дорогах свободно</hint>
+  <hint lang="en">Clear roads</hint>
+  <hint lang="uk">На дорогах вільно</hint>
+  <hint lang="tr">Trafik açık</hint>
+  <hint lang="kk">Жолдар бос</hint>
+  <hint lang="uz">Yo‘llar bo‘sh</hint>
+  <hint lang="be">На дарогах свабодна</hint>
+</region>
+			<title>Москва</title>
+		</traffic>
+	
+			
+		<weather  region="213">
 			<source>mb3d</source>
 			
 		<day>
-			<title>Владимир</title>
+			<title>Москва</title>
 			<country>Россия</country>
 			<time_zone>Europe/Moscow</time_zone>
 			<summer-time>1</summer-time>
-			<sun_rise>08:49</sun_rise>
-			<sunset>15:45</sunset>
+			<sun_rise>05:00</sun_rise>
+			<sunset>19:54</sunset>
 			<daytime>d</daytime>
-			<date date="2020-12-23T00:00:00Z">
-				<day weekday="ср">23</day>
-				<month name="декабря">12</month>
-				<year>2020</year>
+			<date date="2021-04-25T00:00:00Z">
+				<day weekday="вс">25</day>
+				<month name="апреля">4</month>
+				<year>2021</year>
 				<daytime>d</daytime>
 			</date>
 			
-		<day_part typeid="2" type="день">
-			<weather_type>облачно</weather_type>
-			<weather_code>overcast</weather_code>
-			<image>https://yastatic.net/weather/i/icons/blueye/24/ovc.png</image>
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-2.png</image-v2>
-			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/ovc.png</image-v3>
-			<image_number>5</image_number>
-			<wind_speed>2.9</wind_speed>
-			<wind_direction id="s">юг</wind_direction>
-			<dampness>85</dampness>
-			<hectopascal>1007</hectopascal>
-			<torr>756</torr>
-			<pressure>756</pressure>
-			<temperature class_name="t-4" color="E5EAEE">-3</temperature>
+		<day_part typeid="1" type="утро">
+			<weather_type>облачно с прояснениями</weather_type>
+			<weather_code>cloudy</weather_code>
+			<image>https://yastatic.net/weather/i/icons/blueye/24/bkn_d.png</image>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_d_+4.png</image-v2>
+			<image-v3 size="48">https://yastatic.net/weather/i/icons/blueye/48/bkn_d.png</image-v3>
+			<image_number></image_number>
+			<wind_speed>8</wind_speed>
+			<wind_direction id="w">запад</wind_direction>
+			<dampness>68</dampness>
+			<hectopascal>987</hectopascal>
+			<torr>741</torr>
+			<pressure>741</pressure>
+			<temperature class_name="t6" color="F2F0E6">+5</temperature>
 			<time_zone>Europe/Moscow</time_zone>
-			<observation_time>11:00</observation_time>
-			<observation>2020-12-23T11:00:00</observation>
+			<observation_time>10:00</observation_time>
+			<observation>2021-04-25T10:00:00</observation>
 		</day_part>
 	
 			
-		<day_part typeid="3" type="вечер">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-4.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
+		<day_part typeid="2" type="день">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_d_+6.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_d.png</image-v3>
 			
-			<temperature_from class_name="t-10" color="D5E2EC">-9</temperature_from>
-			<temperature_to class_name="t-6" color="E0E7EE">-5</temperature_to>
+			<temperature_from class_name="t6" color="F2F0E6">+6</temperature_from>
+			<temperature_to class_name="t8" color="F3F1E3">+7</temperature_to>
+		
+		</day_part>
+	
+
+		<day_part typeid="3" type="вечер">
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_n_+6.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_n.png</image-v3>
+			
+			<temperature_from class_name="t4" color="F1F0E9">+3</temperature_from>
+			<temperature_to class_name="t8" color="F3F1E3">+7</temperature_to>
 		
 		</day_part>
 	
 
 		<day_part typeid="4" type="ночь">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-10.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc.png</image-v3>
-			<temperature class_name="t-10" color="D5E2EC">-10</temperature>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/skc_n_+2.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/skc_n.png</image-v3>
+			
+			<temperature_from class_name="t2" color="F0F0EC">+1</temperature_from>
+			<temperature_to class_name="t4" color="F1F0E9">+3</temperature_to>
+		
 		</day_part>
 	
 
 		<day_part typeid="1" type="утро">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-8.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
+			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/bkn_d_+8.png</image-v2>
+			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/bkn_d.png</image-v3>
 			
-			<temperature_from class_name="t-10" color="D5E2EC">-10</temperature_from>
-			<temperature_to class_name="t-8" color="DAE5ED">-8</temperature_to>
-		
-		</day_part>
-	
-
-		<day_part typeid="2" type="день">
-			<image-v2 size="22x22">http://yandex.st/weather/v-1/i/icons/22x22/ovc_-sn_-6.png</image-v2>
-			<image-v3 size="30">https://yastatic.net/weather/i/icons/blueye/30/ovc_-sn.png</image-v3>
-			
-			<temperature_from class_name="t-8" color="DAE5ED">-8</temperature_from>
-			<temperature_to class_name="t-6" color="E0E7EE">-6</temperature_to>
+			<temperature_from class_name="t2" color="F0F0EC">+1</temperature_from>
+			<temperature_to class_name="t8" color="F3F1E3">+8</temperature_to>
 		
 		</day_part>
 	
 			
-			<night_short><temperature class_name="t-6" color="E0E7EE">-5</temperature></night_short>,
-			<tomorrow><temperature class_name="t-6" color="E0E7EE">-6</temperature></tomorrow>
+			<night_short><temperature class_name="t2" color="F0F0EC">+1</temperature></night_short>,
+			<tomorrow><temperature class_name="t10" color="F4F1E0">+9</temperature></tomorrow>
 		
 		</day>
 	
-			<url slug="192">http://pogoda.yandex.ru/192/</url>
+			<url slug="213">http://pogoda.yandex.ru/213/</url>
 		</weather>
 	
 		</info>
